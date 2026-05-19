@@ -152,6 +152,11 @@ export function TapaasTransactionSkeleton() {
           selectedVehicle={selectedVehicle}
           onStartAgain={() => {
             setAttempted(false)
+            setPrivacyAgreed(false)
+            setRegistration('')
+            setSelectedVehicle('')
+            setDeclarationAccepted(false)
+            setExitNotice(false)
             setStep('privacy')
           }}
         />

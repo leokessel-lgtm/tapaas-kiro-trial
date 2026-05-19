@@ -7,6 +7,8 @@
  *
  * These components are for visual prototyping only.
  * They do not replicate GEL's full accessibility behaviour, theming, or design tokens.
+ *
+ * TaPaaS styling takes precedence where GEL and TaPaaS conflict.
  */
 
 import React, {
@@ -18,8 +20,6 @@ import './styles.css'
 
 // ---------------------------------------------------------------------------
 // GlobalStyle
-// API mirrors: @snsw-gel/theming GlobalStyle
-// Accepts optional `themes` prop (ignored in preview — no real theming).
 // ---------------------------------------------------------------------------
 export function GlobalStyle({ children }: PropsWithChildren<{ themes?: unknown[] }>) {
   return <>{children}</>
@@ -27,17 +27,10 @@ export function GlobalStyle({ children }: PropsWithChildren<{ themes?: unknown[]
 
 // ---------------------------------------------------------------------------
 // ContentContainer
-// API mirrors: @snsw-gel/page ContentContainer
 // ---------------------------------------------------------------------------
 export function ContentContainer({ children }: PropsWithChildren) {
   return (
-    <div
-      style={{
-        maxWidth: '768px',
-        margin: '0 auto',
-        padding: '0 1rem',
-      }}
-    >
+    <div style={{ maxWidth: '768px', margin: '0 auto', padding: '0 1rem' }}>
       {children}
     </div>
   )
@@ -45,16 +38,10 @@ export function ContentContainer({ children }: PropsWithChildren) {
 
 // ---------------------------------------------------------------------------
 // Section
-// API mirrors: @snsw-gel/page Section (styled div)
 // ---------------------------------------------------------------------------
 export function Section({ children }: PropsWithChildren) {
   return (
-    <section
-      style={{
-        paddingTop: '2rem',
-        paddingBottom: '2rem',
-      }}
-    >
+    <section style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
       {children}
     </section>
   )
@@ -62,8 +49,6 @@ export function Section({ children }: PropsWithChildren) {
 
 // ---------------------------------------------------------------------------
 // Heading
-// API mirrors: @snsw-gel/content Heading
-// Props: level (1–6), children
 // ---------------------------------------------------------------------------
 export interface HeadingProps extends HTMLAttributes<HTMLElement> {
   level?: 1 | 2 | 3 | 4 | 5 | 6
@@ -73,16 +58,7 @@ export interface HeadingProps extends HTMLAttributes<HTMLElement> {
 
 export function Heading({ level = 1, children, style, ...rest }: HeadingProps) {
   const Tag = `h${level}` as React.ElementType
-
-  const sizeMap: Record<number, string> = {
-    1: '2rem',
-    2: '1.5rem',
-    3: '1.25rem',
-    4: '1.125rem',
-    5: '1rem',
-    6: '0.875rem',
-  }
-
+  const sizeMap: Record<number, string> = { 1: '2rem', 2: '1.5rem', 3: '1.25rem', 4: '1.125rem', 5: '1rem', 6: '0.875rem' }
   return (
     <Tag
       style={{
@@ -103,9 +79,8 @@ export function Heading({ level = 1, children, style, ...rest }: HeadingProps) {
 
 // ---------------------------------------------------------------------------
 // ErrorSummary
-// API mirrors: @snsw-gel/error-summary ErrorSummary
-// Props: errors [{ id, text }], singularTitle, pluralTitle
-// Accepts ref for focus management (forwarded to the container div).
+// Uses role="group" + aria-labelledby instead of role="alert" to avoid
+// double-announcement when focus is programmatically moved to the container.
 // ---------------------------------------------------------------------------
 export interface ErrorSummaryProps {
   errors: { id: string; text: string }[]
@@ -116,16 +91,12 @@ export interface ErrorSummaryProps {
 
 export const ErrorSummary = forwardRef<HTMLDivElement, ErrorSummaryProps>(
   function ErrorSummary(
-    {
-      errors,
-      singularTitle = 'Your form has an error',
-      pluralTitle = 'Your form has errors',
-      id,
-    },
+    { errors, singularTitle = 'Your form has an error', pluralTitle = 'Your form has errors', id },
     ref,
   ) {
     const isMoreThanOne = errors.length > 1
     const title = isMoreThanOne ? pluralTitle : singularTitle
+    const titleId = id ? `${id}-title` : 'error-summary-title'
 
     if (errors.length === 0) return null
 
@@ -133,33 +104,18 @@ export const ErrorSummary = forwardRef<HTMLDivElement, ErrorSummaryProps>(
       <div
         id={id}
         ref={ref}
-        role='alert'
+        role='group'
+        aria-labelledby={titleId}
         tabIndex={-1}
-        style={{
-          borderLeft: '4px solid var(--gel-color-error)',
-          backgroundColor: 'var(--gel-color-error-bg)',
-          padding: '1rem 1.25rem 1rem 3.25rem',
-          marginBottom: '1.5rem',
-          outline: 'none',
-          position: 'relative',
-        }}
+        className='gel-error-summary'
         data-gelweb-component='error-summary'
       >
-        <span
-          aria-hidden='true'
-          style={{
-            position: 'absolute',
-            left: '1rem',
-            top: '1.125rem',
-            width: '20px',
-            height: '20px',
-          }}
-        >
+        <span aria-hidden='true' className='gel-error-summary__icon'>
           <svg width='20' height='20' viewBox='0 0 20 20' fill='var(--gel-color-error)' xmlns='http://www.w3.org/2000/svg'>
             <path d='M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0Zm1 15H9v-2h2v2Zm0-4H9V5h2v6Z' />
           </svg>
         </span>
-        <strong style={{ display: 'block', fontSize: '1rem', fontWeight: 700, marginBottom: '0.25rem' }}>
+        <strong id={titleId} style={{ display: 'block', fontSize: '1rem', fontWeight: 700, marginBottom: '0.25rem' }}>
           {title}
         </strong>
         <p style={{ margin: '0 0 0.5rem', fontSize: '1rem' }}>
@@ -169,13 +125,9 @@ export const ErrorSummary = forwardRef<HTMLDivElement, ErrorSummaryProps>(
           <ol style={{ margin: 0, paddingLeft: '1.25rem' }}>
             {errors.map(({ id: errorId, text }) => (
               <li key={errorId}>
-                <a
-                  href={errorId.startsWith('#') ? errorId : `#${errorId}`}
-                  style={{ color: 'var(--gel-color-error)', fontWeight: 700 }}
-                >
+                <a href={errorId.startsWith('#') ? errorId : `#${errorId}`} style={{ color: 'var(--gel-color-error)', fontWeight: 700 }}>
                   {text.replace(/\.$/, '')}
-                </a>
-                .
+                </a>.
               </li>
             ))}
           </ol>
@@ -183,13 +135,9 @@ export const ErrorSummary = forwardRef<HTMLDivElement, ErrorSummaryProps>(
           <ul style={{ margin: 0, paddingLeft: '1.25rem' }}>
             {errors.map(({ id: errorId, text }) => (
               <li key={errorId}>
-                <a
-                  href={errorId.startsWith('#') ? errorId : `#${errorId}`}
-                  style={{ color: 'var(--gel-color-error)', fontWeight: 700 }}
-                >
+                <a href={errorId.startsWith('#') ? errorId : `#${errorId}`} style={{ color: 'var(--gel-color-error)', fontWeight: 700 }}>
                   {text.replace(/\.$/, '')}
-                </a>
-                .
+                </a>.
               </li>
             ))}
           </ul>
@@ -201,10 +149,7 @@ export const ErrorSummary = forwardRef<HTMLDivElement, ErrorSummaryProps>(
 
 // ---------------------------------------------------------------------------
 // RadioButtonList
-// API mirrors: @snsw-gel/radio-button-list RadioButtonList
-// Props: id, legend, options [{ value, label }], value, onChange,
-//        hasError, errorMessage, vertical
-// Accepts ref forwarded to the fieldset element.
+// Now renders inline errorMessage and uses brand colour for selected state.
 // ---------------------------------------------------------------------------
 export interface RadioButtonListOption<T = string> {
   value: T
@@ -228,47 +173,29 @@ export const RadioButtonList = forwardRef<HTMLFieldSetElement, RadioButtonListPr
     ref,
   ) {
     const baseId = id ?? 'radio-group'
+    const errorId = `${baseId}-error`
 
     return (
       <fieldset
         id={id}
         ref={ref}
         aria-invalid={hasError || undefined}
-        style={{
-          border: 'none',
-          padding: 0,
-          margin: '0 0 1.5rem',
-        }}
+        aria-describedby={hasError && errorMessage ? errorId : undefined}
+        style={{ border: 'none', padding: 0, margin: '0 0 1.5rem' }}
       >
-        <legend
-          style={{
-            fontFamily: 'var(--gel-font-body)',
-            fontSize: '1rem',
-            fontWeight: 500,
-            marginBottom: '1.125rem',
-            padding: 0,
-            color: 'var(--gel-color-text)',
-          }}
-        >
+        <legend style={{ fontFamily: 'var(--gel-font-body)', fontSize: '1rem', fontWeight: 500, marginBottom: '1.125rem', padding: 0, color: 'var(--gel-color-text)' }}>
           {legend}
         </legend>
 
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: vertical ? 'column' : 'row',
-            gap: '1.25rem',
-          }}
-        >
+        <div style={{ display: 'flex', flexDirection: vertical ? 'column' : 'row', gap: '1.25rem' }}>
           {options.map((option, index) => {
             const inputId = `${baseId}-${index}`
             const checked = option.value === value
+            const borderColor = hasError ? 'var(--gel-color-error)' : checked ? '#002664' : '#646974'
+            const dotColor = '#002664'
 
             return (
-              <div
-                key={String(option.value)}
-                style={{ position: 'relative', minHeight: '2rem', paddingLeft: '3rem' }}
-              >
+              <div key={String(option.value)} style={{ position: 'relative', minHeight: '2rem', paddingLeft: '3rem' }}>
                 <input
                   type='radio'
                   id={inputId}
@@ -276,54 +203,20 @@ export const RadioButtonList = forwardRef<HTMLFieldSetElement, RadioButtonListPr
                   value={String(option.value)}
                   checked={checked}
                   onChange={() => onChange?.(option.value)}
+                  aria-required={hasError ? true : undefined}
                   className='snsw-preview-control-input'
-                  style={{
-                    position: 'absolute',
-                    width: '2.75rem',
-                    height: '2.75rem',
-                    opacity: 0,
-                    top: '-0.375rem',
-                    left: '-0.375rem',
-                    cursor: 'pointer',
-                  }}
+                  style={{ position: 'absolute', width: '2.75rem', height: '2.75rem', opacity: 0, top: '-0.375rem', left: '-0.375rem', cursor: 'pointer' }}
                 />
-                <label
-                  htmlFor={inputId}
-                  style={{
-                    display: 'block',
-                    cursor: 'pointer',
-                    fontFamily: 'var(--gel-font-body)',
-                    fontSize: '1rem',
-                    color: 'var(--gel-color-text)',
-                    lineHeight: '2rem',
-                    position: 'relative',
-                  }}
-                >
+                <label htmlFor={inputId} style={{ display: 'block', cursor: 'pointer', fontFamily: 'var(--gel-font-body)', fontSize: '1rem', color: 'var(--gel-color-text)', lineHeight: '2rem', position: 'relative' }}>
                   <span
                     aria-hidden='true'
                     style={{
-                      position: 'absolute',
-                      left: '-3rem',
-                      top: 0,
-                      width: '2rem',
-                      height: '2rem',
-                      borderRadius: '50%',
-                      border: hasError ? '2px solid var(--gel-color-error)' : '2px solid #646974',
-                      boxSizing: 'border-box',
-                      backgroundColor: 'var(--gel-color-white)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      position: 'absolute', left: '-3rem', top: 0, width: '2rem', height: '2rem',
+                      borderRadius: '50%', border: `2px solid ${borderColor}`, boxSizing: 'border-box',
+                      backgroundColor: 'var(--gel-color-white)', display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}
                   >
-                    {checked && (
-                      <span style={{
-                        width: '1rem',
-                        height: '1rem',
-                        borderRadius: '50%',
-                        backgroundColor: '#646974',
-                      }} />
-                    )}
+                    {checked && <span style={{ width: '1rem', height: '1rem', borderRadius: '50%', backgroundColor: dotColor }} />}
                   </span>
                   {option.label}
                 </label>
@@ -331,6 +224,15 @@ export const RadioButtonList = forwardRef<HTMLFieldSetElement, RadioButtonListPr
             )
           })}
         </div>
+
+        {hasError && errorMessage && (
+          <div id={errorId} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', backgroundColor: 'var(--gel-color-error-bg)', padding: '0.5rem 1rem 0.5rem 0.625rem', marginTop: '0.75rem', fontWeight: 700, fontSize: '1rem', lineHeight: 1.5 }}>
+            <svg width='20' height='20' viewBox='0 0 20 20' fill='var(--gel-color-error)' style={{ flexShrink: 0, marginTop: '2px' }}>
+              <path d='M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0Zm1 15H9v-2h2v2Zm0-4H9V5h2v6Z' />
+            </svg>
+            <span>{errorMessage}</span>
+          </div>
+        )}
       </fieldset>
     )
   },
@@ -338,8 +240,7 @@ export const RadioButtonList = forwardRef<HTMLFieldSetElement, RadioButtonListPr
 
 // ---------------------------------------------------------------------------
 // Button
-// API mirrors: @snsw-gel/button Button
-// Props: children, onClick, variant ('primary' | 'secondary'), type
+// Added hover class and min-height for link variant.
 // ---------------------------------------------------------------------------
 export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
@@ -349,62 +250,26 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
   disabled?: boolean
 }
 
-export function Button({
-  children,
-  onClick,
-  variant = 'primary',
-  type = 'button',
-  disabled,
-  style,
-  ...rest
-}: ButtonProps) {
+export function Button({ children, onClick, variant = 'primary', type = 'button', disabled, style, ...rest }: ButtonProps) {
   const isPrimary = variant === 'primary'
   const isLink = variant === 'link'
 
   const baseStyles: React.CSSProperties = {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontFamily: 'var(--gel-font-body)',
-    fontSize: '1rem',
-    fontWeight: 600,
-    lineHeight: '1.5em',
-    cursor: disabled ? 'not-allowed' : 'pointer',
-    opacity: disabled ? 0.4 : 1,
-    textDecoration: 'none',
-    transition: 'border-color 0.5s ease, background-color 0.5s ease, color 0.5s ease',
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+    fontFamily: 'var(--gel-font-body)', fontSize: '1rem', fontWeight: 600, lineHeight: '1.5em',
+    cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.4 : 1,
+    textDecoration: 'none', transition: 'border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease',
   }
 
-  const variantStyles: React.CSSProperties =
-    isLink
-      ? {
-          background: 'none',
-          border: 'none',
-          padding: '0 2px',
-          color: 'var(--gel-color-link)',
-          textDecoration: 'underline',
-          borderRadius: '0',
-          minWidth: 'auto',
-        }
-      : {
-          padding: '0.75rem 1.5rem',
-          borderRadius: '6px',
-          border: isPrimary ? '2px solid var(--gel-color-primary)' : '2px solid var(--gel-color-primary)',
-          backgroundColor: isPrimary ? 'var(--gel-color-primary)' : 'transparent',
-          color: isPrimary ? 'var(--gel-color-white)' : 'var(--gel-color-primary)',
-          minWidth: '200px',
-        }
+  const variantStyles: React.CSSProperties = isLink
+    ? { background: 'none', border: 'none', padding: '0.5rem 2px', color: 'var(--gel-color-link)', textDecoration: 'underline', borderRadius: '0', minWidth: 'auto', minHeight: '44px' }
+    : { padding: '0.75rem 1.5rem', borderRadius: '6px', border: '2px solid var(--gel-color-primary)', backgroundColor: isPrimary ? 'var(--gel-color-primary)' : 'transparent', color: isPrimary ? 'var(--gel-color-white)' : 'var(--gel-color-primary)', minWidth: '200px' }
 
   return (
     <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      style={{
-        ...baseStyles,
-        ...variantStyles,
-        ...style,
-      }}
+      type={type} onClick={onClick} disabled={disabled}
+      className={`gel-btn gel-btn--${variant}`}
+      style={{ ...baseStyles, ...variantStyles, ...style }}
       {...rest}
     >
       {children}
@@ -414,8 +279,6 @@ export function Button({
 
 // ---------------------------------------------------------------------------
 // TextLink
-// API mirrors: @snsw-gel/text-link TextLink
-// Props: children, onClick, href
 // ---------------------------------------------------------------------------
 export interface TextLinkProps {
   children: React.ReactNode
@@ -425,37 +288,10 @@ export interface TextLinkProps {
 
 export function TextLink({ children, onClick, href }: TextLinkProps) {
   if (href) {
-    return (
-      <a
-        href={href}
-        style={{
-          color: 'var(--gel-color-link)',
-          textDecoration: 'underline',
-          fontFamily: 'var(--gel-font-body)',
-          fontSize: '1rem',
-          cursor: 'pointer',
-        }}
-      >
-        {children}
-      </a>
-    )
+    return <a href={href} style={{ color: 'var(--gel-color-link)', textDecoration: 'underline', fontFamily: 'var(--gel-font-body)', fontSize: '1rem', cursor: 'pointer' }}>{children}</a>
   }
-
   return (
-    <button
-      type='button'
-      onClick={onClick as React.MouseEventHandler<HTMLButtonElement>}
-      style={{
-        background: 'none',
-        border: 'none',
-        padding: 0,
-        color: 'var(--gel-color-link)',
-        textDecoration: 'underline',
-        fontFamily: 'var(--gel-font-body)',
-        fontSize: '1rem',
-        cursor: 'pointer',
-      }}
-    >
+    <button type='button' onClick={onClick as React.MouseEventHandler<HTMLButtonElement>} style={{ background: 'none', border: 'none', padding: 0, color: 'var(--gel-color-link)', textDecoration: 'underline', fontFamily: 'var(--gel-font-body)', fontSize: '1rem', cursor: 'pointer' }}>
       {children}
     </button>
   )
@@ -463,8 +299,7 @@ export function TextLink({ children, onClick, href }: TextLinkProps) {
 
 // ---------------------------------------------------------------------------
 // Checkbox
-// API mirrors: @snsw-gel/checkbox Checkbox
-// Props: id, label, checked, onChange, hasError, errorMessage, disabled
+// Uses brand colour (#002664) for checked state. Adds aria-describedby for error.
 // ---------------------------------------------------------------------------
 export interface CheckboxProps {
   id?: string
@@ -477,73 +312,38 @@ export interface CheckboxProps {
   value?: string
 }
 
-export function Checkbox({
-  id,
-  label,
-  checked = false,
-  onChange,
-  hasError,
-  errorMessage,
-  disabled,
-  value = 'on',
-}: CheckboxProps) {
+export function Checkbox({ id, label, checked = false, onChange, hasError, errorMessage, disabled, value = 'on' }: CheckboxProps) {
   const elemId = id ?? 'checkbox'
+  const errorId = `${elemId}-error`
+  const borderColor = hasError ? 'var(--gel-color-error)' : checked ? '#002664' : '#646974'
+  const checkColor = '#002664'
 
   return (
     <div style={{ margin: '0 0 1.5rem', position: 'relative', minHeight: '2rem' }} data-gelweb-component='checkbox'>
       <div style={{ position: 'relative', paddingLeft: '3rem' }}>
         <input
-          type='checkbox'
-          id={elemId}
-          checked={checked}
+          type='checkbox' id={elemId} checked={checked}
           onChange={(e) => onChange?.(e.target.checked ? value : '')}
           disabled={disabled}
           aria-invalid={hasError || undefined}
+          aria-required={hasError ? true : undefined}
+          aria-describedby={hasError && errorMessage ? errorId : undefined}
           className='snsw-preview-control-input'
-          style={{
-            position: 'absolute',
-            width: '2.75rem',
-            height: '2.75rem',
-            opacity: 0,
-            top: '-0.375rem',
-            left: '-0.375rem',
-            cursor: disabled ? 'not-allowed' : 'pointer',
-          }}
+          style={{ position: 'absolute', width: '2.75rem', height: '2.75rem', opacity: 0, top: '-0.375rem', left: '-0.375rem', cursor: disabled ? 'not-allowed' : 'pointer' }}
         />
-        <label
-          htmlFor={elemId}
-          style={{
-            display: 'block',
-            cursor: disabled ? 'not-allowed' : 'pointer',
-            fontSize: '1rem',
-            lineHeight: 1.5,
-            fontFamily: 'var(--gel-font-body)',
-            color: 'var(--gel-color-text)',
-            position: 'relative',
-            paddingTop: '0.25rem',
-            paddingBottom: '0.25rem',
-          }}
-        >
+        <label htmlFor={elemId} style={{ display: 'block', cursor: disabled ? 'not-allowed' : 'pointer', fontSize: '1rem', lineHeight: 1.5, fontFamily: 'var(--gel-font-body)', color: 'var(--gel-color-text)', position: 'relative', paddingTop: '0.25rem', paddingBottom: '0.25rem' }}>
           <span
             aria-hidden='true'
             style={{
-              position: 'absolute',
-              left: '-3rem',
-              top: '0',
-              width: '2rem',
-              height: '2rem',
-              border: hasError ? '2px solid var(--gel-color-error)' : '2px solid #646974',
-              borderRadius: '4px',
-              boxSizing: 'border-box',
-              backgroundColor: 'var(--gel-color-white)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              position: 'absolute', left: '-3rem', top: '0', width: '2rem', height: '2rem',
+              border: `2px solid ${borderColor}`, borderRadius: '4px', boxSizing: 'border-box',
+              backgroundColor: checked ? '#002664' : 'var(--gel-color-white)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
           >
             {checked && (
-              <svg width='19' height='15' viewBox='0 0 19 15' fill='#646974'>
-                <path d='M18.6 3.4c.2-.2.2-.5 0-.7L16.3.4c-.2-.2-.5-.2-.7 0L7 9 3.4 5.4c-.2-.2-.5-.2-.7 0L.4 7.7c-.2.2-.2.5 0 .7l6.3 6.3c.2.2.5.2.7 0L18.6 3.4Z' />
+              <svg width='14' height='11' viewBox='0 0 14 11' fill='#ffffff'>
+                <path d='M13.4 1.4c.2-.2.2-.5 0-.7L11.8.1c-.2-.2-.5-.2-.7 0L5 6.2 2.9 4.1c-.2-.2-.5-.2-.7 0L.6 5.7c-.2.2-.2.5 0 .7l4.1 4.1c.2.2.5.2.7 0l8-8Z' />
               </svg>
             )}
           </span>
@@ -551,19 +351,7 @@ export function Checkbox({
         </label>
       </div>
       {hasError && errorMessage && (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'flex-start',
-            gap: '0.5rem',
-            backgroundColor: 'var(--gel-color-error-bg)',
-            padding: '0.5rem 1rem 0.5rem 0.625rem',
-            marginTop: '0.5rem',
-            fontWeight: 700,
-            fontSize: '1rem',
-            lineHeight: 1.5,
-          }}
-        >
+        <div id={errorId} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', backgroundColor: 'var(--gel-color-error-bg)', padding: '0.5rem 1rem 0.5rem 0.625rem', marginTop: '0.5rem', fontWeight: 700, fontSize: '1rem', lineHeight: 1.5 }}>
           <svg width='20' height='20' viewBox='0 0 20 20' fill='var(--gel-color-error)' style={{ flexShrink: 0, marginTop: '2px' }}>
             <path d='M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0Zm1 15H9v-2h2v2Zm0-4H9V5h2v6Z' />
           </svg>
@@ -576,8 +364,6 @@ export function Checkbox({
 
 // ---------------------------------------------------------------------------
 // InPageAlert
-// API mirrors: @snsw-gel/in-page-alert InPageAlert
-// Props: variant, title, children, compact
 // ---------------------------------------------------------------------------
 export interface InPageAlertProps {
   variant: 'error' | 'warning' | 'success' | 'info'
@@ -596,36 +382,19 @@ const alertColors = {
 
 export function InPageAlert({ variant, title, children, compact, style }: InPageAlertProps) {
   const colors = alertColors[variant]
-
   return (
     <div
-      role={variant === 'error' ? 'alert' : undefined}
+      role={variant === 'error' ? 'alert' : 'note'}
       style={{
-        borderLeft: `4px solid ${colors.border}`,
-        backgroundColor: colors.bg,
+        borderLeft: `4px solid ${colors.border}`, backgroundColor: colors.bg,
         padding: compact ? '0.625rem 1rem' : '1rem 1.25rem',
         paddingLeft: compact ? '1rem' : '3.25rem',
-        marginBottom: compact ? '0' : '1.5rem',
-        position: 'relative',
-        fontSize: compact ? '0.9375rem' : '1rem',
-        lineHeight: 1.5,
-        ...style,
+        marginBottom: compact ? '0' : '1.5rem', position: 'relative',
+        fontSize: compact ? '0.9375rem' : '1rem', lineHeight: 1.5, ...style,
       }}
       data-gelweb-component={`in-page-alert-${variant}`}
     >
-      <span
-        aria-hidden='true'
-        style={{
-          position: 'absolute',
-          left: compact ? undefined : '1rem',
-          top: compact ? '50%' : '1rem',
-          transform: compact ? 'translateY(-50%)' : undefined,
-          fontSize: '1.25rem',
-          color: colors.border,
-          fontWeight: 700,
-          display: compact ? 'none' : 'block',
-        }}
-      >
+      <span aria-hidden='true' style={{ position: 'absolute', left: compact ? undefined : '1rem', top: compact ? '50%' : '1rem', transform: compact ? 'translateY(-50%)' : undefined, fontSize: '1.25rem', color: colors.border, fontWeight: 700, display: compact ? 'none' : 'block' }}>
         {colors.icon}
       </span>
       <strong style={{ display: 'block', fontWeight: 700 }}>{title}</strong>
@@ -636,10 +405,8 @@ export function InPageAlert({ variant, title, children, compact, style }: InPage
 
 // ---------------------------------------------------------------------------
 // Field
-// API mirrors: @snsw-gel/field Field
-// Wraps a form input with label, help text, and error message
-// Styles from live service.nsw.gov.au: label weight 500, spacing 1.5rem,
-// error uses icon + pink background inline alert
+// Fixed: label margin reduced to 0.5rem, help text margin fixed,
+// aria-describedby wired to error and help text.
 // ---------------------------------------------------------------------------
 export interface FieldProps {
   id?: string
@@ -653,40 +420,30 @@ export interface FieldProps {
 
 export function Field({ id, label, helpMessage, hasError, errorMessage, children, isOptional }: FieldProps) {
   const elemId = id ?? 'field'
+  const helpId = helpMessage ? `${elemId}-help` : undefined
+  const errorMsgId = hasError && errorMessage ? `${elemId}-error` : undefined
+  const describedBy = [helpId, errorMsgId].filter(Boolean).join(' ') || undefined
+
   return (
     <div style={{ margin: '0 0 1.5rem', maxWidth: '48rem' }} data-gelweb-component='field'>
-      <label
-        htmlFor={elemId}
-        style={{
-          display: 'block',
-          fontWeight: 500,
-          fontSize: '1rem',
-          marginBottom: '1.5rem',
-          color: 'var(--gel-color-text)',
-        }}
-      >
+      <label htmlFor={elemId} style={{ display: 'block', fontWeight: 500, fontSize: '1rem', marginBottom: '0.5rem', color: 'var(--gel-color-text)' }}>
         {label}{isOptional && ' (optional)'}
       </label>
       {helpMessage && (
-        <p style={{ fontSize: '0.875rem', margin: '-1rem 0 0.5rem', color: 'var(--gel-color-text-grey, #646974)' }}>
+        <p id={helpId} style={{ fontSize: '0.875rem', margin: '0 0 0.5rem', color: 'var(--gel-color-text-grey, #646974)' }}>
           {helpMessage}
         </p>
       )}
-      {children}
+      {children && React.isValidElement(children)
+        ? React.cloneElement(children as React.ReactElement<Record<string, unknown>>, {
+            'aria-describedby': describedBy,
+            'aria-invalid': hasError || undefined,
+            'aria-required': hasError ? true : undefined,
+          })
+        : children
+      }
       {hasError && errorMessage && (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'flex-start',
-            gap: '0.5rem',
-            backgroundColor: 'var(--gel-color-error-bg)',
-            padding: '0.5rem 1rem 0.5rem 0.625rem',
-            marginTop: '0.5rem',
-            fontWeight: 700,
-            fontSize: '1rem',
-            lineHeight: 1.5,
-          }}
-        >
+        <div id={errorMsgId} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', backgroundColor: 'var(--gel-color-error-bg)', padding: '0.5rem 1rem 0.5rem 0.625rem', marginTop: '0.5rem', fontWeight: 700, fontSize: '1rem', lineHeight: 1.5 }}>
           <svg width='20' height='20' viewBox='0 0 20 20' fill='var(--gel-color-error)' style={{ flexShrink: 0, marginTop: '2px' }}>
             <path d='M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0Zm1 15H9v-2h2v2Zm0-4H9V5h2v6Z' />
           </svg>
@@ -699,9 +456,7 @@ export function Field({ id, label, helpMessage, hasError, errorMessage, children
 
 // ---------------------------------------------------------------------------
 // Input
-// API mirrors: @snsw-gel/input Input
-// Styles from live site: height 48px, border 2px solid #646974, radius 6px,
-// padding 0.825rem, max-width 372px, focus outline 3px solid #0085b3
+// Fixed: removed outline:none so :focus-visible CSS works. Added aria-invalid.
 // ---------------------------------------------------------------------------
 export interface InputProps {
   id?: string
@@ -716,61 +471,34 @@ export interface InputProps {
   maxLength?: number
 }
 
-const inputWidthMap: Record<string, string> = {
-  xxs: '56px',
-  xs: '92px',
-  sm: '132px',
-  md: '200px',
-  lg: '268px',
-  xl: '416px',
-}
+const inputWidthMap: Record<string, string> = { xxs: '56px', xs: '92px', sm: '132px', md: '200px', lg: '268px', xl: '416px' }
 
-export function Input({
-  id,
-  value,
-  onChange,
-  hasError,
-  disabled,
-  type = 'text',
-  inputWidth,
-  placeholder,
-  name,
-  maxLength,
-}: InputProps) {
+export function Input({ id, value, onChange, hasError, disabled, type = 'text', inputWidth, placeholder, name, maxLength, ...rest }: InputProps & Record<string, unknown>) {
   return (
     <input
-      id={id}
-      type={type}
-      value={value}
-      onChange={onChange}
-      disabled={disabled}
-      placeholder={placeholder}
-      name={name}
-      maxLength={maxLength}
+      id={id} type={type} value={value} onChange={onChange} disabled={disabled}
+      placeholder={placeholder} name={name} maxLength={maxLength}
+      aria-invalid={hasError || undefined}
+      className='gel-input'
       style={{
         display: 'block',
         width: inputWidth ? inputWidthMap[inputWidth] || '100%' : '100%',
         maxWidth: inputWidth ? undefined : '372px',
-        height: '48px',
-        padding: '0 0.825rem',
-        fontSize: '1rem',
+        height: '48px', padding: '0 0.825rem', fontSize: '1rem',
         fontFamily: 'var(--gel-font-body)',
         border: hasError ? '2px solid var(--gel-color-error)' : '2px solid #646974',
-        borderRadius: '6px',
-        outline: 'none',
-        boxSizing: 'border-box',
-        color: 'var(--gel-color-text)',
-        backgroundColor: 'var(--gel-color-white)',
+        borderRadius: '6px', boxSizing: 'border-box',
+        color: 'var(--gel-color-text)', backgroundColor: 'var(--gel-color-white)',
       }}
       data-gelweb-component='input'
+      {...rest}
     />
   )
 }
 
 // ---------------------------------------------------------------------------
 // Textarea
-// API mirrors: @snsw-gel/textarea Textarea
-// Styles from live site: same border/radius as Input, resizable vertically
+// Fixed: removed outline:none, added aria-invalid, uses gel-textarea class.
 // ---------------------------------------------------------------------------
 export interface TextareaProps {
   id?: string
@@ -783,50 +511,30 @@ export interface TextareaProps {
   rows?: number
 }
 
-export function Textarea({
-  id,
-  value,
-  onChange,
-  hasError,
-  disabled,
-  placeholder,
-  maxLength,
-  rows = 4,
-}: TextareaProps) {
+export function Textarea({ id, value, onChange, hasError, disabled, placeholder, maxLength, rows = 4, ...rest }: TextareaProps & Record<string, unknown>) {
   return (
     <textarea
-      id={id}
-      value={value}
-      onChange={onChange}
-      disabled={disabled}
-      placeholder={placeholder}
-      maxLength={maxLength}
-      rows={rows}
+      id={id} value={value} onChange={onChange} disabled={disabled}
+      placeholder={placeholder} maxLength={maxLength} rows={rows}
+      aria-invalid={hasError || undefined}
+      className='gel-textarea'
       style={{
-        display: 'block',
-        width: '100%',
-        maxWidth: '100%',
-        padding: '0.825rem',
-        fontSize: '1rem',
-        fontFamily: 'var(--gel-font-body)',
+        display: 'block', width: '100%', maxWidth: '100%',
+        padding: '0.825rem', fontSize: '1rem', fontFamily: 'var(--gel-font-body)',
         border: hasError ? '2px solid var(--gel-color-error)' : '2px solid #646974',
-        borderRadius: '6px',
-        outline: 'none',
-        boxSizing: 'border-box',
-        color: 'var(--gel-color-text)',
-        backgroundColor: 'var(--gel-color-white)',
-        resize: 'vertical',
-        lineHeight: 1.5,
+        borderRadius: '6px', boxSizing: 'border-box',
+        color: 'var(--gel-color-text)', backgroundColor: 'var(--gel-color-white)',
+        resize: 'vertical', lineHeight: 1.5,
       }}
       data-gelweb-component='textarea'
+      {...rest}
     />
   )
 }
 
 // ---------------------------------------------------------------------------
 // Select
-// API mirrors: @snsw-gel/select Select
-// Styles from live site: same as Input + custom chevron SVG background
+// Fixed: removed outline:none, added aria-invalid, placeholder colour.
 // ---------------------------------------------------------------------------
 export interface SelectProps {
   id?: string
@@ -839,49 +547,33 @@ export interface SelectProps {
   inputWidth?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 }
 
-export function Select({
-  id,
-  value,
-  onChange,
-  hasError,
-  disabled,
-  options,
-  placeholder = 'Select',
-  inputWidth,
-}: SelectProps) {
+export function Select({ id, value, onChange, hasError, disabled, options, placeholder = 'Select', inputWidth, ...rest }: SelectProps & Record<string, unknown>) {
+  const isPlaceholder = !value
   return (
     <select
-      id={id}
-      value={value}
-      onChange={onChange}
-      disabled={disabled}
+      id={id} value={value} onChange={onChange} disabled={disabled}
+      aria-invalid={hasError || undefined}
+      className='gel-select'
       style={{
         display: 'block',
         width: inputWidth ? inputWidthMap[inputWidth] || '100%' : '100%',
         maxWidth: inputWidth ? undefined : '372px',
-        height: '48px',
-        padding: '0 0.825rem',
-        fontSize: '1rem',
+        height: '48px', padding: '0 0.825rem', fontSize: '1rem',
         fontFamily: 'var(--gel-font-body)',
         border: hasError ? '2px solid var(--gel-color-error)' : '2px solid #646974',
-        borderRadius: '6px',
-        outline: 'none',
-        boxSizing: 'border-box',
-        color: 'var(--gel-color-text)',
+        borderRadius: '6px', boxSizing: 'border-box',
+        color: isPlaceholder ? 'var(--gel-color-text-grey)' : 'var(--gel-color-text)',
         backgroundColor: 'var(--gel-color-white)',
         appearance: 'none',
         backgroundImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg width='12' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23002664' d='M12 2c0-.1 0-.1-.1-.2L10.3.1c-.1-.1-.3-.1-.4 0L6 4 2.1 0c-.1 0-.3 0-.4.1L.1 1.7c-.1.1-.1.3 0 .4l5.7 5.8c.1.1.3.1.4 0l5.7-5.8c.1 0 .1-.1.1-.1z'/%3E%3C/svg%3E")`,
-        backgroundPosition: 'center right 18px',
-        backgroundRepeat: 'no-repeat',
-        paddingRight: '2.5rem',
-        cursor: 'pointer',
+        backgroundPosition: 'center right 18px', backgroundRepeat: 'no-repeat',
+        paddingRight: '2.5rem', cursor: 'pointer',
       }}
       data-gelweb-component='select'
+      {...rest}
     >
       <option value=''>{placeholder}</option>
-      {options.map((opt) => (
-        <option key={opt.value} value={opt.value}>{opt.text}</option>
-      ))}
+      {options.map((opt) => <option key={opt.value} value={opt.value}>{opt.text}</option>)}
     </select>
   )
 }

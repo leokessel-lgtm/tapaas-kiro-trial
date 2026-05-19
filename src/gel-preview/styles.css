@@ -5,6 +5,8 @@
  * These styles approximate GEL's visual language for prototyping only.
  * CSS variables sourced from the live service.nsw.gov.au site (Verified).
  * They do not replicate GEL's design tokens, theming, or accessibility behaviour.
+ *
+ * TaPaaS styling takes precedence where GEL and TaPaaS conflict.
  */
 
 :root {
@@ -21,6 +23,7 @@
   --gel-color-primary-hover: #b02831;
   --gel-color-white: #ffffff;
   --gel-color-focus: #0085b3;
+  --gel-color-brand-dark: #002664;
   --gel-spacing-xs: 0.5rem;
   --gel-spacing-sm: 1rem;
   --gel-spacing-md: 1.5rem;
@@ -45,9 +48,31 @@ html, body {
   box-sizing: inherit;
 }
 
+/* --- Focus styles --- */
 button:focus-visible,
-a:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--gel-color-focus);
+  outline-offset: 2px;
+}
+
+.gel-input:focus-visible,
+.gel-textarea:focus-visible,
+.gel-select:focus-visible {
+  outline: 3px solid var(--gel-color-focus);
+  outline-offset: 2px;
+}
+
 input:focus-visible {
+  outline: 3px solid var(--gel-color-focus);
+  outline-offset: 2px;
+}
+
+textarea:focus-visible {
+  outline: 3px solid var(--gel-color-focus);
+  outline-offset: 2px;
+}
+
+select:focus-visible {
   outline: 3px solid var(--gel-color-focus);
   outline-offset: 2px;
 }
@@ -57,6 +82,40 @@ input:focus-visible {
   outline-offset: 2px;
 }
 
+/* --- Button hover states --- */
+.gel-btn--primary:hover:not(:disabled) {
+  background-color: var(--gel-color-primary-hover);
+  border-color: var(--gel-color-primary-hover);
+}
+
+.gel-btn--secondary:hover:not(:disabled) {
+  background-color: var(--gel-color-primary);
+  color: var(--gel-color-white);
+}
+
+.gel-btn--link:hover:not(:disabled) {
+  color: var(--gel-color-primary);
+}
+
+/* --- Error summary --- */
+.gel-error-summary {
+  border-left: 4px solid var(--gel-color-error);
+  background-color: var(--gel-color-error-bg);
+  padding: 1rem 1.25rem 1rem 3.25rem;
+  margin-bottom: 1.5rem;
+  outline: none;
+  position: relative;
+}
+
+.gel-error-summary__icon {
+  position: absolute;
+  left: 1rem;
+  top: 1.125rem;
+  width: 20px;
+  height: 20px;
+}
+
+/* --- Mobile responsive --- */
 @media (max-width: 479px) {
   button[type="button"],
   button[type="submit"] {

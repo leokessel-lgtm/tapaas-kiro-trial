@@ -151,7 +151,7 @@ export function TransactionCtaGroup({
   exitLabel?: string
 }) {
   return (
-    <div className='tapaas-cta-group' aria-label='Transaction actions'>
+    <div className='tapaas-cta-group' role='group' aria-label='Transaction actions'>
       <div className='tapaas-primary-actions'>
         {onContinue && <Button onClick={onContinue}>{continueLabel}</Button>}
         {onBack && <Button variant='secondary' onClick={onBack}>{backLabel}</Button>}
