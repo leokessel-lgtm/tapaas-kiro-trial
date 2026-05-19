@@ -1,0 +1,142 @@
+import { Meta, Canvas, Subtitle, Controls } from '@storybook/addon-docs/blocks'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+import * as stories from './ManualAddress.stories'
+
+<Meta of={stories} />
+
+# Manual address
+
+<Subtitle>
+    A group of fields for entering an address manually.
+</Subtitle>
+
+## About this pattern
+
+The Manual address pattern can be used on its own or with the [Autosuggest address](./?path=/docs/autosuggest-address--docs) pattern.
+
+If Autosuggest cannot identify an address, users can choose to enter it manually.
+
+<MetaComponent
+    componentName='ManualAddress'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/manual-address?ref_type=heads'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=17291-9630&p=f&t=IrkAIotsAQEppAd8-0'
+    example={stories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>Use Manual address when users cannot rely on Autosuggest address search.</li>
+            <li>Restrict states or territories when the product requires it.</li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>Modify field labels or order unless required. </li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Examples
+
+### Controlled vs uncontrolled
+
+The Manual address pattern supports controlled and uncontrolled usage, depending on how you manage state.
+
+#### Controlled
+
+In controlled mode, you manage the address value in your own state. Use the `value` and `onChange` prop.
+When a user edits a field, `onChange` prop returns:
+
+- the full updated address value
+- the key of the field that changed.
+
+<Canvas of={stories.Controlled} />
+
+####  Uncontrolled
+
+In uncontrolled mode, the component manages its own internal state. Use `defaultValue` to set the initial address value.
+To read values as they change, use the `onChange` callback which receives the full current value and the key of the changed field.
+
+<Canvas of={stories.Uncontrolled} />
+
+### States override
+
+By default, Manual address shows all Australian states and territories. You can limit this list using the `statesOverride` prop.
+Use this when your product only supports certain locations.
+
+The following example is restricted to NSW and VIC.
+
+<Canvas of={stories.StatesOverride} />
+
+### Error message
+
+User input validation happens outside the pattern. Specific error messages can be passed into the pattern via the `fieldConfig` prop.
+These messages will flow through to the related input.
+
+Set `errorMessage` on any field key (`streetAddress`, `suburb`, `state`, `postcode`, `country`) to display an error for that input.
+Leave the value empty or omit the key entirely to show no error. Refer to [Field config example](#field-config) for full details.
+
+<Canvas of={stories.ErrorMessage} />
+
+### Field config
+
+Use `fieldConfig` to change how each field appears in the Manual address pattern.
+You can update labels, help text and error messages without replacing the entire field.
+
+Each key in `fieldConfig` matches a key in the patterns value object. Only set the fields you need.
+Any property you omit uses the patterns default settings.
+
+The available properties for each field are:
+- `label`
+- `helpMessage`
+- `errorMessage`
+- `hasError`
+
+Each field takes all the properties that are accepted by the [Field](./?path=/docs/field--docs) component.
+
+<Canvas of={stories.FieldConfig} />
+
+### Value shape examples
+
+```js
+const [value, setValue] = useState({
+    streetAddress: {
+        id: 'unique-id-streetAddress',
+        value: '12b Kooyoo Street',
+        errorMessage: 'Enter a street.'
+    },
+    suburb: {
+        id: 'unique-id-suburb',
+        value: 'Griffith',
+        errorMessage: 'Enter a suburb.'
+    },
+    state: {
+        id: 'unique-id-state',
+        value: 'NSW',
+        errorMessage: 'Select a state.'
+    },
+    postcode: {
+        id: 'unique-id-postcode',
+        value: '2680',
+        errorMessage: 'Enter a postcode.'
+    },
+    country: {
+        id: 'unique-id-country',
+        value: 'Australia'
+    }
+});
+```
+
+## Properties
+
+<Canvas of={stories.Properties} />
+
+<Controls of={stories.Properties} />

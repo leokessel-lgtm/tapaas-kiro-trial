@@ -1,0 +1,120 @@
+import { Meta, Canvas, Subtitle, Controls } from '@storybook/addon-docs/blocks'
+import * as stories from './Textarea.stories'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+
+<Meta of={stories} />
+
+# Textarea
+
+<Subtitle>
+    Textareas allow customers to enter multiple lines of freeform text.
+</Subtitle>
+
+## About this component
+
+This component is also known as multi-line text inputs or text fields. It's used when someone needs to enter an amount of text that’s longer than a single line.
+
+The size of the textarea can be set to indicate to user the amount of text we expect them to enter.
+
+<MetaComponent
+    componentName='Textarea'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/text-area?ref_type=heads'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=1316-609&t=sRgeF20KEbG9Gbdh-4'
+    example={stories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>
+                Use an appropriate size to suggest the expected entry length to
+                the user.
+            </li>
+            <li>
+                Use a character counter instead of automatically cropping pasted
+                text.
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>
+                Use for short or single line text entries. Instead, consider
+                using [text input](./?path=/docs/text-input--docs).
+            </li>
+            <li>
+                Overuse this component. Users can be deterred from completing an
+                action or form if there are excessive textareas.
+            </li>
+            <li>
+                Use a textarea where you can use a combination of other
+                elements.
+            </li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Usage
+
+It is recommended to wrap Textarea within the Field component. The Field component will provide a standard look and feel to the label, help text and error message associated with form input elements.
+
+- The label identifies the individual text input and lets the user know what is required.
+- Help text provides further details on what is needed and is optional.
+- The error message lets the user know what the error is and how to fix it.
+
+Find out more about [Field](./?path=/docs/field--docs).
+
+## Examples
+
+### Help text
+
+By default, this component does not have [help text](./?path=/docs/content-microcopy-help-text--docs). However, we recommend using help text to give the user further context and guidance.
+
+<Canvas of={stories.Default} />
+
+### Error messages
+
+You can find guidance for error content in [Writing for errors](./?path=/docs/content-writing-for-errors--docs).
+
+<Canvas of={stories.HasError} name='Error Message' />
+
+### Disabled
+
+While we do not recommend disabling the textarea as this makes the field invisible to screen reader users, the option is available to use. If you need a field with read-only text consider using the `readOnly` attribute or [Pre-filled data](https://gel.service.nsw.gov.au/gel-library/patterns/pre-filled-data).
+
+<Canvas of={stories.Disabled} />
+
+### Controlled vs uncontrolled
+
+The Textarea component supports both controlled and uncontrolled usage, depending on how you want to manage state.
+
+#### Controlled
+
+In controlled mode, use `value` and `onChange` props to manage the text content via your own state. The `onChange` prop triggers when a user types in the textarea.
+
+<Canvas of={stories.Controlled} />
+
+#### Uncontrolled
+
+In uncontrolled mode, the component manages its own internal state. Use `defaultValue` to set the initial text content.
+
+<Canvas of={stories.Uncontrolled} />
+
+### Rows
+
+It's possible to change the height of the textarea using the `rows` prop. By default, it’s set to small. The following example is set to large.
+
+<Canvas of={stories.Large} name='rows' />
+
+## Properties
+
+<Canvas of={stories.Properties} name='Properties' />
+
+<Controls of={stories.Properties} />

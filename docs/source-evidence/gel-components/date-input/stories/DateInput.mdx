@@ -1,0 +1,175 @@
+import {
+    Meta,
+    Canvas,
+    Subtitle,
+    Controls,
+    Unstyled,
+    Source,
+} from '@storybook/addon-docs/blocks'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+import * as stories from './DateInput.stories'
+
+<Meta of={stories} />
+
+# Date input
+
+<Subtitle>
+    A single-field input which prompts a user to enter or type a date.
+</Subtitle>
+
+## About this component
+
+The date input is a single-field component where a user types or enters a day/month/year, or month/year date.
+
+Currently, the date input does not have any masking. Therefore, users have to fully enter a date in the required format (including “/”): DD/MM/YYYY.
+
+<MetaComponent
+    componentName='DateInput'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/date-input'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=3250-8955&t=D1AOSiVWSbWz2FR8-4'
+    example={stories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>
+                Match the format of the original document when asking for a date
+                as its shown on that document.
+            </li>
+            <li>
+                Mention the expected date format in the [help
+                text](./?path=/docs/content-microcopy-help-text--docs).
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>
+                Use the MM/YY format when a 2-digit year causes ambiguity. For
+                example, when asking a user when their business was established,
+                “12/20” could mean December 2020 or December 1920.
+            </li>
+            <li>
+                Use when the date is not known or close the current date, such
+                as when booking an appointment. Instead, use [calendar
+                picker](./?path=/docs/calendar-picker--docs).
+            </li>
+            <li>
+                Use when there’s a limited selection of dates. Instead, use
+                another component such as [radio button
+                list](./?path=/docs/radio-button-list--docs).
+            </li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Usage
+
+It is recommended to wrap Input within the Field. The Field will provide a standard look and feel to the label, help text and error message associated with form input elements.
+
+- The label identifies the individual text input and lets the user know what is required.
+- Help text provides further details on what is needed and is optional.
+- The error message lets the user know what the error is and how to fix it.
+
+Find out more about the [Field](./?path=/docs/field--docs).
+
+## Examples
+
+### Help text
+
+By default, this component does not have [help text](./?path=/docs/content-microcopy-help-text--docs). However, we recommend using help text to give the user further context and guidance.
+
+<Canvas of={stories.Default} />
+
+### Error messages
+
+You can find guidance for error content in [Writing for errors](./?path=/docs/content-writing-for-errors--docs).
+
+<Canvas of={stories.HasError} name='Error Message' />
+
+### Disabled
+
+Disabling the date input makes the field invisible to screen reader users. While we don't recommend it, the option is still available to use. If you need a field with read-only text consider using the `readOnly` attribute or [Pre-filled data](https://gel.service.nsw.gov.au/gel-library/patterns/pre-filled-data).
+
+<Canvas of={stories.Disabled} />
+
+### Controlled vs Uncontrolled
+
+The Date input component supports both controlled and uncontrolled usage, depending on how you want to manage state.
+
+#### Controlled
+
+In controlled mode, use `value` and `onChange` props to manage the input value via your own state. The `onChange` prop triggers when a user types in the input field and provides both the raw input value and formatted date information when the input is valid.
+
+<Canvas of={stories.Controlled} />
+
+#### Uncontrolled
+
+In uncontrolled mode, the component manages its own internal state. Use `defaultValue` to set the initial input value.
+
+<Canvas of={stories.Uncontrolled} />
+
+### Date formats
+
+The Date input component supports three different date formats to match different use cases.
+
+#### Full Date (DD/MM/YYYY)
+
+Use the full date format when asking users for an exact date, such as date of birth. This is the default format.
+
+<Canvas of={stories.Uncontrolled} />
+
+The `onChange` callback returns detailed date information when the input is valid:
+
+<Source
+    language='js'
+    code={`
+{
+    isValid: true,
+    isoDate: "2020-07-03",
+    longDate: "03 Jul 2020",
+    shortDate: "03/07/2020",
+    value: "03/07/2020",
+}
+`}
+/>
+
+#### Month and Year (MM/YYYY)
+
+Use this format when you need approximate dates with a 4-digit year, such as when a passport was lost.
+
+<Canvas of={stories.FourDigitYear} name='Month and 4-digit Year' />
+
+#### Month and Year (MM/YY)
+
+Use this format for dates with a 2-digit year, such as credit card expiry dates.
+
+For MM/YYYY and MM/YY formats, the onChange callback returns:
+
+<Canvas of={stories.TwoDigitYear} name='Month and 2-digit Year' />
+
+<Source
+    language='js'
+    code={`
+{
+    isValid: true,
+    value: "07/2020" // or "07/20",
+}
+`}
+/>
+
+> Note: The component automatically adjusts its width based on the selected date format to match the expected content length.
+
+## Properties
+
+<Canvas of={stories.Properties} name='Properties' />
+
+<Controls of={stories.Properties} />

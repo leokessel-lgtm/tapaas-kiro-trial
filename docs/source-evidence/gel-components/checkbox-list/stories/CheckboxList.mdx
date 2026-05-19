@@ -1,0 +1,199 @@
+import {
+    Meta,
+    Canvas,
+    Controls,
+    Subtitle,
+    Source,
+} from '@storybook/addon-docs/blocks'
+import * as stories from './CheckboxList.stories'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+
+<Meta of={stories} />
+
+# Checkbox list
+
+<Subtitle>Allows users to select zero or more options from a list.</Subtitle>
+
+## About this component
+
+Checkboxes allow users to select multiple items in a list. They can select zero, one or any number of items.
+
+Each checkbox works on its own. If the user checks an additional box, this does not affect any other selections.
+
+<MetaComponent
+    componentName='CheckboxList'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/checkbox-list?ref_type=heads'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=1306-4828&t=sRgeF20KEbG9Gbdh-4'
+    example={stories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>
+                Use for up to 7 options. If you have more options, consider
+                [autosuggest](/docs/autosuggest--docs).
+            </li>
+            <li>
+                Use in place of autosuggest if there is a benefit to seeing all
+                options upfront.
+            </li>
+            <li>
+                Make sure the fieldset legend or help text explains that the
+                user can choose multiple options.
+            </li>
+            <li>
+                Clearly describe specific requirements, such as ‘pick 3 to 5
+                options’.
+            </li>
+            <li>
+                Use an order that makes sense to your customer, such as
+                alphabetical, time-based or order of importance.
+            </li>
+            <li>
+                Use clarifying text only on options that require it. Keep it
+                concise, clear, informative and specific to the option.
+            </li>
+            <li>
+                Use caution when using both help text and clarifying text. They
+                can create overwhelming visuals when both used.
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>
+                Use when a user is only expected to select one option. Instead,
+                use [radio button list](/docs/radio-button-list--docs).
+            </li>
+            <li>
+                Use for more than 7 options unless it’s beneficial for the user
+                to be able to view all options upfront.
+            </li>
+            <li>
+                Finish the label with punctuation, unless there are multiple
+                sentences.
+            </li>
+            <li>Display the options horizontally.</li>
+            <li>Use clarifying text to repeat information in the help text.</li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Usage
+
+For accessibility, Checkbox list must include a legend. This acts as the overall label for the group of checkboxes.
+This creates a logical grouping in the code and for assistive technologies.
+
+You can also provide:
+
+- help text to offer additional guidance
+- error messages to describe issues and how to resolve them.
+
+This setup ensures a consistent and accessible user experience across form components.
+
+## Examples
+
+### Help text
+
+By default, this component does not have [help text](./?path=/docs/content-microcopy-help-text--docs). However, we recommend using help text to give the user further context and guidance.
+
+<Canvas of={stories.Default} />
+
+### Error messages
+
+Use the `hasError` and `errorMessage` props together to display error states.
+
+When an error is active, the error message is:
+
+- communicated through the fieldset legend for screen readers
+- displayed visually below the options.
+
+All checkboxes will receive error styling to clearly show the error state.
+
+You can find guidance for error content in [Writing for errors](./?path=/docs/content-writing-for-errors--docs).
+
+<Canvas of={stories.ErrorMessage} />
+
+### Disabled
+
+Disabling the checkbox list makes the field invisible to screen reader users. While we don't recommend it, the option is still available to use.
+
+<Canvas of={stories.Disabled} />
+
+### Controlled vs uncontrolled
+
+The Checkbox list supports both controlled and uncontrolled usage. Which option you use depends on how you want to manage state.
+
+#### Controlled
+
+In controlled mode, use `value` and `onChange` props to manage the selected options via your own state.
+This gives you full control over the component's state and allows you to react to changes immediately.
+
+<Canvas of={stories.Controlled} />
+
+#### Uncontrolled
+
+In uncontrolled mode, the component manages its own internal state. Use `defaultValue` to set initial selected options.
+
+<Canvas of={stories.Uncontrolled} />
+
+### Editor text
+
+Editor text shows additional content when the option is selected.
+
+<Canvas of={stories.EditorText} />
+
+### Clarifying text
+
+We can use clarifying text in vertical lists only. It gives the user more information about an option label.
+Clarifying text can help explain option labels that may not give the user enough clarity in 1-2 words.
+When clarifying text is used, only the label is selectable.
+This is so screen readers can navigate between options faster.
+
+<Canvas of={stories.ClarifyingText} />
+
+### Options structure
+
+Pass in options with the `options={}` prop. Each option should have a `value` and a `label` at a minimum, other options are listed below.
+
+<Source
+    language='ts'
+    code={`interface CheckboxOption<Value> extends Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'onChange'> {
+    clarify?: VoiceOverString;
+    editor?: VoiceOverString;
+    value: Value;
+    label: VoiceOverString;
+}`}
+/>
+
+### Changing margin
+
+Use the `margin` prop to remove or increase the default spacing between form group elements.
+
+Read more about [flexible spacing](./?path=/docs/documentation-migration-notes-from-v1-to-v2--docs#flexible-spacing---form-components) and how it is used.
+
+For instance, the margin has been changed to 56px using `margin={ { top: 'xxxl' } }` in the following example.
+
+<Canvas of={stories.ChangingMargin} />
+
+## Properties
+
+<Canvas of={stories.Properties} />
+
+<Controls of={stories.Properties} />
+
+## Accessibility
+
+The Checkbox list uses grouped form controls following W3C accessibility guidelines.
+When checkboxes work together to provide a single answer (like selecting multiple preferences from a list), they should be grouped using a fieldset with a descriptive legend.
+
+Error messages appear at the group level rather than on individual checkboxes. This ensures users understand that validation applies to the entire selection.
+This follows the standard pattern for form control groups where the individual controls combine to provide one answer.

@@ -1,0 +1,157 @@
+import {
+    Meta,
+    Canvas,
+    Subtitle,
+    Controls,
+    Source,
+    Unstyled,
+} from '@storybook/addon-docs/blocks'
+import { InPageAlert } from '@snsw-gel/react'
+import {
+    Table,
+    TableContainer,
+    TableHead,
+    TableBody,
+    TableRow,
+    TableHeader,
+    TableCell,
+} from '@snsw-gel/react'
+import { QualityTable, MetaComponent } from '@snsw-gel/storybook'
+import * as stories from './FileUpload.stories'
+
+<Meta of={stories} />
+
+<Unstyled>
+    <InPageAlert variant='info' title='We’re still working on this page'>
+        <p>
+            For more design and usage guidance, go to [File
+            upload](https://gel.service.nsw.gov.au/gel-library/patterns/file-upload/).
+        </p>
+    </InPageAlert>
+</Unstyled>
+
+# File upload
+
+<Subtitle>
+    Let users upload their own content, such as a document or photo.
+</Subtitle>
+
+## About this pattern
+
+The file upload pattern helps users select and upload files from their device to a specific location.
+
+Users can drag and drop files onto the component or manually select files.
+
+<MetaComponent
+    componentName='FileUpload'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/file-upload?ref_type=heads'
+    gelLink='https://gel.service.nsw.gov.au/gel-library/patterns/file-upload/'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=1359-1168&t=IrkAIotsAQEppAd8-4'
+    example={stories.MetaComponentExample}
+    packageImportSrc='@snsw-gel/file-upload'
+/>
+
+## Examples
+
+### Default
+
+The default implementation of File upload handles upload and delete of single files along with some simple error checking.
+
+File upload requires `name`, `id` and `endpoint` props to enable successful upload or delete of files.
+
+The HTTP request signatures are as follows:
+
+- POST = `{endpoint}/{filename}`
+- DELETE = `{endpoint}/{id}`
+- PUT = not currently supported
+
+<Canvas of={stories.Default} />
+
+### Custom legend
+
+The default legend for the file upload is 'Upload file', but this can be changed to suit your requirements.
+
+The legend is important as it provides extra context to screen reader users to know what they are uploading.
+
+<Canvas of={stories.CustomLegend} />
+
+### Multiple files
+
+Allowing multiple files to be uploaded is possible by passing a number to the `maxFiles` prop.
+
+If too many files are selected or dropped at once, an error message will show and no files will be uploaded.
+
+<Canvas of={stories.MultipleFiles} />
+
+### Max file size
+
+Restricting file size is helpful for preventing the user from uploading files that are too large, simply pass a number to the `maxMBSize` prop.
+
+This will automatically change the helper text and restrict any files larger from being uploaded.
+
+<Canvas of={stories.MaxFileSize} />
+
+### Accepted file types
+
+Allowing specific file types is achieved by the `acceptedFormats` prop.
+
+The `acceptedFormats` prop takes a comma separated string of file extensions. For example passing ` acceptedFormats='.png,.jpg'`
+will restrict the accepted files to just .png and .jpg.
+
+The validation run against the accepted file types is a simple check and should not be relied on solely as a way to validate file types.
+
+<Canvas of={stories.AcceptedFileTypes} />
+
+### Initial files
+
+> **Note:** File data passed into the pattern via the `initialFiles` prop isn't uploaded to the API endpoint. It is used for display purposes only.
+
+`FileUpload` can be initialised with initial files via the `initialFiles` prop. This prop is useful for displaying files which have already been uploaded. For example when a user uploads a file, progresses to the next step, and then returns to the upload step, any files which were previously uploaded by the user can be displayed.
+
+The example below has been initialised with one of two possible files allowed (see `maxFiles` prop).
+
+<Canvas of={stories.InitialFiles} />
+
+### Error messages
+
+`errorMessage` allows you to change the error message of the component. It will automatically turn on the error state of the component and add your custom error message.
+If you need to remove the `errorMessage` you can hook into `onUploaded` and `onRemoved` callbacks to handle extra logic or handle it as part of the custom `api` functions.
+
+<Canvas of={stories.ErrorMessage} />
+
+### Intercepting default error messages
+
+`onInterceptError(errorKey: keyof FileUploadErrors, errorMessage: ReturnType<FileUploadErrors[errorKey]>)` allows you to intercept the default error messages and replace them with your own custom error messages.
+This is useful if you want to provide more context to the user about why the file upload failed.
+
+<Canvas of={stories.InterceptError} />
+
+The default error
+
+All the default error messages can be imported through the `FileUploadErrorMessages` Object.
+Because these error messages are dynamic you will have to call the methods in the object to get the error message.
+
+<Source code={`import { FileUploadErrorKeys, FileUploadErrorMessages } from '@snsw-gel/react'
+
+const errorMessage = FileUploadErrorMessages[
+    FileUploadErrors.UNSUPPORTED_EXTENSION
+]({ acceptedFormats: '.png, .jpg' })
+`}>
+
+</Source>
+
+### Custom API
+
+> **Note:** When you use the custom API, the `endPoint` prop will have no further use. You will also need to handle the error messages based on potential errors coming back from the request on your own thanks to our `errorMessage` prop.
+
+`uploadFile` is a required function. You will need to make sure the only thing is being returned is the dynamic ID of the file from the API response as a `string`. In this instance `response.text()` looks like `hello.png-2343`.
+
+<Canvas of={stories.CustomApi} />
+
+## Properties
+
+<Canvas sourceState='none' of={stories.Properties} />
+
+<Controls of={stories.Properties} />
+
+<QualityTable gel accessible responsive browser testing />

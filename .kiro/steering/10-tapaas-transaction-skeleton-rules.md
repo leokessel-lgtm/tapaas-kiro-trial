@@ -18,6 +18,8 @@ For transactions with more than 5 steps, insert additional form input pages betw
 
 For transactions with 6 or more steps, a visual progress indicator may improve user orientation. Do not build a custom stepper unless it maps to a confirmed TaPaaS or GEL component. Use the text step indicator with aria-live until a pattern is confirmed.
 
+Use the source-backed GEL ProgressStepper only for 4 to 6-step flows. For longer flows, keep text step indication unless a confirmed TaPaaS/GEL long-flow progress pattern is documented.
+
 ## Page rules
 
 - Use mock data only unless a safe backend path already exists.

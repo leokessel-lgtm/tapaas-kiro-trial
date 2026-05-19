@@ -1,0 +1,73 @@
+import {
+    Meta,
+    Canvas,
+    Subtitle,
+    Controls,
+    Unstyled,
+} from '@storybook/addon-docs/blocks'
+import { InPageAlert } from '@snsw-gel/react'
+import { QualityTable, MetaComponent } from '@snsw-gel/storybook'
+import * as stories from './MoreInfoModal.stories'
+
+export const ModalContentText = `Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
+
+<Meta of={stories} />
+
+<Unstyled>
+    <InPageAlert variant='warning' title='The Sliding tooltip is deprecated'>
+        <p>
+            The Sliding tooltip will be removed from the main entry point in v5.
+            For guidance on the new component, go to [More info
+            panel](./?path=/docs/more-info-panel--docs).
+        </p>
+        <p>
+            If you’re currently using the Sliding tooltip, go to [Migrate to new
+            more info
+            panel](./?path=/docs/resources-releases-lifecycle-migration-guides-migrate-to-new-more-info-panel--docs).
+        </p>
+    </InPageAlert>
+</Unstyled>
+
+# Sliding tooltip
+
+<Subtitle>
+    Sliding tooltip is used to provide additional context or information about a
+    particular subject.
+</Subtitle>
+
+## About this component
+
+<MetaComponent
+    componentName='MoreInfoModal'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/more-info-modal?ref_type=heads'
+    gelLink='https://gel.service.nsw.gov.au/gel-library/components/more-info-panel'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=20028-4139&t=ElkGPMBWNj8bnwFS-4'
+    example={stories.QuestionTooltip}
+/>
+
+For Accessibility, the `linkText` prop can also be used to render screen reader only text for the icon tooltip.
+
+## Question icon tooltip
+
+<Canvas of={stories.QuestionTooltip} />
+
+## Info icon tooltip
+
+<Canvas of={stories.InfoTooltip} />
+
+## Hyperlink tooltip
+
+<Canvas of={stories.HyperlinkTooltip} />
+
+## Properties
+
+<Canvas of={stories.TooltipProperties} />
+
+<Controls of={stories.TooltipProperties} />
+
+<QualityTable responsive browser />

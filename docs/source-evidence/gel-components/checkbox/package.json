@@ -1,0 +1,54 @@
+{
+    "name": "@snsw-gel/checkbox",
+    "version": "3.3.4",
+    "license": "UNLICENSED",
+    "main": "dist/cjs/index.cjs",
+    "module": "dist/module/index.js",
+    "source": "src/index.ts",
+    "types": "dist/types/index.d.ts",
+    "exports": {
+        "import": "./dist/esm/index.mjs",
+        "require": "./dist/cjs/index.cjs",
+        "types": "./dist/types/index.d.ts"
+    },
+    "sideEffects": false,
+    "scripts": {
+        "build:src": "yarn g:build:src",
+        "build:types": "yarn g:build:types",
+        "watch": "yarn build:src --watch",
+        "test": "yarn g:test --selectProjects @snsw-gel/checkbox"
+    },
+    "dependencies": {
+        "@snsw-gel/accessibility": "3.1.0",
+        "@snsw-gel/field": "3.4.4",
+        "@snsw-gel/slots": "3.1.2",
+        "@snsw-gel/theming": "3.4.1",
+        "@snsw-gel/types": "3.1.0",
+        "@snsw-gel/utils": "3.4.0",
+        "classnames": "^2.5.1"
+    },
+    "devDependencies": {
+        "@snsw-gel/compiler": "3.5.0",
+        "@snsw-gel/testing": "3.5.0",
+        "@types/react": "19.2.14",
+        "@types/styled-components": "5.1.36"
+    },
+    "peerDependencies": {
+        "@types/react": "*",
+        "@types/react-dom": "*",
+        "@types/styled-components": "*",
+        "react": ">=16.8",
+        "react-dom": ">=16.8",
+        "styled-components": ">=6.3.9"
+    },
+    "publishConfig": {
+        "registry": "https://snsw01.jfrog.io/artifactory/api/npm/snsw-scope/"
+    },
+    "browserslist": [
+        "last 2 version",
+        "> 2%",
+        "iOS > 9",
+        "safari > 11",
+        "not dead"
+    ]
+}

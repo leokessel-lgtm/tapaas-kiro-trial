@@ -1,0 +1,73 @@
+import {
+    Meta,
+    Canvas,
+    Subtitle,
+    Controls,
+    Unstyled,
+} from '@storybook/addon-docs/blocks'
+import { MetaComponent } from '@snsw-gel/storybook'
+import { InPageAlert } from '@snsw-gel/react'
+import * as ComponentLoaderStories from './ComponentLoader.stories'
+
+<Meta of={ComponentLoaderStories} />
+
+<Unstyled>
+    <InPageAlert title='Browser Compatibility' variant='warning'>
+        <p>
+            Customers using Internet Explorer 11 won't be able to view the
+            component as an animation. They will only be able to view a static
+            image of the icon and text label.
+        </p>
+    </InPageAlert>
+</Unstyled>
+
+# Loader
+
+<Subtitle>
+    Loaders tell users that data is loading.
+</Subtitle>
+
+## About this component
+
+Loaders signal to users that something is processing. For example, loading an app or saving an update.
+
+The Loader has a transparent overlay. This overlay obscures the page content. It spins until content has loaded.
+
+<MetaComponent
+    componentName='ComponentLoader'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/loader?ref_type=heads'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=10071-10059&t=yAo2hFDwVjMFzFfH-4'
+    example={ComponentLoaderStories.Default}
+/>
+
+## Examples
+
+There are 2 types of loaders:
+1. Small loader.
+2. Large loader.
+
+### Small loader
+
+The small loader component doesn't block an entire screen. The loader and loader label are centred in the parent container.
+
+Use it when smaller items on a screen need to load. For example, cards or accordions.
+
+Do not use it if the full screen needs to load.
+
+<Canvas of={ComponentLoaderStories.Default} />
+
+### Large loader
+
+The large loader component blocks an entire screen. The loader and loader label are centred on the screen when prop `fullPage` is `true`.
+
+Use it when all screen content needs to load.
+
+Don’t use it when the user needs to interact with other areas of the screen.
+
+<Canvas of={ComponentLoaderStories.FullPage} />
+
+## Properties
+
+<Canvas of={ComponentLoaderStories.LoaderProperties} />
+
+<Controls of={ComponentLoaderStories.LoaderProperties} />

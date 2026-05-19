@@ -1,0 +1,186 @@
+import { Meta, Canvas, Controls, Subtitle } from '@storybook/addon-docs/blocks'
+import * as stories from './Card.stories'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+
+<Meta of={stories} />
+
+# Cards
+
+<Subtitle>
+    A card give users a brief summary or description about a topic or subject.
+</Subtitle>
+
+## About this component
+
+Cards are intended to be short, scannable components that offer linked entry points for users to gather more information.
+
+We use shadows to indicate visual depth as well as to encourage our users to click or tap them.
+
+Cards are shown in a set to show our users that there are groups of related content or tasks.
+
+<MetaComponent
+    componentName='Card, CardTitle'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/card'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=17291-6963'
+    example={stories.StaticCardDefault}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>Keep card content short and contextual.</li>
+            <li>
+                Use the same card type, layout, and image aspect ratio for every
+                card in the set.
+            </li>
+            <li>
+                Use short, descriptive titles. Learn about how to write headings
+                and titles at [Content
+                structure](./?path=/docs/content-content-structure--docs).
+            </li>
+            <li>Show cards next to each other in a grid with equal width.</li>
+            <li>Indicate if the link will open in a new tab.</li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>Include too many visual components in a card.</li>
+            <li>
+                Add interactive components to a link card, such as buttons or
+                form inputs.
+            </li>
+            <li>Use standalone cards.</li>
+            <li>
+                Use static card when there is only one action per card. Instead,
+                use link card.
+            </li>
+            <li>
+                Use static card without any interactive elements if it leads
+                users to think that they can interact with the card.
+            </li>
+            <li>
+                Add complex components such as accordions, notifications or tabs
+                to cards.
+            </li>
+            <li>Nest cards within cards.</li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Examples
+
+### Static card
+
+- Static card uses a title and content area. It isn’t clickable.
+- You can place almost anything inside a static card as long as they focus on the subject and/or group of information.
+
+<Canvas of={stories.StaticCardDefault} />
+
+#### Custom Styling
+
+Custom styling is available to you whether you do it inline like in this example or use the `className` prop to target your card.
+
+<Canvas of={stories.StaticCardCustomStyling} />
+
+### Link card
+
+The link card uses:
+
+- a title
+- content
+- optional call to action (CTA) which gives additional clarity to users of what action they’re taking.
+
+The entire link card is clickable. Use the relevant icon when it will open in a new tab.
+
+Link card needs `isClickable` prop to be true. You need to pass in either an anchor or a route inside the heading `children` prop for it to become entirely clickable. The right arrow appears by default. In addition, you can include text and an icon.
+
+The CTA is vertically-aligned to the bottom of the content container, regardless of the container height.
+
+Visually, a link card includes a highlight bar. This provides a visual anchor and informs users that the card is selectable.
+
+<Canvas of={stories.LinkCardDefault} />
+
+#### With route
+
+Example with a `route`.
+
+<Canvas of={stories.LinkCardWithRoute} />
+
+#### With CTA text
+
+The CTA gives additional clarity to users of what action they’re taking.
+
+<Canvas of={stories.LinkCardWithCtaText} />
+
+#### With CTA icon
+
+When passing in an icon via the `ctaIcon` prop make sure to use this in conjunction with `ctaText` prop.
+If the `ctaText` is omitted the default arrow icon will be displayed.
+
+<Canvas of={stories.LinkCardWithCtaIcon} />
+
+### With image
+
+On both static and link cards you can also include an image with recommended aspect ratio of 16:9, 4:3, 2:2 and 1:1.
+
+An image can be used to complement the title if it helps user distinguish one card to another.
+
+<Canvas of={stories.LinkCardWithImage} />
+
+### CardTitle
+
+Use of the `CardTitle` component without an icon.
+
+<Canvas of={stories.CardTitleDefault} />
+
+#### With icon
+
+You can use an icon to complement the title if they help users distinguish one card to another.
+
+By default the `CardTitle` component uses a `h3`. When using `h4` and `h5` the title will sit alongside the icon.
+
+<Canvas of={stories.CardTitleWithIcon} />
+
+## Properties
+
+<Canvas of={stories.Properties} />
+
+<Controls of={stories.Properties} />
+
+## Accessibility
+
+### Changing Card title heading level
+
+The option of variable heading levels for the Card title has been provided. This is to ensure that your document structure is accessible.
+You’re able to change the heading level semantically and/or visually.
+
+The Card title heading level currently defaults to a `h3`.
+
+#### Changing heading semantically
+
+To change the heading level semantically, use the `headingElement` prop.
+
+For example, if the `headingElement` is set to `h5` and the `level` prop not provided, the Card title will:
+
+- visually show as default (`h3`)
+- semantically show as a `h5`.
+
+<Canvas of={stories.CardTitleChangingHeadingElement} />
+
+#### Changing heading visually
+
+To change the heading level visually, use the `level` prop.
+
+For example, if the `level` prop is set to `h4` and the `headingElement` prop not provided, the Card title will:
+
+- visually show as a `h4`
+- semantically remain as default (`h3`).
+
+<Canvas of={stories.CardTitleChangingHeadingLevel} />

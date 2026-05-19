@@ -1,0 +1,197 @@
+import { Meta, Canvas, Subtitle, Controls } from '@storybook/addon-docs/blocks'
+import * as stories from './InPageAlert.stories'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+
+<Meta of={stories} />
+
+# In-page alerts
+
+<Subtitle>
+    Lets users know about important information without interrupting their task.
+</Subtitle>
+
+## About this component
+
+The In-page alert displays a brief, important message. It's intended to attract the user's attention without interrupting their task. It must have a title, while body text is optional.
+
+Colour and icons are used to:
+
+- draw users' attention to the message
+- help them understand the notification type and urgency.
+
+In-page alerts are often displayed following a user interaction or system event.
+
+<MetaComponent
+    componentName='InPageAlert'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/in-page-alert'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=10078-10233&t=IrkAIotsAQEppAd8-4'
+    example={stories.Info}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>Use clear, concise and simple language.</li>
+            <li>
+                Follow [microcopy
+                guidelines](./?path=/docs/content-microcopy--overview).
+            </li>
+            <li>
+                Display In-page alerts in context and at an appropriate time.
+            </li>
+            <li>Use the appropriate In-page alert for the task.</li>
+            <li>
+                Display the In-page alert at the top of the page if it is
+                relevant to the entire page.
+            </li>
+            <li>
+                Display the In-page alert contextually if it is only relevant to
+                a section within a page.
+            </li>
+            <li>Use compact In-page alerts on aggregated summary pages.</li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>Use for global alerts that are required on all pages.</li>
+            <li>
+                Use multiple In-page alerts on a single screen. If multiple
+                alerts are required, display them by importance:
+                <ol>
+                    <li>error</li>
+                    <li>warning</li>
+                    <li>success</li>
+                    <li>information.</li>
+                </ol>
+            </li>
+            <li>Overuse alerts as this will reduce their effectiveness.</li>
+            <li>
+                Use compact In-page alerts at the top of single pages. Use the
+                standard version at the top of single pages. Use compact In-page
+                alerts under section headings, such as on a summary page.
+            </li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Examples
+
+There are 4 variants of In-page alerts:
+
+1. Info In-page alert.
+2. Error In-page alert.
+3. Success In-page alert.
+4. Warning In-page alert.
+
+All variants are available in standard and compact versions.
+
+### Info In-page alert
+
+Use Info In-page alerts to deliver information that is not critical. These alerts are less intrusive than other alert levels.
+
+Use Info In-page alerts for:
+
+- tips or helpful information
+- messages that do not require urgent action.
+
+<Canvas of={stories.Info} name='Info' />
+
+### Error In-page alert
+
+Use Error In-page alerts to:
+
+- inform users of an error
+- convey critical information that they need to complete a task.
+
+<Canvas of={stories.Error} name='Error' />
+
+### Success In-page alert
+
+Use Success In-page alerts to inform a user that an action was successful. For example, submitting a form or registering an account.
+
+<Canvas of={stories.Success} name='Success' />
+
+### Warning In-page alert
+
+Use Warning In-page alerts to let users know about a potential issue.
+
+Possible scenarios include:
+
+- warning users of a possible negative outcome, such as password expiry
+- providing information to avoid a problem
+- warning users of an action that is unusual or undesirable.
+
+<Canvas of={stories.Warning} name='Warning' />
+
+### Compact version
+
+The compact version of the In-page alert is a shortened version. It’s used on aggregated pages, like summary pages. While we use the standard version at the top of the page, you should use the compact version under a section heading.
+
+Use the compact version to:
+
+- draw the user’s attention to specific information on a page
+- reduce the length of In-page alerts
+- give the user tips or helpful information.
+
+When using the compact version, use the title of the alert as the first sentence. Use short, concise and simple words. If more than 2 sentences are needed, consider using the standard version.
+
+<Canvas of={stories.InfoCompact} name='Compact version' />
+
+### Title only
+
+A simple In-page alert with just a title and without body text.
+
+<Canvas of={stories.TitleOnly} name='Title only' />
+
+### Custom HTML
+
+A variant with custom HTML text.
+
+<Canvas of={stories.CustomHtml} name='Custom HTML' />
+
+## Properties
+
+<Canvas of={stories.Properties} name='Properties' />
+
+<Controls of={stories.Properties} />
+
+## Accessibility
+
+### ARIA roles
+
+The `role` can have two options: `status` and `alert`.
+
+- `status` is polite. Screen readers will finish reading the current stream before announcing it.
+- `alert` is assertive. Screen readers will interrupt the current action to alert the user.
+
+Carefully consider which role you use. They exist to announce content to screen readers and interrupt the user. The announcement only happens when the In-page alert goes from hidden to visible.
+
+<Canvas of={stories.AriaRoles} name='ARIA roles' />
+
+### Changing heading level
+
+The option of variable heading levels for the In-page alert title has been provided. This is to ensure that your document structure is accessible. You can change the heading level by using the `headingElement` prop.
+
+The In-page alert title heading level currently defaults to a `h6`. Regardless of the value provided to the `headingElement` prop, the In-page alert title will visually remain the same size.
+
+Refer to the [In-page alert properties](#properties) to see how the `headingElement` prop is used.
+
+<Canvas of={stories.ChangingHeadingElement} name='Changing heading level' />
+
+#### Paragraph heading level
+
+If the title does not signpost, describe, introduce, or directly relate to the content that follows the placement of the In-page alert, use the provided `headingElement='p'` prop.
+
+The title will visually remain the same size. It will render the title as a paragraph element rather than a heading element.
+
+By doing this, assistive technology reads out the headings to give users a sense of the content structure of a page.
+It will ensure that your document structure is accessible, especially for people who use assistive technology.
+
+<Canvas of={stories.ParagraphHeadingElement} />

@@ -1,0 +1,124 @@
+import { Meta, Canvas, Subtitle, Controls } from '@storybook/addon-docs/blocks'
+import * as stories from './FieldError.stories'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+
+<Meta of={stories} />
+
+# In-line error
+
+<Subtitle>
+    The error and instructional text placed directly beneath the input field
+    label.
+</Subtitle>
+
+## About this component
+
+We show in-line error messages on form submission or when progressing to the next page.
+
+Users expect validation to occur on submission. This is why we show in-line error messages on submit, rather than on change or on blur.
+
+For information on how to write in-line errors, go to [writing for errors](./?path=/docs/content-writing-for-errors--docs).
+
+<MetaComponent
+    componentName='InlineError'
+    example={stories.Default}
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/blob/develop/packages/field/src/Field.tsx?ref_type=heads'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=10216-15496&t=ElkGPMBWNj8bnwFS-4'
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>Keep instructions simple and concise.</li>
+            <li>Use personal pronouns like ‘your’ and ‘our’.</li>
+            <li>Start with a verb like 'enter'.</li>
+            <li>Use common words or phrases users understand.</li>
+            <li>
+                Give users context and assistance in the help text and in-line
+                error message to avoid or fix errors.
+            </li>
+            <li>
+                Use an initial capital for the first word and any proper nouns.
+                Go to guidance on [capitalisation of names and
+                services](./?path=/docs/content-grammar-and-punctuation--docs/#capitalisation).
+            </li>
+            <li>Use punctuation, including full stops.</li>
+            <li>
+                Track errors in Google Analytics to prevent errors from
+                occurring.
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>
+                Blame the user for the error or measure their success. Avoid
+                using words like ‘correct’ or ‘wrong’.
+            </li>
+            <li>
+                Use in-line error messages to inform users they do not have
+                permission to do something.
+            </li>
+            <li>Write multiple sentences. Write only one to 2 sentences.</li>
+            <li>Use long, technical and complex words.</li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Examples
+
+### Default
+
+For use cases where the label, help text and error message is associated with the form input element refer to [Field](./?path=/docs/field--docs) component.
+
+<Canvas of={stories.Default} />
+
+### States
+
+There are 2 states of an error message:
+
+- empty state
+- invalid input state.
+
+These error states are determined by the type of error and how it occurred.
+
+#### Empty state
+
+Occurs when a user does not add information to the text input fields.
+This state appears because the text input fields are set as mandatory.
+
+The error state displays an [error summary](./?path=/docs/error-summary--docs) box and in-line error messages. These error messages inform the user to fill in the fields before proceeding.
+The content in the in-line error message should match the content in the error summary box.
+
+To write the error for an empty state:
+
+- start with a verb like ‘enter’
+- use the words in the form name to give context on how users can solve the error, for example, ‘enter an account name’
+- apply the guidance for writing in-line error messages.
+
+<Canvas of={stories.EmptyState} />
+
+#### Invalid state
+
+Occurs when a user has added incorrect or invalid information in the text input field.
+
+To write the error for an invalid state:
+
+- start with a verb like ‘enter’
+- use the words in the hint text to give context on how users can solve the error, for example, ‘enter 6 digits only’
+- apply the guidance for writing in-line error messages.
+
+<Canvas of={stories.InvalidState} />
+
+## Properties
+
+<Canvas sourceState='none' of={stories.Properties} />
+
+<Controls of={stories.Properties} />

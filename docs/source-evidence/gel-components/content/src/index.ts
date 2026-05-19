@@ -1,0 +1,8 @@
+export { Heading } from './Heading'
+export type { HeadingProps } from './Heading'
+export { HeadingStyle } from './Heading.styled'
+export { HeadingWithIcon } from './HeadingWithIcon'
+export type { HeadingWithIconProps } from './HeadingWithIcon'
+export { HorizontalRule } from './HorizontalRule'
+export type { HorizontalRuleProps } from './HorizontalRule'
+export { Text } from './Text.styled'

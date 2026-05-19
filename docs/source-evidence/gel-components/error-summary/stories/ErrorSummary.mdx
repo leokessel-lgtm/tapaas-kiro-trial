@@ -1,0 +1,165 @@
+import { Meta, Canvas, Subtitle, Controls } from '@storybook/addon-docs/blocks'
+import * as stories from './ErrorSummary.stories'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+
+<Meta of={stories} />
+
+# Error summary
+
+<Subtitle>
+    Used at the top of the page to summarise any errors the user has made. It
+    shows a list of clickable anchors.
+</Subtitle>
+
+## About this component
+
+The error summary is used to display a list of errors at the top of the screen on submit.
+It compiles all the errors from the input fields into a numbered list. It can display a single error or multiple errors.
+
+The error summary contains a heading, a lead-in sentence and a numbered list.
+
+The lead-in sentence is fixed and cannot be customised.
+The number in the lead-in sentence corresponds with the number of errors displayed in the list.
+
+The list provides anchor links to the corresponding input fields with errors.
+It allows the user to navigate to the errors and address the problem.
+
+For information on how to write errors, go to [writing for errors](./?path=/docs/content-writing-for-errors--docs).
+
+<MetaComponent
+    componentName='ErrorSummary'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/error-summary?ref_type=heads'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=1323-3458&t=sRgeF20KEbG9Gbdh-4'
+    example={stories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>Use a title to summarise the list of errors.</li>
+            <li>
+                Use a numbered list for more than one error. Apply the correct
+                [list
+                formatting](./?path=/docs/content-content-structure--docs#lists).
+            </li>
+            <li>
+                Include numbered lists as anchor links inside an error summary
+                box. Deep link each list item to the relevant fields with
+                errors.
+            </li>
+            <li>
+                Use the same in-line error message in the numbered list to
+                provide consistency.
+            </li>
+            <li>
+                Ensure the width of the error summary is between 6 and 8
+                columns.
+            </li>
+            <li>
+                Track errors in Google Analytics to prevent errors from
+                occurring.
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>
+                Force users to memorise the instructions for fixing an error.
+                Keep them contextual, short and simple.
+            </li>
+            <li>Use a full stop at the end of a heading.</li>
+            <li>Use a bulleted list for multiple errors.</li>
+            <li>Use an error summary to replace an in-line error message.</li>
+            <li>Use unnecessary words like ‘please’.</li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Examples
+
+There are 2 types of error summary:
+
+- single error
+- multiple errors.
+
+### Default
+
+By default, the component will not be shown until the `errors` prop is populated with data.
+
+When the component receives errors, it automatically generates:
+
+- the heading and helper text with error count
+- a list of clickable anchors of error text.
+
+> Note: The order of error links in the summary box is top to bottom. For example, the first error on the form would be the first error link listed in the error summary box.
+
+<Canvas of={stories.Default} />
+
+### Custom title
+
+By default, the component title is:
+
+- ‘Your form has an error’ for a single error
+- ‘Your form has errors’ for multiple errors.
+
+The component handles which title to show based on the amount of items in the errors array. If there is more than 1 item in the errors array the `pluralTitle` will take over. This is the case even when setting both the `singularTitle` and `pluralTitle` prop.
+
+#### Single error
+
+To customise the single error title, use the `singularTitle` prop to overwrite the default value.
+
+<Canvas of={stories.SingularTitle} />
+
+#### Multiple errors
+
+To customise the multiple errors title, use the `pluralTitle` prop to overwrite the default value.
+
+<Canvas of={stories.PluralTitle} />
+
+## Properties
+
+<Canvas of={stories.Properties} name='Properties' />
+
+<Controls of={stories.Properties} />
+
+## Accessibility
+
+### Moving focus to error summary
+
+You must move keyboard focus to the error summary once it’s displayed.
+This helps announce the error summary to screen reader users and aid those who navigate with the keyboard.
+
+The example below will show the error summary once the button is clicked. This will demonstrate how to use ref's to shift the focus.
+
+<Canvas of={stories.MoveFocus} />
+
+### Changing heading level
+
+The option of variable heading levels for the Error summary title has been provided. This is to ensure that your document structure is accessible. You can change the heading level by using the `headingElement` prop.
+
+The Error summary title heading level currently defaults to a `h6`. Regardless of the value provided to the `headingElement` prop, the Error summary title will visually remain the same size.
+
+Refer to the [Error Summary Properties](#properties) to see how the `headingElement` prop is used.
+
+<Canvas of={stories.ChangingHeadingElement} />
+
+### Linking from the error summary to each input field
+
+You must link the errors in the error summary to the input they relate to.
+
+For single form fields, link to the field using the id supplied to the field component. These include [select](./?path=/docs/select--docs), [textarea](./?path=/docs/textarea--docs), [input](./?path=/docs/text-input--docs).
+
+For form fields with a list of options, link to the first input by adding a `-0` to the `id`. These include [radio button list](./?path=/docs/radio-button-list--docs) or [checkbox list](./?path=/docs/checkbox-list--docs).
+
+> Note: If you are unsure about the input `id`, you can use `dev-tool` to inspect the first input of radio or checkbox.
+
+The text passed in the error structure needs to match the error message displayed under the field in error.
+
+<Canvas of={stories.SingleInputField} />

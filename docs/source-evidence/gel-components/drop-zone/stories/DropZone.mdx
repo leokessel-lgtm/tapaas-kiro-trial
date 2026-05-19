@@ -1,0 +1,82 @@
+import {
+    Meta,
+    Canvas,
+    Subtitle,
+    Controls,
+    Unstyled,
+} from '@storybook/addon-docs/blocks'
+import { MetaComponent } from '@snsw-gel/storybook'
+import * as stories from './DropZone.stories'
+
+<Meta of={stories} />
+
+# DropZone
+
+<Subtitle>Allows users to drag and drop files inside a zone.</Subtitle>
+
+## About this component
+
+This is part of the [file upload](./?path=/docs/fileupload--docs) pattern, which also uses the [uploaded item](./?path=/docs/uploaded-item--docs) and [file input](./?path=/docs/file-input--docs) components. DropZone can be used as a stand-alone component. You can also use it if you need to rebuild file upload for your team’s specific use case.
+
+The file upload pattern has a drag and drop function. This allows users to transfer files directly into the web interface. This function's availability depends on the browser's ability to support drag and drop, not the device's screen size.
+
+For example, early iOS versions did not support drag and drop. However, with the introduction of iOS 11, Apple enabled drag and drop on both iPhones and iPads. Users accessing the website via an outdated desktop browser may not have access to this function.
+
+<MetaComponent
+    componentName='DropZone'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/drop-zone?ref_type=heads'
+    example={stories.Default}
+/>
+
+## Examples
+
+### Default
+
+The border around the DropZone provides an area for users to drag and drop files.
+
+You can hook into the `onDrop` prop and target `e.dataTransfer.files` to get a list of files that have been dragged and dropped into the `DropZone`.
+
+<Canvas of={stories.Default} />
+
+### Help text
+
+Help text tells users how to upload their files.
+
+Be sure to include file type to inform users:
+
+- what file formats are accepted
+- the maximum file size the user can upload.
+
+Read more about [help text](./?path=/docs/content-microcopy-help-text--docs).
+
+<Canvas of={stories.HelpMessage} />
+
+### Error messages
+
+The error message informs users that a file has not been successfully uploaded. It tells users what error has occurred and how to solve it.
+
+You can find guidance for error content in [Writing for errors](./?path=/docs/content-writing-for-errors--docs).
+
+<Canvas of={stories.ErrorMessage} />
+
+### File input
+
+The ‘Select file’ button enables users to select files on their device to upload.
+
+For more detailed usage guidance, refer to [file input](./?path=/docs/file-input--docs).
+
+<Canvas of={stories.FileInputStory} />
+
+### Upload icon
+
+Component with an upload icon.
+
+The file upload icon gives visual guidance to support the task of uploading files.
+
+<Canvas of={stories.UploadIcon} />
+
+## Properties
+
+<Canvas of={stories.Properties} />
+
+<Controls of={stories.Properties} />

@@ -1,0 +1,155 @@
+import { Meta, Canvas, Subtitle, Controls } from '@storybook/addon-docs/blocks'
+import * as stories from './Input.stories'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+
+<Meta of={stories} />
+
+# Text input
+
+<Subtitle>Lets users enter and edit a small amount of text.</Subtitle>
+
+## About this component
+
+Use this component when someone needs to enter a small or single line of text.
+
+You can set the size of the field to indicate the amount of text we expect the user to enter. For example, a postcode or street name.
+
+<MetaComponent
+    componentName='Input'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/input'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=1306-8961&t=sRgeF20KEbG9Gbdh-4'
+    example={stories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>
+                Use an appropriate field length to suggest the expected entry.
+            </li>
+            <li>Pre-fill entries when the expected entry is known.</li>
+            <li>Use a prefix or suffix as appropriate.</li>
+            <li>Enable appropriate autocomplete where possible.</li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>
+                Use for multi-line inputs. Instead, consider using
+                [textarea](./?path=/docs/textarea--docs).
+            </li>
+            <li>
+                Use for inputs where there is a known set of options. Instead,
+                consider using [select](./?path=/docs/select--docs) or
+                [autosuggest](./?path=/docs/autosuggest--docs).
+            </li>
+            <li>
+                Rely on the placeholder attribute for instructions. It should
+                never be used due to accessibility and usability concerns. Use
+                the `label` and `helpMessage` props instead.
+            </li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Usage
+
+It is recommended to wrap Input within the Field component. The Field component will provide a standard look and feel to the label, help text and error message associated with form input elements.
+
+- The label identifies the individual text input and lets the user know what is required.
+- Help text provides further details on what is needed and is optional.
+- The error message lets the user know what the error is and how to fix it.
+
+Find out more about [Field](./?path=/docs/field--docs).
+
+## Examples
+
+### Help text
+
+By default, this component does not have [help text](./?path=/docs/content-microcopy-help-text--docs). However, we recommend using help text to give the user further context and guidance.
+
+<Canvas of={stories.Default} />
+
+### Error messages
+
+You can find guidance for error content in [Writing for errors](./?path=/docs/content-writing-for-errors--docs).
+
+<Canvas of={stories.HasError} name='Error Message' />
+
+### Disabled
+
+Disabling the input makes the field invisible to screen reader users. While we don't recommend it, the option is still available to use. If you need a field with read-only text consider using the `readOnly` attribute or [Pre-filled data](https://gel.service.nsw.gov.au/gel-library/patterns/pre-filled-data).
+
+<Canvas of={stories.Disabled} />
+
+### Controlled vs uncontrolled
+
+The Input component supports both controlled and uncontrolled usage, depending on how you want to manage state.
+
+#### Controlled
+
+In controlled mode, use `value` and `onChange` props to manage the input value via your own state. The `onChange` prop triggers when a user types in the input field.
+
+<Canvas of={stories.Controlled} />
+
+#### Uncontrolled
+
+In uncontrolled mode, the component manages its own internal state. Use `defaultValue` to set the initial input value.
+
+<Canvas of={stories.Uncontrolled} />
+
+### Prefix and suffix
+
+Prefixes and suffixes are symbols or abbreviations displayed in conjunction with a form’s text input. This component helps users enter the right information into a form.
+
+If your form requires specific information from a user, display this in the label or help text. For example, put ‘value, in dollars’ in the label and use the dollar symbol, ‘$’ in the prefix.
+
+Do not rely on just using prefixes or suffixes because screen readers will not read them out.
+
+#### Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>
+                Use when there’s a commonly understood symbol or abbreviation
+                associated with the information you’re asking the user for. For
+                example, using a dollar symbol, ‘$’ as a prefix and ‘per item’
+                as the suffix.
+            </li>
+            <li>
+                Use to help users quickly understand what kind of information is
+                needed or action they need to take.
+            </li>
+            <li>
+                Allow users to enter a prefix or suffix into the input field.
+                Some users may overlook them, and screen readers do not read out
+                prefixes or suffixes.
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>Use if the information a user needs to give is open ended.</li>
+            <li>
+                Use if the user is required to provide information other than a
+                unit or currency value.
+            </li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+<Canvas of={stories.PrefixSuffix} name='Prefix and Suffix' />
+
+## Properties
+
+<Canvas of={stories.Properties} name='Properties' />
+
+<Controls of={stories.Properties} />

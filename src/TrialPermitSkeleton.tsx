@@ -6,6 +6,7 @@ import {
   Heading,
   InPageAlert,
   Input,
+  ProgressStepper,
   RadioButtonList,
   TextLink,
 } from './gel'
@@ -123,9 +124,15 @@ export function TrialPermitSkeleton() {
       </div>
 
       {step !== 'confirmation' && (
-        <p aria-live='polite' style={{ color: 'var(--gel-color-text-grey)', marginTop: 0 }}>
-          Step {stepOrder.indexOf(step) + 1} of {stepOrder.length}: {stepLabels[step]}
-        </p>
+        <>
+          <ProgressStepper stepsList={stepOrder.map((s, i) => ({
+            content: stepLabels[s],
+            status: i < stepOrder.indexOf(step) ? 'completed' : i === stepOrder.indexOf(step) ? 'current' : 'todo',
+          }))} />
+          <p aria-live='polite' style={{ color: 'var(--gel-color-text-grey)', marginTop: 0 }}>
+            Step {stepOrder.indexOf(step) + 1} of {stepOrder.length}: {stepLabels[step]}
+          </p>
+        </>
       )}
 
       <ErrorSummary ref={errorSummaryRef} errors={errors} />

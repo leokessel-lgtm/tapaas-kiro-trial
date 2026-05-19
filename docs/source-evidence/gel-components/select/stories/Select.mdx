@@ -1,0 +1,177 @@
+import {
+    Meta,
+    Canvas,
+    Subtitle,
+    Controls,
+    Source,
+} from '@storybook/addon-docs/blocks'
+import * as stories from './Select.stories'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+    GEL_IMPORT_SOURCE,
+} from '@snsw-gel/storybook'
+
+export const options = [
+    { value: 'option1', text: 'Option 1' },
+    { value: 'option2', text: 'Option 2' },
+    { value: 'option3', text: 'Option 3' },
+]
+
+<Meta of={stories} />
+
+# Select
+
+<Subtitle>A compact way of displaying multiple choices to the user.</Subtitle>
+
+## About select
+
+Select is also known as a dropdown or dropbox. It’s a standard HTML element.
+
+Select displays a list of options from which a user can select one option. Consider using this component when there’s limited design space.
+
+Research has shown that some people have difficulty navigating and using the select component. If you include it in your designs, consider testing the usability and accessibility with your users.
+
+<MetaComponent
+    componentName='Select'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/select?ref_type=heads'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=1306-9087&t=sRgeF20KEbG9Gbdh-4'
+    example={stories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>
+                Use the [radio button
+                list](./?path=/docs/radio-button-list--docs):
+                <ul>
+                    <li>to display fewer than 8 options, or</li>
+                    <li>
+                        where there is a benefit to the user seeing all
+                        available options up front.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Consider using the
+                [autosuggest](./?path=/docs/autosuggest--docs):
+                <ul>
+                    <li>when displaying more than 16 options</li>
+                    <li>when styled results are required</li>
+                    <li>where each option is more than a few words long.</li>
+                </ul>
+            </li>
+            <li>
+                Consider using the [checkbox
+                list](./?path=/docs/checkbox-list--docs) when multi-select is
+                needed.
+            </li>
+            <li>
+                Use as an alternative to radio button list when space is
+                limited.
+            </li>
+            <li>
+                Consider grouping related options in the dropdown by category.
+            </li>
+            <li>
+                Consider highlighting common options at the beginning of a long
+                list.
+            </li>
+            <li>
+                Use an order that makes sense to your customer, such as
+                alphabetical, time-based or order of importance.
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>
+                Use to display fewer than 8 or more than 16 options. Only use in
+                those cases when space is limited and radio button list would
+                take up too much space.
+            </li>
+            <li>
+                Use where there is a benefit to the user seeing all available
+                options up front.
+            </li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Usage
+
+It is recommended to wrap Select within the Field component. The Field component will provide a standard look and feel to the label, help text and error message associated with form input elements.
+
+- The label identifies the individual text input and lets the user know what is required.
+- Help text provides further details on what is needed and is optional.
+- The error message lets the user know what the error is and how to fix it.
+
+Find out more about [Field](./?path=/docs/field--docs).
+
+## Examples
+
+### Help text
+
+By default, this component does not have [help text](./?path=/docs/content-microcopy-help-text--docs). However, we recommend using help text to give the user further context and guidance.
+
+<Canvas of={stories.Default} />
+
+### Error messages
+
+You can find guidance for error content in [Writing for errors](./?path=/docs/content-writing-for-errors--docs).
+
+<Canvas of={stories.HasError} name='Error Message' />
+
+### Disabled
+
+Disabling select makes the field invisible to screen reader users. While we don't recommend it, the option is still available to use.
+
+<Canvas of={stories.Disabled} />
+
+### Controlled vs uncontrolled
+
+The Select component supports both controlled and uncontrolled usage, depending on how you want to manage state.
+
+#### Controlled
+
+In controlled mode, use `value` and `onChange` props to manage the input value via your own state. The `onChange` prop triggers when a user types in the input field.
+
+<Canvas of={stories.Controlled} />
+
+#### Uncontrolled
+
+In uncontrolled mode, the component manages its own internal state. Use `defaultValue` to set the initial input value.
+
+<Canvas of={stories.Uncontrolled} />
+
+### Placeholder
+
+The `placeholder` prop adds helpful context text to guide users when no option is selected. It defaults to "Select" if not specified.
+
+To remove the placeholder, pass an empty string `placeholder=""`. When removed, users will see the first actual option as the default selection.
+
+<Canvas of={stories.Placeholder} />
+
+### Australian states
+
+An Australian state utility exists, and we recommend you use it. It allows developers to easily populate Select with Australian state data. This provides consistency in Australian state naming across all transactions. Remember to import utils first:
+
+<Source
+    language='js'
+    code={`
+     import { utils } from '${GEL_IMPORT_SOURCE}';
+  `}
+/>
+
+<Canvas of={stories.AustralianStates} height='auto' />
+
+## Properties
+
+<Canvas of={stories.Properties} name='Properties' />
+
+<Controls of={stories.Properties} />

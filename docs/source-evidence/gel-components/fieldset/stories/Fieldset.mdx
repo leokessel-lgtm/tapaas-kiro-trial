@@ -1,0 +1,158 @@
+import { Meta, Canvas, Subtitle, Controls } from '@storybook/addon-docs/blocks'
+import * as stories from './Fieldset.stories'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+
+<Meta of={stories} />
+
+# Fieldset
+
+<Subtitle>
+    A form element that's used to group related and recurring input fields.
+</Subtitle>
+
+## About this pattern
+
+You can use the fieldset to group:
+
+- single multiple choice question (ie. radio or checkbox group)
+- several questions relating to the same topic (ie. date picker using three different inputs for DD/MM/YY, billing and shipping address).
+
+<MetaComponent
+    componentName='Fieldset'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/fieldset?ref_type=heads'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=17295-14664&t=ElkGPMBWNj8bnwFS-4'
+    example={stories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>
+                Use fieldsets to group fields that are related to one another.
+            </li>
+            <li>
+                Use fieldsets when a group of fields appear repeatedly on the
+                same page.
+            </li>
+            <li>
+                Use a legend to provide context for a fieldset's child inputs.
+                Go to [Button and form
+                labels](./?path=/docs/content-microcopy-button-and-form-labels--docs#form-labels).
+            </li>
+            <li>
+                If you need to guide users to complete the required action in
+                your fieldset, use [help
+                text](./?path=/docs/content-microcopy-help-text--docs).
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>
+                Do not use the fieldset for single text or checkbox that asks
+                for a single piece of information, instead use
+                [field](./?path=/docs/field--docs).
+            </li>
+            <li>
+                Use help text on child inputs of a fieldset when legend uses the
+                label presentation.
+            </li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Usage
+
+All fieldsets must have a legend. This provides a title for the grouped form fields and establishes their relationship. For instance, a legend of 'Date of birth' clarifies that the day, month, and year inputs are collectively asking for one piece of information.
+
+You can also display an error validation message. This can be for either each individual input or for the entire fieldset group of inputs. For further information on this, see the examples on [Error messages](#error-messages).
+
+## Examples
+
+### Default
+
+Legend as a heading is the default display. Use this option when the grouped fields are related, but the child inputs are independent of one another.
+
+This is commonly used when sub-grouping input fields, or when fieldset appears repeatedly on a page. An example of this is when asking a user for ‘previous’ names.
+
+<Canvas of={stories.Default} />
+
+### Small legend
+
+Passing in `smallLegend={true}` renders the legend with the visual style of a label. This maintains visual hierarchy without compromising on accessibility and wayfinding.
+
+All labels which are children of the fieldset are then rendered with a font-size of 16px and font-weight of normal.
+
+Use when multiple inputs work as a single unit of information, such as card expiry date. When applying this option, use help text on fieldset rather than on child inputs. Their appearance can cause visual noise and reduce visual hierarchy.
+
+<Canvas of={stories.SmallLegend} name='Small Legend' />
+
+### Help text
+
+Help text provides further details and/or what is required and is optional. By default, help text is not shown but it should be used to provide clarity to the user. Read more about [help text](./?path=/docs/content-microcopy-help-text--docs).
+
+The `helpMessage` prop only accepts a `string` value. Do not include links or other semantic elements as they will not be announced by screen readers. For more details, see [Avoid links](#avoid-links).
+
+<Canvas of={stories.WithHelpMessage} />
+
+### Error messages
+
+These are two different error message use cases. Take the time to understand each use case to ensure you provide the most accessible and useable experience.
+
+#### Single error for group
+
+This is where the inputs within the group combine to provide a single answer (i.e. radio group, checkbox group, date picker etc).
+
+The error message must be shown at the bottom of the fieldset passing the `hasError` and `errorMessage` props on the Fieldset component.
+
+When the `hasError` and `errorMessage` props are passed:
+
+- fieldset will be rendered with `aria-invalid='true'`
+- legend text will be read out followed by the error message this invisible error is for screen readers
+- error message will be rendered after children to match the design but with `aria-hidden='true'` to avoid the screen reader from repeating the error.
+
+<Canvas of={stories.SingleAnswerGroupError} name='Single answer group errors' />
+
+#### Multiple errors for group
+
+This is where each input provides individual answer but those answers are grouped by a common theme (i.e. Billing and Shipping address).
+
+The error messages must be shown for each input but not at the bottom of the fieldset. Do not pass `hasError` and `errorMessage` to the Fieldset component.
+
+Instead each [field](./?path=/docs/field--docs) should have its own error handling.
+
+<Canvas
+    of={stories.MultipleAnswerGroupError}
+    name='Multiple answer group errors'
+/>
+
+### Changing margin
+
+Use the `margin` prop to remove or increase the default spacing between field elements. Read more about [flexible spacing](./?path=/docs/documentation-migration-notes-from-v1-to-v2--docs#flexible-spacing---form-components) and how it is used.
+
+For instance, the margin has been changed to 56px using `margin={ { top: 'xxxl' } }` in the following example.
+
+<Canvas of={stories.FlexibleSpacing} />
+
+## Properties
+
+<Canvas sourceState='none' of={stories.Properties} />
+
+<Controls of={stories.Properties} />
+
+## Accessibility
+
+### Avoid links
+
+Do not include links within labels, help text or error messages.
+
+Screen readers do not read out links within descriptive content. Instead, they read the content as a plain `string` and do not tell users if there's a link present. Therefore, if it has a link, the content becomes inaccessible.
+
+If a link is needed, consider adding it before or after the form field.

@@ -578,3 +578,56 @@ export function Select({ id, value, onChange, hasError, disabled, options, place
   )
 }
 
+
+// ---------------------------------------------------------------------------
+// ProgressStepper
+// Source-backed GEL preview component.
+// Evidence: docs/source-evidence/gel-progress-stepper/
+// Package: @snsw-gel/progress-stepper
+// Usage boundary: 4 to 6 steps only. Do not use for 8+ step flows.
+// Mobile: shows step counter text only. Desktop: shows step names.
+// Does not replace the aria-live text step indicator.
+// ---------------------------------------------------------------------------
+export interface ProgressStepperProps {
+  stepsList: { content: string; status: 'completed' | 'current' | 'todo' }[]
+}
+
+export function ProgressStepper({ stepsList }: ProgressStepperProps) {
+  const numberOfSteps = stepsList.length
+  const currentIndex = stepsList.findIndex(s => s.status === 'current')
+  const currentStepNumber = currentIndex !== -1 ? currentIndex + 1 : (stepsList.every(s => s.status === 'completed') ? numberOfSteps : 1)
+
+  return (
+    <div data-gelweb-component='progress-stepper' className='gel-progress-stepper'>
+      {/* Mobile: step counter only */}
+      <span className='gel-progress-stepper__mobile-label'>
+        Step {currentStepNumber} of {numberOfSteps}
+      </span>
+      {/* Desktop: full step list */}
+      <ol className='gel-progress-stepper__list'>
+        {stepsList.map((step, index) => (
+          <li key={index} className={`gel-progress-stepper__step gel-progress-stepper__step--${step.status}`}>
+            <div className='gel-progress-stepper__position' aria-hidden='true'>
+              {step.status === 'completed' ? (
+                <svg width='14' height='14' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'>
+                  <path d='M13.17 1.86c.57-.68 1.57-.77 2.25-.2.64.53.76 1.45.31 2.12l-.1.13-8.5 10.23c-.56.67-1.54.76-2.21.24l-.13-.11-4.3-4.18c-.63-.62-.65-1.63-.04-2.26.58-.59 1.5-.64 2.14-.14l.12.11 3.07 2.98 7.4-8.9z' fill='currentColor'/>
+                </svg>
+              ) : (
+                <span className='gel-progress-stepper__number'>{index + 1}</span>
+              )}
+            </div>
+            <span className='gel-progress-stepper__label'>
+              {(step.status === 'completed' || step.status === 'current') && (
+                <span className='gel-sr-only'>{step.status === 'completed' ? 'Completed' : 'Current'}: Step {index + 1} </span>
+              )}
+              {step.status === 'todo' && (
+                <span className='gel-sr-only'>Step {index + 1} </span>
+              )}
+              <span>{step.content}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )
+}

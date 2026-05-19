@@ -1,0 +1,109 @@
+import { Meta, Canvas, Subtitle, Controls } from '@storybook/addon-docs/blocks'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+    ViewportCanvas,
+} from '@snsw-gel/storybook'
+import * as stories from './Breadcrumb.stories'
+
+<Meta of={stories} />
+
+# Breadcrumbs
+
+<Subtitle>
+    Give users a sense of place within a website. They also help orient them
+    through a hierarchical series of links.
+</Subtitle>
+
+## About this component
+
+Breadcrumbs show the path from the homepage to the page a user is on.
+
+When users arrive on a page from a search, breadcrumbs allow them to explore similar content by providing an easy link to the page's parent or grandparent pages.
+
+<MetaComponent
+    componentName='Breadcrumb'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/breadcrumb'
+    figamLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=1341-7887&t=IrkAIotsAQEppAd8-4'
+    example={stories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>Use on pages 3 or more levels deep from the homepage.</li>
+            <li>
+                Start the breadcrumb with the homepage and end with the parent
+                page.
+            </li>
+            <li>
+                Exclude the current page. The page title already acts as a
+                navigational signpost for users. It should not be duplicated on
+                the screen.
+            </li>
+            <li>
+                Place the breadcrumb between the global navigation and the page
+                title.
+            </li>
+            <li>Match the page name in the breadcrumb.</li>
+            <li>Keep page titles succinct to avoid long breadcrumbs.</li>
+            <li>
+                Display a breadcrumb that reflects the user's journey to the
+                page.
+            </li>
+            <li>
+                Display the most popular path for users who arrive directly at
+                the page from a search.
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>
+                Show the path the user took to arrive at a page. Instead, use
+                the page's hierarchical location.
+            </li>
+            <li>Rely on breadcrumbs as your only navigation.</li>
+            <li>Use breadcrumbs on multi-step forms or wizards.</li>
+            <li>Use breadcrumbs if an expanded sidebar is displayed.</li>
+            <li>
+                Use breadcrumbs when navigation tabs are active on the screen.
+            </li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Examples
+
+### Mobile
+
+For mobile resolutions under 768px, the breadcrumb shows a link to the grandparent page and the parent page only.
+
+<ViewportCanvas of={stories.BreadcrumbMobile} height='56px' />
+
+### Desktop
+
+<Canvas of={stories.Default} />
+
+### With minimum amount of links
+
+The breadcrumb uses `<Link>` component to route the user between pages. For this example we have directly wrapped Router around the component.
+Routing has to be setup somewhere in your project to use this component, the whereabouts is completely up to you.
+
+Please refer to [Migrate to new Breadcrumb](./?path=/docs/documentation-migration-notes-from-v1-to-v2--docs#migrate-to-new-breadcrumb) for more detailed usage guidelines.
+
+### In section header
+
+For more detailed usage guidance, refer to [Section header](./?path=/docs/section-header--docs).
+
+<Canvas of={stories.SectionHeaderBreadcrumb} sourceState='none' />
+
+## Properties
+
+<Canvas of={stories.Properties} />
+
+<Controls of={stories.Properties} />

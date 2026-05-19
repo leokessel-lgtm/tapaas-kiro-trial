@@ -1,0 +1,111 @@
+import { Meta, Canvas, Subtitle, Controls } from '@storybook/addon-docs/blocks'
+import * as stories from './Callout.stories'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+
+<Meta of={stories} />
+
+# Callout
+
+<Subtitle>Used to highlight a section of text on a page or screen.</Subtitle>
+
+## About this component
+
+Callouts are useful when we want to draw a user's attention to a small section of text on a page.
+
+They should be used with consideration. We recommend using no more than 1 callout per page.
+
+<MetaComponent
+    componentName='Callout'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/callout'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=10078-10226&t=IrkAIotsAQEppAd8-4'
+    example={stories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>
+                Keep callout messages short, easy to scan, informative and
+                clear.
+            </li>
+            <li>Link to a relevant resource where necessary.</li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>Add multiple callout boxes to a single page.</li>
+            <li>
+                Use callouts to highlight maintenance errors. For maintenance
+                errors, use an [in-page
+                alert](./?path=/docs/in-page-alerts--docs) instead.
+            </li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Examples
+
+### Default
+
+A callout consists of a bolded heading and body text within a blue box.
+As a guideline, callout headings should not go over 1 line of text. Body text should not be more than 3 lines.
+
+<Canvas of={stories.Default} />
+
+### Title only
+
+A simple callout with just a title and without body text.
+
+<Canvas of={stories.TitleOnly} />
+
+### Custom HTML
+
+A simple callout with just a title and custom HTML text. You can use any valid HTML, including links to relevant resources, when necessary.
+
+<Canvas of={stories.CustomHtml} />
+
+## Properties
+
+<Canvas of={stories.Properties} />
+
+<Controls of={stories.Properties} />
+
+## Accessibility
+
+### ARIA roles
+
+The `role` can have two options: `status` and `alert`.
+
+- `status` is polite. Screen readers will finish reading the current stream before announcing it.
+- `alert` is assertive. Screen readers will interrupt the current action to alert the user.
+
+Carefully consider which role you use. They exist to announce content to screen readers and interrupt the user. The announcement only happens when the callout goes from hidden to visible.
+
+<Canvas of={stories.ARIARoles} />
+
+### Changing heading level
+
+The option of variable heading levels for the Callout title has been provided. This is to ensure that your document structure is accessible. You can change the heading level by using the `headingElement` prop.
+
+The Callout title heading level currently defaults to a `h6`. Regardless of the value provided to the `headingElement` prop, the Callout title will visually remain the same size.
+
+Refer to the [Callout properties](#properties) to see how the `headingElement` prop is used.
+
+<Canvas of={stories.ChangingHeadingElement} />
+
+#### Paragraph heading level
+
+If the title does not signpost, describe, introduce, or directly relate to the content that follows the placement of the Callout, use the provided `headingElement='p'` prop.
+
+The title will visually remain the same size. It will render the title as a paragraph element rather than a heading element.
+
+By doing this, assistive technology reads out the headings to give users a sense of the content structure of a page. It will ensure that your document structure is accessible, especially for people who use assistive technology.
+
+<Canvas of={stories.ParagraphHeadingElement} />

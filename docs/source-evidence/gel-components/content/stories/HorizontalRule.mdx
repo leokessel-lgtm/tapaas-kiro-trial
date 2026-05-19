@@ -1,0 +1,58 @@
+import {
+    Meta,
+    Canvas,
+    Subtitle,
+    Controls,
+    Unstyled,
+} from '@storybook/addon-docs/blocks'
+import { InPageAlert } from '@snsw-gel/react'
+import { QualityTable, MetaComponent } from '@snsw-gel/storybook'
+import * as stories from './HorizontalRule.stories'
+
+<Meta of={stories} />
+
+<Unstyled>
+    <InPageAlert variant='info' title='We’re still working on this page'>
+        <p>
+            For more design and usage guidance, go to [Horizontal
+            rule](https://gel.service.nsw.gov.au/gel-library/components/content-blocks/horizontal-rule/).
+        </p>
+    </InPageAlert>
+</Unstyled>
+
+# Horizontal rule
+
+<Subtitle>
+    Horizontal line that will be used to separate content. Margin top and bottom
+    can be configured to suit your needs.
+</Subtitle>
+
+## About this component
+
+A horizontal rule is a visual element that creates visual hierarchy by separating content. Use horizontal rule sparingly. Unnecessary visual elements can be distracting and increase a user’s cognitive load.
+
+The horizontal rule should serve a functional, not decorative purpose.
+
+Consider using whitespace (or negative space) over horizontal rule, as it can accomplish the same goal. For example, when separating dense body content from other UI elements.
+
+<MetaComponent
+    componentName='HorizontalRule'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/blob/develop/packages/content/src/HorizontalRule.tsx?ref_type=heads'
+    gelLink='https://gel.service.nsw.gov.au/gel-library/components/content-blocks/horizontal-rule/'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=10079-10225&t=ElkGPMBWNj8bnwFS-4'
+    example={stories.HorizontalRuleStory}
+/>
+
+## Default
+
+Use horizontal lines sparingly. Try to separate content by elements and spacing, not lines.
+
+<Canvas of={stories.HorizontalRuleStory} />
+
+## Properties
+
+<Canvas of={stories.Properties} />
+
+<Controls of={stories.Properties} />
+
+<QualityTable gel accessible responsive browser />

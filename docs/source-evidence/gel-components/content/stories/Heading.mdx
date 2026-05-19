@@ -1,0 +1,79 @@
+import { Canvas, Controls, Meta, Subtitle } from '@storybook/addon-docs/blocks'
+import * as stories from './Heading.stories'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+import { HeadingTable } from './Heading.stories'
+
+<Meta of={stories} />
+
+# Headings
+
+<Subtitle>
+    Headings are used to create visual hierarchy, to facilitate finding
+    information on the page.
+</Subtitle>
+
+## About this component
+
+Heading components create a meaningful visual hierarchy on a simple content page.
+They have inbuilt spacing with top and bottom margins. If needed, you can override the inbuilt spacing.
+
+There are different standard heading sizes for large screens and smaller screens.
+
+<MetaComponent
+    componentName='Heading'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/content?ref_type=heads'
+    example={stories.Heading1}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>
+                Use an initial capital for the first word and any proper nouns.
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>Use full stops at the end of headings.</li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Examples
+
+### Small screens and large screens
+
+<HeadingTable />
+
+### Changing heading size
+
+On a standard content page, a `h1` should use the Heading size `1` style, `h2` should use the Heading size `2` style, etc.
+Although the style may be changed to create larger or smaller headings to create the correct visual hierarchy on the page.
+
+<Canvas of={stories.Default} />
+
+## Properties
+
+<Canvas of={stories.Properties} />
+
+<Controls of={stories.Properties} />
+
+## Accessibility
+
+HTML headings must be used [semantically](https://gel.service.nsw.gov.au/gel-library/foundations/accessibility-overview/semantic-html).
+This means `h1` for the main page heading, `h2` for subordinate headings, etc.
+
+### Changing heading level
+
+In some cases, such as headings within components, the heading level may not be correct semantically.
+The option of variable heading levels has been provided through using the `headingElement` prop. This is to ensure that your document structure is accessible.
+
+<Canvas of={stories.ChangingHeadingLevel} />

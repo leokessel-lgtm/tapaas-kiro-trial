@@ -1,0 +1,78 @@
+import {
+    Meta,
+    Canvas,
+    Subtitle,
+    Controls,
+    Unstyled,
+} from '@storybook/addon-docs/blocks'
+import { InPageAlert } from '@snsw-gel/react'
+import { QualityTable, MetaComponent } from '@snsw-gel/storybook'
+import * as stories from './StatusLabel.stories'
+
+<Meta of={stories} />
+
+<Unstyled>
+    <InPageAlert variant='info' title='We’re still working on this page'>
+        <p>
+            For more design and usage guidance, go to [Status
+            label](https://gel.service.nsw.gov.au/gel-library/components/status-label/).
+        </p>
+    </InPageAlert>
+</Unstyled>
+
+# Status label
+
+<Subtitle>
+    Status labels can focus attention on important content that might otherwise
+    be missed.
+</Subtitle>
+
+## About this component
+
+Status labels can focus attention on important content that might otherwise be missed.
+
+<MetaComponent
+    componentName='StatusLabel'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/status-label'
+    gelLink='https://gel.service.nsw.gov.au/gel-library/components/status-label/'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=10071-10021&t=IrkAIotsAQEppAd8-4'
+    example={stories.Default}
+/>
+
+## Neutral label
+
+Use this label for statuses like inactive, not available, or not provided.
+
+<Canvas of={stories.Default} />
+
+## Error label
+
+Use this label to highlight a problem. Common issues include expired, cancelled, suspended, errors, failed, declined, deleted.
+
+<Canvas of={stories.Error} />
+
+## Warning label
+
+Use this label when something requires the user's attention such as missing information, expiring soon, action required.
+
+<Canvas of={stories.Warning} />
+
+## Success label
+
+Use this label for successful statuses like available, completed, approved, resolved, active, submitted.
+
+<Canvas of={stories.Success} />
+
+## Info label
+
+Use this label when there is otherwise no indication of success or failure or where it can be useful as extra information to the user. Such as a new service, services which have not started yet, coming soon, or a used voucher.
+
+<Canvas of={stories.Info} />
+
+## Properties
+
+<Canvas of={stories.Properties} name='Properties' />
+
+<Controls of={stories.Properties} />
+
+<QualityTable gel accessible responsive browser testing />

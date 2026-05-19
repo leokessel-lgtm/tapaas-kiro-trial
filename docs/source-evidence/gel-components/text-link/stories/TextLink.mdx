@@ -1,0 +1,111 @@
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+import * as stories from './TextLink.stories'
+import { Controls, Subtitle, Meta, Canvas } from '@storybook/addon-docs/blocks'
+
+<Meta of={stories} />
+
+# Text link
+
+<Subtitle>
+    Text links are accessible navigational elements used primarily for navigation.
+    They are styled to resemble a hyperlink and semantically render an anchor
+    element.
+</Subtitle>
+
+## About this component
+
+Links can appear on their own, within a sentence or paragraph or directly following content.
+
+Links are interactive elements and using too many will clutter a page, potentially confusing a user about what action they should take.
+This means links should be used sparingly, particularly inline links.
+
+<MetaComponent
+    componentName='TextLink'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/text-link'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=17268-8661&t=IrkAIotsAQEppAd8-4'
+    example={stories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel
+        title='Do'
+        type={PanelType.SUCCESS}
+    >
+        <ul>
+            <li>Use links sparingly to avoid overwhelming the user with choices.</li>
+            <li>Use clear, descriptive link text that tells users where the link will take them.</li>
+            <li>Clearly convey the purpose or function of each link.</li>
+            <li>Use the full page title when linking to another page, where possible.</li>
+            <li>Ensure linked text not within a sentence does not include a full stop.</li>
+            <li>Place links at the end of sentences or paragraphs when it makes sense.</li>
+            <li>Ensure full stops are after inline link text and not included within the link.</li>
+        </ul>
+    </Panel>
+
+    <Panel
+        title="Don't"
+        type={PanelType.ERROR}
+    >
+        <ul>
+            <li>Use vague link text like ‘click here’, ‘see’ or ‘more information’.</li>
+            <li>Write vague or ambiguous link text.</li>
+            <li>Use a full URL or shortened URL as the link text.</li>
+            <li>Open internal or external links in a new tab by default unless there’s a strong user need, such as preserving form progress.</li>
+        </ul>
+    </Panel>
+
+</PanelTwoColumnContainer>
+
+## Examples
+
+### Internal links
+
+Internal links direct the user to an internal page that is part of the same website or application.
+They can also be used to jump to an element on the same page. Use internal links to respond to a user need.
+
+<Canvas of={stories.Default} />
+
+### External links
+
+External links direct the user to a website hosted on a different domain or server from the current page.
+Use external links when they're an essential part of a user's journey.
+
+When linking to an external website, make the destination clear in the link text.
+For example, 'For more details on link accessibility, go to [page title] – [name of organisation].'
+
+<Canvas of={stories.External} />
+
+### Internal link with router
+
+To use the link component with React Router, pass your router’s Link component to the `as` prop.
+
+Ensure routing is set up in your application. This integration allows the link to behave like a client-side route change without reloading the page.
+
+<Canvas of={stories.Internal} />
+
+### Opening links in new tabs
+
+When using the HTML attribute `target='_blank'` the link will:
+
+- use the new tab icon
+- be given the `aria-label` 'Opens in a new tab'
+- open in a new tab.
+
+<Canvas of={stories.opensInNewTab} />
+
+## Properties
+
+<Canvas of={stories.Properties} name='Properties' />
+
+<Controls of={stories.Properties} />
+
+## Accessibility
+
+For more details on link accessibility, go to [2.4.9 Link Purpose (Link Only) (Level AAA) - W3C](https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-link-only.html).

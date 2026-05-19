@@ -1,0 +1,188 @@
+import { Meta, Canvas, Subtitle, Controls } from '@storybook/addon-docs/blocks'
+import * as stories from './RadioButtonList.stories'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+
+<Meta of={stories} />
+
+# Radio button list
+
+<Subtitle>Lets users select a single option from a list.</Subtitle>
+
+## About this component
+
+Use radio button list when you want the user to select one option from a list of options. They are useful when the user needs to view all options at once.
+
+In most cases, radio button list should have a value selected by default. If this is not the case, you can display an error if no value is selected.
+
+<MetaComponent
+    componentName='RadioButtonList'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/radio-button-list?ref_type=heads'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=1306-5809&t=sRgeF20KEbG9Gbdh-4'
+    example={stories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>
+                Use a vertical radio button list to display between 2 to 7
+                options.
+            </li>
+            <li>
+                Consider [select](./?path=/docs/select--docs) or
+                [autosuggest](./?path=/docs/autosuggest--docs) for displaying
+                more than 7 options or where space is limited.
+            </li>
+            <li>
+                Consider using [checkbox
+                single](./?path=/docs/checkbox-single--docs) for displaying one
+                option.
+            </li>
+            <li>
+                Make sure the [fieldset legend](./?path=/docs/fieldset--docs) or
+                help text explains that the user can only select one option from
+                a list.
+            </li>
+            <li>
+                Use an order that makes sense to your customer such as,
+                alphabetical, time-based or order of importance.
+            </li>
+            <li>
+                Use radio button lists in place of select or autosuggest if a
+                user needs to see all options up front.
+            </li>
+            <li>Include ‘none’ or ‘N/A’ options if appropriate.</li>
+            <li>
+                Set a pre-select for the most logical or least destructive
+                action.
+            </li>
+            <li>
+                Use clarifying text only on options that require it. Keep it
+                concise, clear, informative and specific to the option.
+            </li>
+            <li>
+                Use caution when using both help text and clarifying text as
+                they can create overwhelming visuals.
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>
+                Use where customers can select more than one option. Instead,
+                use a [checkbox list](./?path=/docs/checkbox-list--docs).
+            </li>
+            <li>
+                Use to display more than 7 options unless there is a benefit to
+                the user seeing all available options.
+            </li>
+            <li>
+                Use clarifying text to repeat information that is already in the
+                help text.
+            </li>
+            <li>Use clarifying text in horizontal radio lists.</li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Usage
+
+For accessibility, Radio button list must include a legend. This acts as the overall label for the radio button list. It creates a logical grouping in both the code and for assistive technologies.
+
+You can also provide:
+
+- help text to offer additional guidance
+- error messages to describe issues and how to resolve them.
+
+This setup ensures a consistent and accessible user experience across form components.
+
+## Examples
+
+### Help text
+
+By default, this component does not have [help text](./?path=/docs/content-microcopy-help-text--docs). However, we recommend using help text to give the user further context and guidance.
+
+<Canvas of={stories.HelperMessage} />
+
+### Error messages
+
+Use the `hasError` and `errorMessage` props together to display error states.
+
+When an error is active, the error message is conveyed:
+
+- through the fieldset legend for screen readers
+- displayed visually below the options.
+
+All radio buttons will also receive error styling to clearly indicate the validation state.
+
+You can find guidance for error content in [Writing for errors](./?path=/docs/content-writing-for-errors--docs).
+
+<Canvas of={stories.ErrorMessage} />
+
+### Disabled
+
+Disabling the radio button list makes the field invisible to screen reader users. While we don't recommend it, the option is still available to use.
+
+<Canvas of={stories.Disabled} />
+
+### Controlled vs uncontrolled
+
+The radio button list component supports both controlled and uncontrolled usage. Which option you use depends on how you want to manage state.
+
+#### Controlled
+
+In controlled mode, use `value` and `onChange` props to manage the selected radio button via your own state.
+The `onChange` prop receives the selected option's value when a radio button is selected.
+
+<Canvas of={stories.Controlled} />
+
+#### Uncontrolled
+
+In uncontrolled mode, the component manages its own internal state. Simply provide the `options` array without a `value` prop.
+The onChange prop is optional but can still be used to respond to selection changes.
+
+<Canvas of={stories.Uncontrolled} />
+
+### Editor text
+
+Editor text show additional content when the option is selected.
+
+<Canvas of={stories.EditorText} />
+
+### Clarifying text
+
+We can use clarifying text in vertical lists only. It gives the user more information about an option label.
+Clarifying text can help explain option labels that may not give the user enough clarity in 1-2 words.
+When clarifying text is used, only the label is selectable. This is so screen readers can navigate between options faster.
+
+<Canvas of={stories.ClarifyingText} />
+
+### Dual radio button
+
+Use a dual radio button when you have 2 short options only such as:
+
+- yes/no, or
+- Australia/Overseas.
+
+<Canvas of={stories.HorizontalOptions} />
+
+### Changing margin
+
+Use the `margin` prop to remove or increase the default spacing between form group elements. Read more about [flexible spacing](./?path=/docs/documentation-migration-notes-from-v1-to-v2--docs#flexible-spacing---form-components) and how it is used.
+
+For instance, the margin has been changed to 56px using `margin={ { top: 'xxxl' } }` in the following example.
+
+<Canvas of={stories.ChangingMargin} />
+
+## Properties
+
+<Canvas of={stories.Properties} />
+
+<Controls of={stories.Properties} />

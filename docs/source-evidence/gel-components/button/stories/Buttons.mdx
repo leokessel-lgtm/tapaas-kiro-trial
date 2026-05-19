@@ -1,0 +1,176 @@
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+import { Controls, Subtitle, Meta, Canvas } from '@storybook/addon-docs/blocks'
+import * as ButtonsStories from './Buttons.stories.tsx'
+import uiIconBestPracticesExample from './uiIconBestPracticesExample.png?url'
+
+<Meta of={ButtonsStories} name='About buttons' />
+
+# Buttons
+
+<Subtitle>
+    Let users submit an action or follow a link to another location.
+</Subtitle>
+
+## About this component
+
+We categorise buttons by style, hierarchy and placement. This creates a clear visual hierarchy on a screen.
+
+Our buttons can:
+
+- suggest a bias
+- persuade users to take one action over another
+- indicate an action’s relative importance.
+
+<MetaComponent
+    componentName='Button'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/button'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=17291-7220'
+    example={ButtonsStories.Primary}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>Align buttons to the left of the page or form.</li>
+            <li>
+                Place the primary action first and secondary or tertiary actions
+                after.
+            </li>
+            <li>Use icons that are simple and easy to recognise.</li>
+            <li>Use SVG icons instead of a raster image.</li>
+            <li>
+                Hide icons from screen readers using `aria-hidden` and set the
+                `focusable` attribute to false. This will ensure icons are not
+                in focus and will not be read on screen readers.
+            </li>
+            <li>
+                Write clear, descriptive and action-oriented [button
+                labels](./?path=/docs/content-microcopy-button-and-form-labels--docs#button-labels).
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>
+                Place a button below another button, except on small
+                breakpoints.
+            </li>
+            <li>Have multiple primary buttons near one another.</li>
+            <li>Use more than one icon in a button.</li>
+            <li>Use an icon without a text label.</li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Examples
+
+You can see a grid of interaction states for all button variants in the [Web UI Kit - Figma](https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?m=auto&node-id=17291-7220&t=L2ZvkASOfcSN7838-1).
+
+For more information on designing layouts with buttons, go to [Button alignment and ordering](./?path=/docs/buttons-alignment-and-ordering--docs).
+
+### Primary button
+
+The primary buttons are bold and large. This draws attention to key actions.
+
+- Use for the primary action on a page, such as 'Submit' or 'Apply now'.
+- Use to create bias over other options, such as 'Register' and 'Find out more'.
+- Place the primary button before the secondary or tertiary actions.
+- Use one primary button per screen.
+
+<Canvas of={ButtonsStories.Primary} />
+
+### Secondary button
+
+The secondary buttons are less dominant. Use the secondary button for:
+
+- a lesser action to the primary action, such as 'Register' and 'Find out more'
+- 2 equal options where you do not want to bias the user.
+
+<Canvas of={ButtonsStories.Secondary} />
+
+### Tertiary button
+
+Tertiary buttons are neutral. Use the tertiary button for:
+
+- linking to terms and conditions
+- destructive secondary actions to avoid accidental tapping.
+
+<Canvas of={ButtonsStories.Tertiary} />
+
+### Button with react router
+
+If you want to use the Button component with react router you can pass the Link component to the `as` prop.
+Routing has to be setup somewhere in your project to use this component. The whereabouts is completely up to you.
+
+<Canvas of={ButtonsStories.PrimaryWithRouter} />
+
+### Link buttons
+
+Use a link button:
+
+- as an alternative to the tertiary button when you require a left-aligned button
+- for a list of links, such as related links.
+
+> Note: If you intend to use a link as an anchor element within or directly following content, consider using a [Text link](./?path=/docs/text-link--docs).
+
+<Canvas of={ButtonsStories.LinkButton} />
+
+### Icon start
+
+Place the icon before the text label when:
+
+- it communicates the function of the button
+- fast recognition is the goal.
+
+For example, to return the user to the previous screen.
+
+<Canvas of={ButtonsStories.IconStartButton} />
+
+### Icon end
+
+Place the icon after the text label to add clarity to the user’s action.
+
+Examples of this could include:
+
+- a pop up or external link icon to indicate an external link
+- an arrow icon to clarify that a user is progressing to a next step, and not finishing a form
+- when linking to other Service NSW pages.
+
+<Canvas of={ButtonsStories.IconEndButton} />
+
+## Properties
+
+<Canvas of={ButtonsStories.Properties} />
+
+<Controls of={ButtonsStories.Properties} />
+
+## Accessibility
+
+### Disabled state
+
+Do not disable or make buttons inactive unless there is no alternative.
+
+Assistive technologies such as screen readers sometimes skip disabled buttons. This could create poor user experience for assistive technology users.
+
+### Icons
+
+You can use icons within buttons to reinforce the purpose of the button. A well-designed icon can be recognised quickly and communicate meaning clearly.
+This is important when designing for users with low literacy skills, or English as a second language.
+
+However, icons should be in addition to button text labels. They should not substitute clear, thoughtful, [plain language](./?path=/docs/content-writing-style--docs#plain-language) text labels.
+
+Icons can communicate meaning across languages but be mindful of cultural differences when choosing one.
+
+For example, an envelope is more widely understood than a country-specific mailbox.
+Even if you find the meaning of an icon obvious, your users may not. Do your research to pick up any potential issues.
+
+<img src={uiIconBestPracticesExample} alt='UI icon best practices example' />
+
+Use UI icons where possible. If using a custom icon, ensure it’s consistent with our [UI icon style](/docs/ui-icons--about-ui-icons).

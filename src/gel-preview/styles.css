@@ -123,3 +123,151 @@ select:focus-visible {
     min-height: 44px;
   }
 }
+
+/* --- ProgressStepper (source-backed from @snsw-gel/progress-stepper) --- */
+.gel-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.gel-progress-stepper {
+  margin-bottom: 1.5rem;
+}
+
+.gel-progress-stepper__mobile-label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--gel-font-body);
+  color: var(--gel-color-text);
+  margin-bottom: 0.5rem;
+}
+
+.gel-progress-stepper__list {
+  display: none;
+  flex-flow: row nowrap;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.gel-progress-stepper__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+  text-align: center;
+  padding: 0 0.75rem;
+}
+
+.gel-progress-stepper__step:last-child {
+  flex: 1;
+}
+
+/* Connecting line between steps */
+.gel-progress-stepper__step::before {
+  content: '';
+  width: 100%;
+  height: 3px;
+  position: absolute;
+  right: 50%;
+  top: 15px;
+}
+
+.gel-progress-stepper__step:first-child::before {
+  display: none;
+}
+
+.gel-progress-stepper__step--completed::before {
+  background-color: var(--gel-color-brand-dark, #002664);
+}
+
+.gel-progress-stepper__step--current::before {
+  background-color: var(--gel-color-border, #dee3e5);
+}
+
+.gel-progress-stepper__step--todo::before {
+  background-color: var(--gel-color-border, #dee3e5);
+}
+
+/* Step position circle */
+.gel-progress-stepper__position {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+  background: var(--gel-color-white);
+  border: 2px solid var(--gel-color-border, #dee3e5);
+  color: var(--gel-color-text-grey);
+}
+
+.gel-progress-stepper__step--completed .gel-progress-stepper__position {
+  background-color: var(--gel-color-brand-dark, #002664);
+  border-color: var(--gel-color-brand-dark, #002664);
+  color: var(--gel-color-white);
+}
+
+.gel-progress-stepper__step--current .gel-progress-stepper__position {
+  background-color: var(--gel-color-brand-dark, #002664);
+  border-color: var(--gel-color-brand-dark, #002664);
+  color: var(--gel-color-white);
+  font-size: 0.875rem;
+}
+
+.gel-progress-stepper__step--todo .gel-progress-stepper__position {
+  background-color: var(--gel-color-white);
+  border-color: var(--gel-color-border, #dee3e5);
+  color: var(--gel-color-text-grey);
+}
+
+/* Step label */
+.gel-progress-stepper__label {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  font-family: var(--gel-font-body);
+  display: none;
+}
+
+.gel-progress-stepper__step--completed .gel-progress-stepper__label {
+  font-weight: 400;
+  color: var(--gel-color-text);
+}
+
+.gel-progress-stepper__step--current .gel-progress-stepper__label {
+  font-weight: 700;
+  color: var(--gel-color-text);
+}
+
+.gel-progress-stepper__step--todo .gel-progress-stepper__label {
+  font-weight: 400;
+  color: var(--gel-color-text-grey);
+}
+
+/* Desktop: show step list, hide mobile label */
+@media (min-width: 768px) {
+  .gel-progress-stepper__mobile-label {
+    display: none;
+  }
+
+  .gel-progress-stepper__list {
+    display: flex;
+  }
+
+  .gel-progress-stepper__label {
+    display: block;
+  }
+}

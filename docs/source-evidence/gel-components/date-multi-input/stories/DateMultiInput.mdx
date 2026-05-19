@@ -1,0 +1,151 @@
+import {
+    Meta,
+    Canvas,
+    Controls,
+    Source,
+    Subtitle,
+} from '@storybook/addon-docs/blocks'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+import * as DateMultiInputStories from './DateMultiInput.stories'
+
+<Meta of={DateMultiInputStories} />
+
+# Date multi input
+
+<Subtitle>
+    Lets a user input a date via 2 input fields and 1 dropdown field.
+</Subtitle>
+
+## About this component
+
+Date multi input is split into 3 fields. Each date string is labelled. The date and year fields ask a user to input values.
+The month field requires selection from a dropdown list.
+
+The component tells users what they need to input. It avoids the extra steps that come from calendar widgets or dropdowns.
+
+<MetaComponent
+    componentName='DateMultiInput'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/date-multi-input'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=1323-998&t=D1AOSiVWSbWz2FR8-4'
+    example={DateMultiInputStories.Default}
+/>
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>Use for memorable dates, such as date of birth.</li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>Use when the date is not known or close to the current date. For example, booking an appointment. Instead, use a [calendar picker](./?path=/docs/calendar-picker--docs).</li>
+            <li>Use where the user may want to copy and paste an entry.</li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Usage
+
+Date multi input must include a label. The label acts as the legend for the group of date input fields.
+It creates a logical grouping in the code and for assistive technologies.
+
+You can also add:
+- [help text](#help-text) to offer additional guidance
+- [error messages](#error-messages) to describe issues and how to resolve them.
+
+This usage creates a consistent and accessible experience across form components.
+
+## Examples
+
+### Help text
+
+By default, this component does not have help text. However, we recommend using help text. It gives the user context and guidance.
+
+<Canvas of={DateMultiInputStories.HelpMessage} />
+
+### Error messages
+
+You can find guidance for error content in [Writing for errors](./?path=/docs/content-writing-for-errors--docs).
+
+<Canvas of={DateMultiInputStories.ErrorMessage} />
+
+### Disabled
+
+We don't recommend disabling the date multi input. Disabling this component makes the fields invisible to screen reader users.
+However, the option to disable is available.
+
+<Canvas of={DateMultiInputStories.Disabled} />
+
+### Controlled vs uncontrolled
+
+The Date multi input component supports controlled and uncontrolled usage. The choice depends on how you want to manage state.
+
+#### Controlled
+
+In controlled mode, use `value` and `onChange` props to manage the date value via your own state. The `onChange` prop triggers when all required date fields are completed. They must form a valid date.
+
+The `onInput` prop triggers when an individual field changes. This prop provides a string representation of the current partial or complete date.
+
+<Canvas of={DateMultiInputStories.ControlledDateMultiInput} />
+
+#### Uncontrolled
+
+In uncontrolled mode, the component manages its own internal state. Use `defaultValue` to set the initial date value.
+The `onInput` callback fires for all field types (text inputs and select dropdown) when a user makes a change.
+The `onChange` prop only fires when a complete valid date is formed.
+
+<Canvas of={DateMultiInputStories.UncontrolledDateMultiInput} />
+
+## Small legend
+
+This component uses [Fieldset](./?path=/docs/fieldset--docs). The fieldset legend is displayed as a heading or label. This gives some flexibility in the formatting of the title.
+
+Passing in `smallLegend` as `true` renders the legend with the visual style of a label. This approach maintains visual hierarchy without compromising accessibility and way finding.
+
+<Canvas of={DateMultiInputStories.SmallLegend} />
+
+## Returned values
+
+The Date multi input component returns date values as objects.
+
+It has the following properties:
+- day
+- month
+- year.
+
+The month value uses a zero-based index. For example, January = 0 and December = 11. This index matches JavaScript's native Date-object convention.
+
+<Source
+    language='js'
+    code={`
+{
+    day: 15,
+    month: 0, // January (zero-based)
+    year: 2024
+}
+// Month index reference:
+// January = 0, February = 1, March = 2, ..., December = 11
+`}
+/>
+
+The component also creates a hidden input field. This hidden field has a formatted string representation of the selected date for form submission.
+This field uses the same name prop you provide. It can be accessed via a ref and dom traversing using the ID: `pattern {id}-date`.
+
+## Field visibility
+
+For situations where only month and year are needed, hide the Day field. Do this by supplying a `specificity` prop. Pass in `specificity={DateSpecificity.Month}`.
+
+To collect the year only, pass in `specificity={DateSpecificity.Year}`. The default value is `DateSpecificity.Day`.
+
+<Canvas of={DateMultiInputStories.HideDay} />
+
+## Properties
+
+<Canvas of={DateMultiInputStories.Properties} />
+
+<Controls of={DateMultiInputStories.Properties} />

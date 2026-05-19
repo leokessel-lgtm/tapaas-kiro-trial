@@ -1,0 +1,248 @@
+import { Meta, Canvas, Subtitle, Controls } from '@storybook/addon-docs/blocks'
+import * as ModalStories from './Modal.stories.tsx'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+    ViewportCanvas,
+} from '@snsw-gel/storybook'
+
+<Meta of={ModalStories} />
+
+# Modals
+
+<Subtitle>
+    Appears over a page to interrupt a user’s action. It gives users a focused
+    action or information they need to carry out a task.
+</Subtitle>
+
+## About this component
+
+Modals interrupt a user’s action to give focused information that requires a decision.
+They’re triggered by an action and displayed over the top of a page.
+
+They’re disruptive by design to draw a user’s attention to specific content.
+They must be used rarely and only if necessary.
+
+On desktop, modals are a fixed width. The white modal area has a minimum width of 448px and a maximum width of 708px, depending on screen size and margins.
+On mobile breakpoints they sit at the bottom of the screen.
+
+<MetaComponent
+    componentName='Modal'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/modal'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=1334-4459&t=czjYvMbxHGnrIK8k-4'
+    example={ModalStories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>
+                Use modals to warn users of a potentially destructive,
+                detrimental or irreversible action.
+            </li>
+            <li>
+                Use modals to focus a user’s attention on a new or important
+                task.
+            </li>
+            <li>
+                Explain why the modal has appeared and tell the user why the
+                message is critical.
+            </li>
+            <li>
+                Use questions in headings and body text when confirming an
+                action.
+            </li>
+            <li>
+                Ensure the purpose of the modal is directly relevant to the page
+                or user action.
+            </li>
+            <li>
+                Write clear and actionable copy to grab the user’s attention.
+                The button text must support the action.
+            </li>
+            <li>
+                Start with a verb so the user knows they need to take action.
+            </li>
+            <li>
+                Ensure the action is easy to follow and the user has all the
+                information they need to make a decision.
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>
+                Use modals for supplementary or non-critical information.
+                Instead, use an in-page alert or callout.
+            </li>
+            <li>
+                Display lots of information in modals. Keep them short and
+                concise.
+            </li>
+            <li>
+                Use modals to guide a user through an experience. On-page
+                information should do this.
+            </li>
+            <li>Use modals to capture user details. Instead, use a form.</li>
+            <li>
+                Ask the user to make more than 2 decisions. Instead, give 2
+                options such as ‘Confirm’ or ‘Cancel’.
+            </li>
+            <li>
+                Use modals for complex actions and decisions. The choice should
+                be easy for the user to make without requiring additional
+                information.
+            </li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Usage
+
+To implement a modal correctly, the following props are required or recommended:
+
+<dl>
+    <dt>`title` (required)</dt>
+    <dd>
+        Defines the modal’s purpose. It’s linked to `aria-labelledby` to ensure
+        screen readers announce it.
+    </dd>
+    <dt>`buttons` (required)</dt>
+    <dd>
+        Accepts an array of up to two button objects. By default, the first item
+        is rendered as the primary button and the second as secondary. At least
+        one button is required.
+    </dd>
+    <dt>`description` (optional but recommended) </dt>
+    <dd>
+        Provides a short line of text to give additional context. It appears in
+        the modal body. It’s linked to `aria-describedby` to support screen
+        reader accessibility.
+    </dd>
+</dl>
+
+For longer or custom content (e.g. forms or lists), you can pass content directly into the modal. The content area will automatically scroll if needed. [Learn more about handling long content](#handling-long-content).
+
+<Canvas of={ModalStories.Default} />
+
+## Examples
+
+### Dismissible
+
+Prompts the user by bringing their attention to important information.
+A user can close the modal by selecting the close icon or the page outside the modal’s border.
+The modal window is displayed at a fixed width. An action might not always be required.
+
+Scenarios can include:
+
+- confirming an action a user has taken
+- bringing attention to new or important information.
+
+Passing your close function to the `onClose` prop enables the modal to close in a few different ways:
+
+- click of close button in modal header
+- press Esc on a keyboard
+- click anywhere on the background.
+
+#### Mobile
+
+<ViewportCanvas of={ModalStories.MobileDismissible} height='550px' />
+
+#### Desktop
+
+<Canvas of={ModalStories.Dismissible} />
+
+### Non-dismissible
+
+Warns or brings attention to an important or destructive action.
+Users cannot dismiss or close the modal until an action is taken.
+Typically, you ask users a question to confirm their action.
+
+For example:
+
+- Save your changes?
+- Delete application?
+- Do you want to continue?
+
+Scenarios can include:
+
+1. Asking users if they want to cancel an application, which would result in deleting all application data. Ensuring the user knows that this action cannot be undone.
+2. Confirming a user wants to save their changes. Ensuring the user understands that by exiting, their changes might not be saved.
+3. Double checking if a user wants to delete their data. Ensuring the users knows their data cannot be restored once deleted.
+
+#### Mobile
+
+<ViewportCanvas of={ModalStories.MobileNonDismissible} height='550px' />
+
+#### Desktop
+
+<Canvas of={ModalStories.NonDismissible} />
+
+### Customising buttons
+
+The `buttons` prop accepts all the same props as the [Button](./?path=/docs/buttons--about-buttons) component.
+This allows customisation of button properties such as `variant`, `iconStart` and `disabled`.
+
+We still recommend:
+
+- the first button variant be primary
+- the second variant be secondary
+- buttons not be disabled.
+
+For a list of button properties, go to [Button properties](./?path=/docs/buttons--about-buttons#properties).
+
+For more information on designing layouts with buttons, go to [Button alignment and ordering](./?path=/docs/buttons-alignment-and-ordering--docs).
+
+<Canvas of={ModalStories.CustomisingButtons} />
+
+## Properties
+
+<Canvas sourceState='none' of={ModalStories.Properties} />
+
+<Controls of={ModalStories.Properties} />
+
+## Accessibility
+
+### Keyboard and focus interactions
+
+#### Triggering the modal
+
+When a modal is triggered, the user’s focus is shifted to inside the modal component.
+The focus is trapped until a user takes action. The user cannot interact with any other element on the page.
+The page is greyed out so the user can interact with the modal without distraction.
+
+#### Returning to page
+
+Once an action is taken, the user’s focus is returned to the page.
+This ensures context is not lost after interacting with the modal.
+
+For more information, go to [2.4.3: Focus Order (Level A) - W3C](https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html).
+
+### Hiding background content from screen readers
+
+You should prevent screen readers from accessing content behind the modal. To do this, manually apply `aria-hidden="true"` to the main page content while the modal is open.
+
+We recommend wrapping your page content in a single container element (e.g. a `<div>`). When the modal is shown, toggle `aria-hidden=”true”` on this container to hide the content.
+
+> Important: The modal should not be inside the element with `aria-hidden="true"`, or it will also be hidden from screen readers.
+
+### Handling long content
+
+When content is longer than the modal body, the content area will become scrollable automatically.
+The content area is focusable when scrollable. This allows keyboard users to scroll the content.
+
+## References
+
+Adobe Developer (12 September 2023) ‘[Modal](https://developer.adobe.com/commerce/frontend-core/ui-components/components/modal/)’, accessed 8 January 2025.
+
+Base Web ‘[Modal](https://baseweb.design/components/modal/)’, accessed 21 January 2025.
+
+Department of Agriculture, Fisheries and Forestry ‘[Modal](https://design-system.agriculture.gov.au/components/modal/rationale)’, _Agriculture Design System_, accessed 8 January 2025.
+
+NSW Government ‘[Dialog](https://designsystem.nsw.gov.au/components/dialog/index.html)’, _Design System_, accessed 8 January 2025.
+
+Material Design ‘[Dialogs](https://m3.material.io/components/dialogs/guidelines)’, accessed 8 January 2025.

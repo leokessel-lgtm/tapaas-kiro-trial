@@ -1,0 +1,146 @@
+import { Meta, Canvas, Subtitle, Controls } from '@storybook/addon-docs/blocks'
+import * as stories from './Checkbox.stories'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+
+<Meta of={stories} />
+
+# Checkbox single
+
+<Subtitle>
+    Allows users to select one option. This option may be required before a user
+    progresses.
+</Subtitle>
+
+## About this component
+
+Use the single checkbox when:
+
+- a single ‘yes’ or ‘no’ choice is provided
+- only one option can be selected or deselected
+- the meaning of the option is clear.
+
+To provide users with multiple options, go to [Checkbox list](./?path=/docs/checkbox-list--docs).
+
+<MetaComponent
+    componentName='Checkbox'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/checkbox?ref_type=heads'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=1321-4377&t=sRgeF20KEbG9Gbdh-4'
+    example={stories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>Use where there's only one option to select or deselect.</li>
+            <li>
+                Use to confirm a single action or acknowledge a single
+                statement.
+            </li>
+            <li>
+                Use punctuation (including full stops) in the label when the
+                label is a sentence.
+            </li>
+            <li>
+                Write content that’s short and in plain language. Follow the
+                [Microcopy
+                guidelines](./?path=/docs/content-microcopy--overview).
+            </li>
+            <li>
+                Add ‘(optional)’ at the end of the label when the checkbox is
+                not mandatory.
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>
+                Use double negatives to opt users into things they do not want.
+            </li>
+            <li>Use links within the label.</li>
+            <li>
+                Use a full stop within a hyperlink. Use the full stop after the
+                link.
+            </li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Usage
+
+The Checkbox component provides a complete form input solution. It includes a built-in label, help text, and error message support.
+Unlike some other form components, it does not require wrapping in a Field component.
+
+## Examples
+
+### Help text
+
+To add help text related to the Checkbox, give the help text a unique `id`.
+Link the text to the Checkbox field by using `aria-describedby` props.
+This will ensure that a screen reader will announce the input restrictions when focus moves to the field.
+
+> Note: The `aria-describedby` value should only be one or more ids, space-separated if more than one.
+
+<Canvas of={stories.AdditionalAriaDescribedby} />
+
+### Error messages
+
+Set `hasError={true}` and provide an `errorMessage` to display validation feedback.
+You can find guidance for error content on [Writing for errors](./?path=/docs/content-writing-for-errors--docs).
+
+<Canvas of={stories.WithErrorMessage} />
+
+### Disabled
+
+Disabling the checkbox makes the field invisible to screen reader users. While we don't recommend it, the option is still available to use.
+
+<Canvas of={stories.WithDisabled} />
+
+### Controlled vs uncontrolled
+
+The Checkbox component supports both controlled and uncontrolled usage. Which option you use depends on how you want to manage state.
+
+#### Controlled
+
+In controlled mode, use `checked` and `onChange` props to manage the checkbox state via your own state.
+The `onChange` prop receives the checkbox value when checked, or an empty string when unchecked.
+
+<Canvas of={stories.Controlled} />
+
+#### Uncontrolled
+
+In uncontrolled mode, the component manages its own internal state. Use `defaultChecked` to set the initial checked state.
+The `onChange` prop is optional but can still be used to respond to state changes.
+
+<Canvas of={stories.Uncontrolled} />
+
+### Optional
+
+To indicate that user input is optional, add the `isOptional` prop to the Checkbox.
+
+This will render an `aria-required: false` attribute on the form element and add ‘(optional).’ to the end of the Checkbox label.
+
+> Note: Do not include a full stop as part of the label string when marking the checkbox as optional. A full stop will be automatically included with the appended (optional) text.
+
+<Canvas of={stories.Optional} />
+
+### Changing margin
+
+Use the `margin` prop to remove or increase the default spacing between form group elements.
+Read more about [flexible spacing](./?path=/docs/documentation-migration-notes-from-v1-to-v2--docs#flexible-spacing---form-components) and how it is used.
+
+For instance, the margin has been changed to 56px using `margin={ { top: 'xxxl' } }` in the following example.
+
+<Canvas of={stories.WithChangingMargin} />
+
+## Properties
+
+<Canvas of={stories.Properties} />
+
+<Controls of={stories.Properties} />

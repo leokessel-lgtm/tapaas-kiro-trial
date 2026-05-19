@@ -1,0 +1,130 @@
+import { Meta, Canvas, Subtitle, Controls } from '@storybook/addon-docs/blocks'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+    ViewportCanvas,
+} from '@snsw-gel/storybook'
+import * as stories from './ProgressStepper.stories'
+
+<Meta of={stories} />
+
+# Progress stepper
+
+<Subtitle>
+    A progress stepper displays sequential steps within a multi-step flow.
+</Subtitle>
+
+## About this component
+
+It helps users understand the total steps. It shows their current position and the steps they’ve already completed. By breaking tasks into smaller parts, it reduces cognitive load and improves completion rates.
+
+<MetaComponent
+    componentName='ProgressStepper'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/progress-stepper?ref_type=heads'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=1334-6095&t=IrkAIotsAQEppAd8-4'
+    example={stories.Default}
+/>
+
+> Note: The progress stepper is not exported for individual use. Find out more about its use case within the [Form Header](./?path=/docs/form-header--docs).
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>
+                Use for processes a user won't complete frequently. For example,
+                complex application forms or account setup.
+            </li>
+            <li>
+                Use consistently across a process or transaction. This includes
+                when a user must complete sub-tasks such as proving their
+                identity.
+            </li>
+            <li>Use for processes that have between 4 to 6 steps.</li>
+            <li>Use to indicate sequential steps in a process.</li>
+            <li>
+                Use the step number in a blue bubble for the current step and
+                mark as current.
+            </li>
+            <li>
+                Use ticks to provide a visual cue that a user has completed a
+                step.
+            </li>
+            <li>
+                Include navigation buttons so a user can navigate between the
+                previous and next steps.
+            </li>
+            <li>
+                Label steps simply and succinctly. It's important to communicate
+                to the user the type of information they'll be asked for at each
+                step. Labels set up clear expectations.
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>Display breadcrumbs when using the progress stepper.</li>
+            <li>Use for frequent processes.</li>
+            <li>
+                Use for processes that involve less than 3 steps. Instead,
+                consider using a form.
+            </li>
+            <li>
+                Use if a process involves more than 6 steps. Instead, consider
+                how to simplify or condense a process.
+            </li>
+            <li>
+                Let users progress to a step before completing the previous
+                step.
+            </li>
+            <li>
+                Show all ticks as marked complete when a user is on the final
+                confirmation screen. Instead, display the final step number.
+            </li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Usage
+
+A progress stepper allows you to:
+
+- display the total number of steps involved in a process
+- highlight where the user currently is within a process
+- show how many steps remain and what they are
+- track the steps successfully completed by a user.
+
+## Examples
+
+### Default
+
+It must be placed inside a form header.
+
+- The progress stepper can be used with a minimum of 4 steps or a maximum of 6
+  steps.
+- There should always be one step that is marked as current.
+
+#### Mobile
+
+The step counter shows the current step number and the total amount of steps.
+
+<ViewportCanvas of={stories.ProgressStepperMobile} height='104px' />
+
+#### Desktop
+
+Includes step names. It does not have a step counter.
+
+<Canvas of={stories.Default} />
+
+### Maximum number of steps
+
+<Canvas of={stories.MaximumSteps} />
+
+## Properties
+
+<Canvas of={stories.Properties} name='Properties' />
+
+<Controls of={stories.Properties} />

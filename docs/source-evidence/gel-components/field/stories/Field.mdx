@@ -1,0 +1,136 @@
+import { Meta, Canvas, Subtitle, Controls } from '@storybook/addon-docs/blocks'
+import * as stories from './Field.stories'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+
+<Meta of={stories} />
+
+# Field
+
+<Subtitle>
+    Field adds a label, help text and error message to an input field.
+</Subtitle>
+
+## About this component
+
+The Field component will provide a standard look and feel to singular form input elements. This includes the label, help text and error message connected with them.
+
+For grouping multiple input fields together, instead use [fieldset](./?path=/docs/fieldset--docs).
+
+<MetaComponent
+    componentName='Field'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/field'
+    example={stories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>
+                Use to add a label, help and error message to singular form
+                input element.
+            </li>
+            <li>
+                Use for form inputs such as [text
+                input](./?path=/docs/text-input--docs),
+                [select](./?path=/docs/select--docs) and
+                [textarea](./?path=/docs/textarea--docs).
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>
+                Add multiple form input elements within a single Field. The
+                label is only associated with one control.
+            </li>
+            <li>
+                Use with radio button list, checkbox list or to group multiple
+                text inputs. Instead, use
+                [fieldset](./?path=/docs/fieldset--docs).
+            </li>
+            <li>
+                Include links within labels, help text or error messages. Screen
+                readers will not announce them.
+            </li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Examples
+
+### Default
+
+To ensure the input is accessible, you must provide both an `id` and a `label` to the Field component. The `id` is used to link the input and `label` together. This allows screen readers to announce the field `label` when the user focuses on the input.
+
+<Canvas of={stories.Default} />
+
+### Optional vs required
+
+To indicate that user input is optional on the form element, add the`isOptional` prop to the Field.
+
+This will render an `aria-required: false` attribute on the form element and add ‘(optional)’ to the end of the Field `label`.
+
+By default no `aria-required` attribute is displayed on form element within Field. Please use the `isRequired` prop for now but refer to [Required field changes](./?path=/docs/resources-releases-lifecycle-engineer-migration-guides-required-field-changes--docs).
+
+<Canvas of={stories.Optional} />
+
+### Help text
+
+Help text provides further details and/or what is required and is optional. By default, help text is not shown but it should be used to provide clarity to the user. Read more about [help text](./?path=/docs/content-microcopy-help-text--docs).
+
+The `helpMessage` prop only accepts a `string` value. Do not include links or other semantic elements. They will not be announced by screen readers. For more details, see [Avoid links](#avoid-links).
+
+<Canvas of={stories.WithHelperText} />
+
+### Error messages
+
+The error message lets the user know what the error is and how to fix it. Read more about [Writing for errors](./?path=/docs/content-writing-for-errors--docs).
+
+Find more information on [In-line error messages](./?path=/docs/inline-error--docs).
+
+The `errorMessage` prop only accepts plain strings. Do not include links or other semantic elements. They will not be announced by screen readers. For more details, see [Avoid links](#avoid-links).
+
+<Canvas of={stories.WithErrorText} />
+
+### Changing margin
+
+Use the `margin` prop to remove or increase the default spacing between field elements. Read more about [flexible spacing](./?path=/docs/documentation-migration-notes-from-v1-to-v2--docs#flexible-spacing---form-components) and how it is used.
+
+For instance, the margin has been changed to 56px using `margin={ { top: 'xxxl' } }` in the following example.
+
+<Canvas of={stories.FlexibleSpacing} />
+
+## Properties
+
+<Canvas sourceState='none' of={stories.Properties} />
+
+<Controls of={stories.Properties} />
+
+## Accessibility
+
+### Additional aria-describedby
+
+If the `helpMessage` prop cannot be used to provide further detail, consider programmatically associating the input field with the input restrictions.
+
+Give the input restrictions a unique `id`. Link the input restrictions to the input field by using the `aria-describedby` attribute.
+
+This will ensure that a screen reader will announce the input restrictions when focus moves to the field.
+
+> Note: The `aria-describedby` value should only be `string` of one or a space-separated list of more than one `id`.
+
+<Canvas of={stories.AdditionalAriaDescribedby} />
+
+### Avoid links
+
+Do not include links within labels, help text or error messages.
+
+Screen readers do not read out links within descriptive content. Instead, they read the content as a plain `string` and do not tell users if there's a link present. Therefore, if it has a link, the content becomes inaccessible.
+
+If a link is needed, consider adding it before or after the form field.

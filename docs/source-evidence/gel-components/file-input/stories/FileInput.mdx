@@ -1,0 +1,66 @@
+import {
+    Meta,
+    Canvas,
+    Subtitle,
+    Controls,
+    Unstyled,
+} from '@storybook/addon-docs/blocks'
+import { MetaComponent } from '@snsw-gel/storybook'
+import * as stories from './FileInput.stories'
+
+<Meta of={stories} />
+
+# File input
+
+<Subtitle>Enables users to select files on their device to upload.</Subtitle>
+
+## About this component
+
+This is part of the [file upload](./?path=/docs/fileupload--docs) pattern, which also uses the [uploaded item](./?path=/docs/uploaded-item--docs) and [DropZone](./?path=/docs/dropzone--docs) components.
+File input can be used as a stand-alone component. You can also use it if you need to rebuild file upload for your team’s specific use case.
+
+<MetaComponent
+    componentName='FileInput'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/file-input?ref_type=heads'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=2109-7334&t=ElkGPMBWNj8bnwFS-4'
+    example={stories.Default}
+/>
+
+## Examples
+
+### Default
+
+At a minimum, `id`, `onChange` and `name` props are required for a successful file input button to render.
+
+<Canvas of={stories.Default} />
+
+### Select multiple files
+
+It is possible to allow multiple files to be selected from the file system dialog. This can be done by adding the `multiple` prop.
+
+<Canvas of={stories.SelectMultiple} />
+
+### Accepted files
+
+The `accept` attribute is used to specify the type of file that the server accepts.
+
+The `accept` attribute does not prevent the users on some Operating systems from bypassing the restriction. This makes it important to have extra validation before uploading files.
+
+<Canvas of={stories.AcceptedFiles} />
+
+### Capture
+
+You can also optionally add the `capture` attribute. This indicates to the browser which camera to use for capture of image or video data.
+
+Capture accepts two values:
+
+- `user` - the user-facing camera and/or microphone should be used
+- `environment`- the outward-facing camera and/or microphone should be used.
+
+<Canvas of={stories.Capture} />
+
+## Properties
+
+<Canvas sourceState='none' of={stories.Properties} name='Properties' />
+
+<Controls of={stories.Properties} />

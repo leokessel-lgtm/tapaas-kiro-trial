@@ -1,0 +1,158 @@
+import { Meta, Canvas, Subtitle, Controls } from '@storybook/addon-docs/blocks'
+import * as stories from './Accordion.stories'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+
+<Meta of={stories} />
+
+# Accordion
+
+<Subtitle>
+    Accordions show or hide sections of content. They help users focus by
+    reducing how much information appears on the page at once.
+</Subtitle>
+
+## About this component
+
+Each accordion has a title and a panel that expands to show more detail.
+
+Before choosing an accordion, check if the content works well without one.
+
+<MetaComponent
+    componentName='Accordion, AccordionItem'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/accordion'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=17291-7263'
+    example={stories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>
+                Use accordions to hide optional or detailed information, such as
+                FAQs.
+            </li>
+            <li>Use short, clear titles.</li>
+            <li>
+                Keep the number of accordions to 10 or fewer. If you need more,
+                group them under clear subheadings or split content across
+                pages.
+            </li>
+            <li>Use accordions sparingly.</li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>
+                Use accordions for content all users must read. Break the
+                content into shorter sections instead.
+            </li>
+            <li>
+                Use them to reduce scrolling. Use separate pages or tabs if
+                needed.
+            </li>
+            <li>
+                Put critical information inside an accordion, including alerts
+                or required actions.
+            </li>
+            <li>
+                Use an accordion for very short content (less than one
+                paragraph).
+            </li>
+            <li>
+                Use them when the page includes links that jump to sections.
+            </li>
+            <li>Nest accordions.</li>
+            <li>
+                Put images, tables or other components inside accordion panels.
+            </li>
+            <li>Use accordions when users may print the page.</li>
+            <li>
+                Add icons or extra UI elements inside the accordion heading.
+            </li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Examples
+
+### Single accordion
+
+Add one Accordion item as a child of the Accordion component.
+
+The Accordion item displays the title and the content panel.
+
+- Accordion items use `aria-controls` to link to their panel.
+- When open, `aria-expanded={true}` is applied.
+- When closed, `aria-expanded={false}` is applied.
+- The panel uses `aria-labelledby` and links back to the item's title.
+
+<Canvas of={stories.Default} />
+
+### Multiple items
+
+Add more Accordion items to show multiple accordions.
+
+When two or more items are present, the Accordion shows 'Expand all' and 'Collapse all' buttons.
+
+Provide an accessible name for these buttons using the `name` prop so screen reader users understand their purpose.
+
+<Canvas of={stories.MultipleItems} />
+
+### Controlled vs uncontrolled
+
+The Accordion supports both controlled and uncontrolled use. Choose the mode based on how you want to manage which items are open.
+
+The `expandedKeys` and `defaultExpandedKeys` props accept an array of identifiers that match either the `id` or `key` prop on each Accordion item.
+
+#### Controlled
+
+Use `expandedKeys` and `onExpandedChange` to manage the open state yourself.
+
+<Canvas of={stories.ControlledAccordion} />
+
+#### Uncontrolled
+
+Use `defaultExpandedKeys` to set which items open first. The component manages state after that.
+
+<Canvas of={stories.ExpandByDefault} />
+
+## Properties
+
+<Canvas of={stories.Properties} />
+
+<Controls of={stories.Properties} />
+
+## Accessibility
+
+Accordions add an extra step because users must open each section to see the content. This can make important information easier to miss.
+
+Accordions also print poorly. Users may need to open and print each section separately.
+
+Ensure your pages include print‑friendly styles.
+
+For more information, go to [Accordion pattern (sections with show and hide functionality) - W3C](https://www.w3.org/WAI/ARIA/apg/patterns/accordion).
+
+### Changing heading level
+
+You can change the heading level of an Accordion item title using the `headingElement` prop. The default is `h2`.
+
+Changing the heading level does not change the visual style of the title.
+
+Refer to [Accordion item properties](#properties) for how to use `headingElement`.
+
+<Canvas of={stories.ChangingHeadingElement} name='Changing heading level' />
+
+## References
+
+Gov UK Design System ‘[Accordions](https://design-system.service.gov.uk/components/accordion/)’, accessed 23 July 2023.
+
+Web Accessibility Initiative ‘[Accordion pattern (sections with show and hide functionality)](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)’, accessed 21 November 2023.
+
+Nielson Norman Group (18 May 2018) ‘[Accordions are not always the answer for complex content on desktops](https://www.nngroup.com/articles/accordions-complex-content/)’, accessed 23 July 2023.

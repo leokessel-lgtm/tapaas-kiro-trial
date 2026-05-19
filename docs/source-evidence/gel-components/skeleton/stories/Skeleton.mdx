@@ -1,0 +1,98 @@
+import {
+    Meta,
+    Canvas,
+    Subtitle,
+    Controls,
+    Source,
+} from '@storybook/addon-docs/blocks'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+import * as SkeletonStories from './Skeleton.stories'
+
+<Meta of={SkeletonStories} />
+
+# Skeleton loader
+
+<Subtitle>
+    Used to mimic the look of the page while content is loading.
+</Subtitle>
+
+## About this component
+
+Skeletal loader is a shimmering, rectangle placeholder. It's used when content needs time to load.
+
+It gives the effect of a sudden transition. This effect reduces user uncertainty while waiting for a page to load.
+Use Skeletal loader for components such as text, tiles, images or cards.
+
+Do not use it for interactive UI such as buttons.
+
+<MetaComponent
+    componentName='SkeletonContainer, SkeletonHeading, SkeletonText, SkeletonShape'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/skeleton?ref_type=heads'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=10071-10059&t=yAo2hFDwVjMFzFfH-4'
+    example={SkeletonStories.Example}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>Use for dynamic content.</li>
+            <li>Use when content takes more than one second to load.</li>
+            <li>Use motion to give the effect of a shorter load time.</li>
+            <li>Load from left to right of page.</li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>Use when page is loading a new product.</li>
+            <li>Use motion for longer than 5 seconds of loading.</li>
+            <li>Use for interactive or navigational UI. For example, global nav, buttons, modals and toast notifications.</li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Examples
+
+### Paragraph example: with dynamic content
+
+<Canvas of={SkeletonStories.ParagraphExample} />
+
+### Card example: with dynamic content
+
+<Canvas of={SkeletonStories.CardExample} />
+
+### Table example: with static content
+
+<Canvas of={SkeletonStories.TableExample} />
+
+## Properties
+
+<Canvas of={SkeletonStories.Properties} />
+
+<Controls of={SkeletonStories.Properties} />
+
+## Accessibility
+
+### Usage
+
+Wrap all `SkeletonHeading`, `SkeletonText`, `SkeletonShape` components within a `SkeletonContainer`.
+
+The `SkeletonContainer` includes a visually hidden title. The title is announced by screen readers. It tells users that content is loading.
+It also provides a `div` element with `aria-hidden="true"`, removing that element and all its children from the accessibility tree.
+
+<Source
+    language='js'
+    code={`
+        <SkeletonContainer>
+            <SkeletonHeading />
+            <SkeletonText />
+            <SkeletonShape />
+        </SkeletonContainer>`
+    }
+/>

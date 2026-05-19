@@ -1,0 +1,215 @@
+import {
+    Meta,
+    Story,
+    Canvas,
+    Subtitle,
+    Controls,
+    Anchor,
+    Source,
+} from '@storybook/addon-docs/blocks'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import * as stories from './MoreInfoPanel.stories'
+import {
+    MetaComponent,
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    PanelTheme,
+    ViewportCanvas,
+} from '@snsw-gel/storybook'
+
+<Meta of={stories} />
+
+# More info panel
+
+<Subtitle>
+    Gives the user the option to get in-context details on a specific word,
+    phrase or topic.
+</Subtitle>
+
+## About this component
+
+The More info panel is a user-initiated modal. It gives additional and in-context information on a specific word, phrase or topic.
+
+Users can choose to interact with the panel by selecting the panel trigger element.
+
+While the panel is open, users cannot interact with the content on the main page and a background area covers it. This helps the user to focus on the information within the panel.
+
+When interacting with the panel, a user does not need to action the information. If you need a user to act, consider using a [Non-dismissible modal](./?path=/docs/modals--docs#non-dismissible).
+
+<MetaComponent
+    componentName='MoreInfoPanel'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/more-info-panel'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=29873-137&t=GkNRk47eoU97pDT5-0'
+    example={stories.TextIcon}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>Use for optional or non-critical tasks only.</li>
+            <li>
+                Avoid needlessly interrupting users and disrupting their
+                workflow.
+            </li>
+            <li>Include a text alternative when using the icon triggers.</li>
+            <li>
+                Use to answer common questions. Consider if it would be more
+                appropriate to use an
+                [accordion](./?path=/docs/accordion--docs).
+            </li>
+            <li>Use to define a common technical term.</li>
+            <li>Write short and simple content.</li>
+            <li>For information that’s supplementary and a ‘nice to have.’</li>
+            <li>
+                Repeat the keywords from the linked text in the panel heading.
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>Use for information that’s vital for task completion.</li>
+            <li>
+                Write long, complex content in a More info panel. Instead,
+                consider an external page.
+            </li>
+            <li>
+                Add non-text components such as form fields, images, tables and
+                buttons.
+            </li>
+            <li>Use when a user’s response or input is needed.</li>
+            <li>Use to ‘hide’ content to reduce scroll.</li>
+            <li>Duplicate the information on the main page.</li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Usage
+
+Place the panel trigger element after the content related to information within the panel. It gives users access to more information about the specific topic. Ensure the placement of the trigger stands out.
+
+Ensure the keywords and trigger appear at the end of or after a:
+
+- sentence
+- paragraph
+- form field.
+
+You may want to add a space if placing the trigger after a sentence. This makes it easier for users to scan, digest and select the element.
+
+<Canvas of={stories.Default} />
+
+## Examples
+
+### With visible supporting text
+
+We recommend using a functional icon with visible text. For more information, go to [UI icons - Text alternatives](./?path=/docs/ui-icons--about-ui-icons#when-to-use).
+
+The visible text:
+
+- gives the icon a specific meaning
+- increases the clickable area
+- provides a voice command for people using screen readers.
+
+We suggest using a linked text element before the Info icon.
+
+Other triggers may be used. When selecting a trigger, consider the impact on the user experience.
+
+#### Mobile
+
+<ViewportCanvas of={stories.TextIconMobile} />
+
+#### Desktop
+
+<Canvas of={stories.TextIcon} />
+
+### Without visible supporting text
+
+When using icon-only trigger elements, you must add alt text.
+
+We suggest styling the text alternative with the info icon as ‘More information on [keyword or topic]’.
+
+<PanelTwoColumnContainer>
+    <Panel
+        title='Say'
+        type={PanelType.SUCCESS}
+        theme={PanelTheme.GREY}
+        headingElement='h4'
+    >
+        <ul>
+            <li>More information on how to change the renewal term.</li>
+            <li>More information on Capital Gains Tax.</li>
+        </ul>
+    </Panel>
+    <Panel
+        title="Don't say"
+        type={PanelType.ERROR}
+        theme={PanelTheme.GREY}
+        headingElement='h4'
+    >
+        <ul>
+            <li>More information</li>
+            <li>Click here</li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+<Canvas of={stories.IconOnly} />
+
+## Properties
+
+<Canvas of={stories.Properties} />
+
+<Controls of={stories.Properties} />
+
+## Accessibility
+
+The More info panel can create a disruptive user experience by obscuring content on the main page.
+
+Like accordions, the More info panel hides information. Before using a More info panel, test how your content works without one.
+
+### Keyboard and focus interactions
+
+#### Triggering the panel
+
+When a more info panel is triggered, the user’s focus is shifted to inside the more info panel component.
+The focus is trapped until a user exits the panel. The user cannot interact with any other element on the page.
+The page is greyed out so the user can interact with the panel without distraction.
+
+#### Returning to page
+
+When the panel is closed, the user’s focus is returned to the trigger element.
+This ensures context is not lost after interacting with the more info panel.
+
+For more information, go to [2.4.3: Focus Order (Level A) - W3C](https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html).
+
+### Hiding background content from screen readers
+
+To prevent screen readers from accessing content behind the more info panel, you should manually apply `aria-hidden="true"` to the main page content while the more info panel is open.
+
+We recommend wrapping your page content in a single container element (e.g. a `<div>`). When the more info panel is shown, toggle `aria-hidden=”true”` on this container to hide the content.
+
+> Important: The more info panel should not be inside the element with `aria-hidden="true"`, or it will also be hidden from screen readers.
+
+## References
+
+Carbon Design System ‘[Dialogs](https://carbondesignsystem.com/patterns/dialog-pattern/)’, accessed 17 February 2025.
+
+Daren Lee (29 April 2024)‘[Modal vs non-modal dialogs](https://www.makethingsaccessible.com/guides/modal-vs-non-modal-dialogs/)’, _Make things accessible_, accessed 17 February 2025.
+
+Helio Design System ‘[Flyout](https://helios.hashicorp.design/components/flyout)’, accessed 17 February 2025.
+
+Material Design ‘[Tooltips](https://m2.material.io/components/tooltips)’, accessed 17 February 2025.
+
+NSW Digital Design System ‘[Tooltip](https://designsystem.nsw.gov.au/components/tooltip/index.html)’, accessed 17 February 2025.
+
+Therese Fessenden (23 April 2017) ‘[Modal and nonmodal dialogs: when (and when not) to use them](https://www.nngroup.com/articles/modal-nonmodal-dialog/)’, _Nielsen Norman Group_, accessed 17 February 2025.
+
+Twilio Paste ‘[Side modal](https://paste.twilio.design/components/side-modal)’, accessed 17 February 2025.
+
+Twilio Paste ‘[Side panel](https://paste.twilio.design/components/side-panel)’, accessed 17 February 2025.
+
+W3C Web Accessibility Initiative (WAI) [‘Dialog (modal) pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)’, _World Wide Web Consortium_, accessed 17 February 2025.
+
+W3C Web Accessibility Initiative (WAI) (22 October 2024) ‘[Modal dialog example](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/dialog/)’, accessed 5 March 2025.

@@ -1,0 +1,120 @@
+import { Meta, Canvas, Controls, Subtitle } from '@storybook/addon-docs/blocks'
+import * as stories from './Table.stories'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+    ViewportCanvas,
+} from '@snsw-gel/storybook'
+
+<Meta of={stories} />
+
+# Tables
+
+<Subtitle>Display data and information across rows and columns.</Subtitle>
+
+## About this component
+
+Tables are used to display large amounts of data. They let users easily scan, compare and analyse the information.
+
+When creating a table, present information in a way that’s simple and logical for users to understand. For example, in a hierarchy or organised alphabetically.
+
+<MetaComponent
+    componentName='Table, TableContainer, TableHead, TableHeader, TableBody, TableRow, TableCell'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/table?ref_type=heads'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=10071-10000&t=IrkAIotsAQEppAd8-4'
+    example={stories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>Left align the text data.</li>
+            <li>Right align numerical data.</li>
+            <li>
+                Centre align for unitless, whole numbers, ratios, and
+                dimensions, such as 17, 5:1, or 1920x1080.
+            </li>
+            <li>
+                Left align numerical data for unitless numbers with symbols,
+                such as dollar signs or hash symbols. For example, $300 or #73.
+            </li>
+            <li>Align headers with their related data.</li>
+            <li>
+                Right align the final column, especially for total numbers with
+                decimals. For example, comparing data or call to action.
+            </li>
+            <li>Use a clear and simple table caption (title).</li>
+            <li>
+                Use one to 2 words for column titles. Ensure the title describes
+                the data in that column. In instances where a column title is
+                too long, wrap the text over 2 lines.
+            </li>
+            <li>
+                Ensure that on small screens, the table is sideways scrollable.
+            </li>
+            <li>
+                Use tables where an item has 3 or more columns to show data or
+                comparisons.
+            </li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>Use this component for layout purposes.</li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Examples
+
+### Basic table
+
+A basic table is designed to display simple information. The rows underneath the header row should remain unshaded.
+
+The `title` and `id` props are required. The `id` is used to link the caption (title) and table together. This allows screen readers to announce the table name when the user moves to the table.
+
+#### Mobile
+
+On small screens, the table is sideways scrollable. Refer to [Responsive table layout](#responsive-table-layout).
+
+<ViewportCanvas of={stories.Mobile} height='550px' />
+
+#### Desktop
+
+<Canvas of={stories.Default} />
+
+### With description
+
+You can add a description under the caption (title) to provide more context.
+
+You can use a description to summarise what the table contains. For complex tables, it can be used to explain how data in the table is organised.
+
+> Note: the description is not linked to the table.
+
+<Canvas of={stories.WithDescription} />
+
+### Striped table
+
+Striped tables include shading of alternate rows. They're designed to display complex data sets with multiple columns and text-heavy values.
+
+<Canvas of={stories.Striped} />
+
+## Properties
+
+<Canvas of={stories.Properties} />
+
+<Controls of={stories.Properties} />
+
+## Accessibility
+
+### Responsive table layout
+
+When a table is wider than its container, it’s placed inside a scrollable region. This prevents the page from scrolling in two directions. This approach supports [1.4.10 Reflow (AA) - W3C](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html).
+
+The scrollable region has a clear, accessible name. It uses the table caption as its label and is marked with `role=”region”`. This ensures assistive technologies can identify the table correctly and meets [4.1.2 Name, Role, Value (A) - W3C](https://www.w3.org/WAI/WCAG22/Understanding/name-role-value).
+
+The region receives keyboard focus. When focused, it shows a visible outline and allows users to scroll using arrow keys. This supports keyboard navigation and meets [2.1.1 Keyboard (A) - W3C](https://www.w3.org/WAI/WCAG22/Understanding/keyboard) and [2.4.7 Focus Visible (AA) - W3C](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible).

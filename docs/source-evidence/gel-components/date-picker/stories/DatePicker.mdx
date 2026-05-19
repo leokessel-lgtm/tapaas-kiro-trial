@@ -1,0 +1,130 @@
+import {
+    Meta,
+    Canvas,
+    Controls,
+    Subtitle,
+} from '@storybook/addon-docs/blocks'
+import {
+    Panel,
+    PanelTwoColumnContainer,
+    PanelType,
+    MetaComponent,
+} from '@snsw-gel/storybook'
+import * as DatePickerStories from './DatePicker.stories.tsx'
+
+<Meta of={DatePickerStories} />
+
+# Calendar picker
+
+<Subtitle>
+    The calendar picker lets users select a date. It does this through a pop-up calendar panel.
+</Subtitle>
+
+## About this component
+
+The calendar picker is a date selector component. It uses a calendar icon within an input field.
+Users can select the icon to open a calendar panel for date selection. They can also type the date into the form field.
+
+The calendar picker helps a user select a date in relation to “today’s” date.
+
+It’s useful for people who view dates by weeks, months or years. For example, when a user books an appointment.
+
+<MetaComponent
+    componentName='DatePicker'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/date-picker'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=3405-9622&t=sRgeF20KEbG9Gbdh-4'
+    example={DatePickerStories.Default}
+/>
+
+## Best practices
+
+<PanelTwoColumnContainer>
+    <Panel title='Do' type={PanelType.SUCCESS}>
+        <ul>
+            <li>Use when people need to pick a date in the near future or recent past.</li>
+            <li>Use when the date format required is DD/MM/YYYY.</li>
+            <li>Use the expected date format DD/MM/YYYY in the help text.</li>
+        </ul>
+    </Panel>
+    <Panel title="Don't" type={PanelType.ERROR}>
+        <ul>
+            <li>Use when an expected date is far from “today’s” date or the pre-filled date. Instead, use [Date multi input](./?path=/docs/date-multi-input--docs) or [Date input](./?path=/docs/date-input--docs).</li>
+        </ul>
+    </Panel>
+</PanelTwoColumnContainer>
+
+## Usage
+
+Wrap Input within the Field component. The Field component gives a standard design to related form input elements.
+For example, the label, help text and error message.
+
+- The label tells the user what input is needed.
+- Help text tells the user what’s needed and what’s optional.
+- The error message lets the user know what the error is and how to fix it.
+
+Find out more about the [Field](./?path=/docs/field--docs).
+
+## Examples
+
+### Help text
+
+By default, this component does not have help text. We recommend adding help text to give users context and guidance.
+
+<Canvas of={DatePickerStories.Default} />
+
+### Error messages
+
+For guidance on error content, go to [Writing for errors](./?path=/docs/content-writing-for-errors--docs).
+
+<Canvas of={DatePickerStories.ErrorMessage} />
+
+### Disabled
+
+We don’t recommend disabling the date input. When you disable it, the field becomes invisible to screen reader users.
+However, the option is available to use. If you need a field with read-only text, use the `readOnly` attribute or [Pre-filled data](https://gel.service.nsw.gov.au/user/login?destination=/gel-library/patterns/pre-filled-data).
+
+<Canvas of={DatePickerStories.Disabled} />
+
+### Min and max date range
+
+The `min` and `max` props allow you to define selectable dates on the component.
+Both values must be in ISO-8601 format: YYYY-MM-DD (e.g., min='2022-01-13' max='2025-01-13').
+
+The props restrict date selection within the calendar picker. They do not restrict users from typing any date into the input field.
+
+<Canvas of={DatePickerStories.MinMax} />
+
+### Controlled vs uncontrolled
+
+The DatePicker component supports controlled and uncontrolled usage.
+
+#### Controlled
+
+Use selected and `onSelectionChange` props to manage the:
+- selected date
+- inputValue
+- onInputChange.
+
+The `onSelectionChange` prop triggers when a user selects or enters a valid date. The `onInputChange` prop triggers when a user types in the input field.
+
+##### Controlled onSelectionChange
+
+<Canvas of={DatePickerStories.ControlledOnSelectionChange} />
+
+##### Controlled onInputChange
+
+<Canvas of={DatePickerStories.ControlledOnInputChange} />
+
+#### Uncontrolled
+
+The component manages its own internal state. Use `defaultSelected` to set the initial selected date. Use `defaultInputValue` to set the initial input text value.
+
+When controlling the selected date and input value, the DatePicker won't sync these values. You're responsible for keeping them consistent.
+
+<Canvas of={DatePickerStories.Uncontrolled} />
+
+## Properties
+
+<Canvas of={DatePickerStories.Properties} />
+
+<Controls of={DatePickerStories.Properties} />

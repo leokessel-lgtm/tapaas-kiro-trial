@@ -1,0 +1,80 @@
+import {
+    Meta,
+    Story,
+    Canvas,
+    Subtitle,
+    Controls,
+    Unstyled,
+} from '@storybook/addon-docs/blocks'
+import * as stories from './Pagination.stories'
+import { InPageAlert } from '@snsw-gel/react'
+import { QualityTable, MetaComponent } from '@snsw-gel/storybook'
+
+<Meta of={stories} />
+
+<Unstyled>
+    <InPageAlert variant='info' title='We’re still working on this page'>
+        <p>
+            For more design and usage guidance, go to
+            [Pagination](https://gel.service.nsw.gov.au/gel-library/components/pagination/).
+        </p>
+    </InPageAlert>
+</Unstyled>
+
+# Pagination
+
+<Subtitle>
+    The Pagination component enables the user to select a specific page from a
+    range of pages.
+</Subtitle>
+
+## About this component
+
+We use pagination to divide large volumes of content into pages.
+
+Pagination allows a user to navigate to and through pages within a series . It provides context by showing a user:
+
+- which page their viewing
+- sequential page numbers
+- the total number of pages
+
+It also allows page content to load faster.
+
+We locate pagination under the content of the page.
+
+<MetaComponent
+    componentName='Pagination'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/pagination'
+    gelLink='https://gel.service.nsw.gov.au/gel-library/components/pagination/'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=10071-10030&t=IrkAIotsAQEppAd8-4'
+    example={stories.Default}
+/>
+
+## Default
+
+<Canvas sourceState='none'>
+    <Story story={stories.Default} />
+</Canvas>
+
+Example on how to use the `currentPage` and `onPageChange` props and hooks to change the current pagination.
+`onPageChange` callback returns the page number and an object containing first and last index which are calculated by the page you are on, it only runs when buttons have been clicked on.
+If you need to do some logic on the first page on page load, make sure you set the `currentPage` to `1` which will re trigger the callback and let you handle your results.
+If your `pageSize` prop is `10`, and the `currentPage` is `5` it will return first index `40` and last index `50` which woud indicate you to get results `40` to `50`.
+
+## Setting a current page
+
+Use the `currentPage` prop to set the pagination to a default page, it could be useful when navigating between tabs or pages.
+
+<Canvas>
+    <Story story={stories.CurrentPage} />
+</Canvas>
+
+## Properties
+
+<Canvas>
+    <Story of={stories.Properties} name='Properties' />
+</Canvas>
+
+<Controls of={stories.Properties} />
+
+<QualityTable gel accessible responsive browser testing />

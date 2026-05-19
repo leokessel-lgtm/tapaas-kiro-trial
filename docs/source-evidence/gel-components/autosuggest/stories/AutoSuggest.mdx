@@ -1,0 +1,167 @@
+import {
+    Meta,
+    Canvas,
+    Subtitle,
+    Controls,
+    Source,
+    Unstyled,
+} from '@storybook/addon-docs/blocks'
+import { InPageAlert } from '@snsw-gel/react'
+import { QualityTable, MetaComponent } from '@snsw-gel/storybook'
+import * as stories from './AutoSuggest.stories'
+
+<Meta of={stories} />
+
+<Unstyled>
+    <InPageAlert variant='info' title='We’re still working on this page'>
+        <p>
+            For more design and usage guidance, go to
+            [Autosuggest](https://gel.service.nsw.gov.au/gel-library/components/form-elements/autosuggest/).
+        </p>
+    </InPageAlert>
+</Unstyled>
+
+# Autosuggest
+
+<Subtitle>
+    The Autosuggest component allows users to type into a textbox and view a
+    list of suggested entries.
+</Subtitle>
+
+## About this component
+
+When using autosuggest, a user can start typing and get returns based on their typed criteria. Sometimes, this component is also known as:
+
+- Autocomplete.
+- Combo box.
+- Type-ahead.
+
+Once a user has their results, they can then select the appropriate option from what's displayed.
+
+<MetaComponent
+    componentName='AutoSuggest'
+    gitlabLink='https://gitlab.service.nsw.gov.au/transaction-framework/react-component-library/-/tree/develop/packages/autosuggest?ref_type=heads'
+    gelLink='https://gel.service.nsw.gov.au/gel-library/components/form-elements/autosuggest/'
+    figmaLink='https://www.figma.com/design/77DAYvLV3uiGnMjs9OZqDg/GEL-Web-UI-Kit?node-id=1440-1&t=ElkGPMBWNj8bnwFS-4'
+    example={stories.Default}
+/>
+
+**Note:** refer to the browser console to view examples of the responses returned by `onSelect`, `onChange` and `onBlur` callback functions. The full list of available props can be found in the 'Properties' table at the bottom of this page.
+
+## Default
+
+The default implementation of Autosuggest, where only `suggestions` and `onSelect` are required props.
+
+Wrap Autosuggest in the [`Field`](./?path=/docs/field--docs) component, as you would any other form input from the component library, to provide neccessary accessibility features.
+
+The default filtering logic will search all suggestions based on the input value, using [`String.prototype.startsWith()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith). Please refer to the 'Custom Suggestions Shape' example below to see how this logic can be extended for more complex filtering and suggestions data.
+
+Focus on the input to view all suggestions, and then start typing to filter them.
+
+<Canvas of={stories.Default} />
+
+## Initial value
+
+The Autosuggest component can be initialised with an initial input value and pre-selected suggestion, via the `value` and `suggestion` props.
+
+You'll notice that the input below returns both `value` and `suggestion` via the `onBlur` callback, as the component was initialised with this data.
+
+<Canvas of={stories.InitialValue} name='Initial Value' />
+
+## Reset Selection
+
+The Autosuggest component can be reset by simply passing an empty string into the `value` prop. This will reset the internal `value`, `suggestion` and `method` states, and trigger the `onChange` and `onSelect` callbacks.
+
+<Canvas of={stories.ResetSelection} />
+
+## Custom suggestions
+
+The Autosuggest component is able to handle more complex suggestions structures, such as an array of objects with multiple key/value pairs. Click 'Show code' below to view an example.
+
+In order for the component to know exactly which value(s) to filter by, render in the suggestions dropdown, and return when a user selects a suggestion, three additional functions must be passed in as props.
+
+1. `filterCustomSuggestions`
+    - Handles the filtering of suggestions.
+    - Exposes the input `value`, as typed by the user.
+    - Exposes the `reason` for filtering suggestions:
+        - 'input-changed' - user typed something.
+        - 'input-focused' - input was focused.
+        - 'escape-pressed' - user pressed Escape to clear the input.
+        - 'suggestions-revealed' - user pressed Up or Down to reveal suggestions.
+        - 'suggestion-selected' - user selected a suggestion.
+    - **This function must return an array of filtered suggestions.**
+1. `renderCustomSuggestion`
+    - Handles the rendering of each individual suggestion, to display them in the dropdown list.
+    - Exposes the `suggestion` which, depending on what has been passed in via the `suggestions` prop, is either a string or an object.
+    - **This function must return a string.**
+1. `getCustomSuggestion`
+    - Handles updating of the input value when a suggestion is clicked or navigated to by up/down keys.
+    - Exposes the `suggestion` which, depending on what has been passed in via the `suggestions` prop, is either a string or an object.
+    - **This function must return a string.**
+
+The selected suggestion returned via the various callback functions will always include the complete array item. Therefore if your suggestions is an array of objects, the selected object will be returned in-full.
+
+<Canvas of={stories.CustomSuggestions} />
+
+## Appended suggestion
+
+The Autosuggest component allows an additional, custom suggestion to be appended to the suggestions dropdown. This could be used to display a call-to-action within the suggestions dropdown.
+
+This custom suggestion must adhere to the following shape: `{ label: string | node, onSelect: func }`.
+
+<Canvas of={stories.AppendedSuggestion} />
+
+## Utilities - Countries
+
+A countries utility exists, which allows developers to easily populate Autosuggest with country data. The countries list adheres to ISO 3166, and is updated automatically several times a year.
+
+Remember to import `utils` first:
+
+<Source
+    language='js'
+    code={`
+        import { getCountries } from '@snsw-gel/react';
+    `}
+/>
+
+<Canvas of={stories.Countries} />
+
+## Error messages
+
+The Autosuggest component inherits its error state from the [`Field`](./?path=/docs/field--docs) wrapper, and is styled accordingly.
+
+In the example below an error state has been implemented by leveraging the `onChange` callback function, and checking whether a suggestion has been selected.
+
+<Canvas of={stories.ErrorState} />
+
+## Disabled state
+
+The Autosuggest component can be disabled by passing in the `disabled` prop.
+
+<Canvas of={stories.DisabledState} />
+
+## Optional state
+
+The Autosuggest component should always be wrapped in the [`Field`](./?path=/docs/field--docs) component, which handles the required/optional state logic. You can read more about the `Field` component [here](./?path=/docs/field--docs).
+
+Note that you must still perform your own validation on the input field.
+
+<Canvas of={stories.OptionalState} />
+
+## Minimum search characters
+
+The Autosuggest component can be initialised to only show suggestions after a given number of characters have been entered by the user.
+
+If `minSearchChars` is either excluded or set to `0`, then the suggestions will display upon input focus.
+
+In the example below `minSearchChars` has been set to `3`. Try typing 'Hon' into the input below.
+
+<Canvas of={stories.MinSearchChars} />
+
+## Properties
+
+<Canvas of={stories.Properties} />
+
+<Controls of={stories.Properties} />
+
+<QualityTable gel accessible responsive browser testing />
