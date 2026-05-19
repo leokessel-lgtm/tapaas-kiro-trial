@@ -768,6 +768,62 @@ export function Input({
 }
 
 // ---------------------------------------------------------------------------
+// Textarea
+// API mirrors: @snsw-gel/textarea Textarea
+// Styles from live site: same border/radius as Input, resizable vertically
+// ---------------------------------------------------------------------------
+export interface TextareaProps {
+  id?: string
+  value?: string
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
+  hasError?: boolean
+  disabled?: boolean
+  placeholder?: string
+  maxLength?: number
+  rows?: number
+}
+
+export function Textarea({
+  id,
+  value,
+  onChange,
+  hasError,
+  disabled,
+  placeholder,
+  maxLength,
+  rows = 4,
+}: TextareaProps) {
+  return (
+    <textarea
+      id={id}
+      value={value}
+      onChange={onChange}
+      disabled={disabled}
+      placeholder={placeholder}
+      maxLength={maxLength}
+      rows={rows}
+      style={{
+        display: 'block',
+        width: '100%',
+        maxWidth: '100%',
+        padding: '0.825rem',
+        fontSize: '1rem',
+        fontFamily: 'var(--gel-font-body)',
+        border: hasError ? '2px solid var(--gel-color-error)' : '2px solid #646974',
+        borderRadius: '6px',
+        outline: 'none',
+        boxSizing: 'border-box',
+        color: 'var(--gel-color-text)',
+        backgroundColor: 'var(--gel-color-white)',
+        resize: 'vertical',
+        lineHeight: 1.5,
+      }}
+      data-gelweb-component='textarea'
+    />
+  )
+}
+
+// ---------------------------------------------------------------------------
 // Select
 // API mirrors: @snsw-gel/select Select
 // Styles from live site: same as Input + custom chevron SVG background

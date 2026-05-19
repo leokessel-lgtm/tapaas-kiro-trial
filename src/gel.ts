@@ -32,5 +32,6 @@ export {
   InPageAlert,
   Field,
   Input,
+  Textarea,
   Select,
 } from './gel-preview'

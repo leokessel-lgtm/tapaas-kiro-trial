@@ -12,6 +12,10 @@ Use these rules when building repeatable Service NSW transaction skeletons from 
 
 Use this order unless the supplied transaction evidence clearly requires another sequence.
 
+## Multi-step transactions
+
+For transactions with more than 5 steps, insert additional form input pages between Privacy and Declaration. Each form page maps to template `8410:37703`. Keep each page focused on one topic (e.g. applicant, contact, details, supporting information). The step indicator should show the total step count accurately.
+
 ## Page rules
 
 - Use mock data only unless a safe backend path already exists.

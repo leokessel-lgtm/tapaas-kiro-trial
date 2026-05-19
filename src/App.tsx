@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { ServiceNSWChrome } from './layout-preview/ServiceNSWChrome'
 import { TapaasTransactionSkeleton } from './TapaasTransactionSkeleton'
 import { TrialPermitSkeleton } from './TrialPermitSkeleton'
+import { CommunityEventPermitSkeleton } from './CommunityEventPermitSkeleton'
 
-type ActiveSkeleton = 'vehicle' | 'permit'
+type ActiveSkeleton = 'vehicle' | 'permit' | 'event'
 
 const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; subtitle: string }> = {
   vehicle: {
@@ -16,10 +17,15 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
     title: 'Apply for a trial permit',
     subtitle: 'A non-production trial permit application skeleton using mock data only.',
   },
+  event: {
+    label: 'TaPaaS x Kiro trial',
+    title: 'Community event permit',
+    subtitle: 'A non-production 8-step transaction skeleton demonstrating longer application flows.',
+  },
 }
 
 export function App() {
-  const [active, setActive] = useState<ActiveSkeleton>('permit')
+  const [active, setActive] = useState<ActiveSkeleton>('event')
   const config = skeletonConfig[active]
 
   return (
@@ -61,9 +67,26 @@ export function App() {
         >
           Trial permit skeleton
         </button>
+        <button
+          type='button'
+          onClick={() => setActive('event')}
+          style={{
+            padding: '0.5rem 1rem',
+            fontSize: '0.875rem',
+            fontFamily: 'var(--gel-font-body)',
+            border: '1px solid var(--gel-color-border-dark, #646974)',
+            borderRadius: '4px',
+            background: active === 'event' ? 'var(--gel-color-primary)' : 'transparent',
+            color: active === 'event' ? 'var(--gel-color-white)' : 'var(--gel-color-text)',
+            cursor: 'pointer',
+          }}
+        >
+          Community event permit
+        </button>
       </div>
       {active === 'vehicle' && <TapaasTransactionSkeleton />}
       {active === 'permit' && <TrialPermitSkeleton />}
+      {active === 'event' && <CommunityEventPermitSkeleton />}
     </ServiceNSWChrome>
   )
 }

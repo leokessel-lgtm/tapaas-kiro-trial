@@ -37,3 +37,13 @@ These are **trial-only composites** in `src/tapaas-preview/`. They are not real 
 - Do not add payment, identity proofing, backend calls or policy logic to the trial skeleton.
 - Every coded TaPaaS preview component must map to a source node and have a maturity label.
 
+## Composition patterns
+
+These patterns use existing GEL preview components without creating new TaPaaS composites.
+
+| Pattern | Components used | Classification | Maturity | Notes |
+|---|---|---|---|---|
+| Address input group | `Field` + `Input` (street, suburb, postcode) + `Select` (state) in a `fieldset` | GEL-aligned | draft | Wrap in fieldset with legend. No backend address lookup. |
+| Date input (3-field) | 3 × `Input` (day xxs, month xxs, year sm) in a `fieldset` with legend | GEL-aligned | draft | Standard government date pattern. No date picker. No age/eligibility logic. |
+| Textarea | `Textarea` GEL preview component | GEL-aligned | needs engineer review | Source: `@snsw-gel/textarea`. Added in v0.3 for multi-line text input. |
+

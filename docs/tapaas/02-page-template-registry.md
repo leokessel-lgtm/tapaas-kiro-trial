@@ -12,6 +12,18 @@ Use this page order for the v0.3 trial skeleton:
 
 The skeleton is intentionally generic. It should help Kiro users build simple repeatable transactions, not recreate every TaPaaS state.
 
+## Multi-page form input guidance
+
+For transactions with more than 5 steps, use multiple form input pages between Privacy and Declaration. Each form page maps to template `8410:37703`.
+
+Keep each page focused on one topic:
+- Applicant details (name, date of birth)
+- Contact details (email, phone, address)
+- Service-specific details (event, vehicle, permit type)
+- Supporting information (free text, document confirmation)
+
+This pattern scales to 6–10 steps without requiring new components or templates.
+
 ## Page templates
 
 | Template | Source node | Maturity | Role in skeleton | Notes |
