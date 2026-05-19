@@ -631,3 +631,130 @@ export function ProgressStepper({ stepsList }: ProgressStepperProps) {
     </div>
   )
 }
+
+// ---------------------------------------------------------------------------
+// MoreInfoPanel (simplified inline disclosure)
+// Source evidence: docs/source-evidence/gel-components/more-info-panel/
+// GEL source uses a sliding modal dialog with focus lock and portal.
+// This preview implements the simpler inline disclosure pattern for contextual
+// help, avoiding modal focus management which needs engineer review.
+// Use for optional, non-critical contextual help near a field or section.
+// Classification: GEL-aligned. Maturity: needs engineer review.
+// ---------------------------------------------------------------------------
+export interface MoreInfoPanelProps {
+  triggerText: string
+  title: string
+  children: React.ReactNode
+}
+
+export function MoreInfoPanel({ triggerText, title, children }: MoreInfoPanelProps) {
+  const [isOpen, setIsOpen] = React.useState(false)
+  const panelId = `more-info-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
+
+  return (
+    <div className='gel-more-info-panel' data-gelweb-component='more-info-panel' style={{ margin: '0.5rem 0 1rem' }}>
+      <button
+        type='button'
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+        aria-controls={panelId}
+        className='gel-more-info-panel__trigger'
+      >
+        <svg width='16' height='16' viewBox='0 0 16 16' fill='currentColor' aria-hidden='true' style={{ marginRight: '0.375rem', verticalAlign: 'middle' }}>
+          <path d='M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0Zm.8 12H7.2V7.2h1.6V12Zm0-6.4H7.2V4h1.6v1.6Z'/>
+        </svg>
+        {triggerText}
+      </button>
+      {isOpen && (
+        <div id={panelId} className='gel-more-info-panel__content' role='region' aria-label={title}>
+          <strong style={{ display: 'block', marginBottom: '0.5rem' }}>{title}</strong>
+          {children}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Accordion + AccordionItem
+// Source evidence: docs/source-evidence/gel-components/accordion/
+// Uses button-based headings with aria-expanded and aria-controls.
+// Supports multiple items with open/close toggle.
+// Classification: GEL-aligned. Maturity: needs engineer review.
+// ---------------------------------------------------------------------------
+export interface AccordionItemData {
+  id?: string
+  title: string
+  children: React.ReactNode
+  headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  defaultExpanded?: boolean
+}
+
+export interface AccordionProps {
+  id: string
+  items: AccordionItemData[]
+  name?: string
+}
+
+export function Accordion({ id, items, name = 'sections' }: AccordionProps) {
+  const [openItems, setOpenItems] = React.useState<Set<string>>(() => {
+    const defaults = new Set<string>()
+    items.forEach((item, i) => { if (item.defaultExpanded) defaults.add(item.id || `${id}-${i}`) })
+    return defaults
+  })
+
+  function toggle(itemId: string) {
+    setOpenItems(prev => {
+      const next = new Set(prev)
+      if (next.has(itemId)) { next.delete(itemId) } else { next.add(itemId) }
+      return next
+    })
+  }
+
+  return (
+    <div id={id} data-gelweb-component='accordion-group' className='gel-accordion'>
+      {items.length >= 2 && (
+        <div className='gel-accordion__toggles'>
+          <button type='button' className='gel-accordion__toggle-btn' onClick={() => setOpenItems(new Set(items.map((item, i) => item.id || `${id}-${i}`)))} disabled={openItems.size === items.length}>
+            Open all <span className='gel-sr-only'>{name}</span>
+          </button>
+          <button type='button' className='gel-accordion__toggle-btn' onClick={() => setOpenItems(new Set())} disabled={openItems.size === 0}>
+            Close all <span className='gel-sr-only'>{name}</span>
+          </button>
+        </div>
+      )}
+      {items.map((item, i) => {
+        const itemId = item.id || `${id}-${i}`
+        const buttonId = `${itemId}-button`
+        const panelId = `${itemId}-panel`
+        const isOpen = openItems.has(itemId)
+        const HeadingTag = (item.headingLevel || 'h3') as React.ElementType
+
+        return (
+          <div key={itemId} className='gel-accordion__item' data-gelweb-component='accordion-item'>
+            <HeadingTag style={{ margin: 0 }}>
+              <button
+                type='button'
+                id={buttonId}
+                className='gel-accordion__button'
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+                onClick={() => toggle(itemId)}
+              >
+                <span>{item.title}</span>
+                <svg width='16' height='16' viewBox='0 0 16 16' fill='currentColor' aria-hidden='true' style={{ transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
+                  <path d='M8 11.4L1.3 4.7l1.4-1.4L8 8.6l5.3-5.3 1.4 1.4z'/>
+                </svg>
+              </button>
+            </HeadingTag>
+            <div id={panelId} className={`gel-accordion__content ${isOpen ? 'gel-accordion__content--open' : ''}`} aria-labelledby={buttonId} hidden={!isOpen}>
+              <div className='gel-accordion__content-padding'>
+                {item.children}
+              </div>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}

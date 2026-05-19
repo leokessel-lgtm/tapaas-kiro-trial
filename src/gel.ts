@@ -35,4 +35,6 @@ export {
   Textarea,
   Select,
   ProgressStepper,
+  MoreInfoPanel,
+  Accordion,
 } from './gel-preview'
