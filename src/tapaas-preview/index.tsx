@@ -82,7 +82,7 @@ export function ReviewInfoCard({
           {title}
         </Heading>
         {onEdit && (
-          <TextLink onClick={onEdit}>Edit</TextLink>
+          <TextLink onClick={onEdit}>Edit <span className='gel-sr-only'>{title}</span></TextLink>
         )}
       </div>
       {sections.map((section) => (
