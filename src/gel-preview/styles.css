@@ -1,0 +1,66 @@
+/**
+ * Preview-only local styles.
+ * Replace src/gel.ts exports with @snsw-gel/react exports when registry access is available.
+ *
+ * These styles approximate GEL's visual language for prototyping only.
+ * CSS variables sourced from the live service.nsw.gov.au site (Verified).
+ * They do not replicate GEL's design tokens, theming, or accessibility behaviour.
+ */
+
+:root {
+  --gel-font-body: 'Public Sans', Arial, sans-serif;
+  --gel-color-text: #242934;
+  --gel-color-text-grey: #646974;
+  --gel-color-link: #002664;
+  --gel-color-link-hover: #002664;
+  --gel-color-error: #b81237;
+  --gel-color-error-bg: #f7e7eb;
+  --gel-color-border: #dee3e5;
+  --gel-color-border-dark: #646974;
+  --gel-color-primary: #d7153a;
+  --gel-color-primary-hover: #b02831;
+  --gel-color-white: #ffffff;
+  --gel-color-focus: #0085b3;
+  --gel-spacing-xs: 0.5rem;
+  --gel-spacing-sm: 1rem;
+  --gel-spacing-md: 1.5rem;
+  --gel-spacing-lg: 2rem;
+  --gel-spacing-xl: 2.5rem;
+  --gel-radius: 6px;
+  --gel-form-height: 48px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--gel-font-body);
+  font-size: 100%;
+  line-height: 1.5;
+  color: var(--gel-color-text);
+  box-sizing: border-box;
+  height: 100%;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--gel-color-focus);
+  outline-offset: 2px;
+}
+
+.snsw-preview-control-input:focus-visible + label span {
+  outline: 3px solid var(--gel-color-focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 479px) {
+  button[type="button"],
+  button[type="submit"] {
+    width: 100%;
+    min-height: 44px;
+  }
+}
