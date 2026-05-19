@@ -72,7 +72,7 @@ Create a minimal Vite React TypeScript app shell:
 - package.json with dev/build scripts
 
 Use only public dependencies:
-- react, react-dom, styled-components, vite, @vitejs/plugin-react, typescript
+- react, react-dom, vite, @vitejs/plugin-react, typescript
 
 Do not install @snsw-gel/react.
 ```
