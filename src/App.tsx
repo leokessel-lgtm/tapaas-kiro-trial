@@ -4,8 +4,9 @@ import { TapaasTransactionSkeleton } from './TapaasTransactionSkeleton'
 import { TrialPermitSkeleton } from './TrialPermitSkeleton'
 import { CommunityEventPermitSkeleton } from './CommunityEventPermitSkeleton'
 import { CommunityStallPermitSkeleton } from './CommunityStallPermitSkeleton'
+import { AccessibleMarketPermitSkeleton } from './AccessibleMarketPermitSkeleton'
 
-type ActiveSkeleton = 'vehicle' | 'permit' | 'event' | 'stall'
+type ActiveSkeleton = 'vehicle' | 'permit' | 'event' | 'stall' | 'market'
 
 const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; subtitle: string }> = {
   vehicle: {
@@ -27,6 +28,11 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
     label: 'TaPaaS x Kiro trial',
     title: 'Community stall permit',
     subtitle: 'A non-production 8-step repeatability test using the same patterns as the event permit.',
+  },
+  market: {
+    label: 'TaPaaS x Kiro trial',
+    title: 'Accessible market permit',
+    subtitle: 'A non-production 9-step skeleton with progress stepper, conditional questions and details card.',
   },
 }
 
@@ -109,11 +115,29 @@ export function App() {
         >
           Community stall permit
         </button>
+        <button
+          type='button'
+          onClick={() => setActive('market')}
+          aria-pressed={active === 'market'}
+          style={{
+            padding: '0.5rem 1rem',
+            fontSize: '0.875rem',
+            fontFamily: 'var(--gel-font-body)',
+            border: '1px solid var(--gel-color-border-dark, #646974)',
+            borderRadius: '4px',
+            background: active === 'market' ? 'var(--gel-color-primary)' : 'transparent',
+            color: active === 'market' ? 'var(--gel-color-white)' : 'var(--gel-color-text)',
+            cursor: 'pointer',
+          }}
+        >
+          Accessible market permit
+        </button>
       </div>
       {active === 'vehicle' && <TapaasTransactionSkeleton />}
       {active === 'permit' && <TrialPermitSkeleton />}
       {active === 'event' && <CommunityEventPermitSkeleton />}
       {active === 'stall' && <CommunityStallPermitSkeleton />}
+      {active === 'market' && <AccessibleMarketPermitSkeleton />}
     </ServiceNSWChrome>
   )
 }
