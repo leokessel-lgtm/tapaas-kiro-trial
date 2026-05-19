@@ -12,6 +12,7 @@ The files here are copies of the current extracted TaPaaS evidence from `docs/ta
 | `01-component-registry.md` | Component registry, classification and maturity labels |
 | `02-page-template-registry.md` | Page template registry for transaction skeletons |
 | `03-figma-evidence-notes.md` | Figma evidence notes, node IDs, gaps and warnings |
+| `05-component-template-relationship-map.md` | Component-template relationship guidance for Kiro component selection |
 
 ## Important boundaries
 
@@ -34,3 +35,4 @@ The current coded TaPaaS preview layer lives in `src/tapaas-preview/` and includ
 
 Use `docs/tapaas/04-evidence-log.md` for current implementation evidence and retest history.
 
+Use `docs/tapaas/05-component-template-relationship-map.md` when deciding which components should be used for a template-driven transaction.
