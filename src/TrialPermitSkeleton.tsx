@@ -1,4 +1,5 @@
-import { useMemo, useRef, useState } from 'react'
+import { useState, useCallback } from 'react'
+import { useTransactionStep } from './useTransactionStep'
 import {
   Checkbox,
   ErrorSummary,
@@ -31,23 +32,17 @@ const stepLabels: Record<PermitStep, string> = {
 }
 
 export function TrialPermitSkeleton() {
-  const [step, setStep] = useState<PermitStep>('privacy')
-  const [attempted, setAttempted] = useState(false)
   const [privacyAgreed, setPrivacyAgreed] = useState(false)
   const [applicantName, setApplicantName] = useState('')
   const [permitType, setPermitType] = useState('')
   const [declarationAccepted, setDeclarationAccepted] = useState(false)
-  const [exitNotice, setExitNotice] = useState(false)
-  const errorSummaryRef = useRef<HTMLDivElement>(null)
-  const exitRef = useRef<HTMLDivElement>(null)
 
-  const errors = useMemo(() => {
-    if (!attempted) return []
+  const getErrors = useCallback((s: PermitStep) => {
     const errs: { id: string; text: string }[] = []
-    if (step === 'privacy' && !privacyAgreed) {
+    if (s === 'privacy' && !privacyAgreed) {
       errs.push({ id: 'privacy-confirmation', text: 'Confirm that you have read the privacy information' })
     }
-    if (step === 'input') {
+    if (s === 'input') {
       if (!applicantName.trim()) {
         errs.push({ id: 'applicant-name', text: 'Enter your full name' })
       }
@@ -55,64 +50,13 @@ export function TrialPermitSkeleton() {
         errs.push({ id: 'permit-type', text: 'Select a permit type' })
       }
     }
-    if (step === 'declaration' && !declarationAccepted) {
+    if (s === 'declaration' && !declarationAccepted) {
       errs.push({ id: 'declaration-accepted', text: 'Accept the declaration to continue' })
     }
     return errs
-  }, [attempted, applicantName, declarationAccepted, permitType, privacyAgreed, step])
+  }, [privacyAgreed, applicantName, permitType, declarationAccepted])
 
-  function goBack() {
-    setAttempted(false)
-    const currentIndex = stepOrder.indexOf(step)
-    setStep(stepOrder[Math.max(currentIndex - 1, 0)])
-    window.setTimeout(() => {
-      window.scrollTo(0, 0)
-      const heading = document.querySelector('[id$="-heading"]') as HTMLElement
-      if (heading) { heading.tabIndex = -1; heading.focus() }
-    }, 0)
-  }
-
-  function goNext() {
-    setAttempted(true)
-    const nextErrors = errorsForStep()
-    if (nextErrors.length > 0) {
-      window.setTimeout(() => errorSummaryRef.current?.focus(), 0)
-      return
-    }
-    setAttempted(false)
-    const currentIndex = stepOrder.indexOf(step)
-    const nextStep = stepOrder[Math.min(currentIndex + 1, stepOrder.length - 1)]
-    setStep(nextStep)
-    window.setTimeout(() => {
-      window.scrollTo(0, 0)
-      if (nextStep === 'confirmation') {
-        const status = document.querySelector('[role="status"]') as HTMLElement
-        if (status) { status.tabIndex = -1; status.focus() }
-      } else {
-        const heading = document.querySelector('[id$="-heading"]') as HTMLElement
-        if (heading) { heading.tabIndex = -1; heading.focus() }
-      }
-    }, 0)
-  }
-
-  function errorsForStep() {
-    const errs: { id: string; text: string }[] = []
-    if (step === 'privacy' && !privacyAgreed) {
-      errs.push({ id: 'privacy-confirmation', text: 'Confirm that you have read the privacy information' })
-    }
-    if (step === 'input') {
-      if (!applicantName.trim()) {
-        errs.push({ id: 'applicant-name', text: 'Enter your full name' })
-      }
-      if (!permitType) {
-        errs.push({ id: 'permit-type', text: 'Select a permit type' })
-      }
-    }
-    if (step === 'declaration' && !declarationAccepted) {
-      errs.push({ id: 'declaration-accepted', text: 'Accept the declaration to continue' })
-    }
-    return errs
-  }
+  const { step, attempted, errors, errorSummaryRef, exitRef, exitNotice, goBack, goNext, handleExit, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
 
   return (
     <div>
@@ -143,7 +87,7 @@ export function TrialPermitSkeleton() {
           hasError={attempted && !privacyAgreed}
           onChange={setPrivacyAgreed}
           onContinue={goNext}
-          onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }}
+          onExit={handleExit}
         />
       )}
 
@@ -157,7 +101,7 @@ export function TrialPermitSkeleton() {
           onPermitChange={setPermitType}
           onBack={goBack}
           onContinue={goNext}
-          onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }}
+          onExit={handleExit}
         />
       )}
 
@@ -168,7 +112,7 @@ export function TrialPermitSkeleton() {
           onChange={setDeclarationAccepted}
           onBack={goBack}
           onContinue={goNext}
-          onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }}
+          onExit={handleExit}
         />
       )}
 
@@ -178,7 +122,7 @@ export function TrialPermitSkeleton() {
           permitType={permitType}
           onBack={goBack}
           onSubmit={goNext}
-          onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }}
+          onExit={handleExit}
         />
       )}
 
@@ -187,13 +131,11 @@ export function TrialPermitSkeleton() {
           applicantName={applicantName}
           permitType={permitType}
           onStartAgain={() => {
-            setAttempted(false)
+            reset()
             setPrivacyAgreed(false)
             setApplicantName('')
             setPermitType('')
             setDeclarationAccepted(false)
-            setExitNotice(false)
-            setStep('privacy')
           }}
         />
       )}

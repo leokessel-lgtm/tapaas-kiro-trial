@@ -1,4 +1,5 @@
-import { useMemo, useRef, useState } from 'react'
+import { useState, useCallback } from 'react'
+import { useTransactionStep } from './useTransactionStep'
 import {
   Checkbox,
   ErrorSummary,
@@ -94,55 +95,14 @@ const initialState: FormState = {
 }
 
 export function CommunityEventPermitSkeleton() {
-  const [step, setStep] = useState<EventStep>('privacy')
-  const [attempted, setAttempted] = useState(false)
   const [form, setForm] = useState<FormState>(initialState)
-  const [exitNotice, setExitNotice] = useState(false)
-  const errorSummaryRef = useRef<HTMLDivElement>(null)
-  const exitRef = useRef<HTMLDivElement>(null)
 
   function update(patch: Partial<FormState>) {
     setForm((prev) => ({ ...prev, ...patch }))
   }
 
-  const errors = useMemo(() => {
-    if (!attempted) return []
-    return errorsForStep(step, form)
-  }, [attempted, step, form])
-
-  function goBack() {
-    setAttempted(false)
-    const i = stepOrder.indexOf(step)
-    setStep(stepOrder[Math.max(i - 1, 0)])
-    window.setTimeout(() => {
-      window.scrollTo(0, 0)
-      const heading = document.querySelector('[id$="-heading"]') as HTMLElement
-      if (heading) { heading.tabIndex = -1; heading.focus() }
-    }, 0)
-  }
-
-  function goNext() {
-    setAttempted(true)
-    const errs = errorsForStep(step, form)
-    if (errs.length > 0) {
-      window.setTimeout(() => errorSummaryRef.current?.focus(), 0)
-      return
-    }
-    setAttempted(false)
-    const i = stepOrder.indexOf(step)
-    const nextStep = stepOrder[Math.min(i + 1, stepOrder.length - 1)]
-    setStep(nextStep)
-    window.setTimeout(() => {
-      window.scrollTo(0, 0)
-      if (nextStep === 'confirmation') {
-        const status = document.querySelector('[role="status"]') as HTMLElement
-        if (status) { status.tabIndex = -1; status.focus() }
-      } else {
-        const heading = document.querySelector('[id$="-heading"]') as HTMLElement
-        if (heading) { heading.tabIndex = -1; heading.focus() }
-      }
-    }, 0)
-  }
+  const getErrors = useCallback((s: EventStep) => errorsForStep(s, form), [form])
+  const { step, attempted, errors, errorSummaryRef, exitRef, exitNotice, goBack, goNext, handleExit, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
 
   return (
     <div>
@@ -162,28 +122,28 @@ export function CommunityEventPermitSkeleton() {
       <ErrorSummary ref={errorSummaryRef} errors={errors} />
 
       {step === 'privacy' && (
-        <PrivacyStep form={form} attempted={attempted} update={update} onContinue={goNext} onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }} />
+        <PrivacyStep form={form} attempted={attempted} update={update} onContinue={goNext} onExit={handleExit} />
       )}
       {step === 'applicant' && (
-        <ApplicantStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }} />
+        <ApplicantStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={handleExit} />
       )}
       {step === 'contact' && (
-        <ContactStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }} />
+        <ContactStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={handleExit} />
       )}
       {step === 'permit' && (
-        <PermitStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }} />
+        <PermitStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={handleExit} />
       )}
       {step === 'supporting' && (
-        <SupportingStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }} />
+        <SupportingStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={handleExit} />
       )}
       {step === 'declaration' && (
-        <DeclarationStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }} />
+        <DeclarationStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={handleExit} />
       )}
       {step === 'review' && (
-        <ReviewStep form={form} onBack={goBack} onSubmit={goNext} onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }} />
+        <ReviewStep form={form} onBack={goBack} onSubmit={goNext} onExit={handleExit} />
       )}
       {step === 'confirmation' && (
-        <ConfirmationStep form={form} onStartAgain={() => { setAttempted(false); setForm(initialState); setExitNotice(false); setStep('privacy') }} />
+        <ConfirmationStep form={form} onStartAgain={() => { reset(); setForm(initialState) }} />
       )}
 
       {exitNotice && (
