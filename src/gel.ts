@@ -34,5 +34,4 @@ export {
   Input,
   Textarea,
   Select,
-  ProgressStepper,
 } from './gel-preview'

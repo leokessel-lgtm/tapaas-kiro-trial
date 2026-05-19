@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useRef, useState, useMemo } from 'react'
 import {
   Checkbox,
   ErrorSummary,
@@ -10,7 +10,6 @@ import {
   Select,
   Textarea,
   TextLink,
-  ProgressStepper,
 } from './gel'
 import {
   ConfirmationHeader,
@@ -112,16 +111,6 @@ export function AccessibleMarketPermitSkeleton() {
     return errorsForStep(step, form)
   }, [attempted, step, form])
 
-  const progressSteps = useMemo(() => {
-    const currentIndex = stepOrder.indexOf(step)
-    return stepOrder
-      .filter((s) => s !== 'confirmation')
-      .map((s, i) => ({
-        label: stepLabels[s],
-        status: (i < currentIndex ? 'completed' : i === currentIndex ? 'current' : 'upcoming') as 'completed' | 'current' | 'upcoming',
-      }))
-  }, [step])
-
   function focusHeading() {
     window.setTimeout(() => {
       window.scrollTo(0, 0)
@@ -174,12 +163,9 @@ export function AccessibleMarketPermitSkeleton() {
       </div>
 
       {step !== 'confirmation' && (
-        <>
-          <ProgressStepper steps={progressSteps} />
-          <p aria-live='polite' style={{ color: 'var(--gel-color-text-grey)', marginTop: 0 }}>
-            Step {stepOrder.indexOf(step) + 1} of {stepOrder.length}: {stepLabels[step]}
-          </p>
-        </>
+        <p aria-live='polite' style={{ color: 'var(--gel-color-text-grey)', marginTop: 0 }}>
+          Step {stepOrder.indexOf(step) + 1} of {stepOrder.length}: {stepLabels[step]}
+        </p>
       )}
 
       <ErrorSummary ref={errorSummaryRef} errors={errors} />

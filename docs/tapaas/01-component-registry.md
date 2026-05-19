@@ -46,7 +46,6 @@ These patterns use existing GEL preview components without creating new TaPaaS c
 | Address input group | `Field` + `Input` (street, suburb, postcode) + `Select` (state) in a `fieldset` | GEL-aligned | draft | Wrap in fieldset with legend. No backend address lookup. |
 | Date input (3-field) | 3 × `Input` (day xxs, month xxs, year sm) in a `fieldset` with legend | GEL-aligned | draft | Standard government date pattern. No date picker. No age/eligibility logic. |
 | Textarea | `Textarea` GEL preview component | GEL-aligned | needs engineer review | Source: `@snsw-gel/textarea`. Added in v0.3 for multi-line text input. |
-| Progress stepper | `ProgressStepper` GEL preview component | GEL-aligned | needs engineer review | Visual orientation for 6+ step flows. Uses ordered list with `aria-current="step"`. Does not replace the aria-live text indicator. Mobile-safe with flex-wrap. |
 | Details card | `DetailsCard` TaPaaS preview composite | TaPaaS-specific | draft | Read-only contextual summary card. Source evidence: Details card single `2413:787`. Configurable heading level. Optional status label and action link. |
 | Conditional question panel | `ConditionalQuestionPanel` TaPaaS preview composite | TaPaaS-specific | needs engineer review | Shows extra fields based on a radio answer. Uses fieldset/legend. Conditional content appears after the radio group. Validation blocks when conditional branch requires input. |
 
