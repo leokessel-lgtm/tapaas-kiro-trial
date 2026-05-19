@@ -9,7 +9,7 @@ import {
   Select,
   Textarea,
   TextLink,
-  MoreInfoPanel,
+  MoreInfoDisclosure,
   Accordion,
 } from './gel'
 import {
@@ -276,14 +276,14 @@ function VenueStep({ form, attempted, update, onBack, onContinue, onExit }: Step
           ]}
         />
       </Field>
-      <MoreInfoPanel triggerText='Help choosing a venue type' title='Venue type guidance'>
+      <MoreInfoDisclosure triggerText='Help choosing a venue type' title='Venue type guidance'>
         <ul>
           <li>Use meeting room for small group sessions.</li>
           <li>Use hall for larger community activities.</li>
           <li>Use outdoor space for activities that need open areas.</li>
           <li>This is mock guidance only and needs owner confirmation.</li>
         </ul>
-      </MoreInfoPanel>
+      </MoreInfoDisclosure>
       <Field id='booking-purpose' label='Booking purpose' hasError={purposeErr} errorMessage='Enter the booking purpose.'>
         <Input id='booking-purpose' value={form.bookingPurpose} onChange={(e) => update({ bookingPurpose: e.target.value })} hasError={purposeErr} inputWidth='xl' />
       </Field>

@@ -633,26 +633,26 @@ export function ProgressStepper({ stepsList }: ProgressStepperProps) {
 }
 
 // ---------------------------------------------------------------------------
-// MoreInfoPanel (simplified inline disclosure)
+// MoreInfoDisclosure (inline disclosure variant)
 // Source evidence: docs/source-evidence/gel-components/more-info-panel/
-// GEL source uses a sliding modal dialog with focus lock and portal.
-// This preview implements the simpler inline disclosure pattern for contextual
-// help, avoiding modal focus management which needs engineer review.
-// Use for optional, non-critical contextual help near a field or section.
-// Classification: GEL-aligned. Maturity: needs engineer review.
+// GEL MoreInfoPanel source is a modal dialog with portal, backdrop, focus lock,
+// Escape close and return-focus. That behaviour needs engineer review.
+// This preview implements a simplified inline disclosure for contextual help.
+// Classification: GEL variant. Maturity: needs engineer review.
+// Full GEL modal MoreInfoPanel behaviour is future work.
 // ---------------------------------------------------------------------------
-export interface MoreInfoPanelProps {
+export interface MoreInfoDisclosureProps {
   triggerText: string
   title: string
   children: React.ReactNode
 }
 
-export function MoreInfoPanel({ triggerText, title, children }: MoreInfoPanelProps) {
+export function MoreInfoDisclosure({ triggerText, title, children }: MoreInfoDisclosureProps) {
   const [isOpen, setIsOpen] = React.useState(false)
   const panelId = `more-info-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
 
   return (
-    <div className='gel-more-info-panel' data-gelweb-component='more-info-panel' style={{ margin: '0.5rem 0 1rem' }}>
+    <div className='gel-more-info-panel' data-gelweb-component='more-info-disclosure' style={{ margin: '0.5rem 0 1rem' }}>
       <button
         type='button'
         onClick={() => setIsOpen(!isOpen)}
@@ -675,11 +675,15 @@ export function MoreInfoPanel({ triggerText, title, children }: MoreInfoPanelPro
   )
 }
 
+/** @deprecated Use MoreInfoDisclosure. This alias exists for backwards compatibility only. */
+export const MoreInfoPanel = MoreInfoDisclosure
+
 // ---------------------------------------------------------------------------
-// Accordion + AccordionItem
+// Accordion
 // Source evidence: docs/source-evidence/gel-components/accordion/
 // Uses button-based headings with aria-expanded and aria-controls.
-// Supports multiple items with open/close toggle.
+// Open all / Close all: after toggling, focus moves to the opposite button
+// (matching GEL source nextFocusTarget pattern).
 // Classification: GEL-aligned. Maturity: needs engineer review.
 // ---------------------------------------------------------------------------
 export interface AccordionItemData {
@@ -702,6 +706,29 @@ export function Accordion({ id, items, name = 'sections' }: AccordionProps) {
     items.forEach((item, i) => { if (item.defaultExpanded) defaults.add(item.id || `${id}-${i}`) })
     return defaults
   })
+  const openAllRef = React.useRef<HTMLButtonElement>(null)
+  const closeAllRef = React.useRef<HTMLButtonElement>(null)
+  const pendingFocusRef = React.useRef<'open' | 'close' | null>(null)
+
+  React.useEffect(() => {
+    if (pendingFocusRef.current === 'close' && closeAllRef.current) {
+      closeAllRef.current.focus()
+      pendingFocusRef.current = null
+    } else if (pendingFocusRef.current === 'open' && openAllRef.current) {
+      openAllRef.current.focus()
+      pendingFocusRef.current = null
+    }
+  }, [openItems])
+
+  function handleOpenAll() {
+    setOpenItems(new Set(items.map((item, i) => item.id || `${id}-${i}`)))
+    pendingFocusRef.current = 'close'
+  }
+
+  function handleCloseAll() {
+    setOpenItems(new Set())
+    pendingFocusRef.current = 'open'
+  }
 
   function toggle(itemId: string) {
     setOpenItems(prev => {
@@ -711,14 +738,17 @@ export function Accordion({ id, items, name = 'sections' }: AccordionProps) {
     })
   }
 
+  const allOpen = openItems.size === items.length
+  const allClosed = openItems.size === 0
+
   return (
     <div id={id} data-gelweb-component='accordion-group' className='gel-accordion'>
       {items.length >= 2 && (
         <div className='gel-accordion__toggles'>
-          <button type='button' className='gel-accordion__toggle-btn' onClick={() => setOpenItems(new Set(items.map((item, i) => item.id || `${id}-${i}`)))} disabled={openItems.size === items.length}>
+          <button ref={openAllRef} type='button' className='gel-accordion__toggle-btn' onClick={handleOpenAll} disabled={allOpen}>
             Open all <span className='gel-sr-only'>{name}</span>
           </button>
-          <button type='button' className='gel-accordion__toggle-btn' onClick={() => setOpenItems(new Set())} disabled={openItems.size === 0}>
+          <button ref={closeAllRef} type='button' className='gel-accordion__toggle-btn' onClick={handleCloseAll} disabled={allClosed}>
             Close all <span className='gel-sr-only'>{name}</span>
           </button>
         </div>
@@ -747,11 +777,11 @@ export function Accordion({ id, items, name = 'sections' }: AccordionProps) {
                 </svg>
               </button>
             </HeadingTag>
-            <div id={panelId} className={`gel-accordion__content ${isOpen ? 'gel-accordion__content--open' : ''}`} aria-labelledby={buttonId} hidden={!isOpen}>
+            <section id={panelId} className={`gel-accordion__content ${isOpen ? 'gel-accordion__content--open' : ''}`} aria-labelledby={buttonId} hidden={!isOpen}>
               <div className='gel-accordion__content-padding'>
                 {item.children}
               </div>
-            </div>
+            </section>
           </div>
         )
       })}
