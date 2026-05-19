@@ -142,12 +142,7 @@ select:focus-visible {
 }
 
 .gel-progress-stepper__mobile-label {
-  display: block;
-  font-size: 1rem;
-  font-weight: 700;
-  font-family: var(--gel-font-body);
-  color: var(--gel-color-text);
-  margin-bottom: 0.5rem;
+  display: none;
 }
 
 .gel-progress-stepper__list {
@@ -257,12 +252,8 @@ select:focus-visible {
   color: var(--gel-color-text-grey);
 }
 
-/* Desktop: show step list, hide mobile label */
+/* Desktop: show step list */
 @media (min-width: 768px) {
-  .gel-progress-stepper__mobile-label {
-    display: none;
-  }
-
   .gel-progress-stepper__list {
     display: flex;
   }

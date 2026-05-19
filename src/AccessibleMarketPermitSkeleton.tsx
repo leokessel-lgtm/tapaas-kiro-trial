@@ -200,6 +200,10 @@ function errorsForStep(step: MarketStep, form: FormState) {
   if (step === 'applicant') {
     if (!form.fullName.trim()) errs.push({ id: 'full-name', text: 'Enter your full name' })
     if (!form.dobDay || !form.dobMonth || !form.dobYear) errs.push({ id: 'dob-day', text: 'Enter your date of birth' })
+    else {
+      const d = parseInt(form.dobDay), m = parseInt(form.dobMonth), y = parseInt(form.dobYear)
+      if (d < 1 || d > 31 || m < 1 || m > 12 || y < 1900 || y > 2026) errs.push({ id: 'dob-day', text: 'Enter a valid date of birth' })
+    }
   }
   if (step === 'contact') {
     if (!form.email.trim() || !form.email.includes('@') || !form.email.split('@')[1]?.includes('.')) errs.push({ id: 'email', text: 'Enter a valid email address' })
@@ -213,6 +217,10 @@ function errorsForStep(step: MarketStep, form: FormState) {
     if (!form.marketName.trim()) errs.push({ id: 'market-name', text: 'Enter the market name' })
     if (!form.marketType) errs.push({ id: 'market-type', text: 'Select a market type' })
     if (!form.eventDay || !form.eventMonth || !form.eventYear) errs.push({ id: 'event-day', text: 'Enter the event date' })
+    else {
+      const d = parseInt(form.eventDay), m = parseInt(form.eventMonth), y = parseInt(form.eventYear)
+      if (d < 1 || d > 31 || m < 1 || m > 12 || y < 2024 || y > 2030) errs.push({ id: 'event-day', text: 'Enter a valid event date' })
+    }
   }
   if (step === 'accessibility') {
     if (!form.needsSupport) errs.push({ id: 'needs-support', text: 'Select whether you need accessibility support' })
@@ -415,14 +423,13 @@ function AccessibilityStep({ form, attempted, update, onBack, onContinue, onExit
         ]}
         value={form.needsSupport}
         onChange={(v) => update({ needsSupport: v })}
+        showWhen='yes'
         hasError={supportErr}
         errorMessage='Select whether you need accessibility support'
       >
-        {form.needsSupport === 'yes' && (
-          <Field id='support-details' label='Describe the support needed' helpMessage='This is placeholder content only. No assessment, decision or service promise is made.' hasError={detailsErr} errorMessage='Describe the support needed.'>
-            <Textarea id='support-details' value={form.supportDetails} onChange={(e) => update({ supportDetails: e.target.value })} hasError={detailsErr} rows={4} />
-          </Field>
-        )}
+        <Field id='support-details' label='Describe the support needed' helpMessage='This is placeholder content only. No assessment, decision or service promise is made.' hasError={detailsErr} errorMessage='Describe the support needed.'>
+          <Textarea id='support-details' value={form.supportDetails} onChange={(e) => update({ supportDetails: e.target.value })} hasError={detailsErr} rows={4} />
+        </Field>
       </ConditionalQuestionPanel>
       <DetailsCard
         title='Your application so far'

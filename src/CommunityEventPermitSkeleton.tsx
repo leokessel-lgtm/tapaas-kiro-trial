@@ -206,6 +206,10 @@ function errorsForStep(step: EventStep, form: FormState) {
   if (step === 'applicant') {
     if (!form.fullName.trim()) errs.push({ id: 'full-name', text: 'Enter your full name' })
     if (!form.dobDay || !form.dobMonth || !form.dobYear) errs.push({ id: 'dob-day', text: 'Enter your date of birth' })
+    else {
+      const d = parseInt(form.dobDay), m = parseInt(form.dobMonth), y = parseInt(form.dobYear)
+      if (d < 1 || d > 31 || m < 1 || m > 12 || y < 1900 || y > 2026) errs.push({ id: 'dob-day', text: 'Enter a valid date of birth' })
+    }
   }
   if (step === 'contact') {
     if (!form.email.trim() || !form.email.includes('@') || !form.email.split('@')[1]?.includes('.')) errs.push({ id: 'email', text: 'Enter a valid email address' })
@@ -219,6 +223,10 @@ function errorsForStep(step: EventStep, form: FormState) {
     if (!form.eventName.trim()) errs.push({ id: 'event-name', text: 'Enter the event name' })
     if (!form.eventType) errs.push({ id: 'event-type', text: 'Select an event type' })
     if (!form.eventDay || !form.eventMonth || !form.eventYear) errs.push({ id: 'event-day', text: 'Enter the event date' })
+    else {
+      const d = parseInt(form.eventDay), m = parseInt(form.eventMonth), y = parseInt(form.eventYear)
+      if (d < 1 || d > 31 || m < 1 || m > 12 || y < 2024 || y > 2030) errs.push({ id: 'event-day', text: 'Enter a valid event date' })
+    }
   }
   if (step === 'supporting') {
     if (!form.additionalInfo.trim()) errs.push({ id: 'additional-info', text: 'Provide additional information about your event' })

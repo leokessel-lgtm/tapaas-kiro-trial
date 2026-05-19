@@ -225,13 +225,16 @@ export interface ConditionalQuestionPanelProps {
   options: { value: string; label: string }[]
   value: string
   onChange: (value: string) => void
+  /** Show children only when value matches this string. Defaults to showing for any truthy value if not set. */
+  showWhen?: string
   hasError?: boolean
   errorMessage?: string
   children?: React.ReactNode
 }
 
-export function ConditionalQuestionPanel({ id, legend, options, value, onChange, hasError, errorMessage, children }: ConditionalQuestionPanelProps) {
+export function ConditionalQuestionPanel({ id, legend, options, value, onChange, showWhen, hasError, errorMessage, children }: ConditionalQuestionPanelProps) {
   const errorId = `${id}-error`
+  const shouldShowChildren = showWhen ? value === showWhen : Boolean(value)
   return (
     <fieldset
       id={id}
@@ -266,7 +269,7 @@ export function ConditionalQuestionPanel({ id, legend, options, value, onChange,
           )
         })}
       </div>
-      {value && children && (
+      {shouldShowChildren && children && (
         <div style={{ marginTop: '1rem', borderLeft: '3px solid var(--gel-color-border)', paddingLeft: '1rem' }}>
           {children}
         </div>

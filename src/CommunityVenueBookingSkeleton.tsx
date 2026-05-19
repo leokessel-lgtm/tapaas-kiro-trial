@@ -189,6 +189,10 @@ function errorsForStep(step: VenueStep, form: FormState) {
     if (!form.venueType) errs.push({ id: 'venue-type', text: 'Select a venue type' })
     if (!form.bookingPurpose.trim()) errs.push({ id: 'booking-purpose', text: 'Enter the booking purpose' })
     if (!form.eventDay || !form.eventMonth || !form.eventYear) errs.push({ id: 'event-day', text: 'Enter the booking date' })
+    else {
+      const d = parseInt(form.eventDay), m = parseInt(form.eventMonth), y = parseInt(form.eventYear)
+      if (d < 1 || d > 31 || m < 1 || m > 12 || y < 2024 || y > 2030) errs.push({ id: 'event-day', text: 'Enter a valid booking date' })
+    }
   }
   if (step === 'accessibility') {
     if (!form.needsSupport) errs.push({ id: 'needs-support', text: 'Select whether you need accessibility or equipment support' })
@@ -330,14 +334,13 @@ function AccessibilityStep({ form, attempted, update, onBack, onContinue, onExit
         ]}
         value={form.needsSupport}
         onChange={(v) => update({ needsSupport: v as FormState['needsSupport'] })}
+        showWhen='yes'
         hasError={supportErr}
         errorMessage='Select whether you need accessibility or equipment support'
       >
-        {form.needsSupport === 'yes' && (
-          <Field id='support-details' label='Describe the support needed' helpMessage='This is placeholder content only. No assessment, decision or service promise is made.' hasError={detailsErr} errorMessage='Describe the support needed.'>
-            <Textarea id='support-details' value={form.supportDetails} onChange={(e) => update({ supportDetails: e.target.value })} hasError={detailsErr} rows={4} />
-          </Field>
-        )}
+        <Field id='support-details' label='Describe the support needed' helpMessage='This is placeholder content only. No assessment, decision or service promise is made.' hasError={detailsErr} errorMessage='Describe the support needed.'>
+          <Textarea id='support-details' value={form.supportDetails} onChange={(e) => update({ supportDetails: e.target.value })} hasError={detailsErr} rows={4} />
+        </Field>
       </ConditionalQuestionPanel>
       <Accordion
         id='support-guidance'
