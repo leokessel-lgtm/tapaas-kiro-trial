@@ -3,8 +3,9 @@ import { ServiceNSWChrome } from './layout-preview/ServiceNSWChrome'
 import { TapaasTransactionSkeleton } from './TapaasTransactionSkeleton'
 import { TrialPermitSkeleton } from './TrialPermitSkeleton'
 import { CommunityEventPermitSkeleton } from './CommunityEventPermitSkeleton'
+import { CommunityStallPermitSkeleton } from './CommunityStallPermitSkeleton'
 
-type ActiveSkeleton = 'vehicle' | 'permit' | 'event'
+type ActiveSkeleton = 'vehicle' | 'permit' | 'event' | 'stall'
 
 const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; subtitle: string }> = {
   vehicle: {
@@ -21,6 +22,11 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
     label: 'TaPaaS x Kiro trial',
     title: 'Community event permit',
     subtitle: 'A non-production 8-step transaction skeleton demonstrating longer application flows.',
+  },
+  stall: {
+    label: 'TaPaaS x Kiro trial',
+    title: 'Community stall permit',
+    subtitle: 'A non-production 8-step repeatability test using the same patterns as the event permit.',
   },
 }
 
@@ -86,10 +92,28 @@ export function App() {
         >
           Community event permit
         </button>
+        <button
+          type='button'
+          onClick={() => setActive('stall')}
+          aria-pressed={active === 'stall'}
+          style={{
+            padding: '0.5rem 1rem',
+            fontSize: '0.875rem',
+            fontFamily: 'var(--gel-font-body)',
+            border: '1px solid var(--gel-color-border-dark, #646974)',
+            borderRadius: '4px',
+            background: active === 'stall' ? 'var(--gel-color-primary)' : 'transparent',
+            color: active === 'stall' ? 'var(--gel-color-white)' : 'var(--gel-color-text)',
+            cursor: 'pointer',
+          }}
+        >
+          Community stall permit
+        </button>
       </div>
       {active === 'vehicle' && <TapaasTransactionSkeleton />}
       {active === 'permit' && <TrialPermitSkeleton />}
       {active === 'event' && <CommunityEventPermitSkeleton />}
+      {active === 'stall' && <CommunityStallPermitSkeleton />}
     </ServiceNSWChrome>
   )
 }
