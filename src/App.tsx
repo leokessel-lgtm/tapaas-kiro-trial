@@ -38,6 +38,7 @@ export function App() {
         <button
           type='button'
           onClick={() => setActive('vehicle')}
+          aria-pressed={active === 'vehicle'}
           style={{
             padding: '0.5rem 1rem',
             fontSize: '0.875rem',
@@ -54,6 +55,7 @@ export function App() {
         <button
           type='button'
           onClick={() => setActive('permit')}
+          aria-pressed={active === 'permit'}
           style={{
             padding: '0.5rem 1rem',
             fontSize: '0.875rem',
@@ -70,6 +72,7 @@ export function App() {
         <button
           type='button'
           onClick={() => setActive('event')}
+          aria-pressed={active === 'event'}
           style={{
             padding: '0.5rem 1rem',
             fontSize: '0.875rem',

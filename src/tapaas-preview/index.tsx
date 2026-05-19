@@ -78,7 +78,7 @@ export function ReviewInfoCard({
   return (
     <section className='tapaas-card tapaas-review-card' aria-labelledby={`${slugify(title)}-heading`}>
       <div className='tapaas-card-heading-row'>
-        <Heading level={2} style={{ marginBottom: 0 }} id={`${slugify(title)}-heading`}>
+        <Heading level={3} style={{ marginBottom: 0 }} id={`${slugify(title)}-heading`}>
           {title}
         </Heading>
         {onEdit && (
@@ -87,7 +87,7 @@ export function ReviewInfoCard({
       </div>
       {sections.map((section) => (
         <div className='tapaas-review-section' key={section.title}>
-          <Heading level={3}>{section.title}</Heading>
+          <Heading level={4}>{section.title}</Heading>
           <dl className='tapaas-summary-list'>
             {section.rows.map((row) => (
               <div className='tapaas-summary-row' key={`${section.title}-${row.label}`}>
@@ -118,7 +118,7 @@ export function ReviewFeesCard({
 }) {
   return (
     <section className='tapaas-card tapaas-fees-card' aria-labelledby='review-fees-heading'>
-      <Heading level={2} id='review-fees-heading'>{title}</Heading>
+      <Heading level={3} id='review-fees-heading'>{title}</Heading>
       <dl className='tapaas-summary-list'>
         {fees.map((fee) => (
           <div className='tapaas-summary-row' key={fee.label}>

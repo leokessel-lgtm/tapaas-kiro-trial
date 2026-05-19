@@ -99,6 +99,7 @@ export function CommunityEventPermitSkeleton() {
   const [form, setForm] = useState<FormState>(initialState)
   const [exitNotice, setExitNotice] = useState(false)
   const errorSummaryRef = useRef<HTMLDivElement>(null)
+  const exitRef = useRef<HTMLDivElement>(null)
 
   function update(patch: Partial<FormState>) {
     setForm((prev) => ({ ...prev, ...patch }))
@@ -113,6 +114,11 @@ export function CommunityEventPermitSkeleton() {
     setAttempted(false)
     const i = stepOrder.indexOf(step)
     setStep(stepOrder[Math.max(i - 1, 0)])
+    window.setTimeout(() => {
+      window.scrollTo(0, 0)
+      const heading = document.querySelector('[id$="-heading"]') as HTMLElement
+      if (heading) { heading.tabIndex = -1; heading.focus() }
+    }, 0)
   }
 
   function goNext() {
@@ -124,7 +130,18 @@ export function CommunityEventPermitSkeleton() {
     }
     setAttempted(false)
     const i = stepOrder.indexOf(step)
-    setStep(stepOrder[Math.min(i + 1, stepOrder.length - 1)])
+    const nextStep = stepOrder[Math.min(i + 1, stepOrder.length - 1)]
+    setStep(nextStep)
+    window.setTimeout(() => {
+      window.scrollTo(0, 0)
+      if (nextStep === 'confirmation') {
+        const status = document.querySelector('[role="status"]') as HTMLElement
+        if (status) { status.tabIndex = -1; status.focus() }
+      } else {
+        const heading = document.querySelector('[id$="-heading"]') as HTMLElement
+        if (heading) { heading.tabIndex = -1; heading.focus() }
+      }
+    }, 0)
   }
 
   return (
@@ -145,34 +162,36 @@ export function CommunityEventPermitSkeleton() {
       <ErrorSummary ref={errorSummaryRef} errors={errors} />
 
       {step === 'privacy' && (
-        <PrivacyStep form={form} attempted={attempted} update={update} onContinue={goNext} onExit={() => setExitNotice(true)} />
+        <PrivacyStep form={form} attempted={attempted} update={update} onContinue={goNext} onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }} />
       )}
       {step === 'applicant' && (
-        <ApplicantStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => setExitNotice(true)} />
+        <ApplicantStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }} />
       )}
       {step === 'contact' && (
-        <ContactStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => setExitNotice(true)} />
+        <ContactStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }} />
       )}
       {step === 'permit' && (
-        <PermitStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => setExitNotice(true)} />
+        <PermitStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }} />
       )}
       {step === 'supporting' && (
-        <SupportingStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => setExitNotice(true)} />
+        <SupportingStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }} />
       )}
       {step === 'declaration' && (
-        <DeclarationStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => setExitNotice(true)} />
+        <DeclarationStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }} />
       )}
       {step === 'review' && (
-        <ReviewStep form={form} onBack={goBack} onSubmit={goNext} onExit={() => setExitNotice(true)} />
+        <ReviewStep form={form} onBack={goBack} onSubmit={goNext} onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }} />
       )}
       {step === 'confirmation' && (
         <ConfirmationStep form={form} onStartAgain={() => { setAttempted(false); setForm(initialState); setExitNotice(false); setStep('privacy') }} />
       )}
 
       {exitNotice && (
-        <InPageAlert variant='info' title='Exit modal is not implemented in this trial skeleton'>
-          <p>The TaPaaS Exit modal is documented as design-only in this pack. It needs modal focus management and wording confirmation before implementation.</p>
-        </InPageAlert>
+        <div ref={exitRef} tabIndex={-1}>
+          <InPageAlert variant='info' title='Exit modal is not implemented in this trial skeleton'>
+            <p>The TaPaaS Exit modal is documented as design-only in this pack. It needs modal focus management and wording confirmation before implementation.</p>
+          </InPageAlert>
+        </div>
       )}
     </div>
   )
@@ -189,7 +208,7 @@ function errorsForStep(step: EventStep, form: FormState) {
     if (!form.dobDay || !form.dobMonth || !form.dobYear) errs.push({ id: 'dob-day', text: 'Enter your date of birth' })
   }
   if (step === 'contact') {
-    if (!form.email.trim()) errs.push({ id: 'email', text: 'Enter your email address' })
+    if (!form.email.trim() || !form.email.includes('@') || !form.email.split('@')[1]?.includes('.')) errs.push({ id: 'email', text: 'Enter a valid email address' })
     if (!form.phone.trim()) errs.push({ id: 'phone', text: 'Enter your phone number' })
     if (!form.street.trim()) errs.push({ id: 'street', text: 'Enter your street address' })
     if (!form.suburb.trim()) errs.push({ id: 'suburb', text: 'Enter your suburb' })
@@ -248,7 +267,7 @@ function ApplicantStep({ form, attempted, update, onBack, onContinue, onExit }: 
     <section aria-labelledby='applicant-heading'>
       <Heading level={2} id='applicant-heading'>Your details</Heading>
       <Field id='full-name' label='Full name' helpMessage='Enter your first and last name.' hasError={nameErr} errorMessage='Enter your full name.'>
-        <Input id='full-name' value={form.fullName} onChange={(e) => update({ fullName: e.target.value })} hasError={nameErr} inputWidth='xl' />
+        <Input id='full-name' value={form.fullName} onChange={(e) => update({ fullName: e.target.value })} hasError={nameErr} inputWidth='xl' autoComplete='name' />
       </Field>
       <fieldset style={{ border: 'none', padding: 0, margin: '0 0 1.5rem' }}>
         <legend style={{ fontWeight: 500, fontSize: '1rem', marginBottom: '0.5rem' }}>Date of birth</legend>
@@ -279,7 +298,7 @@ function ApplicantStep({ form, attempted, update, onBack, onContinue, onExit }: 
 }
 
 function ContactStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  const emailErr = attempted && !form.email.trim()
+  const emailErr = attempted && (!form.email.trim() || !form.email.includes('@') || !form.email.split('@')[1]?.includes('.'))
   const phoneErr = attempted && !form.phone.trim()
   const streetErr = attempted && !form.street.trim()
   const suburbErr = attempted && !form.suburb.trim()
@@ -288,19 +307,19 @@ function ContactStep({ form, attempted, update, onBack, onContinue, onExit }: St
   return (
     <section aria-labelledby='contact-heading'>
       <Heading level={2} id='contact-heading'>Contact details</Heading>
-      <Field id='email' label='Email address' hasError={emailErr} errorMessage='Enter your email address.'>
-        <Input id='email' type='email' value={form.email} onChange={(e) => update({ email: e.target.value })} hasError={emailErr} inputWidth='xl' />
+      <Field id='email' label='Email address' hasError={emailErr} errorMessage='Enter a valid email address.'>
+        <Input id='email' type='email' value={form.email} onChange={(e) => update({ email: e.target.value })} hasError={emailErr} inputWidth='xl' autoComplete='email' />
       </Field>
       <Field id='phone' label='Phone number' hasError={phoneErr} errorMessage='Enter your phone number.'>
-        <Input id='phone' type='tel' value={form.phone} onChange={(e) => update({ phone: e.target.value })} hasError={phoneErr} inputWidth='lg' />
+        <Input id='phone' type='tel' value={form.phone} onChange={(e) => update({ phone: e.target.value })} hasError={phoneErr} inputWidth='lg' autoComplete='tel' />
       </Field>
       <fieldset style={{ border: 'none', padding: 0, margin: '0 0 1.5rem' }}>
         <legend style={{ fontWeight: 500, fontSize: '1rem', marginBottom: '1rem' }}>Postal address</legend>
         <Field id='street' label='Street address' hasError={streetErr} errorMessage='Enter your street address.'>
-          <Input id='street' value={form.street} onChange={(e) => update({ street: e.target.value })} hasError={streetErr} inputWidth='xl' />
+          <Input id='street' value={form.street} onChange={(e) => update({ street: e.target.value })} hasError={streetErr} inputWidth='xl' autoComplete='street-address' />
         </Field>
         <Field id='suburb' label='Suburb' hasError={suburbErr} errorMessage='Enter your suburb.'>
-          <Input id='suburb' value={form.suburb} onChange={(e) => update({ suburb: e.target.value })} hasError={suburbErr} inputWidth='lg' />
+          <Input id='suburb' value={form.suburb} onChange={(e) => update({ suburb: e.target.value })} hasError={suburbErr} inputWidth='lg' autoComplete='address-level2' />
         </Field>
         <Field id='state' label='State' hasError={stateErr} errorMessage='Select your state.'>
           <Select
@@ -309,6 +328,7 @@ function ContactStep({ form, attempted, update, onBack, onContinue, onExit }: St
             onChange={(e) => update({ state: e.target.value })}
             hasError={stateErr}
             inputWidth='md'
+            autoComplete='address-level1'
             options={[
               { value: 'NSW', text: 'NSW' },
               { value: 'VIC', text: 'VIC' },
@@ -322,7 +342,7 @@ function ContactStep({ form, attempted, update, onBack, onContinue, onExit }: St
           />
         </Field>
         <Field id='postcode' label='Postcode' hasError={postcodeErr} errorMessage='Enter a valid 4-digit postcode.'>
-          <Input id='postcode' value={form.postcode} onChange={(e) => update({ postcode: e.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={postcodeErr} inputWidth='xs' maxLength={4} />
+          <Input id='postcode' value={form.postcode} onChange={(e) => update({ postcode: e.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={postcodeErr} inputWidth='xs' maxLength={4} autoComplete='postal-code' />
         </Field>
       </fieldset>
       <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
@@ -478,7 +498,7 @@ function ConfirmationStep({ form, onStartAgain }: { form: FormState; onStartAgai
       </InPageAlert>
       <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start again' />
       <p style={{ marginTop: '1rem' }}>
-        <TextLink href='../docs/tapaas/00-source-inventory.md'>Review TaPaaS source inventory</TextLink>
+        <TextLink href='https://github.com/leokessel-lgtm/tapaas-kiro-trial/blob/main/docs/tapaas/00-source-inventory.md'>Review TaPaaS source inventory</TextLink>
       </p>
     </section>
   )

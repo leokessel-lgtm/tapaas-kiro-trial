@@ -38,6 +38,7 @@ export function TrialPermitSkeleton() {
   const [declarationAccepted, setDeclarationAccepted] = useState(false)
   const [exitNotice, setExitNotice] = useState(false)
   const errorSummaryRef = useRef<HTMLDivElement>(null)
+  const exitRef = useRef<HTMLDivElement>(null)
 
   const errors = useMemo(() => {
     if (!attempted) return []
@@ -63,6 +64,11 @@ export function TrialPermitSkeleton() {
     setAttempted(false)
     const currentIndex = stepOrder.indexOf(step)
     setStep(stepOrder[Math.max(currentIndex - 1, 0)])
+    window.setTimeout(() => {
+      window.scrollTo(0, 0)
+      const heading = document.querySelector('[id$="-heading"]') as HTMLElement
+      if (heading) { heading.tabIndex = -1; heading.focus() }
+    }, 0)
   }
 
   function goNext() {
@@ -74,7 +80,18 @@ export function TrialPermitSkeleton() {
     }
     setAttempted(false)
     const currentIndex = stepOrder.indexOf(step)
-    setStep(stepOrder[Math.min(currentIndex + 1, stepOrder.length - 1)])
+    const nextStep = stepOrder[Math.min(currentIndex + 1, stepOrder.length - 1)]
+    setStep(nextStep)
+    window.setTimeout(() => {
+      window.scrollTo(0, 0)
+      if (nextStep === 'confirmation') {
+        const status = document.querySelector('[role="status"]') as HTMLElement
+        if (status) { status.tabIndex = -1; status.focus() }
+      } else {
+        const heading = document.querySelector('[id$="-heading"]') as HTMLElement
+        if (heading) { heading.tabIndex = -1; heading.focus() }
+      }
+    }, 0)
   }
 
   function errorsForStep() {
@@ -119,7 +136,7 @@ export function TrialPermitSkeleton() {
           hasError={attempted && !privacyAgreed}
           onChange={setPrivacyAgreed}
           onContinue={goNext}
-          onExit={() => setExitNotice(true)}
+          onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }}
         />
       )}
 
@@ -133,7 +150,7 @@ export function TrialPermitSkeleton() {
           onPermitChange={setPermitType}
           onBack={goBack}
           onContinue={goNext}
-          onExit={() => setExitNotice(true)}
+          onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }}
         />
       )}
 
@@ -144,7 +161,7 @@ export function TrialPermitSkeleton() {
           onChange={setDeclarationAccepted}
           onBack={goBack}
           onContinue={goNext}
-          onExit={() => setExitNotice(true)}
+          onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }}
         />
       )}
 
@@ -154,7 +171,7 @@ export function TrialPermitSkeleton() {
           permitType={permitType}
           onBack={goBack}
           onSubmit={goNext}
-          onExit={() => setExitNotice(true)}
+          onExit={() => { setExitNotice(true); window.setTimeout(() => exitRef.current?.focus(), 0) }}
         />
       )}
 
@@ -175,11 +192,13 @@ export function TrialPermitSkeleton() {
       )}
 
       {exitNotice && (
-        <InPageAlert variant='info' title='Exit modal is not implemented in this trial skeleton'>
-          <p>
-            The TaPaaS Exit modal is documented as design-only in this pack. It needs modal focus management and wording confirmation before implementation.
-          </p>
-        </InPageAlert>
+        <div ref={exitRef} tabIndex={-1}>
+          <InPageAlert variant='info' title='Exit modal is not implemented in this trial skeleton'>
+            <p>
+              The TaPaaS Exit modal is documented as design-only in this pack. It needs modal focus management and wording confirmation before implementation.
+            </p>
+          </InPageAlert>
+        </div>
       )}
     </div>
   )
@@ -407,7 +426,7 @@ function ConfirmationStep({
       </InPageAlert>
       <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start again' />
       <p style={{ marginTop: '1rem' }}>
-        <TextLink href='../docs/tapaas/00-source-inventory.md'>Review TaPaaS source inventory</TextLink>
+        <TextLink href='https://github.com/leokessel-lgtm/tapaas-kiro-trial/blob/main/docs/tapaas/00-source-inventory.md'>Review TaPaaS source inventory</TextLink>
       </p>
     </section>
   )

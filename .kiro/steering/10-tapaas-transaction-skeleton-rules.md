@@ -16,6 +16,8 @@ Use this order unless the supplied transaction evidence clearly requires another
 
 For transactions with more than 5 steps, insert additional form input pages between Privacy and Declaration. Each form page maps to template `8410:37703`. Keep each page focused on one topic (e.g. applicant, contact, details, supporting information). The step indicator should show the total step count accurately.
 
+For transactions with 6 or more steps, a visual progress indicator may improve user orientation. Do not build a custom stepper unless it maps to a confirmed TaPaaS or GEL component. Use the text step indicator with aria-live until a pattern is confirmed.
+
 ## Page rules
 
 - Use mock data only unless a safe backend path already exists.
