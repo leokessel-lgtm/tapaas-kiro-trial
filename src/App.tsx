@@ -5,8 +5,9 @@ import { TrialPermitSkeleton } from './TrialPermitSkeleton'
 import { CommunityEventPermitSkeleton } from './CommunityEventPermitSkeleton'
 import { AccessibleMarketPermitSkeleton } from './AccessibleMarketPermitSkeleton'
 import { CommunityVenueBookingSkeleton } from './CommunityVenueBookingSkeleton'
+import { FoodStallApprovalSkeleton } from './FoodStallApprovalSkeleton'
 
-type ActiveSkeleton = 'vehicle' | 'permit' | 'event' | 'market' | 'venue'
+type ActiveSkeleton = 'vehicle' | 'permit' | 'event' | 'market' | 'venue' | 'food'
 
 const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; subtitle: string }> = {
   vehicle: {
@@ -33,6 +34,11 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
     label: 'TaPaaS x Kiro trial',
     title: 'Community venue booking',
     subtitle: 'A non-production 8-step skeleton with MoreInfoPanel, Accordion and conditional questions.',
+  },
+  food: {
+    label: 'TaPaaS x Kiro trial',
+    title: 'Temporary food stall approval',
+    subtitle: 'A non-production 8-step skeleton with conditional food handling questions.',
   },
 }
 
@@ -132,12 +138,30 @@ export function App() {
         >
           Community venue booking
         </button>
+        <button
+          type='button'
+          onClick={() => setActive('food')}
+          aria-pressed={active === 'food'}
+          style={{
+            padding: '0.5rem 1rem',
+            fontSize: '0.875rem',
+            fontFamily: 'var(--gel-font-body)',
+            border: '1px solid var(--gel-color-border-dark, #646974)',
+            borderRadius: '4px',
+            background: active === 'food' ? 'var(--gel-color-primary)' : 'transparent',
+            color: active === 'food' ? 'var(--gel-color-white)' : 'var(--gel-color-text)',
+            cursor: 'pointer',
+          }}
+        >
+          Food stall approval
+        </button>
       </div>
       {active === 'vehicle' && <TapaasTransactionSkeleton />}
       {active === 'permit' && <TrialPermitSkeleton />}
       {active === 'event' && <CommunityEventPermitSkeleton />}
       {active === 'market' && <AccessibleMarketPermitSkeleton />}
       {active === 'venue' && <CommunityVenueBookingSkeleton />}
+      {active === 'food' && <FoodStallApprovalSkeleton />}
     </ServiceNSWChrome>
   )
 }
