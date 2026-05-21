@@ -5,8 +5,9 @@ import { TrialPermitSkeleton } from './TrialPermitSkeleton'
 import { AccessibleMarketPermitSkeleton } from './AccessibleMarketPermitSkeleton'
 import { CommunityVenueBookingSkeleton } from './CommunityVenueBookingSkeleton'
 import { MobilityParkingPermitSkeleton } from './MobilityParkingPermitSkeleton'
+import { ComplexTransactionStressTestSkeleton } from './ComplexTransactionStressTestSkeleton'
 
-type ActiveSkeleton = 'vehicle' | 'permit' | 'market' | 'venue' | 'mps'
+type ActiveSkeleton = 'vehicle' | 'permit' | 'market' | 'venue' | 'mps' | 'stress'
 
 const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; subtitle: string }> = {
   vehicle: {
@@ -33,6 +34,11 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
     label: 'TaPaaS x Kiro trial',
     title: 'Mobility parking permit',
     subtitle: 'A non-production 9-step complexity test inspired by MPS Figma evidence.',
+  },
+  stress: {
+    label: 'TaPaaS x Kiro trial',
+    title: 'Complex stress test',
+    subtitle: 'Internal-only 7-step skeleton with modal, repeatable sections, edit links and conditional outcome.',
   },
 }
 
@@ -132,12 +138,30 @@ export function App() {
         >
           Mobility parking permit
         </button>
+        <button
+          type='button'
+          onClick={() => setActive('stress')}
+          aria-pressed={active === 'stress'}
+          style={{
+            padding: '0.5rem 1rem',
+            fontSize: '0.875rem',
+            fontFamily: 'var(--gel-font-body)',
+            border: '1px solid var(--gel-color-border-dark, #646974)',
+            borderRadius: '4px',
+            background: active === 'stress' ? 'var(--gel-color-primary)' : 'transparent',
+            color: active === 'stress' ? 'var(--gel-color-white)' : 'var(--gel-color-text)',
+            cursor: 'pointer',
+          }}
+        >
+          Complex stress test
+        </button>
       </div>
       {active === 'vehicle' && <TapaasTransactionSkeleton />}
       {active === 'permit' && <TrialPermitSkeleton />}
       {active === 'market' && <AccessibleMarketPermitSkeleton />}
       {active === 'venue' && <CommunityVenueBookingSkeleton />}
       {active === 'mps' && <MobilityParkingPermitSkeleton />}
+      {active === 'stress' && <ComplexTransactionStressTestSkeleton />}
     </ServiceNSWChrome>
   )
 }
