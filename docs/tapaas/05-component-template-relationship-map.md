@@ -19,7 +19,7 @@ This is **trial guidance only**. It does not claim production readiness, GEL com
 | Local `.fig` parse | Broad page/node/text extraction completed on 2026-05-19 |
 | Figma MCP access | Confirmed on 2026-05-20 with personal Figma account `leokessel@gmail.com` |
 | Figma MCP deep extraction | Partial. Selected component/template documentation, accessibility-note excerpts and frame inventories were extracted on 2026-05-20 |
-| Mobility Parking Scheme transaction mapping | Frame inventory completed for `MPS Final`; component/template mapping remains pending |
+| Mobility Parking Scheme transaction mapping | Frame inventory completed for `MPS Final`; v0.3 now includes a non-production simulated delivery flow. Detailed frame-by-frame content and annotation extraction remains pending. |
 
 ## Component-template map
 
@@ -49,6 +49,9 @@ This is **trial guidance only**. It does not claim production readiness, GEL com
 | Exit modal | `4677:1042` | Exit/cancel flows | GEL/TaPaaS modal pattern | `ExitModal` | Trial preview includes labelled/described dialog, Escape close, return focus and basic focus containment. Needs VoiceOver/NVDA review. |
 | Business error page | `8931:31271` | Error routing | TaPaaS page template | `BusinessErrorPage` | Trial preview supports mock hard-stop outcomes with `role="alert"`. Real use requires source-confirmed business rules. |
 | System error page | `17628:2069` | Error routing | TaPaaS page template | Not coded | Requires app error-routing design. |
+| Repeatable field group | Form input page `8410:37703`; GEL fieldset/input evidence | Applicant, representative and repeatable-contact pages | GEL-aligned form composition | `RepeatableGroup` | Use for repeated groups only. Keep semantic `fieldset`/`legend`; avoid decorative card headers that obscure the group label. |
+| Evidence checklist | MPS medical frames `4.A`/`4.Aa`/`4.B`/`4.Ba`; GEL file-upload/status-label evidence | Evidence and review pages | GEL/TaPaaS composition | `EvidenceChecklistCard` | Use as mock evidence status only. Do not implement upload, file validation, storage or progress without full GEL FileUpload review. |
+| Assessment summary | MPS eligibility, concession, review and confirmation frame groups; GEL status-label evidence | Eligibility, review and outcome pages | GEL/TaPaaS composition | `AssessmentSummaryPanel` | Use for mock routing/status only. Do not claim real eligibility, concession, payment or policy decisioning. |
 
 ## Mobility Parking Scheme mapping status
 
@@ -62,9 +65,34 @@ The frame inventory shows these groups:
 | Application type | `1.0 - Application`, `1.A - New`, `1.B - Renew`, `1.C - Replace`, `1.CA - Replace Reason` | Form input page plus conditional branch | Use mock application-type branching only. |
 | Personal details | `2.A - Personal details`, `2.B - Personal details - Manual address` | Form input page, address input, date input | Safe as source for generic form pattern only. |
 | Eligibility | `3.0 - Eligibility` and driver/photo/medical branch variants | Conditional question pages | Eligibility decisions require owner confirmation. |
-| Medical documents | `4.A`/`4.B` medical certificate/report and uploaded variants | Future upload/evidence pages | File upload and medical evidence are out of current coded scope. |
+| Medical documents | `4.A`/`4.B` medical certificate/report and uploaded variants | Evidence checklist and mock evidence pages | File upload and medical evidence handling remain mock-only. No real upload, storage or validation. |
 | Concession cards | `5.0` and Centrelink/DVA invalid/duplicate/mismatch variants | Backend/business error patterns | Backend validation and concessions require source-confirmed rules. |
-| Review/confirmation | `6.A - Review`, `6.B - Review without non permit declaraction`, `6.A Confirmation screen`, `6.B Confirmation screen with tile` | Review and Confirmation templates | Reference numbers, email and assessment wording require owner confirmation. |
+| Review/confirmation | `6.A - Review`, `6.B - Review without non permit declaraction`, `6.A Confirmation screen`, `6.B Confirmation screen with tile` | Review, outcome and confirmation templates | Reference numbers, payment, email, outcome and assessment wording require owner confirmation. |
+
+## v0.3 MPS simulation status
+
+The coded `MobilityParkingPermitSkeleton` is a trial simulation, not a faithful implementation of the MPS product.
+
+It intentionally includes:
+
+- mock account and proof-of-identity acknowledgement
+- mock application-type branching for new, renewal and replacement
+- applicant details, manual address and 3-field date input
+- representative and repeatable authorised contacts
+- mock eligibility questions and routing summary
+- mock medical evidence checklist without file upload
+- mock concession validation outcomes
+- mock delivery and payment-routing outcomes
+- review, business-error and confirmation/manual-review outcomes
+
+It intentionally excludes:
+
+- real proof of identity
+- real eligibility decisioning
+- medical document upload, storage or validation
+- concession card validation
+- real payment, receipts or refunds
+- backend calls, error codes or policy logic
 
 Before building an MPS skeleton, extract:
 

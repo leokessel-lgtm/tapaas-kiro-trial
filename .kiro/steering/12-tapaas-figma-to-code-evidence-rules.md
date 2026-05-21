@@ -74,4 +74,7 @@ For any MPS-inspired skeleton:
 - do not implement medical-document upload
 - do not implement concession-card validation
 - do not implement backend error codes without source-confirmed rules
+- do not implement real payment, receipt, refund or reconciliation behaviour
 - mark privacy, legal, identity, eligibility, medical, concession, assessment and timeframe content as owner-confirmation required
+
+If the skeleton needs to test delivery complexity, use mock routing states only. Acceptable mock states include manual review, payment failed, payment cancelled, concession invalid, concession mismatch and concession duplicate. These states must be labelled as simulated and must not include real backend error codes or policy rules.

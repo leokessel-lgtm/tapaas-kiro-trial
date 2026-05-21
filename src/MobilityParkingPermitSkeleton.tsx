@@ -1,182 +1,353 @@
-import { useState, useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { useTransactionStep } from './useTransactionStep'
 import {
+  Accordion,
+  Button,
   Checkbox,
   ErrorSummary,
   Field,
   Heading,
   InPageAlert,
   Input,
+  MoreInfoDisclosure,
   RadioButtonList,
   Select,
   Textarea,
   TextLink,
-  Accordion,
-  MoreInfoDisclosure,
 } from './gel'
 import {
+  AssessmentSummaryPanel,
+  BusinessErrorPage,
+  ConditionalQuestionPanel,
   ConfirmationHeader,
+  DetailsCard,
+  EvidenceChecklistCard,
+  ExitModal,
+  RepeatableGroup,
   ReviewFeesCard,
   ReviewInfoCard,
   TransactionCtaGroup,
   TransactionSummaryCard,
-  ConditionalQuestionPanel,
-  DetailsCard,
 } from './tapaas-preview'
 
 type MpsStep =
   | 'privacy'
+  | 'account'
   | 'appType'
   | 'applicant'
+  | 'representative'
   | 'eligibility'
-  | 'evidence'
+  | 'medical'
   | 'concession'
+  | 'delivery'
+  | 'payment'
   | 'declaration'
   | 'review'
-  | 'confirmation'
+  | 'outcome'
 
 const stepOrder: MpsStep[] = [
-  'privacy', 'appType', 'applicant', 'eligibility', 'evidence', 'concession', 'declaration', 'review', 'confirmation',
+  'privacy',
+  'account',
+  'appType',
+  'applicant',
+  'representative',
+  'eligibility',
+  'medical',
+  'concession',
+  'delivery',
+  'payment',
+  'declaration',
+  'review',
+  'outcome',
 ]
 
 const stepLabels: Record<MpsStep, string> = {
   privacy: 'Privacy',
+  account: 'Account and identity',
   appType: 'Application type',
   applicant: 'Applicant details',
-  eligibility: 'Eligibility questions',
-  evidence: 'Evidence',
-  concession: 'Concession details',
+  representative: 'Representative',
+  eligibility: 'Eligibility',
+  medical: 'Medical evidence',
+  concession: 'Concession',
+  delivery: 'Delivery',
+  payment: 'Payment simulation',
   declaration: 'Declaration',
   review: 'Review',
-  confirmation: 'Confirmation',
+  outcome: 'Outcome',
+}
+
+const mpsStageMap: Record<MpsStep, { number: number; label: string; detail?: string }> = {
+  privacy: { number: 1, label: 'Start and privacy', detail: 'Trial-only privacy page' },
+  account: { number: 1, label: 'Start and privacy', detail: 'Mock account and identity context' },
+  appType: { number: 2, label: 'Application details', detail: 'New, renewal or replacement branch' },
+  applicant: { number: 3, label: 'Personal details', detail: 'Applicant details and manual address' },
+  representative: { number: 3, label: 'Personal details', detail: 'Representative and authorised contacts' },
+  eligibility: { number: 4, label: 'Eligibility', detail: 'Mock eligibility questions' },
+  medical: { number: 5, label: 'Medical evidence', detail: 'Mock evidence status only' },
+  concession: { number: 6, label: 'Concession card details', detail: 'Mock concession validation states' },
+  delivery: { number: 7, label: 'Review and submit', detail: 'Kiro stress-test addition: delivery preference' },
+  payment: { number: 7, label: 'Review and submit', detail: 'Kiro stress-test addition: payment routing' },
+  declaration: { number: 7, label: 'Review and submit', detail: 'Declaration before review' },
+  review: { number: 7, label: 'Review and submit', detail: 'Review page mapped to MPS Review frame' },
+  outcome: { number: 7, label: 'Outcome', detail: 'Confirmation, manual review or business error' },
+}
+
+interface ContactState {
+  name: string
+  relationship: string
+  phone: string
 }
 
 interface FormState {
   privacyAgreed: boolean
+  accountScenario: 'signed-in' | 'guest' | ''
+  poiAcknowledged: boolean
   applicationType: 'new' | 'renew' | 'replace' | ''
+  replaceReason: string
+  permitNumber: string
   fullName: string
+  day: string
+  month: string
+  year: string
   email: string
   phone: string
   street: string
   suburb: string
   state: string
   postcode: string
-  hasCondition: 'yes' | 'no' | ''
+  hasRepresentative: 'yes' | 'no' | ''
+  representativeName: string
+  representativeRelationship: string
+  authorisedContacts: ContactState[]
+  hasMobilityCondition: 'yes' | 'no' | ''
   conditionDetails: string
-  isDriver: 'yes' | 'no' | ''
-  driverDetails: string
-  evidenceAcknowledged: boolean
-  concessionType: string
-  concessionNumber: string
+  hasDriverLicence: 'yes' | 'no' | ''
+  hasPhotoCard: 'yes' | 'no' | ''
+  needsTemporaryPermit: 'yes' | 'no' | ''
+  medicalEvidenceType: 'certificate' | 'report' | ''
+  medicalEvidenceMethod: 'uploaded' | 'provide-later' | ''
+  medicalEvidenceAcknowledged: boolean
+  concessionCardType: 'none' | 'centrelink' | 'dva' | ''
+  concessionCardNumber: string
+  concessionValidationScenario: 'valid' | 'invalid' | 'mismatch' | 'duplicate' | ''
+  deliveryMethod: 'post' | 'service-centre' | ''
+  deliveryInstructions: string
+  paymentScenario: 'success' | 'failed' | 'cancelled' | 'manual-review' | ''
   declarationAccepted: boolean
 }
 
 const initialState: FormState = {
   privacyAgreed: false,
+  accountScenario: '',
+  poiAcknowledged: false,
   applicationType: '',
+  replaceReason: '',
+  permitNumber: '',
   fullName: '',
+  day: '',
+  month: '',
+  year: '',
   email: '',
   phone: '',
   street: '',
   suburb: '',
   state: '',
   postcode: '',
-  hasCondition: '',
+  hasRepresentative: '',
+  representativeName: '',
+  representativeRelationship: '',
+  authorisedContacts: [{ name: '', relationship: '', phone: '' }],
+  hasMobilityCondition: '',
   conditionDetails: '',
-  isDriver: '',
-  driverDetails: '',
-  evidenceAcknowledged: false,
-  concessionType: '',
-  concessionNumber: '',
+  hasDriverLicence: '',
+  hasPhotoCard: '',
+  needsTemporaryPermit: '',
+  medicalEvidenceType: '',
+  medicalEvidenceMethod: '',
+  medicalEvidenceAcknowledged: false,
+  concessionCardType: '',
+  concessionCardNumber: '',
+  concessionValidationScenario: '',
+  deliveryMethod: '',
+  deliveryInstructions: '',
+  paymentScenario: '',
   declarationAccepted: false,
 }
 
 export function MobilityParkingPermitSkeleton() {
   const [form, setForm] = useState<FormState>(initialState)
+  const [exitModalOpen, setExitModalOpen] = useState(false)
 
   function update(patch: Partial<FormState>) {
     setForm((prev) => ({ ...prev, ...patch }))
   }
 
-  const getErrors = useCallback((s: MpsStep) => errorsForStep(s, form), [form])
-  const { step, attempted, errors, errorSummaryRef, exitRef, exitNotice, goBack, goNext, handleExit, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+  function updateContact(index: number, patch: Partial<ContactState>) {
+    setForm((prev) => ({
+      ...prev,
+      authorisedContacts: prev.authorisedContacts.map((contact, contactIndex) =>
+        contactIndex === index ? { ...contact, ...patch } : contact,
+      ),
+    }))
+  }
+
+  function addContact() {
+    setForm((prev) => ({
+      ...prev,
+      authorisedContacts: [...prev.authorisedContacts, { name: '', relationship: '', phone: '' }],
+    }))
+  }
+
+  function removeContact(index: number) {
+    setForm((prev) => ({
+      ...prev,
+      authorisedContacts: prev.authorisedContacts.filter((_, contactIndex) => contactIndex !== index),
+    }))
+  }
+
+  const getErrors = useCallback((step: MpsStep) => errorsForStep(step, form), [form])
+  const {
+    step,
+    attempted,
+    errors,
+    errorSummaryRef,
+    goBack,
+    goNext,
+    reset,
+  } = useTransactionStep(stepOrder, 'outcome', getErrors)
+
+  function startAgain() {
+    reset()
+    setForm(initialState)
+    setExitModalOpen(false)
+  }
 
   return (
     <div>
       <div className='tapaas-trial-banner'>
-        <strong>TaPaaS v0.3 trial skeleton — Mobility parking permit complexity test.</strong>
+        <strong>TaPaaS v0.3 trial skeleton — Mobility Parking Scheme Figma-guided simulation.</strong>
         <p style={{ margin: '0.25rem 0 0' }}>
-          This is a non-production build-assist example using mock data only. Privacy, legal, eligibility, medical, concession and processing details need owner confirmation.
+          This leans on the MPS Figma frame order while adding Kiro stress-test behaviours. Identity, eligibility, medical evidence, concessions, payment and assessment outcomes are simulated and require owner confirmation.
         </p>
       </div>
 
-      {step !== 'confirmation' && (
-        <p aria-live='polite' style={{ color: 'var(--gel-color-text-grey)', marginTop: 0 }}>
-          Step {stepOrder.indexOf(step) + 1} of 9: {stepLabels[step]}
-        </p>
+      {step !== 'outcome' && (
+        <div aria-live='polite' style={{ color: 'var(--gel-color-text-grey)', marginTop: 0, marginBottom: '1rem' }}>
+          <p style={{ margin: 0 }}>
+            Step {mpsStageMap[step].number} of 7: {mpsStageMap[step].label}
+          </p>
+          {mpsStageMap[step].detail && (
+            <p style={{ margin: '0.25rem 0 0', fontSize: '0.875rem' }}>
+              Prototype detail: {mpsStageMap[step].detail}
+            </p>
+          )}
+        </div>
       )}
+
+      {step !== 'outcome' && <RequiredFieldHint />}
 
       <ErrorSummary ref={errorSummaryRef} errors={errors} />
 
-      {step === 'privacy' && <PrivacyStep form={form} attempted={attempted} update={update} onContinue={goNext} onExit={handleExit} />}
-      {step === 'appType' && <AppTypeStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={handleExit} />}
-      {step === 'applicant' && <ApplicantStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={handleExit} />}
-      {step === 'eligibility' && <EligibilityStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={handleExit} />}
-      {step === 'evidence' && <EvidenceStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={handleExit} />}
-      {step === 'concession' && <ConcessionStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={handleExit} />}
-      {step === 'declaration' && <DeclarationStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={handleExit} />}
-      {step === 'review' && <ReviewStep form={form} onBack={goBack} onSubmit={goNext} onExit={handleExit} />}
-      {step === 'confirmation' && <ConfirmationStep form={form} onStartAgain={() => { reset(); setForm(initialState) }} />}
+      {step === 'privacy' && <PrivacyStep form={form} attempted={attempted} update={update} onContinue={goNext} onExit={() => setExitModalOpen(true)} />}
+      {step === 'account' && <AccountStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => setExitModalOpen(true)} />}
+      {step === 'appType' && <ApplicationTypeStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => setExitModalOpen(true)} />}
+      {step === 'applicant' && <ApplicantStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => setExitModalOpen(true)} />}
+      {step === 'representative' && <RepresentativeStep form={form} attempted={attempted} update={update} updateContact={updateContact} addContact={addContact} removeContact={removeContact} onBack={goBack} onContinue={goNext} onExit={() => setExitModalOpen(true)} />}
+      {step === 'eligibility' && <EligibilityStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => setExitModalOpen(true)} />}
+      {step === 'medical' && <MedicalEvidenceStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => setExitModalOpen(true)} />}
+      {step === 'concession' && <ConcessionStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => setExitModalOpen(true)} />}
+      {step === 'delivery' && <DeliveryStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => setExitModalOpen(true)} />}
+      {step === 'payment' && <PaymentStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => setExitModalOpen(true)} />}
+      {step === 'declaration' && <DeclarationStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={() => setExitModalOpen(true)} />}
+      {step === 'review' && <ReviewStep form={form} onBack={goBack} onSubmit={goNext} onExit={() => setExitModalOpen(true)} />}
+      {step === 'outcome' && <OutcomeStep form={form} onStartAgain={startAgain} />}
 
-      {exitNotice && (
-        <div ref={exitRef} tabIndex={-1}>
-          <InPageAlert variant='info' title='Exit modal is not implemented in this trial skeleton'>
-            <p>The TaPaaS Exit modal is documented as design-only in this pack. It needs modal focus management and wording confirmation before implementation.</p>
-          </InPageAlert>
-        </div>
-      )}
+      <ExitModal
+        isOpen={exitModalOpen}
+        onContinue={() => setExitModalOpen(false)}
+        onExit={startAgain}
+        description='This preview does not save draft applications. If you exit, the mock form data will be cleared.'
+      />
     </div>
   )
 }
 
-// --- Validation ---
 function errorsForStep(step: MpsStep, form: FormState) {
   const errs: { id: string; text: string }[] = []
-  if (step === 'privacy' && !form.privacyAgreed) {
-    errs.push({ id: 'privacy-confirmation', text: 'Confirm that you have read the privacy information' })
+  if (step === 'privacy' && !form.privacyAgreed) errs.push({ id: 'privacy-confirmation', text: 'Confirm that you have read the privacy information' })
+  if (step === 'account') {
+    if (!form.accountScenario) errs.push({ id: 'account-scenario', text: 'Select an account and identity scenario' })
+    if (!form.poiAcknowledged) errs.push({ id: 'poi-acknowledged', text: 'Confirm that proof of identity is simulated only' })
   }
   if (step === 'appType') {
     if (!form.applicationType) errs.push({ id: 'application-type', text: 'Select an application type' })
+    if ((form.applicationType === 'renew' || form.applicationType === 'replace') && !form.permitNumber.trim()) errs.push({ id: 'permit-number', text: 'Enter the existing permit number' })
+    if (form.applicationType === 'replace' && !form.replaceReason) errs.push({ id: 'replace-reason', text: 'Select a replacement reason' })
   }
   if (step === 'applicant') {
     if (!form.fullName.trim()) errs.push({ id: 'full-name', text: 'Enter your full name' })
+    if (!isDateComplete(form)) errs.push({ id: 'birth-day', text: 'Enter your date of birth' })
     if (!form.email.trim() || !form.email.includes('@') || !form.email.split('@')[1]?.includes('.')) errs.push({ id: 'email', text: 'Enter a valid email address' })
     if (!form.phone.trim()) errs.push({ id: 'phone', text: 'Enter your phone number' })
     if (!form.street.trim()) errs.push({ id: 'street', text: 'Enter your street address' })
     if (!form.suburb.trim()) errs.push({ id: 'suburb', text: 'Enter your suburb' })
     if (!form.state) errs.push({ id: 'state', text: 'Select your state' })
-    if (!form.postcode.trim() || form.postcode.length !== 4) errs.push({ id: 'postcode', text: 'Enter a valid 4-digit postcode' })
+    if (!/^\d{4}$/.test(form.postcode)) errs.push({ id: 'postcode', text: 'Enter a valid 4-digit postcode' })
+  }
+  if (step === 'representative') {
+    if (!form.hasRepresentative) errs.push({ id: 'has-representative', text: 'Select whether someone is applying on behalf of the applicant' })
+    if (form.hasRepresentative === 'yes') {
+      if (!form.representativeName.trim()) errs.push({ id: 'representative-name', text: 'Enter the representative name' })
+      if (!form.representativeRelationship.trim()) errs.push({ id: 'representative-relationship', text: 'Enter the representative relationship' })
+    }
+    form.authorisedContacts.forEach((contact, index) => {
+      const hasAny = Boolean(contact.name.trim() || contact.relationship.trim() || contact.phone.trim())
+      if (hasAny && !contact.name.trim()) errs.push({ id: `contact-${index}-name`, text: `Enter the name for authorised contact ${index + 1}` })
+      if (hasAny && !contact.relationship.trim()) errs.push({ id: `contact-${index}-relationship`, text: `Enter the relationship for authorised contact ${index + 1}` })
+      if (hasAny && !contact.phone.trim()) errs.push({ id: `contact-${index}-phone`, text: `Enter the phone number for authorised contact ${index + 1}` })
+    })
   }
   if (step === 'eligibility') {
-    if (!form.hasCondition) errs.push({ id: 'has-condition', text: 'Select whether you have a condition that affects your mobility' })
-    if (form.hasCondition === 'yes' && !form.conditionDetails.trim()) errs.push({ id: 'condition-details', text: 'Describe your condition' })
-    if (!form.isDriver) errs.push({ id: 'is-driver', text: 'Select whether you are the driver of the vehicle' })
-    if (form.isDriver === 'yes' && !form.driverDetails.trim()) errs.push({ id: 'driver-details', text: 'Describe your driving situation' })
+    if (!form.hasMobilityCondition) errs.push({ id: 'has-mobility-condition', text: 'Select whether the applicant has a mobility condition' })
+    if (form.hasMobilityCondition === 'yes' && !form.conditionDetails.trim()) errs.push({ id: 'condition-details', text: 'Describe the mobility condition' })
+    if (!form.hasDriverLicence) errs.push({ id: 'has-driver-licence', text: 'Select whether the applicant has a NSW driver licence' })
+    if (!form.hasPhotoCard) errs.push({ id: 'has-photo-card', text: 'Select whether the applicant has a NSW photo card' })
+    if (!form.needsTemporaryPermit) errs.push({ id: 'needs-temporary-permit', text: 'Select whether a temporary permit is needed' })
   }
-  if (step === 'evidence') {
-    if (!form.evidenceAcknowledged) errs.push({ id: 'evidence-acknowledged', text: 'Confirm that you understand evidence will need to be provided separately' })
+  if (step === 'medical') {
+    if (!form.medicalEvidenceType) errs.push({ id: 'medical-evidence-type', text: 'Select a medical evidence type' })
+    if (!form.medicalEvidenceMethod) errs.push({ id: 'medical-evidence-method', text: 'Select how medical evidence will be provided' })
+    if (!form.medicalEvidenceAcknowledged) errs.push({ id: 'medical-evidence-acknowledged', text: 'Confirm that medical evidence handling is simulated only' })
   }
   if (step === 'concession') {
-    if (!form.concessionType) errs.push({ id: 'concession-type', text: 'Select a concession card type' })
-    if (!form.concessionNumber.trim()) errs.push({ id: 'concession-number', text: 'Enter your concession card number' })
+    if (!form.concessionCardType) errs.push({ id: 'concession-card-type', text: 'Select a concession card option' })
+    if (form.concessionCardType !== 'none' && !form.concessionCardNumber.trim()) errs.push({ id: 'concession-card-number', text: 'Enter the concession card number' })
+    if (form.concessionCardType !== 'none' && !form.concessionValidationScenario) errs.push({ id: 'concession-validation-scenario', text: 'Select a mock concession validation result' })
   }
-  if (step === 'declaration' && !form.declarationAccepted) {
-    errs.push({ id: 'declaration-accepted', text: 'Accept the declaration to continue' })
+  if (step === 'delivery') {
+    if (!form.deliveryMethod) errs.push({ id: 'delivery-method', text: 'Select a delivery method' })
   }
+  if (step === 'payment') {
+    if (!form.paymentScenario) errs.push({ id: 'payment-scenario', text: 'Select a mock payment or routing outcome' })
+  }
+  if (step === 'declaration' && !form.declarationAccepted) errs.push({ id: 'declaration-accepted', text: 'Accept the declaration to continue' })
   return errs
 }
 
-// --- Page components ---
+function RequiredFieldHint() {
+  return (
+    <p style={{ margin: '0 0 1.25rem', fontSize: '0.875rem' }}>
+      <span aria-hidden='true' style={{ color: 'var(--gel-color-error)', fontWeight: 700 }}>*</span>
+      <span> indicates a required field</span>
+    </p>
+  )
+}
+
+function isDateComplete(form: FormState) {
+  return /^\d{1,2}$/.test(form.day) && /^\d{1,2}$/.test(form.month) && /^\d{4}$/.test(form.year)
+}
+
 interface StepProps {
   form: FormState
   attempted: boolean
@@ -191,200 +362,317 @@ function PrivacyStep({ form, attempted, update, onContinue, onExit }: StepProps)
     <section aria-labelledby='privacy-heading'>
       <Heading level={2} id='privacy-heading'>Privacy information</Heading>
       <InPageAlert variant='info' title='Owner confirmation required'>
-        <p>Replace this placeholder with the confirmed privacy collection notice for the mobility parking permit service.</p>
+        <p>Replace this placeholder with the confirmed Mobility Parking Scheme privacy collection notice.</p>
       </InPageAlert>
-      <p>We collect your personal information to process your mobility parking permit application. This information may be shared with [confirmed disclosure recipients]. For more information, see [confirmed privacy policy URL].</p>
+      <p>This preview collects mock information to demonstrate the transaction pattern. It does not connect to Service NSW systems, verify identity, assess eligibility or store medical evidence.</p>
       <Checkbox
         id='privacy-confirmation'
         label='I have read and understand the privacy information.'
         checked={form.privacyAgreed}
-        onChange={(v) => update({ privacyAgreed: Boolean(v) })}
+        onChange={(value) => update({ privacyAgreed: Boolean(value) })}
         hasError={attempted && !form.privacyAgreed}
         errorMessage='Confirm that you have read the privacy information.'
       />
-      <TransactionCtaGroup onContinue={onContinue} onExit={onExit} continueLabel='Continue' />
+      <TransactionCtaGroup onContinue={onContinue} onExit={onExit} />
     </section>
   )
 }
 
-function AppTypeStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  const typeErr = attempted && !form.applicationType
+function AccountStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
+  return (
+    <section aria-labelledby='account-heading'>
+      <Heading level={2} id='account-heading'>Account and identity</Heading>
+      <InPageAlert variant='warning' title='Identity proofing is simulated'>
+        <p>The MPS Figma flow includes MyAccount and proof-of-identity screens. This prototype uses a static mock state only and does not perform identity checks.</p>
+      </InPageAlert>
+      <RadioButtonList
+        id='account-scenario'
+        legend='Choose a mock account scenario'
+        options={[
+          { value: 'signed-in', label: 'Signed in with verified account details (mock)' },
+          { value: 'guest', label: 'Continue as guest with manual details (mock)' },
+        ]}
+        value={form.accountScenario}
+        onChange={(value) => update({ accountScenario: String(value) as FormState['accountScenario'] })}
+        hasError={attempted && !form.accountScenario}
+        errorMessage='Select an account and identity scenario.'
+      />
+      {form.accountScenario === 'signed-in' && (
+        <DetailsCard
+          title='Mock account context'
+          description='Read-only context only. No real account data is used.'
+          rows={[
+            { label: 'Account name', value: 'Alex Citizen' },
+            { label: 'Identity status', value: 'Verified in mock scenario' },
+            { label: 'Email', value: 'alex.citizen@example.test' },
+          ]}
+        />
+      )}
+      <Checkbox
+        id='poi-acknowledged'
+        label='I understand proof of identity is not performed in this prototype.'
+        checked={form.poiAcknowledged}
+        onChange={(value) => update({ poiAcknowledged: Boolean(value) })}
+        hasError={attempted && !form.poiAcknowledged}
+        errorMessage='Confirm that proof of identity is simulated only.'
+      />
+      <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
+    </section>
+  )
+}
+
+function ApplicationTypeStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
+  const needsPermitNumber = form.applicationType === 'renew' || form.applicationType === 'replace'
   return (
     <section aria-labelledby='app-type-heading'>
       <Heading level={2} id='app-type-heading'>Application type</Heading>
       <RadioButtonList
         id='application-type'
-        legend='Application type'
+        legend='What do you want to do?'
         options={[
-          { value: 'new', label: 'New application (mock)' },
-          { value: 'renew', label: 'Renewal (mock)' },
-          { value: 'replace', label: 'Replacement (mock)' },
+          { value: 'new', label: 'Apply for a new permit (mock)' },
+          { value: 'renew', label: 'Renew an existing permit (mock)' },
+          { value: 'replace', label: 'Replace a permit (mock)' },
         ]}
         value={form.applicationType}
-        onChange={(v) => update({ applicationType: String(v) as FormState['applicationType'] })}
-        hasError={typeErr}
+        onChange={(value) => update({ applicationType: String(value) as FormState['applicationType'], replaceReason: '', permitNumber: '' })}
+        hasError={attempted && !form.applicationType}
         errorMessage='Select an application type.'
       />
+      {needsPermitNumber && (
+        <Field id='permit-number' label='Existing permit number' helpMessage='Mock only. No permit lookup is performed.' hasError={attempted && !form.permitNumber.trim()} errorMessage='Enter the existing permit number.'>
+          <Input id='permit-number' value={form.permitNumber} onChange={(event) => update({ permitNumber: event.target.value })} hasError={attempted && !form.permitNumber.trim()} inputWidth='lg' />
+        </Field>
+      )}
+      {form.applicationType === 'replace' && (
+        <Field id='replace-reason' label='Reason for replacement' hasError={attempted && !form.replaceReason} errorMessage='Select a replacement reason.'>
+          <Select
+            id='replace-reason'
+            value={form.replaceReason}
+            onChange={(event) => update({ replaceReason: event.target.value })}
+            hasError={attempted && !form.replaceReason}
+            inputWidth='xl'
+            options={[
+              { value: 'lost', text: 'Lost permit (mock)' },
+              { value: 'stolen', text: 'Stolen permit (mock)' },
+              { value: 'damaged', text: 'Damaged permit (mock)' },
+            ]}
+          />
+        </Field>
+      )}
       <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
     </section>
   )
 }
 
 function ApplicantStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  const nameErr = attempted && !form.fullName.trim()
-  const emailErr = attempted && (!form.email.trim() || !form.email.includes('@') || !form.email.split('@')[1]?.includes('.'))
-  const phoneErr = attempted && !form.phone.trim()
-  const streetErr = attempted && !form.street.trim()
-  const suburbErr = attempted && !form.suburb.trim()
-  const stateErr = attempted && !form.state
-  const postcodeErr = attempted && (!form.postcode.trim() || form.postcode.length !== 4)
   return (
     <section aria-labelledby='applicant-heading'>
       <Heading level={2} id='applicant-heading'>Applicant details</Heading>
-      <Field id='full-name' label='Full name' helpMessage='Enter your first and last name.' hasError={nameErr} errorMessage='Enter your full name.'>
-        <Input id='full-name' value={form.fullName} onChange={(e) => update({ fullName: e.target.value })} hasError={nameErr} inputWidth='xl' autoComplete='name' />
+      <Field id='full-name' label='Full name' hasError={attempted && !form.fullName.trim()} errorMessage='Enter your full name.'>
+        <Input id='full-name' value={form.fullName} onChange={(event) => update({ fullName: event.target.value })} hasError={attempted && !form.fullName.trim()} inputWidth='xl' autoComplete='name' />
       </Field>
-      <Field id='email' label='Email address' hasError={emailErr} errorMessage='Enter a valid email address.'>
-        <Input id='email' type='email' value={form.email} onChange={(e) => update({ email: e.target.value })} hasError={emailErr} inputWidth='xl' autoComplete='email' />
-      </Field>
-      <Field id='phone' label='Phone number' hasError={phoneErr} errorMessage='Enter your phone number.'>
-        <Input id='phone' type='tel' value={form.phone} onChange={(e) => update({ phone: e.target.value })} hasError={phoneErr} inputWidth='lg' autoComplete='tel' />
-      </Field>
-      <fieldset style={{ border: 'none', padding: 0, margin: '0 0 1.5rem' }}>
-        <legend style={{ fontWeight: 500, fontSize: '1rem', marginBottom: '1rem' }}>Postal address</legend>
-        <Field id='street' label='Street address' hasError={streetErr} errorMessage='Enter your street address.'>
-          <Input id='street' value={form.street} onChange={(e) => update({ street: e.target.value })} hasError={streetErr} inputWidth='xl' autoComplete='street-address' />
-        </Field>
-        <Field id='suburb' label='Suburb' hasError={suburbErr} errorMessage='Enter your suburb.'>
-          <Input id='suburb' value={form.suburb} onChange={(e) => update({ suburb: e.target.value })} hasError={suburbErr} inputWidth='lg' autoComplete='address-level2' />
-        </Field>
-        <Field id='state' label='State' hasError={stateErr} errorMessage='Select your state.'>
-          <Select
-            id='state'
-            value={form.state}
-            onChange={(e) => update({ state: e.target.value })}
-            hasError={stateErr}
-            inputWidth='md'
-            autoComplete='address-level1'
-            options={[
-              { value: 'NSW', text: 'NSW' },
-              { value: 'VIC', text: 'VIC' },
-              { value: 'QLD', text: 'QLD' },
-              { value: 'WA', text: 'WA' },
-              { value: 'SA', text: 'SA' },
-              { value: 'TAS', text: 'TAS' },
-              { value: 'ACT', text: 'ACT' },
-              { value: 'NT', text: 'NT' },
-            ]}
-          />
-        </Field>
-        <Field id='postcode' label='Postcode' hasError={postcodeErr} errorMessage='Enter a valid 4-digit postcode.'>
-          <Input id='postcode' value={form.postcode} onChange={(e) => update({ postcode: e.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={postcodeErr} inputWidth='xs' maxLength={4} autoComplete='postal-code' />
-        </Field>
+      <fieldset style={{ border: 0, padding: 0, margin: '0 0 1.5rem' }}>
+        <legend style={{ fontWeight: 700, marginBottom: '0.75rem' }}>Date of birth</legend>
+        <p style={{ marginTop: 0, color: 'var(--gel-color-text-grey)' }}>For example, 15 03 1990</p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+          <Field id='birth-day' label='Day' hasError={attempted && !isDateComplete(form)} errorMessage='Enter your date of birth.'>
+            <Input id='birth-day' value={form.day} onChange={(event) => update({ day: event.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={attempted && !isDateComplete(form)} inputWidth='xxs' maxLength={2} autoComplete='bday-day' />
+          </Field>
+          <Field id='birth-month' label='Month'>
+            <Input id='birth-month' value={form.month} onChange={(event) => update({ month: event.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={attempted && !isDateComplete(form)} inputWidth='xxs' maxLength={2} autoComplete='bday-month' />
+          </Field>
+          <Field id='birth-year' label='Year'>
+            <Input id='birth-year' value={form.year} onChange={(event) => update({ year: event.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={attempted && !isDateComplete(form)} inputWidth='sm' maxLength={4} autoComplete='bday-year' />
+          </Field>
+        </div>
       </fieldset>
+      <Field id='email' label='Email address' hasError={attempted && (!form.email.trim() || !form.email.includes('@') || !form.email.split('@')[1]?.includes('.'))} errorMessage='Enter a valid email address.'>
+        <Input id='email' type='email' value={form.email} onChange={(event) => update({ email: event.target.value })} hasError={attempted && (!form.email.trim() || !form.email.includes('@') || !form.email.split('@')[1]?.includes('.'))} inputWidth='xl' autoComplete='email' />
+      </Field>
+      <Field id='phone' label='Phone number' hasError={attempted && !form.phone.trim()} errorMessage='Enter your phone number.'>
+        <Input id='phone' type='tel' value={form.phone} onChange={(event) => update({ phone: event.target.value })} hasError={attempted && !form.phone.trim()} inputWidth='lg' autoComplete='tel' />
+      </Field>
+      <RepeatableGroup title='Residential address' description='Manual address composition using GEL Field, Input and Select preview controls.'>
+        <Field id='street' label='Street address' hasError={attempted && !form.street.trim()} errorMessage='Enter your street address.'>
+          <Input id='street' value={form.street} onChange={(event) => update({ street: event.target.value })} hasError={attempted && !form.street.trim()} inputWidth='xl' autoComplete='street-address' />
+        </Field>
+        <Field id='suburb' label='Suburb' hasError={attempted && !form.suburb.trim()} errorMessage='Enter your suburb.'>
+          <Input id='suburb' value={form.suburb} onChange={(event) => update({ suburb: event.target.value })} hasError={attempted && !form.suburb.trim()} inputWidth='lg' autoComplete='address-level2' />
+        </Field>
+        <Field id='state' label='State' hasError={attempted && !form.state} errorMessage='Select your state.'>
+          <Select id='state' value={form.state} onChange={(event) => update({ state: event.target.value })} hasError={attempted && !form.state} inputWidth='md' autoComplete='address-level1' options={[
+            { value: 'NSW', text: 'NSW' },
+            { value: 'VIC', text: 'VIC' },
+            { value: 'QLD', text: 'QLD' },
+            { value: 'ACT', text: 'ACT' },
+          ]} />
+        </Field>
+        <Field id='postcode' label='Postcode' hasError={attempted && !/^\d{4}$/.test(form.postcode)} errorMessage='Enter a valid 4-digit postcode.'>
+          <Input id='postcode' value={form.postcode} onChange={(event) => update({ postcode: event.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={attempted && !/^\d{4}$/.test(form.postcode)} inputWidth='xs' maxLength={4} autoComplete='postal-code' />
+        </Field>
+      </RepeatableGroup>
+      <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
+    </section>
+  )
+}
+
+interface RepresentativeStepProps extends StepProps {
+  updateContact: (index: number, patch: Partial<ContactState>) => void
+  addContact: () => void
+  removeContact: (index: number) => void
+}
+
+function RepresentativeStep({ form, attempted, update, updateContact, addContact, removeContact, onBack, onContinue, onExit }: RepresentativeStepProps) {
+  return (
+    <section aria-labelledby='representative-heading'>
+      <Heading level={2} id='representative-heading'>Representative and authorised contacts</Heading>
+      <ConditionalQuestionPanel
+        id='has-representative'
+        legend='Is someone applying on behalf of the applicant?'
+        options={[{ value: 'no', label: 'No' }, { value: 'yes', label: 'Yes' }]}
+        value={form.hasRepresentative}
+        onChange={(value) => update({ hasRepresentative: value as FormState['hasRepresentative'] })}
+        showWhen='yes'
+        hasError={attempted && !form.hasRepresentative}
+        errorMessage='Select whether someone is applying on behalf of the applicant'
+      >
+        <Field id='representative-name' label='Representative name' hasError={attempted && form.hasRepresentative === 'yes' && !form.representativeName.trim()} errorMessage='Enter the representative name.'>
+          <Input id='representative-name' value={form.representativeName} onChange={(event) => update({ representativeName: event.target.value })} hasError={attempted && form.hasRepresentative === 'yes' && !form.representativeName.trim()} inputWidth='xl' />
+        </Field>
+        <Field id='representative-relationship' label='Relationship to applicant' hasError={attempted && form.hasRepresentative === 'yes' && !form.representativeRelationship.trim()} errorMessage='Enter the representative relationship.'>
+          <Input id='representative-relationship' value={form.representativeRelationship} onChange={(event) => update({ representativeRelationship: event.target.value })} hasError={attempted && form.hasRepresentative === 'yes' && !form.representativeRelationship.trim()} inputWidth='lg' />
+        </Field>
+      </ConditionalQuestionPanel>
+      <p>Optional authorised contacts test the repeatable group pattern. At least one field in a contact makes the full contact row required.</p>
+      <div className='tapaas-repeatable-list'>
+        {form.authorisedContacts.map((contact, index) => {
+          const hasAny = Boolean(contact.name.trim() || contact.relationship.trim() || contact.phone.trim())
+          return (
+            <RepeatableGroup
+              key={`contact-${index}`}
+              title={`Authorised contact ${index + 1}`}
+              actions={index > 0 ? <Button variant='secondary' onClick={() => removeContact(index)}>Remove contact</Button> : undefined}
+            >
+              <Field id={`contact-${index}-name`} label='Full name' hasError={attempted && hasAny && !contact.name.trim()} errorMessage={`Enter the name for authorised contact ${index + 1}.`}>
+                <Input id={`contact-${index}-name`} value={contact.name} onChange={(event) => updateContact(index, { name: event.target.value })} hasError={attempted && hasAny && !contact.name.trim()} inputWidth='xl' />
+              </Field>
+              <Field id={`contact-${index}-relationship`} label='Relationship to applicant' hasError={attempted && hasAny && !contact.relationship.trim()} errorMessage={`Enter the relationship for authorised contact ${index + 1}.`}>
+                <Input id={`contact-${index}-relationship`} value={contact.relationship} onChange={(event) => updateContact(index, { relationship: event.target.value })} hasError={attempted && hasAny && !contact.relationship.trim()} inputWidth='lg' />
+              </Field>
+              <Field id={`contact-${index}-phone`} label='Phone number' hasError={attempted && hasAny && !contact.phone.trim()} errorMessage={`Enter the phone number for authorised contact ${index + 1}.`}>
+                <Input id={`contact-${index}-phone`} type='tel' value={contact.phone} onChange={(event) => updateContact(index, { phone: event.target.value })} hasError={attempted && hasAny && !contact.phone.trim()} inputWidth='lg' />
+              </Field>
+            </RepeatableGroup>
+          )
+        })}
+      </div>
+      {form.authorisedContacts.length < 3 && <Button variant='secondary' onClick={addContact}>Add another contact</Button>}
       <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
     </section>
   )
 }
 
 function EligibilityStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  const conditionErr = attempted && !form.hasCondition
-  const conditionDetailsErr = attempted && form.hasCondition === 'yes' && !form.conditionDetails.trim()
-  const driverErr = attempted && !form.isDriver
-  const driverDetailsErr = attempted && form.isDriver === 'yes' && !form.driverDetails.trim()
-  const appTypeLabel: Record<string, string> = { new: 'New application', renew: 'Renewal', replace: 'Replacement' }
   return (
     <section aria-labelledby='eligibility-heading'>
       <Heading level={2} id='eligibility-heading'>Eligibility questions</Heading>
-      <ConditionalQuestionPanel
-        id='has-condition'
-        legend='Do you have a condition that affects your mobility?'
-        options={[
-          { value: 'no', label: 'No' },
-          { value: 'yes', label: 'Yes' },
-        ]}
-        value={form.hasCondition}
-        onChange={(v) => update({ hasCondition: v as FormState['hasCondition'] })}
-        showWhen='yes'
-        hasError={conditionErr}
-        errorMessage='Select whether you have a condition that affects your mobility'
-      >
-        <Field id='condition-details' label='Describe your condition' helpMessage='This is placeholder content only. No medical assessment is made in this prototype.' hasError={conditionDetailsErr} errorMessage='Describe your condition.'>
-          <Textarea id='condition-details' value={form.conditionDetails} onChange={(e) => update({ conditionDetails: e.target.value })} hasError={conditionDetailsErr} rows={4} />
-        </Field>
-      </ConditionalQuestionPanel>
-      <ConditionalQuestionPanel
-        id='is-driver'
-        legend='Are you the driver of the vehicle?'
-        options={[
-          { value: 'no', label: 'No' },
-          { value: 'yes', label: 'Yes' },
-        ]}
-        value={form.isDriver}
-        onChange={(v) => update({ isDriver: v as FormState['isDriver'] })}
-        showWhen='yes'
-        hasError={driverErr}
-        errorMessage='Select whether you are the driver of the vehicle'
-      >
-        <Field id='driver-details' label='Describe your driving situation' helpMessage='This is placeholder content only. No eligibility decision is made.' hasError={driverDetailsErr} errorMessage='Describe your driving situation.'>
-          <Textarea id='driver-details' value={form.driverDetails} onChange={(e) => update({ driverDetails: e.target.value })} hasError={driverDetailsErr} rows={4} />
-        </Field>
-      </ConditionalQuestionPanel>
-      <InPageAlert variant='warning' title='Eligibility placeholder'>
-        <p>Eligibility decisions are not made in this prototype. All questions use placeholder content and require owner confirmation.</p>
+      <InPageAlert variant='warning' title='No eligibility decision is made'>
+        <p>These questions mirror the shape of the MPS Figma flow, but the answers do not assess or decide eligibility.</p>
       </InPageAlert>
-      <DetailsCard
-        title='Application summary so far'
-        rows={[
-          { label: 'Name', value: form.fullName || '—' },
-          { label: 'Application type', value: appTypeLabel[form.applicationType] || '—' },
-        ]}
-        headingLevel={3}
+      <ConditionalQuestionPanel
+        id='has-mobility-condition'
+        legend='Does the applicant have a mobility condition?'
+        options={[{ value: 'yes', label: 'Yes' }, { value: 'no', label: 'No' }]}
+        value={form.hasMobilityCondition}
+        onChange={(value) => update({ hasMobilityCondition: value as FormState['hasMobilityCondition'] })}
+        showWhen='yes'
+        hasError={attempted && !form.hasMobilityCondition}
+        errorMessage='Select whether the applicant has a mobility condition'
+      >
+        <Field id='condition-details' label='Describe the condition' helpMessage='Mock content only. Do not enter real medical information.' hasError={attempted && form.hasMobilityCondition === 'yes' && !form.conditionDetails.trim()} errorMessage='Describe the mobility condition.'>
+          <Textarea id='condition-details' value={form.conditionDetails} onChange={(event) => update({ conditionDetails: event.target.value })} hasError={attempted && form.hasMobilityCondition === 'yes' && !form.conditionDetails.trim()} rows={4} />
+        </Field>
+      </ConditionalQuestionPanel>
+      <RadioButtonList
+        id='has-driver-licence'
+        legend='Does the applicant have a NSW driver licence?'
+        options={[{ value: 'yes', label: 'Yes (mock)' }, { value: 'no', label: 'No (mock)' }]}
+        value={form.hasDriverLicence}
+        onChange={(value) => update({ hasDriverLicence: String(value) as FormState['hasDriverLicence'] })}
+        hasError={attempted && !form.hasDriverLicence}
+        errorMessage='Select whether the applicant has a NSW driver licence.'
       />
+      <RadioButtonList
+        id='has-photo-card'
+        legend='Does the applicant have a NSW photo card?'
+        options={[{ value: 'yes', label: 'Yes (mock)' }, { value: 'no', label: 'No (mock)' }]}
+        value={form.hasPhotoCard}
+        onChange={(value) => update({ hasPhotoCard: String(value) as FormState['hasPhotoCard'] })}
+        hasError={attempted && !form.hasPhotoCard}
+        errorMessage='Select whether the applicant has a NSW photo card.'
+      />
+      <RadioButtonList
+        id='needs-temporary-permit'
+        legend='Is a temporary permit needed while this is assessed?'
+        options={[{ value: 'yes', label: 'Yes (mock)' }, { value: 'no', label: 'No (mock)' }]}
+        value={form.needsTemporaryPermit}
+        onChange={(value) => update({ needsTemporaryPermit: String(value) as FormState['needsTemporaryPermit'] })}
+        hasError={attempted && !form.needsTemporaryPermit}
+        errorMessage='Select whether a temporary permit is needed.'
+      />
+      <AssessmentSummaryPanel title='Mock routing preview' items={assessmentItems(form)} />
       <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
     </section>
   )
 }
 
-function EvidenceStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  const ackErr = attempted && !form.evidenceAcknowledged
+function MedicalEvidenceStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
   return (
-    <section aria-labelledby='evidence-heading'>
-      <Heading level={2} id='evidence-heading'>Evidence</Heading>
-      <InPageAlert variant='info' title='File upload not implemented'>
-        <p>In a real application, you would upload medical evidence here. File upload is not implemented in this trial skeleton.</p>
+    <section aria-labelledby='medical-heading'>
+      <Heading level={2} id='medical-heading'>Medical evidence</Heading>
+      <InPageAlert variant='info' title='File upload is deliberately mocked'>
+        <p>GEL file upload is high risk and needs deeper source-backed review. This preview records an evidence scenario only and does not upload files.</p>
       </InPageAlert>
+      <RadioButtonList
+        id='medical-evidence-type'
+        legend='What evidence type will be provided?'
+        options={[{ value: 'certificate', label: 'Medical certificate (mock)' }, { value: 'report', label: 'Medical report (mock)' }]}
+        value={form.medicalEvidenceType}
+        onChange={(value) => update({ medicalEvidenceType: String(value) as FormState['medicalEvidenceType'] })}
+        hasError={attempted && !form.medicalEvidenceType}
+        errorMessage='Select a medical evidence type.'
+      />
+      <RadioButtonList
+        id='medical-evidence-method'
+        legend='How will the evidence be provided?'
+        options={[{ value: 'uploaded', label: 'Mock uploaded now' }, { value: 'provide-later', label: 'Provide after submission' }]}
+        value={form.medicalEvidenceMethod}
+        onChange={(value) => update({ medicalEvidenceMethod: String(value) as FormState['medicalEvidenceMethod'] })}
+        hasError={attempted && !form.medicalEvidenceMethod}
+        errorMessage='Select how medical evidence will be provided.'
+      />
+      <EvidenceChecklistCard
+        title='Medical evidence checklist'
+        items={[
+          { id: 'identity', label: 'Identity evidence', status: form.poiAcknowledged ? 'provided' : 'needs-review', description: 'Static mock proof-of-identity state only.' },
+          { id: 'medical', label: 'Medical evidence', status: form.medicalEvidenceMethod === 'uploaded' ? 'provided' : form.medicalEvidenceMethod === 'provide-later' ? 'needs-review' : 'required', description: 'No file is uploaded. The status is only a simulated value.' },
+          { id: 'concession', label: 'Concession evidence', status: form.concessionCardType && form.concessionCardType !== 'none' ? 'needs-review' : 'not-required', description: 'Concession validation is simulated on the next page.' },
+        ]}
+      />
       <Checkbox
-        id='evidence-acknowledged'
-        label='I understand that evidence will need to be provided separately.'
-        checked={form.evidenceAcknowledged}
-        onChange={(v) => update({ evidenceAcknowledged: Boolean(v) })}
-        hasError={ackErr}
-        errorMessage='Confirm that you understand evidence will need to be provided separately.'
+        id='medical-evidence-acknowledged'
+        label='I understand medical evidence handling is simulated only.'
+        checked={form.medicalEvidenceAcknowledged}
+        onChange={(value) => update({ medicalEvidenceAcknowledged: Boolean(value) })}
+        hasError={attempted && !form.medicalEvidenceAcknowledged}
+        errorMessage='Confirm that medical evidence handling is simulated only.'
       />
       <Accordion
-        id='evidence-guidance'
+        id='medical-guidance'
         items={[
-          {
-            title: 'What evidence is needed',
-            children: (
-              <>
-                <p>You may need to provide a medical certificate or letter from your treating health professional confirming your mobility condition.</p>
-                <p>Accepted evidence types include GP letters, specialist reports and occupational therapy assessments.</p>
-                <p style={{ fontSize: '0.875rem', color: 'var(--gel-color-text-grey)', fontStyle: 'italic' }}>Owner confirmation required — evidence types and requirements are placeholder content only.</p>
-              </>
-            ),
-          },
-          {
-            title: 'How to provide evidence',
-            children: (
-              <>
-                <p>Evidence can be uploaded as a scanned document or photograph. Accepted formats include PDF, JPG and PNG.</p>
-                <p>If you cannot upload evidence online, you may post it to [confirmed postal address].</p>
-                <p style={{ fontSize: '0.875rem', color: 'var(--gel-color-text-grey)', fontStyle: 'italic' }}>Owner confirmation required — upload methods, formats and postal details are placeholder content only.</p>
-              </>
-            ),
-          },
+          { title: 'What happens if evidence is provided later?', children: <p>The mock application routes to manual review. A real service would need confirmed policy and operational rules.</p> },
+          { title: 'Why not build upload now?', children: <p>File upload has validation, privacy, security and accessibility risks. The pack needs deeper engineering review before a coded preview claims that behaviour.</p> },
         ]}
       />
       <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
@@ -393,41 +681,99 @@ function EvidenceStep({ form, attempted, update, onBack, onContinue, onExit }: S
 }
 
 function ConcessionStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  const typeErr = attempted && !form.concessionType
-  const numberErr = attempted && !form.concessionNumber.trim()
+  const needsCard = form.concessionCardType !== '' && form.concessionCardType !== 'none'
   return (
     <section aria-labelledby='concession-heading'>
       <Heading level={2} id='concession-heading'>Concession details</Heading>
-      <Field id='concession-type' label='Concession card type' hasError={typeErr} errorMessage='Select a concession card type.'>
-        <Select
-          id='concession-type'
-          value={form.concessionType}
-          onChange={(e) => update({ concessionType: e.target.value })}
-          hasError={typeErr}
-          inputWidth='xl'
-          options={[
-            { value: 'centrelink', text: 'Centrelink (mock)' },
-            { value: 'dva', text: 'DVA (mock)' },
-            { value: 'none', text: 'None (mock)' },
-          ]}
-        />
-      </Field>
-      <Field id='concession-number' label='Concession card number' helpMessage='Enter your card number. This is not validated in this prototype.' hasError={numberErr} errorMessage='Enter your concession card number.'>
-        <Input id='concession-number' value={form.concessionNumber} onChange={(e) => update({ concessionNumber: e.target.value })} hasError={numberErr} inputWidth='lg' />
-      </Field>
-      <InPageAlert variant='info' title='Concession validation not performed'>
-        <p>Concession card validation is not performed in this prototype. All details are mock only.</p>
+      <InPageAlert variant='warning' title='Concession validation is simulated'>
+        <p>The MPS Figma file includes invalid, duplicate and mismatch states. This page lets you choose a mock outcome but does not validate a real card.</p>
       </InPageAlert>
-      <MoreInfoDisclosure triggerText='What concession cards are accepted' title='Accepted concession cards'>
-        <ul>
-          <li>Centrelink Pensioner Concession Card</li>
-          <li>Centrelink Health Care Card</li>
-          <li>DVA Gold Card</li>
-          <li>DVA White Card</li>
-          <li>Commonwealth Seniors Health Card</li>
-        </ul>
-        <p style={{ fontSize: '0.875rem', color: 'var(--gel-color-text-grey)', fontStyle: 'italic' }}>Owner confirmation required — accepted card types are placeholder content only.</p>
+      <Field id='concession-card-type' label='Concession card option' hasError={attempted && !form.concessionCardType} errorMessage='Select a concession card option.'>
+        <Select id='concession-card-type' value={form.concessionCardType} onChange={(event) => update({ concessionCardType: event.target.value as FormState['concessionCardType'], concessionCardNumber: '', concessionValidationScenario: '' })} hasError={attempted && !form.concessionCardType} inputWidth='xl' options={[
+          { value: 'none', text: 'No concession card (mock)' },
+          { value: 'centrelink', text: 'Centrelink card (mock)' },
+          { value: 'dva', text: 'DVA card (mock)' },
+        ]} />
+      </Field>
+      {needsCard && (
+        <>
+          <Field id='concession-card-number' label='Concession card number' helpMessage='Mock only. Do not enter a real card number.' hasError={attempted && !form.concessionCardNumber.trim()} errorMessage='Enter the concession card number.'>
+            <Input id='concession-card-number' value={form.concessionCardNumber} onChange={(event) => update({ concessionCardNumber: event.target.value })} hasError={attempted && !form.concessionCardNumber.trim()} inputWidth='lg' />
+          </Field>
+          <RadioButtonList
+            id='concession-validation-scenario'
+            legend='Mock validation result'
+            options={[
+              { value: 'valid', label: 'Card validates successfully' },
+              { value: 'invalid', label: 'Card number invalid' },
+              { value: 'mismatch', label: 'Card details do not match applicant' },
+              { value: 'duplicate', label: 'Card already used on another application' },
+            ]}
+            value={form.concessionValidationScenario}
+            onChange={(value) => update({ concessionValidationScenario: String(value) as FormState['concessionValidationScenario'] })}
+            hasError={attempted && !form.concessionValidationScenario}
+            errorMessage='Select a mock concession validation result.'
+          />
+        </>
+      )}
+      <MoreInfoDisclosure triggerText='Why these mock outcomes exist' title='Concession validation states'>
+        <p>MPS Figma inventory includes several concession error variants. This preview tests routing and content treatment only. Real backend rules, wording and recovery paths need owner confirmation.</p>
       </MoreInfoDisclosure>
+      <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
+    </section>
+  )
+}
+
+function DeliveryStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
+  return (
+    <section aria-labelledby='delivery-heading'>
+      <Heading level={2} id='delivery-heading'>Delivery preferences</Heading>
+      <RadioButtonList
+        id='delivery-method'
+        legend='How would the permit be delivered if the real service approves the application?'
+        options={[{ value: 'post', label: 'Post to residential address (mock)' }, { value: 'service-centre', label: 'Collect at a service centre (mock)' }]}
+        value={form.deliveryMethod}
+        onChange={(value) => update({ deliveryMethod: String(value) as FormState['deliveryMethod'] })}
+        hasError={attempted && !form.deliveryMethod}
+        errorMessage='Select a delivery method.'
+      />
+      <Field id='delivery-instructions' label='Delivery instructions' helpMessage='Optional. This is not sent anywhere.' isOptional>
+        <Textarea id='delivery-instructions' value={form.deliveryInstructions} onChange={(event) => update({ deliveryInstructions: event.target.value })} rows={3} />
+      </Field>
+      <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
+    </section>
+  )
+}
+
+function PaymentStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
+  return (
+    <section aria-labelledby='payment-heading'>
+      <Heading level={2} id='payment-heading'>Payment simulation</Heading>
+      <ReviewFeesCard
+        title='Mock fee estimate'
+        fees={[
+          { label: 'Mobility parking permit application', amount: '$0.00' },
+          { label: 'Replacement fee', amount: form.applicationType === 'replace' ? '$0.00' : '$0.00' },
+        ]}
+        totalAmount='$0.00'
+      />
+      <InPageAlert variant='info' title='No real payment is included'>
+        <p>This page only simulates payment and routing outcomes. No payment provider, receipt or refund process is connected.</p>
+      </InPageAlert>
+      <RadioButtonList
+        id='payment-scenario'
+        legend='Choose a mock payment or routing outcome'
+        options={[
+          { value: 'success', label: 'Mock payment succeeds and application submits' },
+          { value: 'failed', label: 'Payment fails and shows a recoverable error' },
+          { value: 'cancelled', label: 'Payment is cancelled' },
+          { value: 'manual-review', label: 'Skip payment and route to manual review' },
+        ]}
+        value={form.paymentScenario}
+        onChange={(value) => update({ paymentScenario: String(value) as FormState['paymentScenario'] })}
+        hasError={attempted && !form.paymentScenario}
+        errorMessage='Select a mock payment or routing outcome.'
+      />
       <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
     </section>
   )
@@ -438,14 +784,14 @@ function DeclarationStep({ form, attempted, update, onBack, onContinue, onExit }
     <section aria-labelledby='declaration-heading'>
       <Heading level={2} id='declaration-heading'>Declaration</Heading>
       <InPageAlert variant='warning' title='Legal wording required'>
-        <p>This placeholder must be replaced with confirmed legal or policy wording before use in a real transaction.</p>
+        <p>This placeholder must be replaced with confirmed MPS declaration wording before real use.</p>
       </InPageAlert>
-      <p>By submitting this application, I declare that the information I have provided is true and correct. I understand that providing false or misleading information is [confirmed legal consequence — policy owner to confirm].</p>
+      <p>I declare that the information I have provided is true and correct. I understand that providing false or misleading information may have consequences confirmed by the policy owner.</p>
       <Checkbox
         id='declaration-accepted'
         label='I declare that the information provided is true and correct.'
         checked={form.declarationAccepted}
-        onChange={(v) => update({ declarationAccepted: Boolean(v) })}
+        onChange={(value) => update({ declarationAccepted: Boolean(value) })}
         hasError={attempted && !form.declarationAccepted}
         errorMessage='Accept the declaration to continue.'
       />
@@ -455,71 +801,160 @@ function DeclarationStep({ form, attempted, update, onBack, onContinue, onExit }
 }
 
 function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBack: () => void; onSubmit: () => void; onExit: () => void }) {
-  const appTypeLabel: Record<string, string> = { new: 'New application', renew: 'Renewal', replace: 'Replacement' }
-  const concessionLabel: Record<string, string> = { centrelink: 'Centrelink', dva: 'DVA', none: 'None' }
   return (
     <section aria-labelledby='review-heading'>
       <Heading level={2} id='review-heading'>Review your application</Heading>
-      <p>Check the information below before submitting. This page does not submit to a real service.</p>
-      <ReviewInfoCard title='Application type' sections={[{ title: 'Type', rows: [
-        { label: 'Application type', value: appTypeLabel[form.applicationType] || form.applicationType },
+      <p>Check the mock information below before submitting. This does not submit to a real service.</p>
+      <InPageAlert variant='info' title='Mobility Parking Scheme permit'>
+        <p>Please ensure that the details listed below are correct. Incorrect information may cause a delay in a real application. This preview still uses mock data only.</p>
+      </InPageAlert>
+      <ReviewInfoCard title='Application' sections={[{ title: 'Application details', rows: [
+        { label: 'Application type', value: appTypeLabel(form) },
+        { label: 'Existing permit', value: form.permitNumber || 'Not provided' },
+        { label: 'Replacement reason', value: form.replaceReason || 'Not applicable' },
       ] }]} />
-      <ReviewInfoCard title='Applicant details' sections={[{ title: 'Personal information', rows: [
+      <ReviewInfoCard title='Applicant' sections={[{ title: 'Applicant details', rows: [
         { label: 'Full name', value: form.fullName },
+        { label: 'Date of birth', value: `${form.day}/${form.month}/${form.year}` },
         { label: 'Email', value: form.email },
         { label: 'Phone', value: form.phone },
         { label: 'Address', value: `${form.street}, ${form.suburb} ${form.state} ${form.postcode}` },
       ] }]} />
-      <ReviewInfoCard title='Eligibility' sections={[{ title: 'Eligibility answers', rows: [
-        { label: 'Condition affecting mobility', value: form.hasCondition === 'yes' ? 'Yes' : 'No' },
-        ...(form.hasCondition === 'yes' ? [{ label: 'Condition details', value: form.conditionDetails }] : []),
-        { label: 'Driver of vehicle', value: form.isDriver === 'yes' ? 'Yes' : 'No' },
-        ...(form.isDriver === 'yes' ? [{ label: 'Driving situation', value: form.driverDetails }] : []),
+      <ReviewInfoCard title='Eligibility and evidence' sections={[{ title: 'Eligibility', rows: [
+        { label: 'Mobility condition', value: yesNo(form.hasMobilityCondition) },
+        { label: 'Medical evidence', value: evidenceLabel(form) },
+        { label: 'Driver licence', value: yesNo(form.hasDriverLicence) },
+        { label: 'Photo card', value: yesNo(form.hasPhotoCard) },
+        { label: 'Temporary permit', value: yesNo(form.needsTemporaryPermit) },
       ] }]} />
-      <ReviewInfoCard title='Evidence' sections={[{ title: 'Evidence acknowledgement', rows: [
-        { label: 'Evidence acknowledged', value: form.evidenceAcknowledged ? 'Yes' : 'No' },
+      <ReviewInfoCard title='Concession and delivery' sections={[{ title: 'Concession', rows: [
+        { label: 'Card type', value: concessionTypeLabel(form) },
+        { label: 'Mock validation', value: concessionValidationLabel(form) },
+        { label: 'Delivery method', value: deliveryLabel(form) },
       ] }]} />
-      <ReviewInfoCard title='Concession details' sections={[{ title: 'Concession information', rows: [
-        { label: 'Concession card type', value: concessionLabel[form.concessionType] || form.concessionType },
-        { label: 'Concession card number', value: form.concessionNumber },
-      ] }]} />
+      <EvidenceChecklistCard title='Evidence and validation status' items={evidenceItems(form)} />
+      <AssessmentSummaryPanel title='Mock assessment summary' items={assessmentItems(form)} />
       <ReviewFeesCard fees={[{ label: 'Application fee', amount: '$0.00' }]} totalAmount='$0.00' />
-      <InPageAlert variant='info' title='Payment excluded'>
-        <p>No payment flow is included in this trial skeleton. Fee amounts need owner confirmation.</p>
-      </InPageAlert>
-      <TransactionCtaGroup onBack={onBack} onContinue={onSubmit} onExit={onExit} continueLabel='Submit application' />
+      <TransactionCtaGroup onBack={onBack} onContinue={onSubmit} onExit={onExit} continueLabel='Submit mock application' />
     </section>
   )
 }
 
-function ConfirmationStep({ form, onStartAgain }: { form: FormState; onStartAgain: () => void }) {
-  const appTypeLabel: Record<string, string> = { new: 'New application', renew: 'Renewal', replace: 'Replacement' }
-  const concessionLabel: Record<string, string> = { centrelink: 'Centrelink', dva: 'DVA', none: 'None' }
+function OutcomeStep({ form, onStartAgain }: { form: FormState; onStartAgain: () => void }) {
+  if (form.paymentScenario === 'failed' || form.paymentScenario === 'cancelled') {
+    return (
+      <BusinessErrorPage
+        title={form.paymentScenario === 'failed' ? 'Payment was not successful' : 'Payment was cancelled'}
+        message={<p>The application has not been submitted. This is a simulated payment recovery path only.</p>}
+        guidance={<p>Try again, choose a different mock outcome, or confirm the real payment recovery journey with product and engineering owners.</p>}
+        reference='MPS-PAYMENT-MOCK'
+        onStartAgain={onStartAgain}
+      />
+    )
+  }
+  if (form.concessionCardType !== 'none' && ['invalid', 'mismatch', 'duplicate'].includes(form.concessionValidationScenario)) {
+    return (
+      <BusinessErrorPage
+        title='Concession details need attention'
+        message={<p>The mock concession outcome selected on this run cannot progress automatically.</p>}
+        guidance={<p>Real concession recovery wording, backend error codes and support channels need source-confirmed business rules.</p>}
+        reference='MPS-CONCESSION-MOCK'
+        onStartAgain={onStartAgain}
+      />
+    )
+  }
+
+  const manual = isManualReview(form)
   return (
-    <section aria-labelledby='confirmation-heading'>
-      <ConfirmationHeader title='Application submitted' transactionName='Mobility parking permit' />
-      <TransactionSummaryCard items={[
-        { label: 'Reference number', value: 'MPS-MOCK-000000', helpText: 'Mock reference only.' },
+    <section aria-labelledby='outcome-heading'>
+      <ConfirmationHeader title={manual ? 'Application received for manual review' : 'Application submitted'} transactionName='Mobility Parking Scheme' />
+      <TransactionSummaryCard heading='Application summary' items={[
+        { label: 'Reference number', value: manual ? 'MPS-REVIEW-000000' : 'MPS-MOCK-000000', helpText: 'Mock reference only.' },
         { label: 'Applicant', value: form.fullName },
-        { label: 'Application type', value: appTypeLabel[form.applicationType] || form.applicationType },
-        { label: 'Concession card type', value: concessionLabel[form.concessionType] || form.concessionType },
+        { label: 'Application type', value: appTypeLabel(form) },
+        { label: 'Outcome route', value: manual ? 'Manual review' : 'Submitted' },
       ]}>
-        <p>Processing timeframes, receipt wording and next steps must be confirmed by the service owner before reuse.</p>
+        <p>Assessment wording, reference format, notification timing and next steps need service-owner confirmation.</p>
       </TransactionSummaryCard>
       <Heading level={2}>Next steps</Heading>
       <ol className='tapaas-step-list'>
-        <li>Your application will be assessed within [confirmed assessment timeframe].</li>
-        <li>You will receive a notification at [confirmed contact method].</li>
-        <li>If approved, your mobility parking permit will be issued.</li>
-        <li>Contact [confirmed support channel] if you need to update your application.</li>
+        <li>Your mock application will be assessed within [confirmed timeframe].</li>
+        <li>You will receive updates by [confirmed contact channel].</li>
+        <li>If the real service approves the application, the permit would be issued using the confirmed delivery method.</li>
       </ol>
-      <InPageAlert variant='info' title='Owner confirmation required'>
-        <p>Owner confirmation required — assessment, timeframes and next steps are not real.</p>
+      <InPageAlert variant='info' title='Trial boundary'>
+        <p>No approval, permit issue, payment receipt, eligibility decision or concession validation has occurred.</p>
       </InPageAlert>
       <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start again' />
       <p style={{ marginTop: '1rem' }}>
-        <TextLink href='https://github.com/leokessel-lgtm/tapaas-kiro-trial/blob/main/docs/tapaas/00-source-inventory.md'>Review TaPaaS source inventory</TextLink>
+        <TextLink href='https://github.com/leokessel-lgtm/tapaas-kiro-trial/blob/main/docs/tapaas/05-component-template-relationship-map.md'>Review TaPaaS component-template relationship map</TextLink>
       </p>
     </section>
   )
+}
+
+function evidenceItems(form: FormState) {
+  return [
+    { id: 'identity', label: 'Proof of identity', status: form.poiAcknowledged ? 'provided' as const : 'needs-review' as const, description: 'Static mock state only.' },
+    { id: 'medical', label: 'Medical evidence', status: form.medicalEvidenceMethod === 'uploaded' ? 'provided' as const : 'needs-review' as const, description: evidenceLabel(form) },
+    { id: 'concession', label: 'Concession evidence', status: form.concessionCardType === 'none' ? 'not-required' as const : form.concessionValidationScenario === 'valid' ? 'provided' as const : 'needs-review' as const, description: concessionValidationLabel(form) },
+  ]
+}
+
+function assessmentItems(form: FormState) {
+  return [
+    { label: 'Eligibility decision', value: 'Not assessed', tone: 'warning' as const },
+    { label: 'Identity proofing', value: form.poiAcknowledged ? 'Mock acknowledged' : 'Needs review', tone: form.poiAcknowledged ? 'good' as const : 'warning' as const },
+    { label: 'Medical evidence', value: form.medicalEvidenceMethod === 'uploaded' ? 'Mock provided' : 'Manual review likely', tone: form.medicalEvidenceMethod === 'uploaded' ? 'good' as const : 'warning' as const },
+    { label: 'Concession validation', value: concessionValidationLabel(form), tone: form.concessionValidationScenario === 'valid' || form.concessionCardType === 'none' ? 'good' as const : form.concessionValidationScenario ? 'error' as const : 'neutral' as const },
+    { label: 'Route after submission', value: isManualReview(form) ? 'Manual review' : 'Standard mock submission', tone: isManualReview(form) ? 'warning' as const : 'good' as const },
+  ]
+}
+
+function isManualReview(form: FormState) {
+  return form.paymentScenario === 'manual-review' ||
+    form.medicalEvidenceMethod === 'provide-later' ||
+    form.hasDriverLicence === 'no' ||
+    form.hasPhotoCard === 'no'
+}
+
+function appTypeLabel(form: FormState) {
+  if (form.applicationType === 'new') return 'New application'
+  if (form.applicationType === 'renew') return 'Renewal'
+  if (form.applicationType === 'replace') return 'Replacement'
+  return 'Not selected'
+}
+
+function concessionTypeLabel(form: FormState) {
+  if (form.concessionCardType === 'centrelink') return 'Centrelink'
+  if (form.concessionCardType === 'dva') return 'DVA'
+  if (form.concessionCardType === 'none') return 'None'
+  return 'Not selected'
+}
+
+function concessionValidationLabel(form: FormState) {
+  if (form.concessionCardType === 'none') return 'Not required'
+  if (form.concessionValidationScenario === 'valid') return 'Valid in mock scenario'
+  if (form.concessionValidationScenario === 'invalid') return 'Invalid in mock scenario'
+  if (form.concessionValidationScenario === 'mismatch') return 'Details mismatch in mock scenario'
+  if (form.concessionValidationScenario === 'duplicate') return 'Duplicate in mock scenario'
+  return 'Not selected'
+}
+
+function evidenceLabel(form: FormState) {
+  if (form.medicalEvidenceMethod === 'uploaded') return `${form.medicalEvidenceType || 'Medical evidence'} marked as mock uploaded`
+  if (form.medicalEvidenceMethod === 'provide-later') return `${form.medicalEvidenceType || 'Medical evidence'} will be provided later`
+  return 'Not selected'
+}
+
+function deliveryLabel(form: FormState) {
+  if (form.deliveryMethod === 'post') return 'Post to residential address'
+  if (form.deliveryMethod === 'service-centre') return 'Collect at a service centre'
+  return 'Not selected'
+}
+
+function yesNo(value: 'yes' | 'no' | '') {
+  if (value === 'yes') return 'Yes'
+  if (value === 'no') return 'No'
+  return 'Not selected'
 }

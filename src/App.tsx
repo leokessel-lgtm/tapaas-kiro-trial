@@ -5,9 +5,8 @@ import { TrialPermitSkeleton } from './TrialPermitSkeleton'
 import { AccessibleMarketPermitSkeleton } from './AccessibleMarketPermitSkeleton'
 import { CommunityVenueBookingSkeleton } from './CommunityVenueBookingSkeleton'
 import { MobilityParkingPermitSkeleton } from './MobilityParkingPermitSkeleton'
-import { ComplexTransactionStressTestSkeleton } from './ComplexTransactionStressTestSkeleton'
 
-type ActiveSkeleton = 'vehicle' | 'permit' | 'market' | 'venue' | 'mps' | 'stress'
+type ActiveSkeleton = 'vehicle' | 'permit' | 'market' | 'venue' | 'mps'
 
 const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; subtitle: string }> = {
   vehicle: {
@@ -32,13 +31,8 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
   },
   mps: {
     label: 'TaPaaS x Kiro trial',
-    title: 'Mobility parking permit',
-    subtitle: 'A non-production 9-step complexity test inspired by MPS Figma evidence.',
-  },
-  stress: {
-    label: 'TaPaaS x Kiro trial',
-    title: 'Complex permit application',
-    subtitle: 'A non-production 7-step skeleton with an exit modal, repeatable sections, edit links and a business-error outcome.',
+    title: 'Mobility Parking Scheme simulation',
+    subtitle: 'A non-production Figma-guided MPS transaction with mock identity, eligibility, evidence, concession, payment and outcome routing.',
   },
 }
 
@@ -47,8 +41,7 @@ const switcherOptions: { id: ActiveSkeleton; label: string }[] = [
   { id: 'permit', label: 'Trial permit skeleton' },
   { id: 'market', label: 'Accessible market permit' },
   { id: 'venue', label: 'Community venue booking' },
-  { id: 'mps', label: 'Mobility parking permit' },
-  { id: 'stress', label: 'Complex permit application' },
+  { id: 'mps', label: 'Mobility Parking Scheme' },
 ]
 
 export function App() {
@@ -88,7 +81,6 @@ export function App() {
       {active === 'market' && <AccessibleMarketPermitSkeleton />}
       {active === 'venue' && <CommunityVenueBookingSkeleton />}
       {active === 'mps' && <MobilityParkingPermitSkeleton />}
-      {active === 'stress' && <ComplexTransactionStressTestSkeleton />}
     </ServiceNSWChrome>
   )
 }

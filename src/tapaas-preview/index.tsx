@@ -18,6 +18,19 @@ export interface FeeItem {
   amount: string
 }
 
+export interface EvidenceChecklistItem {
+  id: string
+  label: string
+  description?: string
+  status: 'required' | 'provided' | 'not-required' | 'needs-review'
+}
+
+export interface AssessmentSummaryItem {
+  label: string
+  value: React.ReactNode
+  tone?: 'neutral' | 'good' | 'warning' | 'error'
+}
+
 export function ConfirmationHeader({
   title,
   transactionName,
@@ -295,8 +308,97 @@ export function BusinessErrorPage({
   )
 }
 
+export function RepeatableGroup({
+  title,
+  description,
+  children,
+  actions,
+}: {
+  title: string
+  description?: React.ReactNode
+  children: React.ReactNode
+  actions?: React.ReactNode
+}) {
+  return (
+    <fieldset className='tapaas-repeatable-group'>
+      <legend className='tapaas-repeatable-group__legend'>{title}</legend>
+      {description && <p className='tapaas-repeatable-group__description'>{description}</p>}
+      <div className='tapaas-repeatable-group__fields'>
+        {children}
+      </div>
+      {actions && <div className='tapaas-repeatable-group__actions'>{actions}</div>}
+    </fieldset>
+  )
+}
+
+export function EvidenceChecklistCard({
+  title = 'Evidence checklist',
+  items,
+  children,
+}: {
+  title?: string
+  items: EvidenceChecklistItem[]
+  children?: React.ReactNode
+}) {
+  return (
+    <section className='tapaas-card tapaas-evidence-card' aria-labelledby={`${slugify(title)}-heading`}>
+      <Heading level={3} id={`${slugify(title)}-heading`}>{title}</Heading>
+      <ul className='tapaas-evidence-list'>
+        {items.map((item) => (
+          <li className='tapaas-evidence-item' key={item.id}>
+            <span className={`tapaas-status-pill tapaas-status-pill--${item.status}`}>
+              {statusLabel(item.status)}
+            </span>
+            <div>
+              <strong>{item.label}</strong>
+              {item.description && <p className='tapaas-help-text'>{item.description}</p>}
+            </div>
+          </li>
+        ))}
+      </ul>
+      {children && <div className='tapaas-card-extra'>{children}</div>}
+    </section>
+  )
+}
+
+export function AssessmentSummaryPanel({
+  title = 'Mock assessment summary',
+  items,
+  children,
+}: {
+  title?: string
+  items: AssessmentSummaryItem[]
+  children?: React.ReactNode
+}) {
+  return (
+    <section className='tapaas-card tapaas-assessment-panel' aria-labelledby={`${slugify(title)}-heading`}>
+      <Heading level={3} id={`${slugify(title)}-heading`}>{title}</Heading>
+      <dl className='tapaas-assessment-list'>
+        {items.map((item) => (
+          <div className='tapaas-assessment-row' key={item.label}>
+            <dt>{item.label}</dt>
+            <dd>
+              <span className={`tapaas-assessment-value tapaas-assessment-value--${item.tone || 'neutral'}`}>
+                {item.value}
+              </span>
+            </dd>
+          </div>
+        ))}
+      </dl>
+      {children && <div className='tapaas-card-extra'>{children}</div>}
+    </section>
+  )
+}
+
 function slugify(value: string) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+}
+
+function statusLabel(status: EvidenceChecklistItem['status']) {
+  if (status === 'provided') return 'Mock provided'
+  if (status === 'not-required') return 'Not required'
+  if (status === 'needs-review') return 'Needs review'
+  return 'Required'
 }
 
 // ---------------------------------------------------------------------------
