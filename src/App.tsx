@@ -6,8 +6,9 @@ import { CommunityEventPermitSkeleton } from './CommunityEventPermitSkeleton'
 import { AccessibleMarketPermitSkeleton } from './AccessibleMarketPermitSkeleton'
 import { CommunityVenueBookingSkeleton } from './CommunityVenueBookingSkeleton'
 import { FoodStallApprovalSkeleton } from './FoodStallApprovalSkeleton'
+import { MobilityParkingPermitSkeleton } from './MobilityParkingPermitSkeleton'
 
-type ActiveSkeleton = 'vehicle' | 'permit' | 'event' | 'market' | 'venue' | 'food'
+type ActiveSkeleton = 'vehicle' | 'permit' | 'event' | 'market' | 'venue' | 'food' | 'mps'
 
 const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; subtitle: string }> = {
   vehicle: {
@@ -39,6 +40,11 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
     label: 'TaPaaS x Kiro trial',
     title: 'Temporary food stall approval',
     subtitle: 'A non-production 8-step skeleton with conditional food handling questions.',
+  },
+  mps: {
+    label: 'TaPaaS x Kiro trial',
+    title: 'Mobility parking permit',
+    subtitle: 'A non-production 9-step complexity test inspired by MPS Figma evidence.',
   },
 }
 
@@ -155,6 +161,23 @@ export function App() {
         >
           Food stall approval
         </button>
+        <button
+          type='button'
+          onClick={() => setActive('mps')}
+          aria-pressed={active === 'mps'}
+          style={{
+            padding: '0.5rem 1rem',
+            fontSize: '0.875rem',
+            fontFamily: 'var(--gel-font-body)',
+            border: '1px solid var(--gel-color-border-dark, #646974)',
+            borderRadius: '4px',
+            background: active === 'mps' ? 'var(--gel-color-primary)' : 'transparent',
+            color: active === 'mps' ? 'var(--gel-color-white)' : 'var(--gel-color-text)',
+            cursor: 'pointer',
+          }}
+        >
+          Mobility parking permit
+        </button>
       </div>
       {active === 'vehicle' && <TapaasTransactionSkeleton />}
       {active === 'permit' && <TrialPermitSkeleton />}
@@ -162,6 +185,7 @@ export function App() {
       {active === 'market' && <AccessibleMarketPermitSkeleton />}
       {active === 'venue' && <CommunityVenueBookingSkeleton />}
       {active === 'food' && <FoodStallApprovalSkeleton />}
+      {active === 'mps' && <MobilityParkingPermitSkeleton />}
     </ServiceNSWChrome>
   )
 }
