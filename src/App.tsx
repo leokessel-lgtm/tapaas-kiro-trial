@@ -2,13 +2,11 @@ import { useState } from 'react'
 import { ServiceNSWChrome } from './layout-preview/ServiceNSWChrome'
 import { TapaasTransactionSkeleton } from './TapaasTransactionSkeleton'
 import { TrialPermitSkeleton } from './TrialPermitSkeleton'
-import { CommunityEventPermitSkeleton } from './CommunityEventPermitSkeleton'
 import { AccessibleMarketPermitSkeleton } from './AccessibleMarketPermitSkeleton'
 import { CommunityVenueBookingSkeleton } from './CommunityVenueBookingSkeleton'
-import { FoodStallApprovalSkeleton } from './FoodStallApprovalSkeleton'
 import { MobilityParkingPermitSkeleton } from './MobilityParkingPermitSkeleton'
 
-type ActiveSkeleton = 'vehicle' | 'permit' | 'event' | 'market' | 'venue' | 'food' | 'mps'
+type ActiveSkeleton = 'vehicle' | 'permit' | 'market' | 'venue' | 'mps'
 
 const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; subtitle: string }> = {
   vehicle: {
@@ -21,11 +19,6 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
     title: 'Apply for a trial permit',
     subtitle: 'A non-production trial permit application skeleton using mock data only.',
   },
-  event: {
-    label: 'TaPaaS x Kiro trial',
-    title: 'Community event permit',
-    subtitle: 'A non-production 8-step transaction skeleton demonstrating longer application flows.',
-  },
   market: {
     label: 'TaPaaS x Kiro trial',
     title: 'Accessible market permit',
@@ -36,11 +29,6 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
     title: 'Community venue booking',
     subtitle: 'A non-production 8-step skeleton with MoreInfoPanel, Accordion and conditional questions.',
   },
-  food: {
-    label: 'TaPaaS x Kiro trial',
-    title: 'Temporary food stall approval',
-    subtitle: 'A non-production 8-step skeleton with conditional food handling questions.',
-  },
   mps: {
     label: 'TaPaaS x Kiro trial',
     title: 'Mobility parking permit',
@@ -49,7 +37,7 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
 }
 
 export function App() {
-  const [active, setActive] = useState<ActiveSkeleton>('event')
+  const [active, setActive] = useState<ActiveSkeleton>('permit')
   const config = skeletonConfig[active]
 
   return (
@@ -95,23 +83,6 @@ export function App() {
         </button>
         <button
           type='button'
-          onClick={() => setActive('event')}
-          aria-pressed={active === 'event'}
-          style={{
-            padding: '0.5rem 1rem',
-            fontSize: '0.875rem',
-            fontFamily: 'var(--gel-font-body)',
-            border: '1px solid var(--gel-color-border-dark, #646974)',
-            borderRadius: '4px',
-            background: active === 'event' ? 'var(--gel-color-primary)' : 'transparent',
-            color: active === 'event' ? 'var(--gel-color-white)' : 'var(--gel-color-text)',
-            cursor: 'pointer',
-          }}
-        >
-          Community event permit
-        </button>
-        <button
-          type='button'
           onClick={() => setActive('market')}
           aria-pressed={active === 'market'}
           style={{
@@ -146,23 +117,6 @@ export function App() {
         </button>
         <button
           type='button'
-          onClick={() => setActive('food')}
-          aria-pressed={active === 'food'}
-          style={{
-            padding: '0.5rem 1rem',
-            fontSize: '0.875rem',
-            fontFamily: 'var(--gel-font-body)',
-            border: '1px solid var(--gel-color-border-dark, #646974)',
-            borderRadius: '4px',
-            background: active === 'food' ? 'var(--gel-color-primary)' : 'transparent',
-            color: active === 'food' ? 'var(--gel-color-white)' : 'var(--gel-color-text)',
-            cursor: 'pointer',
-          }}
-        >
-          Food stall approval
-        </button>
-        <button
-          type='button'
           onClick={() => setActive('mps')}
           aria-pressed={active === 'mps'}
           style={{
@@ -181,10 +135,8 @@ export function App() {
       </div>
       {active === 'vehicle' && <TapaasTransactionSkeleton />}
       {active === 'permit' && <TrialPermitSkeleton />}
-      {active === 'event' && <CommunityEventPermitSkeleton />}
       {active === 'market' && <AccessibleMarketPermitSkeleton />}
       {active === 'venue' && <CommunityVenueBookingSkeleton />}
-      {active === 'food' && <FoodStallApprovalSkeleton />}
       {active === 'mps' && <MobilityParkingPermitSkeleton />}
     </ServiceNSWChrome>
   )
