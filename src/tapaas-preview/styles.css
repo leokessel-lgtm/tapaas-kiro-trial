@@ -122,6 +122,154 @@
   margin-top: 0.5rem;
 }
 
+.tapaas-repeatable-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.tapaas-repeatable-group {
+  border: 0;
+  border-top: 1px solid var(--gel-color-border);
+  padding: 1.5rem 0 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.tapaas-repeatable-group:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.tapaas-repeatable-group__legend {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0 0 1rem;
+  font-family: var(--gel-font-body);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--gel-color-text);
+}
+
+.tapaas-repeatable-group__description {
+  margin: -0.5rem 0 1rem;
+  color: var(--gel-color-text-grey);
+}
+
+.tapaas-repeatable-group__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.tapaas-repeatable-group__fields > * {
+  margin-bottom: 0 !important;
+}
+
+.tapaas-repeatable-group__actions {
+  margin-top: 1rem;
+}
+
+.tapaas-evidence-card,
+.tapaas-assessment-panel {
+  background: #f4f7f9;
+}
+
+.tapaas-evidence-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tapaas-evidence-item {
+  display: grid;
+  grid-template-columns: 8.75rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  padding: 1rem 0;
+  border-top: 1px solid var(--gel-color-border);
+}
+
+.tapaas-evidence-item:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.tapaas-status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.75rem;
+  padding: 0.125rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.2;
+  border: 1px solid var(--gel-color-border-dark);
+  background: var(--gel-color-white);
+  color: var(--gel-color-text);
+}
+
+.tapaas-status-pill--provided {
+  border-color: #008a07;
+  color: #006b05;
+}
+
+.tapaas-status-pill--needs-review,
+.tapaas-status-pill--required {
+  border-color: var(--gel-color-primary);
+  color: var(--gel-color-primary);
+}
+
+.tapaas-status-pill--not-required {
+  border-color: var(--gel-color-text-grey);
+  color: var(--gel-color-text-grey);
+}
+
+.tapaas-assessment-list {
+  margin: 0;
+}
+
+.tapaas-assessment-row {
+  display: grid;
+  grid-template-columns: minmax(10rem, 1fr) minmax(0, 2fr);
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--gel-color-border);
+}
+
+.tapaas-assessment-row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.tapaas-assessment-row dt {
+  font-weight: 700;
+}
+
+.tapaas-assessment-row dd {
+  margin: 0;
+}
+
+.tapaas-assessment-value {
+  font-weight: 700;
+}
+
+.tapaas-assessment-value--good {
+  color: #006b05;
+}
+
+.tapaas-assessment-value--warning {
+  color: #8a5a00;
+}
+
+.tapaas-assessment-value--error {
+  color: var(--gel-color-error);
+}
+
 .tapaas-modal-layer {
   position: fixed;
   inset: 0;
@@ -189,6 +337,12 @@
   .tapaas-summary-row {
     grid-template-columns: 1fr;
     gap: 0.25rem;
+  }
+
+  .tapaas-evidence-item,
+  .tapaas-assessment-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
   }
 
   .tapaas-primary-actions,

@@ -259,9 +259,10 @@ function HoldersStep({ form, attempted, update, onBack, onContinue, onExit }: St
         </InPageAlert>
       )}
 
-      {form.holders.map((holder, index) => (
-        <fieldset key={holder.id} style={{ border: '1px solid var(--gel-color-border, #ccc)', borderRadius: '4px', padding: '1rem', margin: '0 0 1rem' }}>
-          <legend style={{ fontWeight: 500, fontSize: '1rem' }}>Holder {index + 1}</legend>
+      <div className='tapaas-repeatable-list'>
+        {form.holders.map((holder, index) => (
+        <fieldset key={holder.id} className='tapaas-repeatable-group'>
+          <legend className='tapaas-repeatable-group__legend'>Holder {index + 1}</legend>
           <Field
             id={`holder-${index}-name`}
             label='Full name'
@@ -295,7 +296,8 @@ function HoldersStep({ form, attempted, update, onBack, onContinue, onExit }: St
             <Button variant='secondary' onClick={() => removeHolder(index)}>Remove holder {index + 1}</Button>
           )}
         </fieldset>
-      ))}
+        ))}
+      </div>
 
       {form.holders.length < 3 && (
         <div style={{ marginBottom: '1.5rem' }}>
