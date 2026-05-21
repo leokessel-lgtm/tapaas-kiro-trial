@@ -46,8 +46,8 @@ This is **trial guidance only**. It does not claim production readiness, GEL com
 | Radio buttons | `31:63987` | Form input page `8410:37703`, declaration step `9894:3936` | GEL variant | `RadioButtonList` | Use existing GEL preview radio list first. |
 | Radio button cards | `31:63988` | Selection/input pages | TaPaaS-specific composite | Not coded | MCP extracted responsive spacing and error-spacing notes. Needs keyboard/focus/error-state review before coding. |
 | VEOS selection card | `31:63989` | Vehicle-specific flows only | TaPaaS-specific composite | Not coded | Design-only. Do not generalise without source confirmation. |
-| Exit modal | `4677:1042` | Exit/cancel flows | GEL/TaPaaS modal pattern | Not coded; exit notice only | Design-only until modal focus behaviour and wording are confirmed. |
-| Business error page | `8931:31271` | Error routing | TaPaaS page template | Not coded | Requires source-confirmed business rules. |
+| Exit modal | `4677:1042` | Exit/cancel flows | GEL/TaPaaS modal pattern | `ExitModal` | Trial preview includes labelled/described dialog, Escape close, return focus and basic focus containment. Needs VoiceOver/NVDA review. |
+| Business error page | `8931:31271` | Error routing | TaPaaS page template | `BusinessErrorPage` | Trial preview supports mock hard-stop outcomes with `role="alert"`. Real use requires source-confirmed business rules. |
 | System error page | `17628:2069` | Error routing | TaPaaS page template | Not coded | Requires app error-routing design. |
 
 ## Mobility Parking Scheme mapping status

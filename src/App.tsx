@@ -28,7 +28,7 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
   venue: {
     label: 'TaPaaS x Kiro trial',
     title: 'Community venue booking',
-    subtitle: 'A non-production 8-step skeleton with MoreInfoPanel, Accordion and conditional questions.',
+    subtitle: 'A non-production 8-step skeleton with MoreInfoDisclosure, Accordion and conditional questions.',
   },
   mps: {
     label: 'TaPaaS x Kiro trial',
@@ -37,10 +37,19 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
   },
   stress: {
     label: 'TaPaaS x Kiro trial',
-    title: 'Complex stress test',
-    subtitle: 'Internal-only 7-step skeleton with modal, repeatable sections, edit links and conditional outcome.',
+    title: 'Complex permit application',
+    subtitle: 'A non-production 7-step skeleton with an exit modal, repeatable sections, edit links and a business-error outcome.',
   },
 }
+
+const switcherOptions: { id: ActiveSkeleton; label: string }[] = [
+  { id: 'vehicle', label: 'Vehicle skeleton' },
+  { id: 'permit', label: 'Trial permit skeleton' },
+  { id: 'market', label: 'Accessible market permit' },
+  { id: 'venue', label: 'Community venue booking' },
+  { id: 'mps', label: 'Mobility parking permit' },
+  { id: 'stress', label: 'Complex permit application' },
+]
 
 export function App() {
   const [active, setActive] = useState<ActiveSkeleton>('permit')
@@ -52,109 +61,27 @@ export function App() {
       pageTitle={config.title}
       pageSubtitle={config.subtitle}
     >
-      <div style={{ marginBottom: '1.5rem', display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-        <button
-          type='button'
-          onClick={() => setActive('vehicle')}
-          aria-pressed={active === 'vehicle'}
-          style={{
-            padding: '0.5rem 1rem',
-            fontSize: '0.875rem',
-            fontFamily: 'var(--gel-font-body)',
-            border: '1px solid var(--gel-color-border-dark, #646974)',
-            borderRadius: '4px',
-            background: active === 'vehicle' ? 'var(--gel-color-primary)' : 'transparent',
-            color: active === 'vehicle' ? 'var(--gel-color-white)' : 'var(--gel-color-text)',
-            cursor: 'pointer',
-          }}
-        >
-          Vehicle skeleton
-        </button>
-        <button
-          type='button'
-          onClick={() => setActive('permit')}
-          aria-pressed={active === 'permit'}
-          style={{
-            padding: '0.5rem 1rem',
-            fontSize: '0.875rem',
-            fontFamily: 'var(--gel-font-body)',
-            border: '1px solid var(--gel-color-border-dark, #646974)',
-            borderRadius: '4px',
-            background: active === 'permit' ? 'var(--gel-color-primary)' : 'transparent',
-            color: active === 'permit' ? 'var(--gel-color-white)' : 'var(--gel-color-text)',
-            cursor: 'pointer',
-          }}
-        >
-          Trial permit skeleton
-        </button>
-        <button
-          type='button'
-          onClick={() => setActive('market')}
-          aria-pressed={active === 'market'}
-          style={{
-            padding: '0.5rem 1rem',
-            fontSize: '0.875rem',
-            fontFamily: 'var(--gel-font-body)',
-            border: '1px solid var(--gel-color-border-dark, #646974)',
-            borderRadius: '4px',
-            background: active === 'market' ? 'var(--gel-color-primary)' : 'transparent',
-            color: active === 'market' ? 'var(--gel-color-white)' : 'var(--gel-color-text)',
-            cursor: 'pointer',
-          }}
-        >
-          Accessible market permit
-        </button>
-        <button
-          type='button'
-          onClick={() => setActive('venue')}
-          aria-pressed={active === 'venue'}
-          style={{
-            padding: '0.5rem 1rem',
-            fontSize: '0.875rem',
-            fontFamily: 'var(--gel-font-body)',
-            border: '1px solid var(--gel-color-border-dark, #646974)',
-            borderRadius: '4px',
-            background: active === 'venue' ? 'var(--gel-color-primary)' : 'transparent',
-            color: active === 'venue' ? 'var(--gel-color-white)' : 'var(--gel-color-text)',
-            cursor: 'pointer',
-          }}
-        >
-          Community venue booking
-        </button>
-        <button
-          type='button'
-          onClick={() => setActive('mps')}
-          aria-pressed={active === 'mps'}
-          style={{
-            padding: '0.5rem 1rem',
-            fontSize: '0.875rem',
-            fontFamily: 'var(--gel-font-body)',
-            border: '1px solid var(--gel-color-border-dark, #646974)',
-            borderRadius: '4px',
-            background: active === 'mps' ? 'var(--gel-color-primary)' : 'transparent',
-            color: active === 'mps' ? 'var(--gel-color-white)' : 'var(--gel-color-text)',
-            cursor: 'pointer',
-          }}
-        >
-          Mobility parking permit
-        </button>
-        <button
-          type='button'
-          onClick={() => setActive('stress')}
-          aria-pressed={active === 'stress'}
-          style={{
-            padding: '0.5rem 1rem',
-            fontSize: '0.875rem',
-            fontFamily: 'var(--gel-font-body)',
-            border: '1px solid var(--gel-color-border-dark, #646974)',
-            borderRadius: '4px',
-            background: active === 'stress' ? 'var(--gel-color-primary)' : 'transparent',
-            color: active === 'stress' ? 'var(--gel-color-white)' : 'var(--gel-color-text)',
-            cursor: 'pointer',
-          }}
-        >
-          Complex stress test
-        </button>
+      <div style={{ marginBottom: '1.5rem', display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }} role='group' aria-label='Choose a trial transaction skeleton'>
+        {switcherOptions.map((option) => (
+          <button
+            key={option.id}
+            type='button'
+            onClick={() => setActive(option.id)}
+            aria-pressed={active === option.id}
+            style={{
+              padding: '0.5rem 1rem',
+              fontSize: '0.875rem',
+              fontFamily: 'var(--gel-font-body)',
+              border: '1px solid var(--gel-color-border-dark, #646974)',
+              borderRadius: '4px',
+              background: active === option.id ? 'var(--gel-color-primary)' : 'transparent',
+              color: active === option.id ? 'var(--gel-color-white)' : 'var(--gel-color-text)',
+              cursor: 'pointer',
+            }}
+          >
+            {option.label}
+          </button>
+        ))}
       </div>
       {active === 'vehicle' && <TapaasTransactionSkeleton />}
       {active === 'permit' && <TrialPermitSkeleton />}

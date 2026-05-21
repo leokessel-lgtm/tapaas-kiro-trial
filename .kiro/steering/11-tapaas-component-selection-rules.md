@@ -44,3 +44,8 @@ For date input, use 3 narrow `Input` fields (day xxs, month xxs, year sm) in a `
 
 For multi-line text input, use the `Textarea` GEL preview component. Set a `maxLength` character limit where appropriate and show a character counter below the field.
 
+## Modal and error-page patterns
+
+Use `ExitModal` from `src/tapaas-preview/` only for explicit exit confirmation. It is a trial preview mapped to TaPaaS Exit modal `4677:1042`. Keep the source-aligned button labels (`No, continue`, `Yes, exit` or authenticated equivalent), labelled/described dialog semantics, Escape close and return-focus behaviour. Do not use it for unrelated confirmation tasks.
+
+Use `BusinessErrorPage` from `src/tapaas-preview/` only for hard-stop business outcomes. It maps to TaPaaS Business error page `8931:31271` and must use mock content unless a service owner supplies confirmed business rules, reference format and recovery wording.

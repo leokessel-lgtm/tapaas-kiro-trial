@@ -35,10 +35,10 @@ This pattern scales to 6–10 steps without requiring new components or template
 | Review step | `8143:15161` | draft | Included | Use for playback of captured details, declarations and fees before submit. |
 | Confirmation step | `5354:8224` | draft | Included | Use after successful completion. Timeframes, reference numbers and next steps must be source-confirmed. |
 | PDF receipt | `9926:3752` | design-only | Excluded from coded skeleton | Treat as future receipt guidance only. |
-| Exit modal | `4677:1042` | design-only | Excluded from coded skeleton | Requires modal behaviour, focus management and wording confirmation. |
+| Exit modal | `4677:1042` | needs engineer review | Coded in complex transaction skeleton | Trial preview includes labelled/described modal, Escape close, return focus and basic focus containment. Needs VoiceOver/NVDA and engineering review before reuse. |
 | Email confirmation modal | `9290:50392` | design-only | Excluded from coded skeleton | Requires modal behaviour and content confirmation. |
 | Time out modal | `13768:39` | design-only | Excluded from coded skeleton | Requires session behaviour and security review. |
-| Business error page | `8931:31271` | design-only | Excluded from coded skeleton | Requires source-confirmed business rules. |
+| Business error page | `8931:31271` | needs engineer review | Coded in complex transaction skeleton | Trial preview supports hard-stop mock business outcomes with `role="alert"`. Real use requires source-confirmed business rules and recovery instructions. |
 | System error page | `17628:2069` | design-only | Excluded from coded skeleton | Requires app error-routing design. |
 
 ## MCP-confirmed template structure
@@ -63,8 +63,8 @@ This confirms the Templates file is structured well for Kiro extraction. Selecte
 | Declaration step `9894:3936` | Includes statement declarations and questionnaire/radio variants. | Keep declaration wording placeholder until legal/policy owner confirms it. |
 | Review step `8143:15161` | Accessibility note says edit link labels should describe the section being edited, for example `Edit <Heading 3>`. | Review edit controls must be section-specific, not generic `Edit`. |
 | Confirmation step `5354:8224` | Usage guidance says header verb must be past tense and transaction summary, alerts, next steps and backend messages require configuration. Accessibility note says callout headings should be H3 semantically even if visually smaller. | Use past-tense confirmation heading, mock backend alerts only, and preserve semantic heading levels. |
-| Exit modal `4677:1042` | Has authenticated and unauthenticated variants with `No, continue`, `Yes, exit and log out`, and `Yes, exit` copy. | Do not implement as an inline notice if a real exit flow is required. Use a source-backed modal with focus management. |
-| Business error page `8931:31271` | Accessibility annotations include page title, H1/H2, empty alt and `role="alert"` guidance. | Treat business errors as source-confirmed hard-stop routes only. Do not invent error codes. |
+| Exit modal `4677:1042` | Has authenticated and unauthenticated variants with `No, continue`, `Yes, exit and log out`, and `Yes, exit` copy. | Do not implement as an inline notice if a real exit flow is required. Use the source-backed `ExitModal` preview and keep wording/behaviour under review. |
+| Business error page `8931:31271` | Accessibility annotations include page title, H1/H2, empty alt and `role="alert"` guidance. | Treat business errors as source-confirmed hard-stop routes only. Use `BusinessErrorPage` for mock/test outcomes and do not invent real error codes. |
 | System error page `17628:2069` | Includes a technical hard-stop page with retry/start-over/logout actions and accessibility guidance. | Use only for app/system routing. Do not blend with validation errors. |
 
 ## Additional template/context pages confirmed by MCP
@@ -72,9 +72,9 @@ This confirms the Templates file is structured well for Kiro extraction. Selecte
 | Page | Source node | Role | Current status |
 |---|---|---|---|
 | Intro/Context | `8131:11988` | Includes Right Hand Panel Usage Guidance | Deep extraction pending |
-| Business error page | `8931:31271` | Business-rule hard stop template | Design-only |
+| Business error page | `8931:31271` | Business-rule hard stop template | Preview coded for complex transaction |
 | System error page | `17628:2069` | System/technical error template | Design-only |
-| Exit modal | `4677:1042` | Exit/cancel confirmation modal | Design-only |
+| Exit modal | `4677:1042` | Exit/cancel confirmation modal | Preview coded for complex transaction |
 | Email confirmation modal | `9290:50392` | Email confirmation/update modal | Design-only |
 | Time out modal | `13768:39` | Session timeout modal | Design-only |
 | Local Components | `632:695` | File-local template components | Deep extraction pending |

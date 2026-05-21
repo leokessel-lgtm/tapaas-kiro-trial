@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import { useTransactionStep } from './useTransactionStep'
 import {
   Checkbox,
@@ -12,7 +12,9 @@ import {
   TextLink,
 } from './gel'
 import {
+  BusinessErrorPage,
   ConfirmationHeader,
+  ExitModal,
   ReviewFeesCard,
   ReviewInfoCard,
   TransactionCtaGroup,
@@ -45,6 +47,7 @@ const stepLabels: Record<StressStep, string> = {
 }
 
 interface PermitHolder {
+  id: string
   name: string
   relationship: string
 }
@@ -65,7 +68,7 @@ const initialState: FormState = {
   fullName: '',
   email: '',
   phone: '',
-  holders: [{ name: '', relationship: '' }],
+  holders: [{ id: 'holder-1', name: '', relationship: '' }],
   supportingInfo: '',
   declarationAccepted: false,
   simulateError: false,
@@ -86,6 +89,16 @@ function errorsForStep(step: StressStep, form: FormState) {
   if (step === 'holders') {
     const hasValid = form.holders.some((h) => h.name.trim() && h.relationship.trim())
     if (!hasValid) errs.push({ id: 'holder-0-name', text: 'At least one permit holder must have a name and relationship' })
+    form.holders.forEach((holder, index) => {
+      const hasName = Boolean(holder.name.trim())
+      const hasRelationship = Boolean(holder.relationship.trim())
+      if (hasName && !hasRelationship) {
+        errs.push({ id: `holder-${index}-relationship`, text: `Enter the relationship for holder ${index + 1}` })
+      }
+      if (!hasName && hasRelationship) {
+        errs.push({ id: `holder-${index}-name`, text: `Enter the name for holder ${index + 1}` })
+      }
+    })
   }
   if (step === 'supporting') {
     if (!form.supportingInfo.trim()) errs.push({ id: 'supporting-info', text: 'Provide supporting information' })
@@ -101,8 +114,6 @@ function errorsForStep(step: StressStep, form: FormState) {
 export function ComplexTransactionStressTestSkeleton() {
   const [form, setForm] = useState<FormState>(initialState)
   const [showExitModal, setShowExitModal] = useState(false)
-  const returnFocusRef = useRef<HTMLElement | null>(null)
-  const modalRef = useRef<HTMLDivElement>(null)
 
   function update(patch: Partial<FormState>) {
     setForm((prev) => ({ ...prev, ...patch }))
@@ -116,25 +127,8 @@ export function ComplexTransactionStressTestSkeleton() {
 
   /* ── Exit modal logic ─────────────────────────────────────────────── */
 
-  function openExitModal() {
-    returnFocusRef.current = document.activeElement as HTMLElement
-    setShowExitModal(true)
-  }
-
-  function closeExitModal() {
-    setShowExitModal(false)
-    window.setTimeout(() => returnFocusRef.current?.focus(), 0)
-  }
-
-  useEffect(() => {
-    if (!showExitModal) return
-    function handleKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') closeExitModal()
-    }
-    document.addEventListener('keydown', handleKey)
-    window.setTimeout(() => modalRef.current?.focus(), 0)
-    return () => document.removeEventListener('keydown', handleKey)
-  }, [showExitModal])
+  const openExitModal = useCallback(() => setShowExitModal(true), [])
+  const closeExitModal = useCallback(() => setShowExitModal(false), [])
 
   function handleStartAgain() {
     reset()
@@ -147,9 +141,9 @@ export function ComplexTransactionStressTestSkeleton() {
   return (
     <div>
       <div className='tapaas-trial-banner'>
-        <strong>TaPaaS v0.3 trial skeleton — Complex transaction stress test (internal only).</strong>
+        <strong>TaPaaS v0.3 trial skeleton — Complex permit application.</strong>
         <p style={{ margin: '0.25rem 0 0' }}>
-          This is a non-production build-assist example using mock data only. Privacy, legal and processing details need owner confirmation.
+          This is a non-production build-assist example using mock data only. It tests exit modal, repeatable sections, review edits and a business-error outcome.
         </p>
       </div>
 
@@ -169,30 +163,11 @@ export function ComplexTransactionStressTestSkeleton() {
       {step === 'review' && <ReviewStep form={form} update={update} setStep={setStep} setAttempted={setAttempted} onBack={goBack} onSubmit={goNext} onExit={openExitModal} />}
       {step === 'outcome' && <OutcomeStep form={form} onStartAgain={handleStartAgain} />}
 
-      {/* ── Exit modal ──────────────────────────────────────────────── */}
-      {showExitModal && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)' }} onClick={closeExitModal} />
-          <div
-            ref={modalRef}
-            tabIndex={-1}
-            role='dialog'
-            aria-modal='true'
-            aria-labelledby='exit-modal-title'
-            style={{ position: 'relative', background: 'var(--gel-color-white, #fff)', borderRadius: '6px', padding: '2rem', maxWidth: '480px', width: '90%', outline: 'none' }}
-          >
-            <Heading level={2} id='exit-modal-title'>Are you sure you want to exit?</Heading>
-            <p>If you exit, your progress will not be saved.</p>
-            <p style={{ fontSize: '0.875rem', color: 'var(--gel-color-text-grey)' }}>
-              This is a mock exit modal for stress testing. It does not claim production GEL modal behaviour.
-            </p>
-            <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem', flexWrap: 'wrap' }}>
-              <Button onClick={closeExitModal}>No, continue</Button>
-              <Button variant='secondary' onClick={handleStartAgain}>Yes, exit</Button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ExitModal
+        isOpen={showExitModal}
+        onContinue={closeExitModal}
+        onExit={handleStartAgain}
+      />
     </div>
   )
 }
@@ -259,7 +234,7 @@ function HoldersStep({ form, attempted, update, onBack, onContinue, onExit }: St
 
   function addHolder() {
     if (form.holders.length < 3) {
-      update({ holders: [...form.holders, { name: '', relationship: '' }] })
+      update({ holders: [...form.holders, { id: `holder-${Date.now()}`, name: '', relationship: '' }] })
     }
   }
 
@@ -285,13 +260,36 @@ function HoldersStep({ form, attempted, update, onBack, onContinue, onExit }: St
       )}
 
       {form.holders.map((holder, index) => (
-        <fieldset key={index} style={{ border: '1px solid var(--gel-color-border, #ccc)', borderRadius: '4px', padding: '1rem', margin: '0 0 1rem' }}>
+        <fieldset key={holder.id} style={{ border: '1px solid var(--gel-color-border, #ccc)', borderRadius: '4px', padding: '1rem', margin: '0 0 1rem' }}>
           <legend style={{ fontWeight: 500, fontSize: '1rem' }}>Holder {index + 1}</legend>
-          <Field id={`holder-${index}-name`} label='Full name' hasError={false} errorMessage=''>
-            <Input id={`holder-${index}-name`} value={holder.name} onChange={(e) => updateHolder(index, { name: e.target.value })} inputWidth='xl' />
+          <Field
+            id={`holder-${index}-name`}
+            label='Full name'
+            hasError={attempted && ((!holder.name.trim() && Boolean(holder.relationship.trim())) || (index === 0 && !hasValid))}
+            errorMessage={index === 0 && !hasValid ? 'Enter at least one holder name.' : `Enter the name for holder ${index + 1}.`}
+          >
+            <Input
+              id={`holder-${index}-name`}
+              value={holder.name}
+              onChange={(e) => updateHolder(index, { name: e.target.value })}
+              inputWidth='xl'
+              hasError={attempted && ((!holder.name.trim() && Boolean(holder.relationship.trim())) || (index === 0 && !hasValid))}
+              autoComplete='name'
+            />
           </Field>
-          <Field id={`holder-${index}-relationship`} label='Relationship to applicant' hasError={false} errorMessage=''>
-            <Input id={`holder-${index}-relationship`} value={holder.relationship} onChange={(e) => updateHolder(index, { relationship: e.target.value })} inputWidth='lg' />
+          <Field
+            id={`holder-${index}-relationship`}
+            label='Relationship to applicant'
+            hasError={attempted && Boolean(holder.name.trim()) && !holder.relationship.trim()}
+            errorMessage={`Enter the relationship for holder ${index + 1}.`}
+          >
+            <Input
+              id={`holder-${index}-relationship`}
+              value={holder.relationship}
+              onChange={(e) => updateHolder(index, { relationship: e.target.value })}
+              inputWidth='lg'
+              hasError={attempted && Boolean(holder.name.trim()) && !holder.relationship.trim()}
+            />
           </Field>
           {form.holders.length > 1 && (
             <Button variant='secondary' onClick={() => removeHolder(index)}>Remove holder {index + 1}</Button>
@@ -447,19 +445,23 @@ function OutcomeStep({ form, onStartAgain }: { form: FormState; onStartAgain: ()
   if (form.simulateError) {
     return (
       <section aria-labelledby='outcome-heading'>
-        <div role='status'>
-          <InPageAlert variant='error' title='Your application could not be processed'>
-            <p>
-              A business rule prevented this application from being submitted. This is a simulated error for stress testing purposes only.
-            </p>
-            <p style={{ fontSize: '0.875rem', color: 'var(--gel-color-text-grey)' }}>
-              In a real transaction, this page would show a specific error code and recovery instructions confirmed by the service owner.
-            </p>
-          </InPageAlert>
-        </div>
         <Heading level={2} id='outcome-heading'>Application not submitted</Heading>
-        <p>The simulated business error prevented submission. You can start again or contact [confirmed support channel] for help.</p>
-        <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start again' />
+        <BusinessErrorPage
+          title='We cannot progress this application'
+          reference='BUSINESS-ERROR-000000'
+          message={
+            <p>
+              A simulated business rule prevented this application from being submitted. This tests the TaPaaS business-error page pattern only.
+            </p>
+          }
+          guidance={
+            <>
+              <p>In a real transaction, this page would use a source-confirmed business rule, error reference and recovery instruction.</p>
+              <p>Contact [confirmed support channel] if you need help with this mock application.</p>
+            </>
+          }
+          onStartAgain={onStartAgain}
+        />
         <p style={{ marginTop: '1rem' }}>
           <TextLink href='https://github.com/leokessel-lgtm/tapaas-kiro-trial/blob/main/docs/tapaas/00-source-inventory.md'>
             Review TaPaaS source inventory
@@ -471,7 +473,7 @@ function OutcomeStep({ form, onStartAgain }: { form: FormState; onStartAgain: ()
 
   return (
     <section aria-labelledby='outcome-heading'>
-      <ConfirmationHeader title='Application submitted' transactionName='Complex transaction stress test' />
+      <ConfirmationHeader title='Application submitted' transactionName='Complex permit application' />
       <Heading level={2} id='outcome-heading'>Application confirmed</Heading>
       <TransactionSummaryCard items={[
         { label: 'Reference number', value: 'STRESS-000000', helpText: 'Mock reference only.' },

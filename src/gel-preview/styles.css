@@ -142,7 +142,10 @@ select:focus-visible {
 }
 
 .gel-progress-stepper__mobile-label {
-  display: none;
+  display: block;
+  color: var(--gel-color-text-grey);
+  font-size: 0.875rem;
+  font-weight: 700;
 }
 
 .gel-progress-stepper__list {
@@ -254,6 +257,10 @@ select:focus-visible {
 
 /* Desktop: show step list */
 @media (min-width: 768px) {
+  .gel-progress-stepper__mobile-label {
+    display: none;
+  }
+
   .gel-progress-stepper__list {
     display: flex;
   }

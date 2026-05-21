@@ -122,6 +122,65 @@
   margin-top: 0.5rem;
 }
 
+.tapaas-modal-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.tapaas-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.tapaas-modal {
+  position: relative;
+  width: min(100%, 32rem);
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  background: var(--gel-color-white);
+  border-radius: var(--gel-radius);
+  padding: 2rem;
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.24);
+  outline: none;
+}
+
+.tapaas-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.tapaas-error-page {
+  margin-top: 1rem;
+}
+
+.tapaas-error-page__alert {
+  border-left: 4px solid var(--gel-color-error);
+  background: var(--gel-color-error-bg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tapaas-error-page__alert > :last-child,
+.tapaas-error-page__guidance > :last-child {
+  margin-bottom: 0;
+}
+
+.tapaas-error-page__reference {
+  margin: 0 0 1rem;
+}
+
+.tapaas-error-page__guidance {
+  margin-bottom: 1.5rem;
+}
+
 @media (max-width: 640px) {
   .tapaas-card {
     padding: 1rem;
@@ -136,5 +195,13 @@
   .tapaas-primary-actions > button {
     width: 100%;
   }
-}
 
+  .tapaas-modal {
+    padding: 1.25rem;
+  }
+
+  .tapaas-modal-actions,
+  .tapaas-modal-actions > button {
+    width: 100%;
+  }
+}

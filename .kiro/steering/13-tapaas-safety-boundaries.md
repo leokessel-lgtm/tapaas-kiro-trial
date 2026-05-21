@@ -26,7 +26,13 @@ Apply these rules to Privacy, Declaration, Review and Confirmation pages.
 - Mark expected processing times for confirmation.
 - Do not claim the user is eligible, approved or entitled unless source evidence confirms it.
 
+## Error and exit outcomes
+
+- Business error pages must be hard-stop outcomes with source-confirmed rules, recovery wording and reference formats.
+- In trial skeletons, use mock business-error content only and label it as simulated.
+- Exit confirmation must use the source-backed `ExitModal` preview, not an inline notice, when the flow is intended to test exit behaviour.
+- Do not claim modal, error-page or focus behaviour is production approved without engineering and accessibility review.
+
 ## Global boundary
 
 Do not claim production readiness, formal WCAG compliance, legal approval, privacy approval, policy approval or GEL compliance.
-

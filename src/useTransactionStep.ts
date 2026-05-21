@@ -30,10 +30,15 @@ export function useTransactionStep<T extends string>(
     return getErrors(step)
   }, [attempted, step, getErrors])
 
-  function focusHeading() {
+  function stepToHeadingId(value: T) {
+    return `${String(value).replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()}-heading`
+  }
+
+  function focusHeading(targetStep: T) {
     window.setTimeout(() => {
       window.scrollTo(0, 0)
-      const heading = document.querySelector('[id$="-heading"]') as HTMLElement
+      const heading = document.getElementById(stepToHeadingId(targetStep)) ||
+        document.querySelector('[id$="-heading"]') as HTMLElement | null
       if (heading) { heading.tabIndex = -1; heading.focus() }
     }, 0)
   }
@@ -49,8 +54,9 @@ export function useTransactionStep<T extends string>(
   function goBack() {
     setAttempted(false)
     const i = stepOrder.indexOf(step)
-    setStep(stepOrder[Math.max(i - 1, 0)])
-    focusHeading()
+    const previousStep = stepOrder[Math.max(i - 1, 0)]
+    setStep(previousStep)
+    focusHeading(previousStep)
   }
 
   function goNext() {
@@ -64,7 +70,7 @@ export function useTransactionStep<T extends string>(
     const i = stepOrder.indexOf(step)
     const nextStep = stepOrder[Math.min(i + 1, stepOrder.length - 1)]
     setStep(nextStep)
-    if (nextStep === confirmationStep) { focusConfirmation() } else { focusHeading() }
+    if (nextStep === confirmationStep) { focusConfirmation() } else { focusHeading(nextStep) }
   }
 
   function handleExit() {

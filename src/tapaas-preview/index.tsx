@@ -21,16 +21,18 @@ export interface FeeItem {
 export function ConfirmationHeader({
   title,
   transactionName,
+  headingLevel = 2,
 }: {
   title: string
   transactionName: string
+  headingLevel?: 1 | 2 | 3
 }) {
   return (
     <header className='tapaas-confirmation-header' role='status' aria-label='Transaction completed'>
       <span className='tapaas-confirmation-icon' aria-hidden='true'>✓</span>
       <div>
         <p className='tapaas-kicker'>{transactionName}</p>
-        <Heading level={1} style={{ marginBottom: 0 }}>{title}</Heading>
+        <Heading level={headingLevel} style={{ marginBottom: 0 }}>{title}</Heading>
       </div>
     </header>
   )
@@ -82,7 +84,7 @@ export function ReviewInfoCard({
           {title}
         </Heading>
         {onEdit && (
-          <TextLink onClick={onEdit}>Edit <span className='gel-sr-only'>{title}</span></TextLink>
+          <TextLink onClick={onEdit}>Edit {title}</TextLink>
         )}
       </div>
       {sections.map((section) => (
@@ -160,6 +162,136 @@ export function TransactionCtaGroup({
         <Button variant='link' onClick={onExit}>{exitLabel}</Button>
       )}
     </div>
+  )
+}
+
+export function ExitModal({
+  isOpen,
+  onContinue,
+  onExit,
+  title = 'Are you sure you want to exit and lose your progress?',
+  description = "If you exit now, you'll have to start again next time.",
+  continueLabel = 'No, continue',
+  exitLabel = 'Yes, exit',
+}: {
+  isOpen: boolean
+  onContinue: () => void
+  onExit: () => void
+  title?: string
+  description?: string
+  continueLabel?: string
+  exitLabel?: string
+}) {
+  const dialogRef = React.useRef<HTMLDivElement>(null)
+  const previousFocusRef = React.useRef<HTMLElement | null>(null)
+
+  function getFocusableControls() {
+    if (!dialogRef.current) return []
+    return Array.from(dialogRef.current.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ))
+  }
+
+  React.useEffect(() => {
+    if (!isOpen) return
+    previousFocusRef.current = document.activeElement as HTMLElement
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.setTimeout(() => {
+      const firstControl = getFocusableControls()[0]
+      if (firstControl) {
+        firstControl.focus()
+      } else {
+        dialogRef.current?.focus()
+      }
+    }, 0)
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        onContinue()
+        return
+      }
+      if (event.key !== 'Tab' || !dialogRef.current) return
+
+      const focusable = getFocusableControls()
+      if (focusable.length === 0) {
+        event.preventDefault()
+        dialogRef.current.focus()
+        return
+      }
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = originalOverflow
+      window.setTimeout(() => previousFocusRef.current?.focus(), 0)
+    }
+  }, [isOpen, onContinue])
+
+  if (!isOpen) return null
+
+  return (
+    <div className='tapaas-modal-layer' role='presentation'>
+      <div className='tapaas-modal-backdrop' aria-hidden='true' />
+      <div
+        ref={dialogRef}
+        className='tapaas-modal'
+        role='dialog'
+        aria-modal='true'
+        aria-labelledby='exit-modal-title'
+        aria-describedby='exit-modal-description'
+        tabIndex={-1}
+      >
+        <Heading level={2} id='exit-modal-title'>{title}</Heading>
+        <p id='exit-modal-description'>{description}</p>
+        <div className='tapaas-modal-actions'>
+          <Button onClick={onContinue}>{continueLabel}</Button>
+          <Button variant='secondary' onClick={onExit}>{exitLabel}</Button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export function BusinessErrorPage({
+  title = 'We cannot progress this application',
+  message,
+  guidance,
+  reference,
+  onStartAgain,
+}: {
+  title?: string
+  message: React.ReactNode
+  guidance?: React.ReactNode
+  reference?: string
+  onStartAgain: () => void
+}) {
+  return (
+    <section className='tapaas-error-page' aria-labelledby='business-error-heading'>
+      <div role='alert' className='tapaas-error-page__alert'>
+        <Heading level={2} id='business-error-heading'>{title}</Heading>
+        <div>{message}</div>
+      </div>
+      {reference && (
+        <p className='tapaas-error-page__reference'>
+          Reference: <strong>{reference}</strong>
+        </p>
+      )}
+      {guidance && <div className='tapaas-error-page__guidance'>{guidance}</div>}
+      <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start again' />
+    </section>
   )
 }
 

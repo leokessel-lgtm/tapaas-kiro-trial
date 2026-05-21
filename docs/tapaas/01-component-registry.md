@@ -33,6 +33,8 @@ These are **trial-only composites** in `src/tapaas-preview/`. They are not real 
 | `ReviewInfoCard` | `title`, `sections`, optional edit action | Review info card `18:4448` | Supports stacked review rows only for this trial. |
 | `ReviewFeesCard` | `title`, `fees`, `totalLabel`, `totalAmount` | Review fees card `18:4449` | Mock amounts only. No payment logic. |
 | `TransactionCtaGroup` | `onBack`, `onContinue`, `onExit`, labels | Transaction CTA button guidance and end-of-transaction CTA guidance | Uses GEL preview buttons. No modal behaviour included. |
+| `ExitModal` | `isOpen`, `onContinue`, `onExit`, labels | Exit modal `4677:1042` | Source-backed trial preview for exit confirmation. Uses `role="dialog"`, `aria-modal`, labelled/described content, Escape close, return focus and basic focus containment. Needs VoiceOver/NVDA review. |
+| `BusinessErrorPage` | `title`, `message`, `guidance`, `reference`, `onStartAgain` | Business error page `8931:31271` | Source-backed trial preview for hard-stop business outcomes. Uses `role="alert"` around the error content. Requires real source-confirmed business rules before reuse. |
 
 ## Build rules
 
@@ -56,6 +58,8 @@ These patterns use existing GEL preview components without creating new TaPaaS c
 | Conditional question panel | `ConditionalQuestionPanel` TaPaaS preview composite | TaPaaS-specific | needs engineer review | Shows extra fields based on a radio answer. Uses fieldset/legend. Conditional content appears after the radio group. Validation blocks when conditional branch requires input. |
 | More info panel | `MoreInfoDisclosure` GEL preview component (alias: `MoreInfoPanel`) | GEL variant | needs engineer review | GEL MoreInfoPanel source is a modal dialog with portal, backdrop, focus lock, Escape close and return-focus. The trial preview is a simplified inline disclosure for contextual help only. Do not use for critical content. Full GEL modal behaviour remains future engineer review work. Source: `docs/source-evidence/gel-components/more-info-panel/`. |
 | Accordion | `Accordion` GEL preview component | GEL-aligned | needs engineer review | Source: `@snsw-gel/accordion` (evidence at `docs/source-evidence/gel-components/accordion/`). Button-based headings with `aria-expanded` and `aria-controls`. Open all/Close all with focus management (focus moves to opposite button after toggle, matching GEL source nextFocusTarget pattern). Panels use `section` with `aria-labelledby`. Does not implement full controlled/uncontrolled API or exact GEL styling. Do not nest. Do not put critical information inside. TaPaaS legal accordion `22:35625` is a content-specific use of this pattern and needs separate legal/content review. |
+| Exit modal | `ExitModal` TaPaaS preview component | GEL/TaPaaS modal pattern | needs engineer review | Source: Exit modal `4677:1042`. Use for explicit exit confirmation only. Includes labelled/described dialog, Escape close, return focus and basic focus containment. Does not claim full production modal approval. |
+| Business error page | `BusinessErrorPage` TaPaaS preview component | TaPaaS page pattern | needs engineer review | Source: Business error page `8931:31271`. Use only for hard-stop business outcomes with source-confirmed business rules and recovery instructions. The complex transaction uses simulated mock content only. |
 
 ## MCP documentation findings
 
