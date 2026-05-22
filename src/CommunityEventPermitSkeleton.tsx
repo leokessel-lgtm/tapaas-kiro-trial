@@ -14,6 +14,7 @@ import {
 } from './gel'
 import {
   ConfirmationHeader,
+  ExitModal,
   ReviewFeesCard,
   ReviewInfoCard,
   TransactionCtaGroup,
@@ -102,7 +103,7 @@ export function CommunityEventPermitSkeleton() {
   }
 
   const getErrors = useCallback((s: EventStep) => errorsForStep(s, form), [form])
-  const { step, attempted, errors, errorSummaryRef, exitRef, exitNotice, goBack, goNext, handleExit, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+  const { step, attempted, errors, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
 
   return (
     <div>
@@ -122,37 +123,36 @@ export function CommunityEventPermitSkeleton() {
       <ErrorSummary ref={errorSummaryRef} errors={errors} />
 
       {step === 'privacy' && (
-        <PrivacyStep form={form} attempted={attempted} update={update} onContinue={goNext} onExit={handleExit} />
+        <PrivacyStep form={form} attempted={attempted} update={update} onContinue={goNext} onExit={openExitModal} />
       )}
       {step === 'applicant' && (
-        <ApplicantStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={handleExit} />
+        <ApplicantStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />
       )}
       {step === 'contact' && (
-        <ContactStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={handleExit} />
+        <ContactStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />
       )}
       {step === 'permit' && (
-        <PermitStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={handleExit} />
+        <PermitStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />
       )}
       {step === 'supporting' && (
-        <SupportingStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={handleExit} />
+        <SupportingStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />
       )}
       {step === 'declaration' && (
-        <DeclarationStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={handleExit} />
+        <DeclarationStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />
       )}
       {step === 'review' && (
-        <ReviewStep form={form} onBack={goBack} onSubmit={goNext} onExit={handleExit} />
+        <ReviewStep form={form} onBack={goBack} onSubmit={goNext} onExit={openExitModal} />
       )}
       {step === 'confirmation' && (
         <ConfirmationStep form={form} onStartAgain={() => { reset(); setForm(initialState) }} />
       )}
 
-      {exitNotice && (
-        <div ref={exitRef} tabIndex={-1}>
-          <InPageAlert variant='info' title='Exit modal is not implemented in this trial skeleton'>
-            <p>The TaPaaS Exit modal is documented as design-only in this pack. It needs modal focus management and wording confirmation before implementation.</p>
-          </InPageAlert>
-        </div>
-      )}
+      <ExitModal
+        isOpen={exitModalOpen}
+        onContinue={closeExitModal}
+        onExit={() => { reset(); setForm(initialState) }}
+        description='This preview does not save draft applications. If you exit, the mock form data will be cleared.'
+      />
     </div>
   )
 }

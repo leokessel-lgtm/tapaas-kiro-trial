@@ -10,7 +10,7 @@ export interface StepError {
  *
  * Handles: step state, attempted state, error computation, focus management
  * (heading on transition, role="status" on confirmation, error summary on
- * validation failure), exit notice state, and scroll-to-top on navigation.
+ * validation failure), exit modal state, and scroll-to-top on navigation.
  *
  * Does not handle form state — each skeleton manages its own fields.
  */
@@ -21,9 +21,8 @@ export function useTransactionStep<T extends string>(
 ) {
   const [step, setStep] = useState<T>(stepOrder[0])
   const [attempted, setAttempted] = useState(false)
-  const [exitNotice, setExitNotice] = useState(false)
+  const [exitModalOpen, setExitModalOpen] = useState(false)
   const errorSummaryRef = useRef<HTMLDivElement>(null)
-  const exitRef = useRef<HTMLDivElement>(null)
 
   const errors = useMemo(() => {
     if (!attempted) return []
@@ -73,14 +72,17 @@ export function useTransactionStep<T extends string>(
     if (nextStep === confirmationStep) { focusConfirmation() } else { focusHeading(nextStep) }
   }
 
-  function handleExit() {
-    setExitNotice(true)
-    window.setTimeout(() => exitRef.current?.focus(), 0)
+  function openExitModal() {
+    setExitModalOpen(true)
+  }
+
+  function closeExitModal() {
+    setExitModalOpen(false)
   }
 
   function reset() {
     setAttempted(false)
-    setExitNotice(false)
+    setExitModalOpen(false)
     setStep(stepOrder[0])
   }
 
@@ -91,11 +93,11 @@ export function useTransactionStep<T extends string>(
     setAttempted,
     errors,
     errorSummaryRef,
-    exitRef,
-    exitNotice,
+    exitModalOpen,
+    openExitModal,
+    closeExitModal,
     goBack,
     goNext,
-    handleExit,
     reset,
   }
 }

@@ -13,6 +13,7 @@ import {
 } from './gel'
 import {
   ConfirmationHeader,
+  ExitModal,
   ReviewFeesCard,
   ReviewInfoCard,
   TransactionCtaGroup,
@@ -56,7 +57,7 @@ export function TrialPermitSkeleton() {
     return errs
   }, [privacyAgreed, applicantName, permitType, declarationAccepted])
 
-  const { step, attempted, errors, errorSummaryRef, exitRef, exitNotice, goBack, goNext, handleExit, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+  const { step, attempted, errors, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
 
   return (
     <div>
@@ -87,7 +88,7 @@ export function TrialPermitSkeleton() {
           hasError={attempted && !privacyAgreed}
           onChange={setPrivacyAgreed}
           onContinue={goNext}
-          onExit={handleExit}
+          onExit={openExitModal}
         />
       )}
 
@@ -101,7 +102,7 @@ export function TrialPermitSkeleton() {
           onPermitChange={setPermitType}
           onBack={goBack}
           onContinue={goNext}
-          onExit={handleExit}
+          onExit={openExitModal}
         />
       )}
 
@@ -112,7 +113,7 @@ export function TrialPermitSkeleton() {
           onChange={setDeclarationAccepted}
           onBack={goBack}
           onContinue={goNext}
-          onExit={handleExit}
+          onExit={openExitModal}
         />
       )}
 
@@ -122,7 +123,7 @@ export function TrialPermitSkeleton() {
           permitType={permitType}
           onBack={goBack}
           onSubmit={goNext}
-          onExit={handleExit}
+          onExit={openExitModal}
         />
       )}
 
@@ -140,15 +141,12 @@ export function TrialPermitSkeleton() {
         />
       )}
 
-      {exitNotice && (
-        <div ref={exitRef} tabIndex={-1}>
-          <InPageAlert variant='info' title='Exit modal is not implemented in this trial skeleton'>
-            <p>
-              The TaPaaS Exit modal is documented as design-only in this pack. It needs modal focus management and wording confirmation before implementation.
-            </p>
-          </InPageAlert>
-        </div>
-      )}
+      <ExitModal
+        isOpen={exitModalOpen}
+        onContinue={closeExitModal}
+        onExit={() => { reset(); setPrivacyAgreed(false); setApplicantName(''); setPermitType(''); setDeclarationAccepted(false) }}
+        description='This preview does not save draft applications. If you exit, the mock form data will be cleared.'
+      />
     </div>
   )
 }
