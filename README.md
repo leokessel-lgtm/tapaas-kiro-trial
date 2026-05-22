@@ -62,12 +62,17 @@ The deployed app is available at:
 npm install --cache ./.npm-cache
 npm run dev
 npm run build
+npm run test
+npm run parity
+npm run validate
 npm run storybook
 npm run build:storybook
 npm run build:all
 ```
 
 Storybook runs locally at `http://localhost:6006`. The GitHub Pages workflow runs `npm run build:all`, so the main Vite app and Storybook catalogue are deployed together.
+
+Use `npm run validate` before committing substantial changes. It runs the audit, lint, evidence parity check, automated tests, app build and Storybook build.
 
 ## Architecture
 
