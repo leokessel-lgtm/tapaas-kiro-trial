@@ -13,15 +13,24 @@ It includes:
 - page template registry for repeatable transaction skeletons
 - TaPaaS steering files for Kiro
 - trial-only TaPaaS preview composites
-- two non-production repeatable transaction skeletons:
+- five visible non-production transaction skeletons:
   - vehicle search skeleton
   - trial permit application skeleton
+  - accessible market permit
+  - community venue booking
+  - Mobility Parking Scheme simulation
+- Storybook component catalogue for isolated designer review
 
 This is **build-assist material only**. It does not claim production readiness, formal accessibility compliance, GEL compliance, privacy approval, legal approval, policy approval or TaPaaS engineering sign-off.
 
 ## Preview app
 
-A working local preview of two TaPaaS repeatable transaction skeletons, built with GEL-shaped preview components and a small `src/tapaas-preview/` composite layer.
+A working local preview of selected TaPaaS repeatable transaction skeletons, built with GEL-shaped preview components and a small `src/tapaas-preview/` composite layer.
+
+The deployed app is available at:
+
+- Main preview: `https://leokessel-lgtm.github.io/tapaas-kiro-trial/`
+- Storybook catalogue: `https://leokessel-lgtm.github.io/tapaas-kiro-trial/storybook/`
 
 ### Pages implemented
 
@@ -41,8 +50,9 @@ A working local preview of two TaPaaS repeatable transaction skeletons, built wi
 - Mock data only
 - Error summary and inline validation
 - Responsive transaction skeleton
-- Switcher between vehicle and trial permit skeletons
+- Switcher between the visible trial skeletons
 - TaPaaS maturity labels and evidence notes
+- Storybook catalogue for component-by-component review
 
 ## How to run
 
@@ -50,7 +60,12 @@ A working local preview of two TaPaaS repeatable transaction skeletons, built wi
 npm install --cache ./.npm-cache
 npm run dev
 npm run build
+npm run storybook
+npm run build:storybook
+npm run build:all
 ```
+
+Storybook runs locally at `http://localhost:6006`. The GitHub Pages workflow runs `npm run build:all`, so the main Vite app and Storybook catalogue are deployed together.
 
 ## Architecture
 
@@ -62,6 +77,10 @@ src/
 ├── layout-preview/                ← Page shell
 ├── TapaasTransactionSkeleton.tsx   ← Vehicle-style repeatable skeleton
 ├── TrialPermitSkeleton.tsx         ← Trial permit repeatability proof
+├── AccessibleMarketPermitSkeleton.tsx
+├── CommunityVenueBookingSkeleton.tsx
+├── MobilityParkingPermitSkeleton.tsx
+├── stories/                        ← Storybook component catalogue
 ├── App.tsx                        ← Shell wrapper and skeleton switcher
 └── main.tsx                       ← React root + GlobalStyle
 ```
@@ -75,6 +94,13 @@ src/
 | `ReviewInfoCard` | Review info card `18:4448` | Trial-only |
 | `ReviewFeesCard` | Review fees card `18:4449` | Trial-only |
 | `TransactionCtaGroup` | Transaction CTA/end CTA guidance | Trial-only |
+| `ExitModal` | Exit modal template `4677:1042` | Trial-only |
+| `BusinessErrorPage` | Business error page template `8931:31271` | Trial-only |
+| `RepeatableGroup` | Repeatable form composition | Trial-only |
+| `EvidenceChecklistCard` | MPS evidence simulation | Trial-only |
+| `AssessmentSummaryPanel` | MPS assessment simulation | Trial-only |
+| `DetailsCard` | Details card source evidence | Trial-only |
+| `ConditionalQuestionPanel` | Conditional question pattern | Trial-only |
 
 ## Boundaries
 

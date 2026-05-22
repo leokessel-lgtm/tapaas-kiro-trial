@@ -1,0 +1,29 @@
+.storybook-surface {
+  max-width: 760px;
+  padding: 1rem;
+}
+
+.storybook-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.storybook-stack {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 760px;
+}
+
+.storybook-note {
+  border-left: 4px solid #2e5299;
+  background: #eaedf4;
+  padding: 1rem 1.25rem;
+  margin: 0 0 1.5rem;
+}
+
+.storybook-note p {
+  margin: 0.25rem 0 0;
+}

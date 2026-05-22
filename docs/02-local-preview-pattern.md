@@ -71,8 +71,11 @@ Create a minimal Vite React TypeScript app shell:
 - tsconfig.json
 - package.json with dev/build scripts
 
-Use only public dependencies:
-- react, react-dom, vite, @vitejs/plugin-react, typescript
+Use only public runtime dependencies:
+- react, react-dom
+
+Use public build and review tooling only:
+- vite, @vitejs/plugin-react, typescript, eslint, storybook, @storybook/react-vite, @storybook/addon-essentials, @storybook/addon-a11y
 
 Do not install @snsw-gel/react.
 ```
@@ -83,6 +86,9 @@ Do not install @snsw-gel/react.
 npm install --cache ./.npm-cache   # if global cache has permission issues
 npm run dev                        # http://localhost:5173/
 npm run build                      # production build
+npm run storybook                  # http://localhost:6006/
+npm run build:storybook            # static catalogue in dist/storybook
+npm run build:all                  # app + Storybook for GitHub Pages
 ```
 
 ## Swapping to real GEL (when registry access is available)
