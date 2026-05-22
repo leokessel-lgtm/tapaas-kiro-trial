@@ -326,7 +326,7 @@ function SupportingStep({ form, attempted, update, onBack, onContinue, onExit }:
       >
         <Textarea id='supporting-info' value={form.supportingInfo} onChange={(e) => update({ supportingInfo: e.target.value })} hasError={infoErr} maxLength={charLimit} rows={5} />
       </Field>
-      <p style={{ fontSize: '0.875rem', color: 'var(--gel-color-text-grey)', marginTop: '-1rem' }}>
+      <p aria-live='polite' aria-atomic='true' style={{ fontSize: '0.875rem', color: 'var(--gel-color-text-grey)', marginTop: '-1rem' }}>
         {form.supportingInfo.length}/{charLimit} characters
       </p>
       <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />

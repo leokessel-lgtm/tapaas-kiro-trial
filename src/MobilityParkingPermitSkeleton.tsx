@@ -61,7 +61,7 @@ const stepOrder: MpsStep[] = [
   'outcome',
 ]
 
-const stepLabels: Record<MpsStep, string> = {
+const _stepLabels: Record<MpsStep, string> = {
   privacy: 'Privacy',
   account: 'Account and identity',
   appType: 'Application type',

@@ -1,4 +1,4 @@
-import { useRef, useState, useMemo, useCallback } from 'react'
+import { useRef, useState, useMemo } from 'react'
 
 export interface StepError {
   id: string

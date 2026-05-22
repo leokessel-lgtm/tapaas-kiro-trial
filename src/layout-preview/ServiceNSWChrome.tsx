@@ -12,7 +12,7 @@
  */
 
 import { PropsWithChildren } from 'react'
-import { IconGlobe, IconAvatar, IconSignOut, IconSearch, IconChevronLeft } from './icons'
+import { IconGlobe, IconAvatar, IconSignOut, IconSearch } from './icons'
 import servicenswLogo from '../assets/servicensw-logo.svg'
 import './serviceNSWChrome.css'
 

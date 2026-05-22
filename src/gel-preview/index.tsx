@@ -125,7 +125,11 @@ export const ErrorSummary = forwardRef<HTMLDivElement, ErrorSummaryProps>(
           <ol style={{ margin: 0, paddingLeft: '1.25rem' }}>
             {errors.map(({ id: errorId, text }) => (
               <li key={errorId}>
-                <a href={errorId.startsWith('#') ? errorId : `#${errorId}`} style={{ color: 'var(--gel-color-error)', fontWeight: 700 }}>
+                <a
+                  href={errorId.startsWith('#') ? errorId : `#${errorId}`}
+                  style={{ color: 'var(--gel-color-error)', fontWeight: 700 }}
+                  onClick={(e) => { e.preventDefault(); const target = document.getElementById(errorId.startsWith('#') ? errorId.slice(1) : errorId); if (target) { target.scrollIntoView({ block: 'center' }); target.focus() } }}
+                >
                   {text.replace(/\.$/, '')}
                 </a>.
               </li>
@@ -135,7 +139,11 @@ export const ErrorSummary = forwardRef<HTMLDivElement, ErrorSummaryProps>(
           <ul style={{ margin: 0, paddingLeft: '1.25rem' }}>
             {errors.map(({ id: errorId, text }) => (
               <li key={errorId}>
-                <a href={errorId.startsWith('#') ? errorId : `#${errorId}`} style={{ color: 'var(--gel-color-error)', fontWeight: 700 }}>
+                <a
+                  href={errorId.startsWith('#') ? errorId : `#${errorId}`}
+                  style={{ color: 'var(--gel-color-error)', fontWeight: 700 }}
+                  onClick={(e) => { e.preventDefault(); const target = document.getElementById(errorId.startsWith('#') ? errorId.slice(1) : errorId); if (target) { target.scrollIntoView({ block: 'center' }); target.focus() } }}
+                >
                   {text.replace(/\.$/, '')}
                 </a>.
               </li>
@@ -316,7 +324,6 @@ export function Checkbox({ id, label, checked = false, onChange, hasError, error
   const elemId = id ?? 'checkbox'
   const errorId = `${elemId}-error`
   const borderColor = hasError ? 'var(--gel-color-error)' : checked ? '#002664' : '#646974'
-  const checkColor = '#002664'
 
   return (
     <div style={{ margin: '0 0 1.5rem', position: 'relative', minHeight: '2rem' }} data-gelweb-component='checkbox'>

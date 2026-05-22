@@ -7,6 +7,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:report": "tsc && vite build --mode production 2>&1 | tail -5",
+    "lint": "eslint src/",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -14,10 +16,14 @@
     "react-dom": "^18.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^10.4.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "typescript": "^5.0.0",
+    "typescript-eslint": "^8.59.4",
     "vite": "^5.0.0"
   }
 }

@@ -341,7 +341,7 @@ function SupportingStep({ form, attempted, update, onBack, onContinue, onExit }:
       <Field id='additional-info' label='Additional information' helpMessage={`Describe any specific requirements for your booking. Maximum ${charLimit} characters.`} hasError={infoErr} errorMessage='Provide additional information about your booking.'>
         <Textarea id='additional-info' value={form.additionalInfo} onChange={(e) => update({ additionalInfo: e.target.value })} hasError={infoErr} maxLength={charLimit} rows={5} />
       </Field>
-      <p style={{ fontSize: '0.875rem', color: 'var(--gel-color-text-grey)', marginTop: '-1rem' }}>
+      <p aria-live='polite' aria-atomic='true' style={{ fontSize: '0.875rem', color: 'var(--gel-color-text-grey)', marginTop: '-1rem' }}>
         {form.additionalInfo.length}/{charLimit} characters
       </p>
       <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
