@@ -20,6 +20,7 @@ It includes:
   - community venue booking
   - Mobility Parking Scheme simulation
 - Storybook component catalogue for isolated designer review
+- TaPaaS component intake board for evidence-first Figma component triage
 
 This is **build-assist material only**. It does not claim production readiness, formal accessibility compliance, GEL compliance, privacy approval, legal approval, policy approval or TaPaaS engineering sign-off.
 
@@ -53,6 +54,7 @@ The deployed app is available at:
 - Switcher between the visible trial skeletons
 - TaPaaS maturity labels and evidence notes
 - Storybook catalogue for component-by-component review
+- TaPaaS intake board showing coded, documented-only, page-guidance and design-only candidates
 
 ## How to run
 
