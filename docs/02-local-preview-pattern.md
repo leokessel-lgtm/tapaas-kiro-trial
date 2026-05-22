@@ -75,7 +75,7 @@ Use only public runtime dependencies:
 - react, react-dom
 
 Use public build and review tooling only:
-- vite, @vitejs/plugin-react, typescript, eslint, storybook, @storybook/react-vite, @storybook/addon-essentials, @storybook/addon-a11y
+- vite, @vitejs/plugin-react, typescript, eslint, storybook, @storybook/react-vite, @storybook/addon-docs, @storybook/addon-a11y
 
 Do not install @snsw-gel/react.
 ```
