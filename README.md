@@ -136,6 +136,7 @@ See:
 - `docs/tapaas/02-page-template-registry.md`
 - `docs/tapaas/03-figma-evidence-notes.md`
 - `docs/tapaas/04-evidence-log.md`
+- `docs/tapaas/06-selected-component-maturity-backlog.md`
 - `.kiro/steering/10-tapaas-transaction-skeleton-rules.md`
 - `.kiro/steering/11-tapaas-component-selection-rules.md`
 - `.kiro/steering/12-tapaas-figma-to-code-evidence-rules.md`

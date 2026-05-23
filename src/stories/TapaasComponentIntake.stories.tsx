@@ -16,6 +16,16 @@ type ComponentCandidate = {
   risk?: string
 }
 
+type MaturityBacklogItem = {
+  order: number
+  candidate: string
+  source: string
+  startingStatus: string
+  target: string
+  whyNow: string
+  gates: string
+}
+
 const candidates: ComponentCandidate[] = [
   {
     name: 'Confirmation page header',
@@ -197,6 +207,54 @@ const candidates: ComponentCandidate[] = [
   },
 ]
 
+const selectedMaturityBacklog: MaturityBacklogItem[] = [
+  {
+    order: 1,
+    candidate: 'Declaration review',
+    source: '27:38386',
+    startingStatus: 'documented only',
+    target: 'coded preview candidate',
+    whyNow: 'Review pages appear in every transaction skeleton, and declaration playback is a common TaPaaS-specific gap.',
+    gates: 'Choose accordion or card variant per flow. Confirm legal-content treatment before code.',
+  },
+  {
+    order: 2,
+    candidate: 'Legal info accordion',
+    source: '22:35625',
+    startingStatus: 'documented only',
+    target: 'source-backed usage guidance',
+    whyNow: 'Legal and privacy guidance appears across declaration and review contexts and needs stricter collapse/visibility rules.',
+    gates: 'Use GEL accordion behaviour only for optional guidance. Do not hide required legal/privacy content without content and accessibility confirmation.',
+  },
+  {
+    order: 3,
+    candidate: 'Details card single interactive',
+    source: '2958:2499',
+    startingStatus: 'documented only',
+    target: 'coded preview candidate',
+    whyNow: 'The read-only DetailsCard is already coded; the interactive variant is the next controlled increase in complexity.',
+    gates: 'Confirm action semantics, edit/remove labels, keyboard flow and focus return before implementation.',
+  },
+  {
+    order: 4,
+    candidate: 'TaPaaS radio button cards',
+    source: '31:63988',
+    startingStatus: 'documented only',
+    target: 'prototype only after accessibility check',
+    whyNow: 'Card-based choices are useful for product/application type selection, but they carry native-radio accessibility risk.',
+    gates: 'Deep extract selected, unselected, focus, error, disabled and responsive states. Preserve native radio semantics.',
+  },
+  {
+    order: 5,
+    candidate: 'Backend error examples',
+    source: '31:73426',
+    startingStatus: 'design-only',
+    target: 'coded variants for mock-only outcomes',
+    whyNow: 'The MPS simulation already needs realistic hard-stop, retry and manual-review outcomes without real backend logic.',
+    gates: 'Use only source-confirmed error types and recovery wording. Keep all rules mock-only unless service owners confirm them.',
+  },
+]
+
 const templateMap = [
   { template: 'Privacy', source: '3395:41359', components: 'Privacy card, terms checkbox, error summary, CTA group' },
   { template: 'Search input', source: '16274:18397', components: 'Search vehicle input, GEL Field/Input/Button, result-selection states' },
@@ -370,6 +428,48 @@ export const TemplateRelationships: Story = {
                 <th scope='row'>{item.template}</th>
                 <td>{item.source}</td>
                 <td>{item.components}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  ),
+}
+
+export const SelectedMaturityBacklog: Story = {
+  render: () => (
+    <div className='storybook-board'>
+      <Heading level={2}>Selected maturity backlog</Heading>
+      <InPageAlert variant='info' title='Focused next set'>
+        <p>
+          These five TaPaaS candidates are selected for deeper maturity work. This is not a commitment to code all five immediately:
+          each item must pass source, engineering and accessibility gates before it moves from evidence to preview implementation.
+        </p>
+      </InPageAlert>
+      <div className='storybook-table-wrap'>
+        <table className='storybook-table'>
+          <thead>
+            <tr>
+              <th scope='col'>Order</th>
+              <th scope='col'>Candidate</th>
+              <th scope='col'>Source</th>
+              <th scope='col'>Starting status</th>
+              <th scope='col'>Target</th>
+              <th scope='col'>Why now</th>
+              <th scope='col'>Gate before coding</th>
+            </tr>
+          </thead>
+          <tbody>
+            {selectedMaturityBacklog.map((item) => (
+              <tr key={item.candidate}>
+                <th scope='row'>{item.order}</th>
+                <td>{item.candidate}</td>
+                <td>{item.source}</td>
+                <td>{item.startingStatus}</td>
+                <td>{item.target}</td>
+                <td>{item.whyNow}</td>
+                <td>{item.gates}</td>
               </tr>
             ))}
           </tbody>
