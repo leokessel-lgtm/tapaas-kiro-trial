@@ -17,6 +17,7 @@ import {
   RepeatableGroup,
   ReviewFeesCard,
   ReviewInfoCard,
+  TapaasSearchAction,
   TransactionCtaGroup,
   TransactionSummaryCard,
   backendErrorExamples,
@@ -156,6 +157,18 @@ export const MpsEvidenceAndAssessment: Story = {
           { label: 'Route after submission', value: 'Manual review', tone: 'warning' },
         ]}
       />
+    </div>
+  ),
+}
+
+export const SearchVehicleInput: Story = {
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Search vehicle input</strong>
+        <p>Static preview only. Search behaviour, validation, result states and backend lookup are unresolved.</p>
+      </div>
+      <TapaasSearchAction />
     </div>
   ),
 }

@@ -7,6 +7,7 @@ import {
   InteractiveDetailsCard,
   LegalInfoAccordion,
   RadioButtonCards,
+  TapaasSearchAction,
   backendErrorExamples,
 } from './index'
 
@@ -103,6 +104,14 @@ describe('selected TaPaaS maturity components', () => {
 
     expect(screen.getByRole('radio', { name: /Apply for a new permit/ })).toBeChecked()
     expect(screen.getByRole('radio', { name: /Renew a permit/ })).not.toBeChecked()
+  })
+
+  it('renders the search vehicle input as a static preview action', () => {
+    render(<TapaasSearchAction />)
+
+    expect(screen.getByLabelText('Enter a NSW plate number')).toHaveAttribute('type', 'text')
+    expect(screen.getByText('Use placeholder content until service search rules are confirmed.')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Find vehicle' })).toBeInTheDocument()
   })
 
   it('renders backend error examples as hard-stop alert pages', () => {

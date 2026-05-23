@@ -1,5 +1,5 @@
 import React from 'react'
-import { Accordion, Button, Heading, TextLink } from '../gel'
+import { Accordion, Button, Field, Heading, Input, TextLink } from '../gel'
 import './styles.css'
 
 export interface SummaryItem {
@@ -49,6 +49,15 @@ export interface BackendErrorExample {
   message: string
   guidance: string
   reference: string
+}
+
+export interface TapaasSearchActionProps {
+  id?: string
+  label?: string
+  helpText?: string
+  buttonLabel?: string
+  placeholder?: string
+  defaultValue?: string
 }
 
 export function ConfirmationHeader({
@@ -194,6 +203,41 @@ export function TransactionCtaGroup({
       {onExit && (
         <Button variant='link' onClick={onExit}>{exitLabel}</Button>
       )}
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// TapaasSearchAction
+// TaPaaS preview composite — search-first input with action button.
+// Source evidence: Search vehicle input `22:16683`, Search input page `16274:18397`.
+// Behaviour, validation, result states and backend lookup remain unresolved.
+// ---------------------------------------------------------------------------
+export function TapaasSearchAction({
+  id,
+  label = 'Enter a NSW plate number',
+  helpText = 'Use placeholder content until service search rules are confirmed.',
+  buttonLabel = 'Find vehicle',
+  placeholder,
+  defaultValue,
+}: TapaasSearchActionProps) {
+  const generatedId = React.useId()
+  const inputId = id || `tapaas-search-action-${generatedId}`
+
+  return (
+    <div
+      className='tapaas-search-action'
+      data-tapaas-component='search-vehicle-input'
+      data-preview-boundary='static preview only'
+    >
+      <div className='tapaas-search-action__field'>
+        <Field id={inputId} label={label} helpMessage={helpText}>
+          <Input id={inputId} defaultValue={defaultValue} placeholder={placeholder} inputWidth='xl' />
+        </Field>
+      </div>
+      <div className='tapaas-search-action__button'>
+        <Button>{buttonLabel}</Button>
+      </div>
     </div>
   )
 }

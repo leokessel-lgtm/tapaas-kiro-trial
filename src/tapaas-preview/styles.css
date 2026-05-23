@@ -115,6 +115,31 @@
   gap: 1rem;
 }
 
+.tapaas-search-action {
+  align-items: flex-end;
+  background: var(--gel-color-white);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  max-width: 48rem;
+}
+
+.tapaas-search-action__field {
+  flex: 1 1 18rem;
+}
+
+.tapaas-search-action__field [data-gelweb-component='field'] {
+  margin-bottom: 0 !important;
+}
+
+.tapaas-search-action__field .gel-input {
+  max-width: 100%;
+}
+
+.tapaas-search-action__button {
+  flex: 0 0 auto;
+}
+
 .tapaas-trial-banner {
   border-left: 4px solid #2e5299;
   background: #eaedf4;
@@ -528,6 +553,12 @@
 
   .tapaas-primary-actions,
   .tapaas-primary-actions > button {
+    width: 100%;
+  }
+
+  .tapaas-search-action,
+  .tapaas-search-action__button,
+  .tapaas-search-action__button > button {
     width: 100%;
   }
 
