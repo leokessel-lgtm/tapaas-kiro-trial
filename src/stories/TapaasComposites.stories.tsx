@@ -178,3 +178,35 @@ export const DetailsCardContext: Story = {
     </div>
   ),
 }
+
+/**
+ * Exit modal in isolation.
+ *
+ * Source evidence: TaPaaS Exit modal template `4677:1042`.
+ * This is a preview pattern — not the full GEL modal with FocusLock/Portal.
+ *
+ * Test: open, Escape close, Tab trap, No/Yes actions, return focus.
+ */
+function ExitModalIsolatedExample() {
+  const [isOpen, setIsOpen] = useState(false)
+  return (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Exit modal — isolated test</strong>
+        <p>Click the button to open. Test keyboard: Escape closes, Tab stays trapped inside, focus returns to trigger on close.</p>
+        <p>Source: TaPaaS Exit modal template <code>4677:1042</code>. Preview only — does not claim full GEL modal behaviour.</p>
+      </div>
+      <Button onClick={() => setIsOpen(true)}>Open exit modal</Button>
+      <ExitModal
+        isOpen={isOpen}
+        onContinue={() => setIsOpen(false)}
+        onExit={() => { setIsOpen(false); alert('Exit action fired — in a real skeleton this resets form state.') }}
+        description='This preview does not save draft applications. If you exit, the mock form data will be cleared.'
+      />
+    </div>
+  )
+}
+
+export const ExitModalIsolated: Story = {
+  render: () => <ExitModalIsolatedExample />,
+}
