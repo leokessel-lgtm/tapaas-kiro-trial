@@ -101,6 +101,67 @@
   margin-top: 1.5rem;
 }
 
+.tapaas-mps-review-frame__hint {
+  font-size: 0.875rem;
+  margin: 0 0 1.25rem;
+}
+
+.tapaas-mps-review-frame__hint span {
+  color: var(--gel-color-error);
+  font-weight: 700;
+}
+
+.tapaas-mps-review-frame__sections {
+  margin: 2rem 0 1.5rem;
+  max-width: 42rem;
+}
+
+.tapaas-mps-review-frame__section {
+  margin-bottom: 1.5rem;
+}
+
+.tapaas-mps-review-frame__section-heading {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.tapaas-mps-confirmation-frame__reference {
+  margin: -1rem 0 1.5rem 3.75rem;
+}
+
+.tapaas-mps-confirmation-frame__next {
+  margin: 1.5rem 0;
+}
+
+.tapaas-mps-confirmation-frame__related {
+  margin-top: 1rem;
+  max-width: 42rem;
+}
+
+.tapaas-mps-confirmation-frame__feedback {
+  align-items: center;
+  border-top: 1px solid var(--gel-color-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+}
+
+.tapaas-mps-confirmation-frame__feedback p {
+  font-weight: 700;
+  margin: 0;
+}
+
+.tapaas-mps-confirmation-frame__feedback-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
 .tapaas-cta-group {
   display: flex;
   flex-direction: column;
@@ -577,6 +638,10 @@
   .tapaas-summary-row {
     grid-template-columns: 1fr;
     gap: 0.25rem;
+  }
+
+  .tapaas-mps-confirmation-frame__reference {
+    margin-left: 0;
   }
 
   .tapaas-evidence-item,

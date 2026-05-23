@@ -6,6 +6,8 @@ import {
   DeclarationReview,
   InteractiveDetailsCard,
   LegalInfoAccordion,
+  MpsConfirmationFramePreview,
+  MpsReviewFramePreview,
   RadioButtonCards,
   TapaasSearchAction,
   backendErrorExamples,
@@ -121,5 +123,58 @@ describe('selected TaPaaS maturity components', () => {
     expect(screen.getByText('Mock backend code:')).toBeInTheDocument()
     expect(screen.getByText('INVALID_PAYMENT_DETAILS')).toBeInTheDocument()
     expect(screen.getByText(/MPS-PAYMENT-MOCK/)).toBeInTheDocument()
+  })
+
+  it('renders the MPS review frame preview with frame order and edit labels', () => {
+    const onEdit = vi.fn()
+    const onSubmit = vi.fn()
+
+    render(
+      <MpsReviewFramePreview
+        sections={[
+          {
+            id: 'application-details',
+            title: 'Application details',
+            rows: [{ label: 'Application type', value: 'Renewal' }],
+          },
+          {
+            id: 'personal-details',
+            title: 'Personal details',
+            rows: [{ label: 'Full name', value: 'Alex Citizen' }],
+          },
+        ]}
+        declarationStatements={['I declare this mock information is correct.']}
+        onEdit={onEdit}
+        onSubmit={onSubmit}
+      />,
+    )
+
+    expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
+    expect(screen.getByText('*')).toBeInTheDocument()
+    expect(screen.getByText(/Please ensure that the details listed below are correct/)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Edit Application details' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Declaration' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Submit mock application' })).toBeInTheDocument()
+  })
+
+  it('renders the MPS confirmation frame preview with next steps and feedback', () => {
+    render(
+      <MpsConfirmationFramePreview
+        referenceNumber='MPS-MOCK-000000'
+        applicationDetails={[{ label: 'Applicant', value: 'Alex Citizen' }]}
+        nextSteps={[
+          { id: 'assessment', content: 'Your mock application will be assessed within [confirmed timeframe].' },
+          { id: 'updates', content: 'You will receive updates by [confirmed contact channel].' },
+        ]}
+        relatedContent={<p>Related transaction content remains owner-confirmation required.</p>}
+        onStartAgain={() => undefined}
+      />,
+    )
+
+    expect(screen.getByRole('status', { name: 'Transaction completed' })).toHaveTextContent('Your application has been submitted')
+    expect(screen.getByText('MPS-MOCK-000000')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'What happens next?' })).toBeInTheDocument()
+    expect(screen.getByLabelText('Was this page useful?')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Start again' })).toBeInTheDocument()
   })
 })

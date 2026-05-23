@@ -1,5 +1,5 @@
 import React from 'react'
-import { Accordion, Button, Field, Heading, Input, TextLink } from '../gel'
+import { Accordion, Button, Field, Heading, InPageAlert, Input, TextLink } from '../gel'
 import './styles.css'
 
 export interface SummaryItem {
@@ -49,6 +49,18 @@ export interface BackendErrorExample {
   message: string
   guidance: string
   reference: string
+}
+
+export interface MpsReviewFrameSection {
+  id: string
+  title: string
+  rows: SummaryItem[]
+  editLabel?: string
+}
+
+export interface MpsConfirmationNextStep {
+  id: string
+  content: React.ReactNode
 }
 
 export interface TapaasSearchActionProps {
@@ -186,6 +198,135 @@ export function ReviewFeesCard({
           <dd>{totalAmount}</dd>
         </div>
       </dl>
+    </section>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// MpsReviewFramePreview
+// MPS transaction review-frame layout extracted from `MPS Final` frame `6.A - Review` (`0:33185`).
+// Source evidence shows required-field hint, warning callout, review sections, edit links,
+// declaration checkbox area and bottom CTA/footer relationship. Content and rules stay mock-only.
+// ---------------------------------------------------------------------------
+export function MpsReviewFramePreview({
+  sections,
+  declarationStatements,
+  onEdit,
+  onBack,
+  onSubmit,
+  onExit,
+  calloutTitle = 'Mobility Parking Scheme permit',
+  calloutText = 'Please ensure that the details listed below are correct. Incorrect information may cause a delay in a real application.',
+  submitLabel = 'Submit mock application',
+}: {
+  sections: MpsReviewFrameSection[]
+  declarationStatements: React.ReactNode[]
+  onEdit?: (sectionId: string) => void
+  onBack?: () => void
+  onSubmit?: () => void
+  onExit?: () => void
+  calloutTitle?: string
+  calloutText?: React.ReactNode
+  submitLabel?: string
+}) {
+  return (
+    <section
+      className='tapaas-mps-review-frame'
+      aria-labelledby='mps-review-frame-heading'
+      data-tapaas-component='mps-review-frame-preview'
+      data-preview-boundary='preview implementation; not production-approved'
+    >
+      <Heading level={2} id='mps-review-frame-heading'>Review your application</Heading>
+      <p className='tapaas-mps-review-frame__hint'>
+        <span aria-hidden='true'>*</span> indicates a required field
+      </p>
+      <InPageAlert variant='info' title={calloutTitle}>
+        <p>{calloutText}</p>
+      </InPageAlert>
+      <div className='tapaas-mps-review-frame__sections'>
+        {sections.map((section) => (
+          <section className='tapaas-mps-review-frame__section' aria-labelledby={`${section.id}-heading`} key={section.id}>
+            <div className='tapaas-mps-review-frame__section-heading'>
+              <Heading level={3} id={`${section.id}-heading`} style={{ marginBottom: 0 }}>{section.title}</Heading>
+              {onEdit && (
+                <TextLink onClick={() => onEdit(section.id)}>{section.editLabel || `Edit ${section.title}`}</TextLink>
+              )}
+            </div>
+            <dl className='tapaas-summary-list'>
+              {section.rows.map((row) => (
+                <div className='tapaas-summary-row' key={`${section.id}-${row.label}`}>
+                  <dt>{row.label}</dt>
+                  <dd>
+                    {row.value}
+                    {row.helpText && <p className='tapaas-help-text'>{row.helpText}</p>}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        ))}
+      </div>
+      <DeclarationReview
+        title='Declaration'
+        intro='Accepted declaration shown on the MPS review frame. Final wording needs owner confirmation.'
+        sections={[{ title: 'Accepted declaration', statements: declarationStatements }]}
+      />
+      <TransactionCtaGroup onBack={onBack} onContinue={onSubmit} onExit={onExit} continueLabel={submitLabel} />
+    </section>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// MpsConfirmationFramePreview
+// MPS transaction confirmation frame extracted from `MPS Final` frame
+// `6.A Confirmation screen` (`0:33222`). Outcome facts remain mock/placeholder.
+// ---------------------------------------------------------------------------
+export function MpsConfirmationFramePreview({
+  title = 'Your application has been submitted',
+  transactionName = 'Mobility Parking Scheme',
+  referenceNumber,
+  applicationDetails,
+  nextSteps,
+  relatedContent,
+  onStartAgain,
+  feedbackLabel = 'Was this page useful?',
+}: {
+  title?: string
+  transactionName?: string
+  referenceNumber: string
+  applicationDetails: SummaryItem[]
+  nextSteps: MpsConfirmationNextStep[]
+  relatedContent?: React.ReactNode
+  onStartAgain?: () => void
+  feedbackLabel?: string
+}) {
+  return (
+    <section
+      className='tapaas-mps-confirmation-frame'
+      aria-labelledby='mps-confirmation-frame-heading'
+      data-tapaas-component='mps-confirmation-frame-preview'
+      data-preview-boundary='preview implementation; not production-approved'
+    >
+      <ConfirmationHeader title={title} transactionName={transactionName} />
+      <p className='tapaas-mps-confirmation-frame__reference'>
+        Reference number: <strong>{referenceNumber}</strong>
+      </p>
+      <TransactionSummaryCard heading='Application details' items={applicationDetails} />
+      <section className='tapaas-mps-confirmation-frame__next' aria-labelledby='mps-confirmation-next-heading'>
+        <Heading level={2} id='mps-confirmation-next-heading'>What happens next?</Heading>
+        <ol className='tapaas-step-list'>
+          {nextSteps.map((step) => <li key={step.id}>{step.content}</li>)}
+        </ol>
+        {relatedContent && <div className='tapaas-mps-confirmation-frame__related'>{relatedContent}</div>}
+      </section>
+      <div className='tapaas-mps-confirmation-frame__feedback' aria-label={feedbackLabel}>
+        <p>{feedbackLabel}</p>
+        <div className='tapaas-mps-confirmation-frame__feedback-actions'>
+          <Button variant='secondary'>Yes</Button>
+          <Button variant='secondary'>No</Button>
+        </div>
+      </div>
+      {onStartAgain && <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start again' />}
     </section>
   )
 }

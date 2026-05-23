@@ -25,6 +25,8 @@ import {
   ExitModal,
   InteractiveDetailsCard,
   LegalInfoAccordion,
+  MpsConfirmationFramePreview,
+  MpsReviewFramePreview,
   RadioButtonCards,
   RepeatableGroup,
   ReviewFeesCard,
@@ -811,53 +813,52 @@ function DeclarationStep({ form, attempted, update, onBack, onContinue, onExit }
 
 function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBack: () => void; onSubmit: () => void; onExit: () => void }) {
   return (
-    <section aria-labelledby='review-heading'>
-      <Heading level={2} id='review-heading'>Review your application</Heading>
-      <p>Check the mock information below before submitting. This does not submit to a real service.</p>
-      <InPageAlert variant='info' title='Mobility Parking Scheme permit'>
-        <p>Please ensure that the details listed below are correct. Incorrect information may cause a delay in a real application. This preview still uses mock data only.</p>
-      </InPageAlert>
-      <ReviewInfoCard title='Application' sections={[{ title: 'Application details', rows: [
-        { label: 'Application type', value: appTypeLabel(form) },
-        { label: 'Existing permit', value: form.permitNumber || 'Not provided' },
-        { label: 'Replacement reason', value: form.replaceReason || 'Not applicable' },
-      ] }]} />
-      <ReviewInfoCard title='Applicant' sections={[{ title: 'Applicant details', rows: [
-        { label: 'Full name', value: form.fullName },
-        { label: 'Date of birth', value: `${form.day}/${form.month}/${form.year}` },
-        { label: 'Email', value: form.email },
-        { label: 'Phone', value: form.phone },
-        { label: 'Address', value: `${form.street}, ${form.suburb} ${form.state} ${form.postcode}` },
-      ] }]} />
-      <ReviewInfoCard title='Eligibility and evidence' sections={[{ title: 'Eligibility', rows: [
-        { label: 'Mobility condition', value: yesNo(form.hasMobilityCondition) },
-        { label: 'Medical evidence', value: evidenceLabel(form) },
-        { label: 'Driver licence', value: yesNo(form.hasDriverLicence) },
-        { label: 'Photo card', value: yesNo(form.hasPhotoCard) },
-        { label: 'Temporary permit', value: yesNo(form.needsTemporaryPermit) },
-      ] }]} />
-      <ReviewInfoCard title='Concession and delivery' sections={[{ title: 'Concession', rows: [
-        { label: 'Card type', value: concessionTypeLabel(form) },
-        { label: 'Mock validation', value: concessionValidationLabel(form) },
-        { label: 'Delivery method', value: deliveryLabel(form) },
-      ] }]} />
-      <EvidenceChecklistCard title='Evidence and validation status' items={evidenceItems(form)} />
-      <AssessmentSummaryPanel title='Mock assessment summary' items={assessmentItems(form)} />
-      <DeclarationReview
-        title='Declaration review'
+    <section aria-label='MPS review and supporting preview status'>
+      <MpsReviewFramePreview
         sections={[
           {
-            title: 'Accepted declaration',
-            statements: [
-              'I declare that the information provided is true and correct.',
-              'I understand this prototype does not assess eligibility or submit to a real service.',
+            id: 'mps-review-application',
+            title: 'Application details',
+            rows: [
+              { label: 'Application type', value: appTypeLabel(form) },
+              { label: 'Existing permit', value: form.permitNumber || 'Not provided' },
+              { label: 'Replacement reason', value: form.replaceReason || 'Not applicable' },
+            ],
+          },
+          {
+            id: 'mps-review-personal',
+            title: 'Personal details',
+            rows: [
+              { label: 'Full name', value: form.fullName },
+              { label: 'Date of birth', value: `${form.day}/${form.month}/${form.year}` },
+              { label: 'Email', value: form.email },
+              { label: 'Phone', value: form.phone },
+              { label: 'Address', value: `${form.street}, ${form.suburb} ${form.state} ${form.postcode}` },
+            ],
+          },
+          {
+            id: 'mps-review-concession',
+            title: 'Concession card details',
+            rows: [
+              { label: 'Card type', value: concessionTypeLabel(form) },
+              { label: 'Mock validation', value: concessionValidationLabel(form) },
+              { label: 'Delivery method', value: deliveryLabel(form) },
             ],
           },
         ]}
+        declarationStatements={[
+          'I declare that the information provided is true and correct.',
+          'I understand this prototype does not assess eligibility or submit to a real service.',
+        ]}
+        onEdit={() => undefined}
+        onBack={onBack}
+        onSubmit={onSubmit}
+        onExit={onExit}
       />
+      <EvidenceChecklistCard title='Evidence and validation status' items={evidenceItems(form)} />
+      <AssessmentSummaryPanel title='Mock assessment summary' items={assessmentItems(form)} />
       <LegalInfoAccordion />
       <ReviewFeesCard fees={[{ label: 'Application fee', amount: '$0.00' }]} totalAmount='$0.00' />
-      <TransactionCtaGroup onBack={onBack} onContinue={onSubmit} onExit={onExit} continueLabel='Submit mock application' />
     </section>
   )
 }
@@ -889,25 +890,25 @@ function OutcomeStep({ form, onStartAgain }: { form: FormState; onStartAgain: ()
   const manual = isManualReview(form)
   return (
     <section aria-labelledby='outcome-heading'>
-      <ConfirmationHeader title={manual ? 'Application received for manual review' : 'Application submitted'} transactionName='Mobility Parking Scheme' />
-      <TransactionSummaryCard heading='Application summary' items={[
-        { label: 'Reference number', value: manual ? 'MPS-REVIEW-000000' : 'MPS-MOCK-000000', helpText: 'Mock reference only.' },
-        { label: 'Applicant', value: form.fullName },
-        { label: 'Application type', value: appTypeLabel(form) },
-        { label: 'Outcome route', value: manual ? 'Manual review' : 'Submitted' },
-      ]}>
-        <p>Assessment wording, reference format, notification timing and next steps need service-owner confirmation.</p>
-      </TransactionSummaryCard>
-      <Heading level={2}>Next steps</Heading>
-      <ol className='tapaas-step-list'>
-        <li>Your mock application will be assessed within [confirmed timeframe].</li>
-        <li>You will receive updates by [confirmed contact channel].</li>
-        <li>If the real service approves the application, the permit would be issued using the confirmed delivery method.</li>
-      </ol>
+      <MpsConfirmationFramePreview
+        title={manual ? 'Your application has been received for manual review' : 'Your application has been submitted'}
+        referenceNumber={manual ? 'MPS-REVIEW-000000' : 'MPS-MOCK-000000'}
+        applicationDetails={[
+          { label: 'Applicant', value: form.fullName },
+          { label: 'Application type', value: appTypeLabel(form) },
+          { label: 'Outcome route', value: manual ? 'Manual review' : 'Submitted', helpText: 'Mock outcome only.' },
+        ]}
+        nextSteps={[
+          { id: 'assessment', content: 'Your mock application will be assessed within [confirmed timeframe].' },
+          { id: 'updates', content: 'You will receive updates by [confirmed contact channel].' },
+          { id: 'issue', content: 'If the real service approves the application, the permit would be issued using the confirmed delivery method.' },
+        ]}
+        relatedContent={<p>Assessment wording, reference format, notification timing and next steps need service-owner confirmation.</p>}
+        onStartAgain={onStartAgain}
+      />
       <InPageAlert variant='info' title='Trial boundary'>
         <p>No approval, permit issue, payment receipt, eligibility decision or concession validation has occurred.</p>
       </InPageAlert>
-      <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start again' />
       <p style={{ marginTop: '1rem' }}>
         <TextLink href='https://github.com/leokessel-lgtm/tapaas-kiro-trial/blob/main/docs/tapaas/05-component-template-relationship-map.md'>Review TaPaaS component-template relationship map</TextLink>
       </p>

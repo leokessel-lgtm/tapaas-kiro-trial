@@ -1,0 +1,33 @@
+# MPS confirmation frame evidence note
+
+| Field | Value |
+|---|---|
+| component | `MpsConfirmationFramePreview` |
+| candidate_discovery_mode | `selection-guidance` |
+| implementation_evidence_mode | `live-figma-mcp-targeted-node` |
+| source_file | `Mobility_Parking_Scheme.sketch 1 (Master @ 509b60a) (Copy)` |
+| source_page | `MPS Final` |
+| source_frame | `6.A Confirmation screen` |
+| source_node | `0:33222` |
+| anatomy | Page header/global nav context, status check icon, past-tense confirmation heading, short supporting text, application details/reference area, `What happens next?` heading, ordered next-step content, supporting paragraph, feedback prompt and footer relationship. |
+| states_variants | Single confirmation screen extracted. Tile variant `6.B Confirmation screen with tile` remains unresolved. |
+| behaviour | Start-again and feedback actions are preview-only. No receipt, notification, related-transaction routing or persistence is implemented. |
+| classification | `TaPaaS-specific transaction frame pattern` |
+| maturity | `coded-preview` |
+| validation_status | `targeted test pending at capture; build/parity required` |
+| implementation_boundary | Preview-only confirmation layout. Reference number, timeframe, communication channel and issue outcome are mock/placeholder values. |
+| unknowns | Exact heading/supporting text, real reference format, actual next-step wording, feedback behaviour, related transaction tile rules, tile variant, final assistive-technology behaviour. |
+| review_reason | `engineer`, `accessibility`, `owner`, `policy` |
+
+## Suitability gate
+
+- Bounded enough to extract: yes, one supplied Figma frame.
+- Transaction-build value: high, because it maps the MPS outcome to the confirmation template.
+- Anatomy: clear enough for preview layout.
+- States/variants: one frame evidenced; related tile variant unresolved.
+- Unsupported business logic: excluded and marked unresolved.
+
+## Notes
+
+- The component preserves the frame-level order: confirmation status, reference/application details, what-happens-next content, feedback prompt and footer/action relationship.
+- The broader confirmation frame remains source evidence. The reusable preview pattern is limited to layout and placeholder transaction content.

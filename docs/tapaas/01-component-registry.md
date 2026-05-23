@@ -6,12 +6,14 @@
 |---|---|---|---|---|---|
 | Confirmation page header | `9:10494` | GEL variant | needs engineer review | Confirmation step success header | Preview component: `ConfirmationHeader` |
 | Transaction summary card | `10:1861` | TaPaaS-specific composite | needs engineer review | Confirmation summary and receipt details | Preview component: `TransactionSummaryCard` |
+| MPS confirmation frame | `0:33222` | TaPaaS-specific transaction frame pattern | coded-preview | Mobility Parking Scheme confirmation layout | Preview component: `MpsConfirmationFramePreview`. Preserves confirmation heading, reference/application details, next-step content, feedback prompt and action/footer relationship with mock content only. |
 | Next steps card | `10:1862` | TaPaaS-specific composite | draft | Confirmation next steps | Documented only |
 | Review info card | `18:4448` | TaPaaS-specific composite | needs engineer review | Review page information playback | Preview component: `ReviewInfoCard` |
 | Review fees card | `18:4449` | TaPaaS-specific composite | needs engineer review | Review page fee breakdown | Preview component: `ReviewFeesCard` |
 | Privacy card | `1:198` | TaPaaS-specific composite | draft | Privacy collection notice | Used as page guidance only |
 | Conditional declaration | `27:56000` | GEL variant | draft | Mandatory declaration checkbox | Used as page guidance only |
 | Declaration review | `27:38386` | TaPaaS-specific composite | needs engineer review | Review page declaration playback | Preview component: `DeclarationReview`. Includes card and accordion variants. Legal content treatment still needs owner confirmation. |
+| MPS review frame | `0:33185` | TaPaaS-specific transaction frame pattern | coded-preview | Mobility Parking Scheme review-page layout | Preview component: `MpsReviewFramePreview`. Preserves review section order, required-field hint, callout, edit actions, declaration placement and CTA relationship with mock content only. |
 | TaPaaS radio buttons | `31:63987` | GEL variant | draft | Radio selection with TaPaaS content model | Use existing `RadioButtonList` unless card behaviour is required |
 | TaPaaS radio button cards | `31:63988` | TaPaaS-specific composite | needs engineer review | Card-based selection | Preview component: `RadioButtonCards`. Figma status remains `CONCEPT`, so use sparingly and verify keyboard/focus/error behaviour. |
 | Search vehicle input | `22:16683` | TaPaaS-specific composite | draft | Vehicle lookup/search step | Built in skeleton with existing `Field`, `Input`, `Button` only |
@@ -30,6 +32,7 @@ These are **trial-only composites** in `src/tapaas-preview/`. They are not real 
 |---|---|---|---|
 | `ConfirmationHeader` | `title`, `transactionName` | Confirmation page header `9:10494` | Uses a visual success mark and plain text. Requires accessibility review before reuse. |
 | `TransactionSummaryCard` | `heading`, `items`, optional `children` | Transaction summary card `10:1861` | Uses semantic section and definition-list style rows. |
+| `MpsConfirmationFramePreview` | `title`, `referenceNumber`, `applicationDetails`, `nextSteps`, optional related content/start callback | MPS Confirmation frame `0:33222` | Preview-only MPS confirmation-frame layout. Keeps reference number, timeframe, notification, related transaction and receipt details as mock/placeholder content. |
 | `ReviewInfoCard` | `title`, `sections`, optional edit action | Review info card `18:4448` | Supports stacked review rows only for this trial. |
 | `ReviewFeesCard` | `title`, `fees`, `totalLabel`, `totalAmount` | Review fees card `18:4449` | Mock amounts only. No payment logic. |
 | `TransactionCtaGroup` | `onBack`, `onContinue`, `onExit`, labels | Transaction CTA button guidance and end-of-transaction CTA guidance | Uses GEL preview buttons. No modal behaviour included. |
@@ -41,6 +44,7 @@ These are **trial-only composites** in `src/tapaas-preview/`. They are not real 
 | `EvidenceChecklistCard` | `title`, evidence `items`, optional `children` | MPS medical frames `4.A`/`4.Aa`/`4.B`/`4.Ba`; GEL file-upload evidence | Mock-only status summary for evidence requirements. Does not upload files and must not be treated as GEL FileUpload. |
 | `AssessmentSummaryPanel` | `title`, assessment `items`, optional `children` | MPS eligibility, concession and review frame groups; GEL status-label evidence | Mock-only routing/status display. Does not make decisions or validate eligibility, concessions or payments. |
 | `DeclarationReview` | `title`, `intro`, `sections`, `variant` | Declaration review `27:38386` | Review-page declaration playback. Supports card and accordion variants. Legal content requires owner confirmation. |
+| `MpsReviewFramePreview` | `sections`, `declarationStatements`, optional edit/back/submit/exit callbacks | MPS Review frame `0:33185` | Preview-only MPS review-frame layout. Keeps unsupported identity, eligibility, medical, concession, payment, legal, privacy, policy and backend logic unresolved. |
 | `LegalInfoAccordion` | `title`, `items` | Legal info accordion `22:35625` | Content-specific wrapper around GEL Accordion behaviour. Use only for optional legal/privacy guidance unless confirmed otherwise. |
 | `InteractiveDetailsCard` | `title`, `description`, `rows`, `statusLabel`, `actions` | Details card single interactive `2958:2499` | Context card with explicit action buttons. Action semantics and focus expectations need review. |
 | `RadioButtonCards` | `id`, `legend`, `options`, `value`, `onChange`, error props | TaPaaS radio button cards `31:63988` | Native radio inputs presented as cards. Figma status is `CONCEPT`; use for 2 to 4 high-clarity choices only. |

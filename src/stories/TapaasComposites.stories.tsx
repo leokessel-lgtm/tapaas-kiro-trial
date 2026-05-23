@@ -14,6 +14,8 @@ import {
   ExitModal,
   InteractiveDetailsCard,
   LegalInfoAccordion,
+  MpsConfirmationFramePreview,
+  MpsReviewFramePreview,
   RadioButtonCards,
   RepeatableGroup,
   ReviewFeesCard,
@@ -108,6 +110,42 @@ function ModalAndBusinessErrorExample() {
 export const ReviewAndConfirmation: Story = {
   render: () => (
     <div className='storybook-stack'>
+      <MpsReviewFramePreview
+        sections={[
+          {
+            id: 'storybook-mps-review-application',
+            title: 'Application details',
+            rows: [
+              { label: 'Application type', value: 'Renewal' },
+              { label: 'Existing permit', value: 'MPS-MOCK-123456' },
+            ],
+          },
+          {
+            id: 'storybook-mps-review-personal',
+            title: 'Personal details',
+            rows: [
+              { label: 'Full name', value: 'Jane Citizen' },
+              { label: 'Address', value: '1 Mock Street, Sydney NSW 2000' },
+            ],
+          },
+          {
+            id: 'storybook-mps-review-concession',
+            title: 'Concession card details',
+            rows: [
+              { label: 'Card type', value: 'None' },
+              { label: 'Delivery method', value: 'Post to residential address' },
+            ],
+          },
+        ]}
+        declarationStatements={[
+          'I declare that the information provided is true and correct.',
+          'I understand this preview does not submit to a real service.',
+        ]}
+        onEdit={() => undefined}
+        onSubmit={() => undefined}
+        onBack={() => undefined}
+        onExit={() => undefined}
+      />
       <ReviewInfoCard
         title='Applicant details'
         sections={[
@@ -130,6 +168,21 @@ export const ReviewAndConfirmation: Story = {
         totalAmount='$0.00'
       />
       <ConfirmationHeader title='Application submitted' transactionName='Mock transaction' />
+      <MpsConfirmationFramePreview
+        referenceNumber='MPS-MOCK-000000'
+        applicationDetails={[
+          { label: 'Applicant', value: 'Jane Citizen' },
+          { label: 'Application type', value: 'Renewal' },
+          { label: 'Outcome route', value: 'Submitted', helpText: 'Mock outcome only.' },
+        ]}
+        nextSteps={[
+          { id: 'assessment', content: 'Your mock application will be assessed within [confirmed timeframe].' },
+          { id: 'updates', content: 'You will receive updates by [confirmed contact channel].' },
+          { id: 'issue', content: 'If approved by the real service, the permit would be issued using confirmed delivery rules.' },
+        ]}
+        relatedContent={<p>Related transactions and notification wording need owner confirmation.</p>}
+        onStartAgain={() => undefined}
+      />
       <TransactionSummaryCard
         items={[
           { label: 'Reference number', value: 'MOCK-000000', helpText: 'Mock reference only.' },
