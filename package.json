@@ -14,9 +14,10 @@
     "parity": "node scripts/check-parity.mjs",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
+    "test:browser": "playwright test",
     "test": "vitest run",
     "test:watch": "vitest",
-    "validate": "npm audit && npm run lint && npm run parity && npm run test && npm run build:all"
+    "validate": "npm audit && npm run lint && npm run parity && npm run test && npm run build:all && npm run test:browser"
   },
   "dependencies": {
     "react": "^18.0.0",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.60.0",
     "@storybook/addon-a11y": "^10.4.1",
     "@storybook/addon-docs": "^10.4.1",
     "@storybook/react-vite": "^10.4.1",

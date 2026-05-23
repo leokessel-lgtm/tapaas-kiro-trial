@@ -63,6 +63,7 @@ npm install --cache ./.npm-cache
 npm run dev
 npm run build
 npm run test
+npm run test:browser
 npm run parity
 npm run validate
 npm run storybook
@@ -72,7 +73,13 @@ npm run build:all
 
 Storybook runs locally at `http://localhost:6006`. The GitHub Pages workflow runs `npm run build:all`, so the main Vite app and Storybook catalogue are deployed together.
 
-Use `npm run validate` before committing substantial changes. It runs the audit, lint, evidence parity check, automated tests, app build and Storybook build.
+Use `npm run validate` before committing substantial changes. It runs the audit, lint, evidence parity check, automated component tests, app build, Storybook build and Playwright browser smoke tests.
+
+The browser smoke tests run against the built local preview by default. To run the same smoke checks against the deployed GitHub Pages site, use:
+
+```bash
+PLAYWRIGHT_BASE_URL=https://leokessel-lgtm.github.io/tapaas-kiro-trial/ npm run test:browser
+```
 
 ## Architecture
 
