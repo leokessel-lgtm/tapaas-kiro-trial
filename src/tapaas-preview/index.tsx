@@ -60,6 +60,17 @@ export interface TapaasSearchActionProps {
   defaultValue?: string
 }
 
+export interface EmailConfirmationModalProps {
+  isOpen: boolean
+  emailAddress: string
+  onSend: () => void
+  onEdit: () => void
+  onDismiss?: () => void
+  title?: string
+  sendLabel?: string
+  editLabel?: string
+}
+
 export function ConfirmationHeader({
   title,
   transactionName,
@@ -336,6 +347,116 @@ export function ExitModal({
         <div className='tapaas-modal-actions'>
           <Button onClick={onContinue}>{continueLabel}</Button>
           <Button variant='secondary' onClick={onExit}>{exitLabel}</Button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// EmailConfirmationModal
+// TaPaaS preview composite — confirmation-step email verification modal.
+// Source evidence: Email confirmation modal `9290:50392`; component frame `9241:18447`.
+// Send/edit/dismiss callbacks are mock-only and do not send email or persist data.
+// ---------------------------------------------------------------------------
+export function EmailConfirmationModal({
+  isOpen,
+  emailAddress,
+  onSend,
+  onEdit,
+  onDismiss,
+  title = 'Confirm email address',
+  sendLabel = 'Send',
+  editLabel = 'Edit email address',
+}: EmailConfirmationModalProps) {
+  const dialogRef = React.useRef<HTMLDivElement>(null)
+  const previousFocusRef = React.useRef<HTMLElement | null>(null)
+  const generatedId = React.useId()
+  const titleId = `${generatedId}-title`
+  const descriptionId = `${generatedId}-description`
+  const dismiss = onDismiss || onEdit
+
+  function getFocusableControls() {
+    if (!dialogRef.current) return []
+    return Array.from(dialogRef.current.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ))
+  }
+
+  React.useEffect(() => {
+    if (!isOpen) return
+    previousFocusRef.current = document.activeElement as HTMLElement
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.setTimeout(() => {
+      getFocusableControls()[0]?.focus()
+    }, 0)
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        dismiss()
+        return
+      }
+      if (event.key !== 'Tab' || !dialogRef.current) return
+
+      const focusable = getFocusableControls()
+      if (focusable.length === 0) {
+        event.preventDefault()
+        dialogRef.current.focus()
+        return
+      }
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = originalOverflow
+      window.setTimeout(() => previousFocusRef.current?.focus(), 0)
+    }
+  }, [dismiss, isOpen])
+
+  if (!isOpen) return null
+
+  return (
+    <div className='tapaas-modal-layer tapaas-email-confirmation-layer' role='presentation'>
+      <div className='tapaas-modal-backdrop' aria-hidden='true' />
+      <div
+        ref={dialogRef}
+        className='tapaas-modal tapaas-email-confirmation-modal'
+        role='dialog'
+        aria-modal='true'
+        aria-labelledby={titleId}
+        aria-describedby={descriptionId}
+        tabIndex={-1}
+        data-tapaas-component='email-confirmation-modal'
+        data-preview-boundary='preview implementation; not production-approved'
+      >
+        <button
+          type='button'
+          className='tapaas-email-confirmation-modal__close'
+          aria-label='Close email confirmation modal'
+          onClick={dismiss}
+        >
+          <span aria-hidden='true'>&times;</span>
+        </button>
+        <Heading level={2} id={titleId} style={{ marginBottom: '1rem' }}>{title}</Heading>
+        <p id={descriptionId} className='tapaas-email-confirmation-modal__description'>
+          Check the address. We'll send your receipt to <strong>{emailAddress}</strong>
+        </p>
+        <div className='tapaas-modal-actions tapaas-email-confirmation-modal__actions'>
+          <Button variant='secondary' onClick={onEdit}>{editLabel}</Button>
+          <Button onClick={onSend}>{sendLabel}</Button>
         </div>
       </div>
     </div>

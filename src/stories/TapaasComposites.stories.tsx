@@ -9,6 +9,7 @@ import {
   ConfirmationHeader,
   DeclarationReview,
   DetailsCard,
+  EmailConfirmationModal,
   EvidenceChecklistCard,
   ExitModal,
   InteractiveDetailsCard,
@@ -71,6 +72,7 @@ function ConditionalAndRepeatableExample() {
 
 function ModalAndBusinessErrorExample() {
   const [isOpen, setIsOpen] = useState(false)
+  const [isEmailOpen, setIsEmailOpen] = useState(false)
 
   return (
     <div className='storybook-stack'>
@@ -78,11 +80,18 @@ function ModalAndBusinessErrorExample() {
         <p>Modal and business-error behaviour still needs VoiceOver/NVDA review.</p>
       </InPageAlert>
       <Button onClick={() => setIsOpen(true)}>Open exit modal</Button>
+      <Button variant='secondary' onClick={() => setIsEmailOpen(true)}>Open email confirmation modal</Button>
       <ExitModal
         isOpen={isOpen}
         onContinue={() => setIsOpen(false)}
         onExit={() => setIsOpen(false)}
         description='This preview does not save draft applications.'
+      />
+      <EmailConfirmationModal
+        isOpen={isEmailOpen}
+        emailAddress='samplemail@email.com'
+        onSend={() => setIsEmailOpen(false)}
+        onEdit={() => setIsEmailOpen(false)}
       />
       <BusinessErrorPage
         title='Concession details need attention'
@@ -300,4 +309,39 @@ function ExitModalIsolatedExample() {
 
 export const ExitModalIsolated: Story = {
   render: () => <ExitModalIsolatedExample />,
+}
+
+function EmailConfirmationModalExample({ mode }: { mode: 'desktop' | 'mobile' }) {
+  const [isOpen, setIsOpen] = useState(false)
+  const [lastAction, setLastAction] = useState('No action selected')
+  const isMobile = mode === 'mobile'
+
+  return (
+    <div className='storybook-stack' style={isMobile ? { maxWidth: 390 } : undefined}>
+      <div className='storybook-note'>
+        <strong>{isMobile ? 'Email confirmation modal — mobile bottom modal' : 'Email confirmation modal — desktop centred modal'}</strong>
+        <p>Source: TaPaaS Email confirmation modal <code>9290:50392</code>, component frame <code>9241:18447</code>. Preview callbacks only.</p>
+        {isMobile
+          ? <p>Set the Storybook viewport below 640px to verify the bottom-modal treatment. The constrained container shows intended mobile review width but cannot force CSS media queries by itself.</p>
+          : <p>Use a desktop-width Storybook viewport to verify centred modal placement and horizontal action order.</p>}
+      </div>
+      <Button onClick={() => setIsOpen(true)}>Open email confirmation modal</Button>
+      <p aria-live='polite'>{lastAction}</p>
+      <EmailConfirmationModal
+        isOpen={isOpen}
+        emailAddress='samplemail@email.com'
+        onSend={() => { setIsOpen(false); setLastAction('Mock send selected') }}
+        onEdit={() => { setIsOpen(false); setLastAction('Mock edit selected') }}
+        onDismiss={() => { setIsOpen(false); setLastAction('Mock close selected') }}
+      />
+    </div>
+  )
+}
+
+export const EmailConfirmationModalDesktop: Story = {
+  render: () => <EmailConfirmationModalExample mode='desktop' />,
+}
+
+export const EmailConfirmationModalMobile: Story = {
+  render: () => <EmailConfirmationModalExample mode='mobile' />,
 }

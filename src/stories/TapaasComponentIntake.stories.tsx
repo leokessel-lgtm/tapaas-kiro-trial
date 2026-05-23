@@ -155,6 +155,17 @@ const candidates: ComponentCandidate[] = [
     risk: 'Backend lookup, vehicle ownership and search-result states are out of scope.',
   },
   {
+    name: 'Email confirmation modal',
+    source: '9290:50392',
+    classification: 'TaPaaS-specific',
+    maturity: 'coded-preview',
+    status: 'coded preview',
+    templateUse: 'Confirmation step',
+    whyItMatters: 'Reusable confirmation-step pattern for verifying an entered email address before receipt or communication actions.',
+    nextAction: 'Review desktop centred and mobile bottom-modal treatments in Storybook before using in transaction skeletons.',
+    risk: 'No real email send, persistence, routing or critical-error handling is implemented.',
+  },
+  {
     name: 'Details card single',
     source: '2413:787',
     classification: 'TaPaaS-specific composite',

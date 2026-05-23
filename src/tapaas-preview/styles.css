@@ -339,6 +339,40 @@
   margin-top: 1.5rem;
 }
 
+.tapaas-email-confirmation-modal {
+  padding: 2rem;
+  width: min(100%, 44.25rem);
+}
+
+.tapaas-email-confirmation-modal__close {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--gel-color-text);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--gel-font-body);
+  font-size: 2rem;
+  height: 3rem;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  width: 3rem;
+}
+
+.tapaas-email-confirmation-modal__description {
+  margin: 0;
+  padding-right: 2rem;
+}
+
+.tapaas-email-confirmation-modal__actions {
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
 .tapaas-error-page {
   margin-top: 1rem;
 }
@@ -569,6 +603,31 @@
   .tapaas-modal-actions,
   .tapaas-modal-actions > button {
     width: 100%;
+  }
+
+  .tapaas-email-confirmation-layer {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .tapaas-email-confirmation-modal {
+    border-radius: var(--gel-radius) var(--gel-radius) 0 0;
+    max-height: calc(100vh - 1rem);
+    padding: 1.5rem 1.25rem 3rem;
+    width: 100%;
+  }
+
+  .tapaas-email-confirmation-modal__actions {
+    flex-direction: column;
+    margin-top: 1.5rem;
+  }
+
+  .tapaas-email-confirmation-modal__actions > button:first-child {
+    order: 2;
+  }
+
+  .tapaas-email-confirmation-modal__actions > button:last-child {
+    order: 1;
   }
 
   .tapaas-card-actions,
