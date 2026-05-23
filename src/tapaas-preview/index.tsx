@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Heading, TextLink } from '../gel'
+import { Accordion, Button, Heading, TextLink } from '../gel'
 import './styles.css'
 
 export interface SummaryItem {
@@ -29,6 +29,26 @@ export interface AssessmentSummaryItem {
   label: string
   value: React.ReactNode
   tone?: 'neutral' | 'good' | 'warning' | 'error'
+}
+
+export interface DeclarationReviewSection {
+  title: string
+  statements: React.ReactNode[]
+}
+
+export interface RadioButtonCardOption {
+  value: string
+  label: string
+  description?: React.ReactNode
+  pictogram?: React.ReactNode
+}
+
+export interface BackendErrorExample {
+  code: string
+  title: string
+  message: string
+  guidance: string
+  reference: string
 }
 
 export function ConfirmationHeader({
@@ -308,6 +328,65 @@ export function BusinessErrorPage({
   )
 }
 
+// ---------------------------------------------------------------------------
+// BackendErrorExamplePage
+// TaPaaS preview composite — mock-only business/backend error variants.
+// Source evidence: Backend errors repository `31:73426`.
+// ---------------------------------------------------------------------------
+export const backendErrorExamples = {
+  paymentError: {
+    code: 'INVALID_PAYMENT_DETAILS',
+    title: 'Unable to submit permit request',
+    message: 'We could not submit this permit request due to a payment error. No money has been taken.',
+    guidance: 'Try again or visit a service centre. This is mock recovery wording only.',
+    reference: 'MPS-PAYMENT-MOCK',
+  },
+  concessionNeedsAttention: {
+    code: 'INVALID_INPUT',
+    title: 'Concession details need attention',
+    message: 'The mock concession outcome selected on this run cannot progress automatically.',
+    guidance: 'Real concession recovery wording, backend error codes and support channels need source-confirmed business rules.',
+    reference: 'MPS-CONCESSION-MOCK',
+  },
+  addressNotNsw: {
+    code: 'ADDRESS_NOT_NSW',
+    title: 'Your address is not in NSW',
+    message: 'Mobility parking permits are only available for NSW residents.',
+    guidance: 'Check the eligibility criteria. If you need help, call 13 77 88. This is mock content only.',
+    reference: 'MPS-ADDRESS-MOCK',
+  },
+  systemUnavailable: {
+    code: 'SYSTEM_FAILURE',
+    title: 'Our system is temporarily unavailable',
+    message: 'We are working to resolve this technical issue.',
+    guidance: 'Try again later. This prototype does not connect to a real system.',
+    reference: 'MPS-SYSTEM-MOCK',
+  },
+} satisfies Record<string, BackendErrorExample>
+
+export function BackendErrorExamplePage({
+  example,
+  onStartAgain,
+}: {
+  example: BackendErrorExample
+  onStartAgain: () => void
+}) {
+  return (
+    <BusinessErrorPage
+      title={example.title}
+      message={(
+        <>
+          <p>{example.message}</p>
+          <p className='tapaas-help-text'>Mock backend code: <strong>{example.code}</strong></p>
+        </>
+      )}
+      guidance={<p>{example.guidance}</p>}
+      reference={example.reference}
+      onStartAgain={onStartAgain}
+    />
+  )
+}
+
 export function RepeatableGroup({
   title,
   description,
@@ -390,6 +469,112 @@ export function AssessmentSummaryPanel({
   )
 }
 
+// ---------------------------------------------------------------------------
+// DeclarationReview
+// TaPaaS preview composite — review-page declaration playback.
+// Source evidence: Declaration review `27:38386`.
+// ---------------------------------------------------------------------------
+export function DeclarationReview({
+  title = 'Declaration',
+  intro = 'You have accepted these declarations:',
+  sections,
+  variant = 'card',
+}: {
+  title?: string
+  intro?: string
+  sections: DeclarationReviewSection[]
+  variant?: 'card' | 'accordion'
+}) {
+  if (variant === 'accordion') {
+    return (
+      <section className='tapaas-declaration-review' aria-labelledby={`${slugify(title)}-declaration-review-heading`}>
+        <Heading level={3} id={`${slugify(title)}-declaration-review-heading`}>{title}</Heading>
+        <p>{intro}</p>
+        <Accordion
+          id={`${slugify(title)}-declaration-accordion`}
+          name='declaration sections'
+          items={sections.map((section) => ({
+            id: `${slugify(title)}-${slugify(section.title)}`,
+            title: section.title,
+            headingLevel: 'h4',
+            children: (
+              <ul className='tapaas-declaration-list'>
+                {section.statements.map((statement, index) => <li key={index}>{statement}</li>)}
+              </ul>
+            ),
+          }))}
+        />
+      </section>
+    )
+  }
+
+  return (
+    <section className='tapaas-card tapaas-declaration-review' aria-labelledby={`${slugify(title)}-declaration-review-heading`}>
+      <Heading level={3} id={`${slugify(title)}-declaration-review-heading`}>{title}</Heading>
+      <p>{intro}</p>
+      {sections.map((section) => (
+        <div className='tapaas-declaration-section' key={section.title}>
+          <Heading level={4}>{section.title}</Heading>
+          <ul className='tapaas-declaration-list'>
+            {section.statements.map((statement, index) => <li key={index}>{statement}</li>)}
+          </ul>
+        </div>
+      ))}
+    </section>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// LegalInfoAccordion
+// TaPaaS content-specific wrapper over GEL Accordion behaviour.
+// Source evidence: Legal info accordion `22:35625`.
+// ---------------------------------------------------------------------------
+export function LegalInfoAccordion({
+  title = 'Privacy and notifications',
+  items = defaultLegalInfoItems,
+}: {
+  title?: string
+  items?: { id: string; title: string; content: React.ReactNode }[]
+}) {
+  return (
+    <section className='tapaas-legal-info' aria-labelledby={`${slugify(title)}-legal-info-heading`}>
+      <Heading level={3} id={`${slugify(title)}-legal-info-heading`}>{title}</Heading>
+      <Accordion
+        id={`${slugify(title)}-legal-info-accordion`}
+        name='legal information sections'
+        items={items.map((item) => ({
+          id: item.id,
+          title: item.title,
+          headingLevel: 'h4',
+          children: item.content,
+        }))}
+      />
+    </section>
+  )
+}
+
+const defaultLegalInfoItems = [
+  {
+    id: 'privacy-collection-notice',
+    title: 'Privacy Collection Notice',
+    content: (
+      <p>
+        Service NSW delivers this service on behalf of the responsible agency. Replace this placeholder with the confirmed privacy collection notice before reuse.
+      </p>
+    ),
+  },
+  {
+    id: 'terms-and-conditions',
+    title: 'Terms and Conditions',
+    content: <p>You have agreed to the terms and conditions for this mock transaction. Confirm the real wording with the service owner.</p>,
+  },
+  {
+    id: 'notifications',
+    title: 'Notifications',
+    content: <p>We may send mock updates about this transaction. Real notification wording and channels need owner confirmation.</p>,
+  },
+]
+
 function slugify(value: string) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 }
@@ -444,6 +629,132 @@ export function DetailsCard({ title, description, rows, statusLabel, onAction, a
         ))}
       </dl>
     </section>
+  )
+}
+
+export interface InteractiveDetailsCardAction {
+  label: string
+  onAction: () => void
+  variant?: 'primary' | 'secondary' | 'link'
+}
+
+export interface InteractiveDetailsCardProps extends Omit<DetailsCardProps, 'onAction' | 'actionLabel'> {
+  actions: InteractiveDetailsCardAction[]
+}
+
+// ---------------------------------------------------------------------------
+// InteractiveDetailsCard
+// TaPaaS preview composite — context card with explicit actions.
+// Source evidence: Details card single interactive `2958:2499`.
+// ---------------------------------------------------------------------------
+export function InteractiveDetailsCard({ title, description, rows, statusLabel, headingLevel = 3, actions }: InteractiveDetailsCardProps) {
+  const id = slugify(title) + '-interactive-details'
+  return (
+    <section className='tapaas-card tapaas-interactive-details-card' aria-labelledby={id} data-tapaas-component='interactive-details-card'>
+      <div className='tapaas-card-heading-row'>
+        <div>
+          <Heading level={headingLevel} style={{ marginBottom: description ? '0.25rem' : 0 }} id={id}>{title}</Heading>
+          {description && <p className='tapaas-help-text'>{description}</p>}
+        </div>
+        {statusLabel && <span className='tapaas-status-pill tapaas-status-pill--needs-review'>{statusLabel}</span>}
+      </div>
+      <dl className='tapaas-summary-list'>
+        {rows.map((row) => (
+          <div className='tapaas-summary-row' key={row.label}>
+            <dt>{row.label}</dt>
+            <dd>{row.value}</dd>
+          </div>
+        ))}
+      </dl>
+      <div className='tapaas-card-actions' aria-label={`${title} actions`}>
+        {actions.map((action) => (
+          <Button
+            key={action.label}
+            variant={action.variant || 'secondary'}
+            onClick={action.onAction}
+          >
+            {action.label}
+          </Button>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// RadioButtonCards
+// TaPaaS preview composite — native radio inputs presented as cards.
+// Source evidence: TaPaaS radio button cards `31:63988`.
+// ---------------------------------------------------------------------------
+export function RadioButtonCards({
+  id,
+  legend,
+  options,
+  value,
+  onChange,
+  hasError,
+  errorMessage = 'Select an option to continue',
+  required,
+}: {
+  id: string
+  legend: string
+  options: RadioButtonCardOption[]
+  value: string
+  onChange: (value: string) => void
+  hasError?: boolean
+  errorMessage?: string
+  required?: boolean
+}) {
+  const errorId = `${id}-error`
+  return (
+    <fieldset
+      className={`tapaas-radio-card-fieldset ${hasError ? 'tapaas-radio-card-fieldset--error' : ''}`}
+      aria-describedby={hasError ? errorId : undefined}
+      aria-invalid={hasError || undefined}
+    >
+      <legend className='tapaas-radio-card-legend'>{legend}</legend>
+      <div className='tapaas-radio-card-set'>
+        {options.map((option) => {
+          const optionId = `${id}-${option.value}`
+          const labelId = `${optionId}-label`
+          const descriptionId = option.description ? `${optionId}-description` : undefined
+          const selected = option.value === value
+          return (
+            <label
+              key={option.value}
+              htmlFor={optionId}
+              className={`tapaas-radio-card ${selected ? 'tapaas-radio-card--selected' : ''} ${hasError ? 'tapaas-radio-card--error' : ''}`}
+            >
+              <input
+                id={optionId}
+                name={id}
+                type='radio'
+                value={option.value}
+                checked={selected}
+                required={required}
+                aria-required={required || undefined}
+                aria-labelledby={labelId}
+                aria-describedby={[descriptionId, hasError ? errorId : undefined].filter(Boolean).join(' ') || undefined}
+                onChange={() => onChange(option.value)}
+              />
+              <span className='tapaas-radio-card__body'>
+                <span className='tapaas-radio-card__pictogram' aria-hidden='true'>{option.pictogram || '○'}</span>
+                <span className='tapaas-radio-card__text'>
+                  <span id={labelId} className='tapaas-radio-card__label'>{option.label}</span>
+                  {option.description && <span id={descriptionId} className='tapaas-radio-card__description'>{option.description}</span>}
+                </span>
+              </span>
+            </label>
+          )
+        })}
+      </div>
+      {hasError && (
+        <div id={errorId} className='tapaas-radio-card-error'>
+          <span aria-hidden='true'>⊘</span>
+          <strong>{errorMessage}</strong>
+        </div>
+      )}
+    </fieldset>
   )
 }
 

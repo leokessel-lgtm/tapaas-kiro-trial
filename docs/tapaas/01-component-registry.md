@@ -11,16 +11,16 @@
 | Review fees card | `18:4449` | TaPaaS-specific composite | needs engineer review | Review page fee breakdown | Preview component: `ReviewFeesCard` |
 | Privacy card | `1:198` | TaPaaS-specific composite | draft | Privacy collection notice | Used as page guidance only |
 | Conditional declaration | `27:56000` | GEL variant | draft | Mandatory declaration checkbox | Used as page guidance only |
-| Declaration review | `27:38386` | TaPaaS-specific composite | needs engineer review | Review page declaration playback | MCP text extracted. Includes accordion and card variants. Use only after selecting the variant and confirming legal content treatment. |
+| Declaration review | `27:38386` | TaPaaS-specific composite | needs engineer review | Review page declaration playback | Preview component: `DeclarationReview`. Includes card and accordion variants. Legal content treatment still needs owner confirmation. |
 | TaPaaS radio buttons | `31:63987` | GEL variant | draft | Radio selection with TaPaaS content model | Use existing `RadioButtonList` unless card behaviour is required |
-| TaPaaS radio button cards | `31:63988` | TaPaaS-specific composite | needs engineer review | Card-based selection | MCP text extracted. Figma gives responsive spacing rules, fixed desktop width and error spacing. Do not implement until keyboard/focus/error behaviour is source-confirmed. |
+| TaPaaS radio button cards | `31:63988` | TaPaaS-specific composite | needs engineer review | Card-based selection | Preview component: `RadioButtonCards`. Figma status remains `CONCEPT`, so use sparingly and verify keyboard/focus/error behaviour. |
 | Search vehicle input | `22:16683` | TaPaaS-specific composite | draft | Vehicle lookup/search step | Built in skeleton with existing `Field`, `Input`, `Button` only |
 | Details card single | `2413:787` | TaPaaS-specific composite | draft | Context/details card | Documented only |
-| Details card single interactive | `2958:2499` | TaPaaS-specific composite | needs engineer review | Interactive context/details card | MCP text extracted. Figma marks it READY FOR BUILD, but the action model and keyboard behaviour still need engineering/accessibility review before coding. |
+| Details card single interactive | `2958:2499` | TaPaaS-specific composite | needs engineer review | Interactive context/details card | Preview component: `InteractiveDetailsCard`. Action model remains preview-only and needs engineering/accessibility review before broader reuse. |
 | Show more / less | `22:25082` | GEL variant | draft | Progressive reveal of optional content | MCP text extracted. Figma describes it as a GEL button with custom content and says it does not need to be rebuilt. Prefer existing GEL button/disclosure behaviour. |
-| Legal info accordion | `22:35625` | TaPaaS-specific composite using GEL accordion behaviour | needs engineer review | Legal/privacy accordion content on review or declaration pages | MCP text extracted. Figma marks it BUILT and Custom/GEL, but legal/privacy content must not be hidden or made optional without content and accessibility confirmation. |
+| Legal info accordion | `22:35625` | TaPaaS-specific composite using GEL accordion behaviour | needs engineer review | Legal/privacy accordion content on review or declaration pages | Preview component: `LegalInfoAccordion`. Figma marks it BUILT and Custom/GEL, but legal/privacy content must not be hidden or made optional without content and accessibility confirmation. |
 | VEOS selection card | `31:63989` | TaPaaS-specific composite | design-only | Vehicle Emissions Offset Scheme selection card | MCP inventory confirmed. Candidate selection-card pattern only. Needs deep review before use. |
-| Backend error examples | `31:73426` | TaPaaS-specific pattern set | design-only | Backend/business/system error examples | MCP inventory confirmed. Requires source-confirmed business rules and error-routing design. |
+| Backend error examples | `31:73426` | TaPaaS-specific pattern set | needs engineer review | Backend/business/system error examples | Preview data/component: `backendErrorExamples` and `BackendErrorExamplePage` for mock-only outcomes. Real error rules and routing remain out of scope. |
 
 ## Coded preview components
 
@@ -35,9 +35,14 @@ These are **trial-only composites** in `src/tapaas-preview/`. They are not real 
 | `TransactionCtaGroup` | `onBack`, `onContinue`, `onExit`, labels | Transaction CTA button guidance and end-of-transaction CTA guidance | Uses GEL preview buttons. No modal behaviour included. |
 | `ExitModal` | `isOpen`, `onContinue`, `onExit`, labels | Exit modal `4677:1042` | Source-backed trial preview for exit confirmation. Uses `role="dialog"`, `aria-modal`, labelled/described content, Escape close, return focus and basic focus containment. Needs VoiceOver/NVDA review. |
 | `BusinessErrorPage` | `title`, `message`, `guidance`, `reference`, `onStartAgain` | Business error page `8931:31271` | Source-backed trial preview for hard-stop business outcomes. Uses `role="alert"` around the error content. Requires real source-confirmed business rules before reuse. |
+| `BackendErrorExamplePage` | `example`, `onStartAgain` | Backend errors repository `31:73426` | Mock-only variants for hard-stop outcomes. Wraps `BusinessErrorPage` and displays source-backed mock error codes. |
 | `RepeatableGroup` | `title`, optional `description`, `children`, optional `actions` | Form input page `8410:37703`; GEL fieldset/form evidence | Preview composition for repeated form groups. Used for address and authorised-contact sections. Not a standalone TaPaaS component. |
 | `EvidenceChecklistCard` | `title`, evidence `items`, optional `children` | MPS medical frames `4.A`/`4.Aa`/`4.B`/`4.Ba`; GEL file-upload evidence | Mock-only status summary for evidence requirements. Does not upload files and must not be treated as GEL FileUpload. |
 | `AssessmentSummaryPanel` | `title`, assessment `items`, optional `children` | MPS eligibility, concession and review frame groups; GEL status-label evidence | Mock-only routing/status display. Does not make decisions or validate eligibility, concessions or payments. |
+| `DeclarationReview` | `title`, `intro`, `sections`, `variant` | Declaration review `27:38386` | Review-page declaration playback. Supports card and accordion variants. Legal content requires owner confirmation. |
+| `LegalInfoAccordion` | `title`, `items` | Legal info accordion `22:35625` | Content-specific wrapper around GEL Accordion behaviour. Use only for optional legal/privacy guidance unless confirmed otherwise. |
+| `InteractiveDetailsCard` | `title`, `description`, `rows`, `statusLabel`, `actions` | Details card single interactive `2958:2499` | Context card with explicit action buttons. Action semantics and focus expectations need review. |
+| `RadioButtonCards` | `id`, `legend`, `options`, `value`, `onChange`, error props | TaPaaS radio button cards `31:63988` | Native radio inputs presented as cards. Figma status is `CONCEPT`; use for 2 to 4 high-clarity choices only. |
 
 ## Build rules
 
@@ -76,12 +81,12 @@ The 2026-05-20 MCP pass confirmed that several TaPaaS component pages already in
 | Confirmation page header | `READY FOR BUILD` | Safe to use as preview guidance, but keep engineer/accessibility review gate. |
 | Privacy card | `BUILT` | Strong page guidance. Privacy wording still requires owner confirmation. |
 | Conditional declaration | `READY FOR BUILD` | Good pattern for declaration structure. Legal wording remains unverified. |
-| Legal info accordion | `BUILT`, `Custom / GEL` | Use only after confirming whether legal/privacy content may be collapsed. |
+| Legal info accordion | `BUILT`, `Custom / GEL` | Preview coded as `LegalInfoAccordion`, but use only after confirming whether legal/privacy content may be collapsed. |
 | Declaration review | `READY FOR BUILD`, `GEL`, `Figma`, `Storybook` | Good candidate for next coded component, but choose accordion vs card variant first. |
-| Details card single interactive | `READY FOR BUILD` | Good candidate for next coded component, but confirm action semantics and keyboard behaviour. |
+| Details card single interactive | `READY FOR BUILD` | Preview coded as `InteractiveDetailsCard`, but confirm action semantics and keyboard behaviour. |
 | Search vehicle input | `CONCEPT` | Keep mock-only and avoid backend lookup. |
 | Review info card, review fees card, next steps card, transaction summary card | `CONCEPT` | Useful as trial composites. Do not overclaim maturity. |
-| TaPaaS radio button cards | `CONCEPT` | Defer coding until accessibility behaviour is confirmed. |
+| TaPaaS radio button cards | `CONCEPT` | Preview coded as `RadioButtonCards` for trial review only; do not promote until accessibility behaviour is confirmed. |
 
 The component pages consistently separate `Component`, `Sub-components`, `Designer documentation`, `Developer documentation` and `Accessibility annotations`. Kiro should inspect those sections before coding or changing a preview component.
 

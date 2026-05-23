@@ -3,17 +3,23 @@ import { useState } from 'react'
 import { Button, Field, Input, InPageAlert, Textarea } from '../gel'
 import {
   AssessmentSummaryPanel,
+  BackendErrorExamplePage,
   BusinessErrorPage,
   ConditionalQuestionPanel,
   ConfirmationHeader,
+  DeclarationReview,
   DetailsCard,
   EvidenceChecklistCard,
   ExitModal,
+  InteractiveDetailsCard,
+  LegalInfoAccordion,
+  RadioButtonCards,
   RepeatableGroup,
   ReviewFeesCard,
   ReviewInfoCard,
   TransactionCtaGroup,
   TransactionSummaryCard,
+  backendErrorExamples,
 } from '../tapaas-preview'
 import './storybook.css'
 
@@ -177,6 +183,63 @@ export const DetailsCardContext: Story = {
       />
     </div>
   ),
+}
+
+function SelectedMaturityComponentsExample() {
+  const [applicationType, setApplicationType] = useState('')
+  const [removed, setRemoved] = useState(false)
+
+  return (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Selected maturity backlog components</strong>
+        <p>These examples are source-backed preview candidates, not production TaPaaS components.</p>
+      </div>
+      <RadioButtonCards
+        id='storybook-radio-cards'
+        legend='What do you want to do?'
+        value={applicationType}
+        onChange={setApplicationType}
+        options={[
+          { value: 'new', label: 'Apply for a new permit', description: 'Start a new mock application.', pictogram: 'N' },
+          { value: 'renew', label: 'Renew a permit', description: 'Use an existing mock permit number.', pictogram: 'R' },
+        ]}
+        hasError={!applicationType}
+        errorMessage='Select an option to continue'
+        required
+      />
+      <DeclarationReview
+        title='Declaration review'
+        sections={[
+          {
+            title: 'Accepted declaration',
+            statements: [
+              'I declare that the information provided is true and correct.',
+              'I understand this preview does not submit to a real service.',
+            ],
+          },
+        ]}
+      />
+      <LegalInfoAccordion />
+      <InteractiveDetailsCard
+        title='Mock permit holder'
+        description='Interactive details card example. Actions use buttons because they change local state.'
+        statusLabel={removed ? 'Removed in mock state' : 'Mock active'}
+        rows={[
+          { label: 'Name', value: 'Alex Citizen' },
+          { label: 'Permit type', value: 'Individual MPS permit' },
+        ]}
+        actions={[
+          { label: removed ? 'Restore mock holder' : 'Remove this holder', onAction: () => setRemoved((value) => !value), variant: 'secondary' },
+        ]}
+      />
+      <BackendErrorExamplePage example={backendErrorExamples.addressNotNsw} onStartAgain={() => undefined} />
+    </div>
+  )
+}
+
+export const SelectedMaturityComponents: Story = {
+  render: () => <SelectedMaturityComponentsExample />,
 }
 
 /**

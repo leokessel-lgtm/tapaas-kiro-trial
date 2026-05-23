@@ -17,17 +17,21 @@ import {
 } from './gel'
 import {
   AssessmentSummaryPanel,
-  BusinessErrorPage,
+  BackendErrorExamplePage,
   ConditionalQuestionPanel,
   ConfirmationHeader,
-  DetailsCard,
+  DeclarationReview,
   EvidenceChecklistCard,
   ExitModal,
+  InteractiveDetailsCard,
+  LegalInfoAccordion,
+  RadioButtonCards,
   RepeatableGroup,
   ReviewFeesCard,
   ReviewInfoCard,
   TransactionCtaGroup,
   TransactionSummaryCard,
+  backendErrorExamples,
 } from './tapaas-preview'
 
 type MpsStep =
@@ -398,13 +402,17 @@ function AccountStep({ form, attempted, update, onBack, onContinue, onExit }: St
         errorMessage='Select an account and identity scenario.'
       />
       {form.accountScenario === 'signed-in' && (
-        <DetailsCard
+        <InteractiveDetailsCard
           title='Mock account context'
           description='Read-only context only. No real account data is used.'
+          statusLabel='Mock verified'
           rows={[
             { label: 'Account name', value: 'Alex Citizen' },
             { label: 'Identity status', value: 'Verified in mock scenario' },
             { label: 'Email', value: 'alex.citizen@example.test' },
+          ]}
+          actions={[
+            { label: 'Change mock account', onAction: () => update({ accountScenario: 'guest' }), variant: 'secondary' },
           ]}
         />
       )}
@@ -426,18 +434,19 @@ function ApplicationTypeStep({ form, attempted, update, onBack, onContinue, onEx
   return (
     <section aria-labelledby='app-type-heading'>
       <Heading level={2} id='app-type-heading'>Application type</Heading>
-      <RadioButtonList
+      <RadioButtonCards
         id='application-type'
         legend='What do you want to do?'
         options={[
-          { value: 'new', label: 'Apply for a new permit (mock)' },
-          { value: 'renew', label: 'Renew an existing permit (mock)' },
-          { value: 'replace', label: 'Replace a permit (mock)' },
+          { value: 'new', label: 'Apply for a new permit (mock)', description: 'Start a new mock MPS application.', pictogram: 'N' },
+          { value: 'renew', label: 'Renew an existing permit (mock)', description: 'Use an existing mock permit number.', pictogram: 'R' },
+          { value: 'replace', label: 'Replace a permit (mock)', description: 'Choose a mock replacement reason.', pictogram: 'P' },
         ]}
         value={form.applicationType}
         onChange={(value) => update({ applicationType: String(value) as FormState['applicationType'], replaceReason: '', permitNumber: '' })}
         hasError={attempted && !form.applicationType}
         errorMessage='Select an application type.'
+        required
       />
       {needsPermitNumber && (
         <Field id='permit-number' label='Existing permit number' helpMessage='Mock only. No permit lookup is performed.' hasError={attempted && !form.permitNumber.trim()} errorMessage='Enter the existing permit number.'>
@@ -834,6 +843,19 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
       ] }]} />
       <EvidenceChecklistCard title='Evidence and validation status' items={evidenceItems(form)} />
       <AssessmentSummaryPanel title='Mock assessment summary' items={assessmentItems(form)} />
+      <DeclarationReview
+        title='Declaration review'
+        sections={[
+          {
+            title: 'Accepted declaration',
+            statements: [
+              'I declare that the information provided is true and correct.',
+              'I understand this prototype does not assess eligibility or submit to a real service.',
+            ],
+          },
+        ]}
+      />
+      <LegalInfoAccordion />
       <ReviewFeesCard fees={[{ label: 'Application fee', amount: '$0.00' }]} totalAmount='$0.00' />
       <TransactionCtaGroup onBack={onBack} onContinue={onSubmit} onExit={onExit} continueLabel='Submit mock application' />
     </section>
@@ -843,22 +865,22 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
 function OutcomeStep({ form, onStartAgain }: { form: FormState; onStartAgain: () => void }) {
   if (form.paymentScenario === 'failed' || form.paymentScenario === 'cancelled') {
     return (
-      <BusinessErrorPage
-        title={form.paymentScenario === 'failed' ? 'Payment was not successful' : 'Payment was cancelled'}
-        message={<p>The application has not been submitted. This is a simulated payment recovery path only.</p>}
-        guidance={<p>Try again, choose a different mock outcome, or confirm the real payment recovery journey with product and engineering owners.</p>}
-        reference='MPS-PAYMENT-MOCK'
+      <BackendErrorExamplePage
+        example={form.paymentScenario === 'failed' ? backendErrorExamples.paymentError : {
+          ...backendErrorExamples.paymentError,
+          code: 'PAYMENT_CANCELLED',
+          title: 'Payment was cancelled',
+          message: 'The application has not been submitted. This is a simulated payment cancellation path only.',
+          reference: 'MPS-PAYMENT-CANCELLED-MOCK',
+        }}
         onStartAgain={onStartAgain}
       />
     )
   }
   if (form.concessionCardType !== 'none' && ['invalid', 'mismatch', 'duplicate'].includes(form.concessionValidationScenario)) {
     return (
-      <BusinessErrorPage
-        title='Concession details need attention'
-        message={<p>The mock concession outcome selected on this run cannot progress automatically.</p>}
-        guidance={<p>Real concession recovery wording, backend error codes and support channels need source-confirmed business rules.</p>}
-        reference='MPS-CONCESSION-MOCK'
+      <BackendErrorExamplePage
+        example={backendErrorExamples.concessionNeedsAttention}
         onStartAgain={onStartAgain}
       />
     )
