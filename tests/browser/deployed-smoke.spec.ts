@@ -5,6 +5,17 @@ async function continueFromCurrentStep(page: import('@playwright/test').Page) {
 }
 
 async function chooseByLabelText(page: import('@playwright/test').Page, label: string | RegExp) {
+  const radio = page.getByRole('radio', { name: label }).first()
+  if (await radio.count()) {
+    const id = await radio.getAttribute('id')
+    if (id) {
+      await page.locator(`label[for="${id}"]`).click()
+    } else {
+      await radio.check({ force: true })
+    }
+    return
+  }
+
   await page.getByText(label, { exact: typeof label === 'string' }).click()
 }
 

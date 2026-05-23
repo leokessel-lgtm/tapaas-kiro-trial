@@ -739,6 +739,9 @@ export function RadioButtonCards({
               />
               <span className='tapaas-radio-card__body'>
                 <span className='tapaas-radio-card__pictogram' aria-hidden='true'>{option.pictogram || '○'}</span>
+                <span className='tapaas-radio-card__control' aria-hidden='true'>
+                  {selected && <span />}
+                </span>
                 <span className='tapaas-radio-card__text'>
                   <span id={labelId} className='tapaas-radio-card__label'>{option.label}</span>
                   {option.description && <span id={descriptionId} className='tapaas-radio-card__description'>{option.description}</span>}

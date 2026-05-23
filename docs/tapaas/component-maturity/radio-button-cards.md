@@ -59,6 +59,20 @@ Implemented as `RadioButtonCards` in `src/tapaas-preview/`.
 
 Status: `coded preview`, still `needs engineer review`, because the Figma status remains `CONCEPT`.
 
+## Storybook fidelity hardening
+
+Designer-facing review on 2026-05-23 identified that the first Storybook example looked too unlike the Figma source because it opened in error state, used letter placeholders as pictograms and did not show a visible radio-control marker.
+
+The preview was adjusted to:
+
+- open the selected maturity example with one option selected, not in validation error state
+- preserve a visible radio-control marker inside each card
+- keep the whole card selectable through the associated native radio input and label
+- replace letter placeholders with decorative SVG pictogram placeholders
+- keep the component classified as a preview candidate, not production TaPaaS or GEL
+
+This improves visual and behavioural review quality, but it is still not a pixel-perfect implementation. Exact TaPaaS pictogram assets, final spacing and final selected/error state treatment still need TaPaaS/GEL confirmation.
+
 ## Open questions
 
 - Which pictogram library should be used when GEL and TaPaaS differ?
