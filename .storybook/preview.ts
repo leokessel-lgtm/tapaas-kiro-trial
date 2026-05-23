@@ -11,7 +11,6 @@ const preview: Preview = {
       },
     },
     a11y: {
-      element: '#storybook-root',
       config: {},
       options: {},
     },
