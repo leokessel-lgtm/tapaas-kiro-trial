@@ -14,7 +14,7 @@
 | behaviour | Start-again and feedback actions are preview-only. No receipt, notification, related-transaction routing or persistence is implemented. |
 | classification | `TaPaaS-specific transaction frame pattern` |
 | maturity | `coded-preview` |
-| validation_status | `targeted test pending at capture; build/parity required` |
+| validation_status | `build-tested` |
 | implementation_boundary | Preview-only confirmation layout. Reference number, timeframe, communication channel and issue outcome are mock/placeholder values. |
 | unknowns | Exact heading/supporting text, real reference format, actual next-step wording, feedback behaviour, related transaction tile rules, tile variant, final assistive-technology behaviour. |
 | review_reason | `engineer`, `accessibility`, `owner`, `policy` |

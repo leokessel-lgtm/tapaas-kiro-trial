@@ -14,7 +14,7 @@
 | behaviour | Edit links and submit/back/exit actions are preview callbacks only. No route editing or real submission is implemented by this component. |
 | classification | `TaPaaS-specific transaction frame pattern` |
 | maturity | `coded-preview` |
-| validation_status | `targeted test pending at capture; build/parity required` |
+| validation_status | `build-tested` |
 | implementation_boundary | Preview-only review layout. No identity, eligibility, medical, concession, payment, legal, privacy, policy or backend logic. |
 | unknowns | Exact source text, final content wording, edit route destinations, whether all sections are mandatory, detailed `6.B` variant rules, final accessibility behaviour with assistive technology. |
 | review_reason | `engineer`, `accessibility`, `owner`, `policy`, `privacy` |
