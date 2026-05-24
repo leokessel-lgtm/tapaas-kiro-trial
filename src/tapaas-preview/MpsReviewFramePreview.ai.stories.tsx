@@ -5,6 +5,13 @@ import { MpsReviewFramePreview } from './index'
 const meta = {
   component: MpsReviewFramePreview,
   tags: ['ai-generated'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Development-only smoke stories. Use TaPaaS Preview/Composites / MPS Review Frame - Figma Fidelity for designer-facing Figma comparison.',
+      },
+    },
+  },
 } satisfies Meta<typeof MpsReviewFramePreview>
 
 export default meta
@@ -31,6 +38,7 @@ const sections = [
 ]
 
 export const FigmaFidelitySlice: Story = {
+  name: 'Development Slice - use curated fidelity story',
   args: {
     sections,
     declarationStatements: ['Declaration wording remains placeholder-only.'],
@@ -44,6 +52,7 @@ export const FigmaFidelitySlice: Story = {
 }
 
 export const WithoutEditCallbacks: Story = {
+  name: 'Without Edit Callbacks',
   args: {
     sections,
     declarationStatements: [],

@@ -5,6 +5,13 @@ import { NextStepsCardPreview } from './index'
 const meta = {
   component: NextStepsCardPreview,
   tags: ['ai-generated'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Development-only smoke stories. Use TaPaaS Preview/Composites / Next Steps Card for designer-facing Figma comparison.',
+      },
+    },
+  },
 } satisfies Meta<typeof NextStepsCardPreview>
 
 export default meta
