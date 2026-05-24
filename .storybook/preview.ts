@@ -1,8 +1,18 @@
-import type { Preview } from '@storybook/react'
+import { createElement } from 'react'
+import type { Preview } from '@storybook/react-vite'
+import { initialize, mswLoader } from 'msw-storybook-addon'
+import { GlobalStyle } from '../src/gel'
+import { mswHandlers } from './msw-handlers'
 import '../src/gel-preview/styles.css'
 import '../src/tapaas-preview/styles.css'
 
+initialize({ onUnhandledRequest: 'bypass' })
+
 const preview: Preview = {
+  decorators: [
+    (Story) => createElement(GlobalStyle, null, createElement(Story)),
+  ],
+  loaders: [mswLoader],
   parameters: {
     controls: {
       matchers: {
@@ -15,6 +25,9 @@ const preview: Preview = {
       options: {},
     },
     layout: 'padded',
+    msw: {
+      handlers: mswHandlers,
+    },
   },
 }
 

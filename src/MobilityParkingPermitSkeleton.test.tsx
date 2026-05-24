@@ -82,7 +82,7 @@ describe('MobilityParkingPermitSkeleton', () => {
     await user.click(screen.getByRole('button', { name: 'Submit mock application' }))
 
     const status = screen.getByRole('status', { name: 'Transaction completed' })
-    expect(within(status).getByRole('heading', { name: 'Application submitted' })).toBeInTheDocument()
+    expect(within(status).getByRole('heading', { name: 'Your application has been submitted' })).toBeInTheDocument()
     expect(screen.getByText('MPS-MOCK-000000')).toBeInTheDocument()
   })
 })
