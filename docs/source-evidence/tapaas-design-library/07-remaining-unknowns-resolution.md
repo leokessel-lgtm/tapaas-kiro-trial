@@ -14,6 +14,7 @@ It does not claim production readiness, WCAG compliance, GEL approval, TaPaaS ap
 | Final legal/privacy/declaration wording | Resolved as owner-gated placeholder content. | Legal accordion and declaration review use source-like structure with explicit placeholders. | Confirmed legal/privacy/policy copy and decision on whether required material can sit inside collapsed accordions. |
 | Real backend error routing and recovery rules | Resolved as mock-only routing categories, not real routing. | Backend examples remain source-code-backed mock hard-stop examples with visible mock code/reference treatment. | Source-confirmed backend codes, routing categories, recovery wording, service-centre/call-centre rules and ownership. |
 | Email modal fine-grain source parity | Improved for review. | Desktop and mobile Storybook stories now open the modal by default, making the dialog directly inspectable. Unit tests cover modal role, `aria-modal`, email copy, action callbacks, Escape and tab wrap. | Live Figma re-resolution of source node `9290:50392` / frame `9241:18447` and desktop/mobile screenshot comparison. |
+| MPS representative/contact details source gap | Resolved as skeleton-only until stronger evidence exists. | No standalone representative/contact details frame was found in `MPS Final`. Applicant contact details in `2.A - Personal details` `0:17387` and `2.B - Personal details - Manual address` `0:17405` can be used only as structural reference. | Dedicated representative/contact frame evidence or owner-supplied representative, nominee, authority, relationship, consent, identity and privacy rules. |
 | Assistive technology behaviour | Partially resolved as automated semantic/focus smoke coverage. | Tests cover native radio selection, radio keyboard fallback, modal focus wrap, Escape close, dialog labelling and key frame semantics. | Manual VoiceOver/NVDA review. Automated checks must not be treated as WCAG compliance. |
 
 ## Review sequence
@@ -24,7 +25,8 @@ It does not claim production readiness, WCAG compliance, GEL approval, TaPaaS ap
 4. Pixel parity: run per-story screenshot comparison only for components intended for designer-facing fidelity review.
 5. Legal/privacy/declaration content: gather owner-approved wording and collapse/visibility decisions.
 6. Backend error routing: gather source-confirmed routing and recovery rules before adding behaviour.
-7. Assistive technology: run manual screen-reader checks after the above visual/content decisions stabilise.
+7. Representative/contact details: do not extract or align further unless a dedicated frame is found or owner evidence is supplied.
+8. Assistive technology: run manual screen-reader checks after the above visual/content decisions stabilise.
 
 ## Backend routing decision matrix
 
@@ -44,6 +46,7 @@ It does not claim production readiness, WCAG compliance, GEL approval, TaPaaS ap
 | Terms and Conditions | Placeholder transaction wording. | Confirm approved text, link target and whether acceptance/playback wording is sufficient. |
 | Notifications | Placeholder email/update wording. | Confirm notification channels, timing and whether email receipt copy is correct. |
 | Declaration review | Source-like playback structure with mock statements. | Confirm exact declaration statements, grouping and whether accordion playback is permitted. |
+| Representative/contact details | Skeleton-only mock fields. Applicant contact details may inform field grouping only. | Confirm whether representative, nominee, authority, relationship, consent, identity or privacy rules exist, and whether the pattern belongs in the MPS transaction. |
 
 ## Pictogram asset matrix
 
@@ -69,4 +72,5 @@ It does not claim production readiness, WCAG compliance, GEL approval, TaPaaS ap
 
 - Preview-only code and documentation.
 - No backend lookup, routing, validation, persistence, identity, eligibility, address lookup, email delivery, payment, legal, privacy or policy behaviour added.
+- MPS representative/contact details remains skeleton-only. Future extraction should proceed only if a dedicated representative/contact frame is found or owner evidence is supplied.
 - Live Figma MCP re-resolution failed for some historical component nodes in the 2026-05-24 follow-up pass, so exact pixel parity and email modal fine-grain parity remain review-gated.
