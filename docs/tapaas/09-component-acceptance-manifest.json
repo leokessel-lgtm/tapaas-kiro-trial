@@ -3,6 +3,61 @@
   "purpose": "Static acceptance connections for coded-preview TaPaaS artefacts. This manifest checks preview, story, transaction, test and evidence links only.",
   "entries": [
     {
+      "id": "mps-application-type-branching",
+      "name": "MPS application type / branching",
+      "classification": "TaPaaS-specific transaction branch pattern",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "RadioButtonCards"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--radio-button-card-states",
+            "mode": "isolated-review",
+            "expectedText": "Radio button cards",
+            "mobileNoOverflow": true
+          },
+          {
+            "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
+            "mode": "transaction-assembly",
+            "expectedText": "Privacy information",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "used",
+        "files": ["src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "application type / branching"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx",
+        "src/MobilityParkingPermitSkeleton.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/component-maturity/radio-button-cards.md",
+          "docs/source-evidence/tapaas-design-library/component-maturity/radio-button-cards.md"
+        ],
+        "logKey": "Align MPS application type branching with preview review gates",
+        "relationshipMapKey": "Radio button cards",
+        "coverageMatrixKey": "application type / branching"
+      },
+      "boundaries": [
+        "preview-only",
+        "mock branch state only",
+        "no real permit lookup",
+        "no backend validation",
+        "no identity verification",
+        "no customer record update",
+        "no eligibility logic",
+        "no fee or payment logic"
+      ]
+    },
+    {
       "id": "mps-applicant-details-frame",
       "name": "MPS applicant details/manual address frame",
       "classification": "TaPaaS-specific transaction frame pattern",

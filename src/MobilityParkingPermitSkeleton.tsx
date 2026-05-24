@@ -867,7 +867,7 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
             rows: [
               { label: 'Application type', value: appTypeLabel(form) },
               { label: 'Existing permit', value: form.permitNumber || 'Not provided' },
-              { label: 'Replacement reason', value: form.replaceReason || 'Not applicable' },
+              { label: 'Replacement reason', value: replaceReasonLabel(form) },
             ],
           },
           {
@@ -990,6 +990,14 @@ function appTypeLabel(form: FormState) {
   if (form.applicationType === 'new') return 'New application'
   if (form.applicationType === 'renew') return 'Renewal'
   if (form.applicationType === 'replace') return 'Replacement'
+  return 'Not selected'
+}
+
+function replaceReasonLabel(form: FormState) {
+  if (form.applicationType !== 'replace') return 'Not applicable'
+  if (form.replaceReason === 'lost') return 'Lost permit (mock)'
+  if (form.replaceReason === 'stolen') return 'Stolen permit (mock)'
+  if (form.replaceReason === 'damaged') return 'Damaged permit (mock)'
   return 'Not selected'
 }
 

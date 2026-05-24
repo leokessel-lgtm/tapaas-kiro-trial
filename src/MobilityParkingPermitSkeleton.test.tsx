@@ -22,6 +22,37 @@ async function reachApplicantDetailsStep(user: ReturnType<typeof userEvent.setup
   await continueFromCurrentStep(user)
 }
 
+async function completeFromApplicantDetailsToReview(user: ReturnType<typeof userEvent.setup>) {
+  await fillApplicantSearchStep(user)
+  await continueFromCurrentStep(user)
+
+  await user.click(screen.getByRole('radio', { name: 'No' }))
+  await continueFromCurrentStep(user)
+
+  await user.click(screen.getByRole('radio', { name: 'No' }))
+  await user.click(screen.getAllByRole('radio', { name: 'Yes (mock)' })[0])
+  await user.click(screen.getAllByRole('radio', { name: 'Yes (mock)' })[1])
+  await user.click(screen.getAllByRole('radio', { name: 'No (mock)' })[2])
+  await continueFromCurrentStep(user)
+
+  await user.click(screen.getByRole('radio', { name: 'Medical certificate (mock)' }))
+  await user.click(screen.getByRole('radio', { name: 'Mock uploaded now' }))
+  await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
+  await continueFromCurrentStep(user)
+
+  await user.selectOptions(screen.getByLabelText('Concession card option'), 'none')
+  await continueFromCurrentStep(user)
+
+  await user.click(screen.getByRole('radio', { name: 'Post to residential address (mock)' }))
+  await continueFromCurrentStep(user)
+
+  await user.click(screen.getByRole('radio', { name: 'Mock payment succeeds and application submits' }))
+  await continueFromCurrentStep(user)
+
+  await user.click(screen.getByRole('checkbox', { name: 'I declare that the information provided is true and correct.' }))
+  await continueFromCurrentStep(user)
+}
+
 async function fillApplicantSearchStep(user: ReturnType<typeof userEvent.setup>) {
   await user.type(screen.getByLabelText('First name *'), 'Alex')
   await user.type(screen.getByLabelText('Last name *'), 'Citizen')
@@ -161,11 +192,57 @@ describe('MobilityParkingPermitSkeleton', () => {
     await reachApplicationTypeStep(user)
 
     expect(screen.getByRole('heading', { name: 'Application type' })).toBeInTheDocument()
+    await user.click(screen.getByRole('radio', { name: 'Apply for a new permit (mock)' }))
+
+    expect(screen.queryByLabelText('Existing permit number')).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('Reason for replacement')).not.toBeInTheDocument()
+
     await user.click(screen.getByRole('radio', { name: 'Renew an existing permit (mock)' }))
 
     expect(screen.getByLabelText('Existing permit number')).toBeInTheDocument()
     expect(screen.getByText('Mock only. No permit lookup is performed.')).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /find|lookup|search/i })).not.toBeInTheDocument()
+  })
+
+  it('carries the renewal branch through to review without lookup or backend behaviour', async () => {
+    const user = userEvent.setup()
+    render(<MobilityParkingPermitSkeleton />)
+
+    await reachApplicationTypeStep(user)
+    await user.click(screen.getByRole('radio', { name: 'Renew an existing permit (mock)' }))
+    await user.type(screen.getByLabelText('Existing permit number'), 'MPS-RENEW-001')
+    await continueFromCurrentStep(user)
+
+    expect(screen.queryByRole('button', { name: /find|lookup|search/i })).not.toBeInTheDocument()
+    await completeFromApplicantDetailsToReview(user)
+
+    expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
+    expect(screen.getByText('Renewal')).toBeInTheDocument()
+    expect(screen.getByText('MPS-RENEW-001')).toBeInTheDocument()
+    expect(screen.getByText('Not applicable')).toBeInTheDocument()
+  })
+
+  it('carries the replacement branch and reason through to review without lookup or backend behaviour', async () => {
+    const user = userEvent.setup()
+    render(<MobilityParkingPermitSkeleton />)
+
+    await reachApplicationTypeStep(user)
+    await user.click(screen.getByRole('radio', { name: 'Replace a permit (mock)' }))
+
+    expect(screen.getByLabelText('Existing permit number')).toBeInTheDocument()
+    expect(screen.getByLabelText('Reason for replacement')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /find|lookup|search/i })).not.toBeInTheDocument()
+
+    await user.type(screen.getByLabelText('Existing permit number'), 'MPS-REPLACE-001')
+    await user.selectOptions(screen.getByLabelText('Reason for replacement'), 'lost')
+    await continueFromCurrentStep(user)
+
+    await completeFromApplicantDetailsToReview(user)
+
+    expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
+    expect(screen.getByText('Replacement')).toBeInTheDocument()
+    expect(screen.getByText('MPS-REPLACE-001')).toBeInTheDocument()
+    expect(screen.getByText('Lost permit (mock)')).toBeInTheDocument()
   })
 
   it('routes mock payment failure through the backend error preview without real submission behaviour', async () => {
