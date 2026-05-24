@@ -25,6 +25,7 @@ import {
   ExitModal,
   InteractiveDetailsCard,
   LegalInfoAccordion,
+  MpsApplicantDetailsFramePreview,
   MpsConfirmationFramePreview,
   MpsReviewFramePreview,
   RadioButtonCards,
@@ -35,6 +36,7 @@ import {
   TransactionSummaryCard,
   backendErrorExamples,
 } from './tapaas-preview'
+import type { MpsApplicantDetailsFrameValue } from './tapaas-preview'
 
 type MpsStep =
   | 'privacy'
@@ -112,12 +114,20 @@ interface FormState {
   applicationType: 'new' | 'renew' | 'replace' | ''
   replaceReason: string
   permitNumber: string
+  applicantAddressMode: 'search' | 'manual'
+  firstName: string
+  lastName: string
   fullName: string
   day: string
   month: string
   year: string
   email: string
   phone: string
+  residentialAddress: string
+  unitNumber: string
+  streetNumber: string
+  streetName: string
+  streetType: string
   street: string
   suburb: string
   state: string
@@ -150,12 +160,20 @@ const initialState: FormState = {
   applicationType: '',
   replaceReason: '',
   permitNumber: '',
+  applicantAddressMode: 'search',
+  firstName: '',
+  lastName: '',
   fullName: '',
   day: '',
   month: '',
   year: '',
   email: '',
   phone: '',
+  residentialAddress: '',
+  unitNumber: '',
+  streetNumber: '',
+  streetName: '',
+  streetType: '',
   street: '',
   suburb: '',
   state: '',
@@ -251,7 +269,7 @@ export function MobilityParkingPermitSkeleton() {
         </div>
       )}
 
-      {step !== 'outcome' && <RequiredFieldHint />}
+      {step !== 'outcome' && step !== 'applicant' && <RequiredFieldHint />}
 
       <ErrorSummary ref={errorSummaryRef} errors={errors} />
 
@@ -292,14 +310,20 @@ function errorsForStep(step: MpsStep, form: FormState) {
     if (form.applicationType === 'replace' && !form.replaceReason) errs.push({ id: 'replace-reason', text: 'Select a replacement reason' })
   }
   if (step === 'applicant') {
-    if (!form.fullName.trim()) errs.push({ id: 'full-name', text: 'Enter your full name' })
-    if (!isDateComplete(form)) errs.push({ id: 'birth-day', text: 'Enter your date of birth' })
-    if (!form.email.trim() || !form.email.includes('@') || !form.email.split('@')[1]?.includes('.')) errs.push({ id: 'email', text: 'Enter a valid email address' })
-    if (!form.phone.trim()) errs.push({ id: 'phone', text: 'Enter your phone number' })
-    if (!form.street.trim()) errs.push({ id: 'street', text: 'Enter your street address' })
-    if (!form.suburb.trim()) errs.push({ id: 'suburb', text: 'Enter your suburb' })
-    if (!form.state) errs.push({ id: 'state', text: 'Select your state' })
-    if (!/^\d{4}$/.test(form.postcode)) errs.push({ id: 'postcode', text: 'Enter a valid 4-digit postcode' })
+    if (!form.firstName.trim()) errs.push({ id: 'mps-applicant-first-name', text: 'Enter a first name' })
+    if (!form.lastName.trim()) errs.push({ id: 'mps-applicant-last-name', text: 'Enter a last name' })
+    if (!isDateComplete(form)) errs.push({ id: 'mps-applicant-dob-day', text: 'Enter a date of birth' })
+    if (form.applicantAddressMode === 'search' && !form.residentialAddress.trim()) errs.push({ id: 'mps-applicant-residential-address', text: 'Enter a residential address' })
+    if (form.applicantAddressMode === 'manual') {
+      if (!form.streetNumber.trim()) errs.push({ id: 'mps-applicant-street-number', text: 'Enter a street number' })
+      if (!form.streetName.trim()) errs.push({ id: 'mps-applicant-street-name', text: 'Enter a street name' })
+      if (!form.streetType) errs.push({ id: 'mps-applicant-street-type', text: 'Select a street type' })
+      if (!form.suburb.trim()) errs.push({ id: 'mps-applicant-suburb', text: 'Enter a suburb' })
+      if (!form.state) errs.push({ id: 'mps-applicant-state', text: 'Select a state' })
+      if (!form.postcode.trim()) errs.push({ id: 'mps-applicant-postcode', text: 'Enter a postcode' })
+    }
+    if (!form.email.trim() || !form.email.includes('@') || !form.email.split('@')[1]?.includes('.')) errs.push({ id: 'mps-applicant-email', text: 'Enter a valid email address' })
+    if (!form.phone.trim()) errs.push({ id: 'mps-applicant-phone', text: 'Enter your phone number' })
   }
   if (step === 'representative') {
     if (!form.hasRepresentative) errs.push({ id: 'has-representative', text: 'Select whether someone is applying on behalf of the applicant' })
@@ -351,7 +375,7 @@ function RequiredFieldHint() {
 }
 
 function isDateComplete(form: FormState) {
-  return /^\d{1,2}$/.test(form.day) && /^\d{1,2}$/.test(form.month) && /^\d{4}$/.test(form.year)
+  return /^\d{1,2}$/.test(form.day) && Boolean(form.month.trim()) && /^\d{4}$/.test(form.year)
 }
 
 interface StepProps {
@@ -477,55 +501,76 @@ function ApplicationTypeStep({ form, attempted, update, onBack, onContinue, onEx
 }
 
 function ApplicantStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
+  function handleFrameChange(value: MpsApplicantDetailsFrameValue) {
+    const firstName = value.firstName || ''
+    const lastName = value.lastName || ''
+    const street = form.applicantAddressMode === 'manual'
+      ? formatManualStreet(value)
+      : value.residentialAddress || ''
+
+    update({
+      firstName,
+      lastName,
+      fullName: [firstName, lastName].filter(Boolean).join(' '),
+      day: (value.dateOfBirthDay || '').replace(/\D/g, '').slice(0, 2),
+      month: value.dateOfBirthMonth || '',
+      year: (value.dateOfBirthYear || '').replace(/\D/g, '').slice(0, 4),
+      email: value.email || '',
+      phone: value.phone || '',
+      residentialAddress: value.residentialAddress || '',
+      unitNumber: value.unitNumber || '',
+      streetNumber: value.streetNumber || '',
+      streetName: value.streetName || '',
+      streetType: value.streetType || '',
+      street,
+      suburb: value.suburb || '',
+      state: value.state || '',
+      postcode: (value.postcode || '').replace(/\D/g, '').slice(0, 4),
+    })
+  }
+
   return (
     <section aria-labelledby='applicant-heading'>
-      <Heading level={2} id='applicant-heading'>Applicant details</Heading>
-      <Field id='full-name' label='Full name' hasError={attempted && !form.fullName.trim()} errorMessage='Enter your full name.'>
-        <Input id='full-name' value={form.fullName} onChange={(event) => update({ fullName: event.target.value })} hasError={attempted && !form.fullName.trim()} inputWidth='xl' autoComplete='name' />
-      </Field>
-      <fieldset style={{ border: 0, padding: 0, margin: '0 0 1.5rem' }}>
-        <legend style={{ fontWeight: 700, marginBottom: '0.75rem' }}>Date of birth</legend>
-        <p style={{ marginTop: 0, color: 'var(--gel-color-text-grey)' }}>For example, 15 03 1990</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
-          <Field id='birth-day' label='Day' hasError={attempted && !isDateComplete(form)} errorMessage='Enter your date of birth.'>
-            <Input id='birth-day' value={form.day} onChange={(event) => update({ day: event.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={attempted && !isDateComplete(form)} inputWidth='xxs' maxLength={2} autoComplete='bday-day' />
-          </Field>
-          <Field id='birth-month' label='Month'>
-            <Input id='birth-month' value={form.month} onChange={(event) => update({ month: event.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={attempted && !isDateComplete(form)} inputWidth='xxs' maxLength={2} autoComplete='bday-month' />
-          </Field>
-          <Field id='birth-year' label='Year'>
-            <Input id='birth-year' value={form.year} onChange={(event) => update({ year: event.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={attempted && !isDateComplete(form)} inputWidth='sm' maxLength={4} autoComplete='bday-year' />
-          </Field>
-        </div>
-      </fieldset>
-      <Field id='email' label='Email address' hasError={attempted && (!form.email.trim() || !form.email.includes('@') || !form.email.split('@')[1]?.includes('.'))} errorMessage='Enter a valid email address.'>
-        <Input id='email' type='email' value={form.email} onChange={(event) => update({ email: event.target.value })} hasError={attempted && (!form.email.trim() || !form.email.includes('@') || !form.email.split('@')[1]?.includes('.'))} inputWidth='xl' autoComplete='email' />
-      </Field>
-      <Field id='phone' label='Phone number' hasError={attempted && !form.phone.trim()} errorMessage='Enter your phone number.'>
-        <Input id='phone' type='tel' value={form.phone} onChange={(event) => update({ phone: event.target.value })} hasError={attempted && !form.phone.trim()} inputWidth='lg' autoComplete='tel' />
-      </Field>
-      <RepeatableGroup title='Residential address' description='Manual address composition using GEL Field, Input and Select preview controls.'>
-        <Field id='street' label='Street address' hasError={attempted && !form.street.trim()} errorMessage='Enter your street address.'>
-          <Input id='street' value={form.street} onChange={(event) => update({ street: event.target.value })} hasError={attempted && !form.street.trim()} inputWidth='xl' autoComplete='street-address' />
-        </Field>
-        <Field id='suburb' label='Suburb' hasError={attempted && !form.suburb.trim()} errorMessage='Enter your suburb.'>
-          <Input id='suburb' value={form.suburb} onChange={(event) => update({ suburb: event.target.value })} hasError={attempted && !form.suburb.trim()} inputWidth='lg' autoComplete='address-level2' />
-        </Field>
-        <Field id='state' label='State' hasError={attempted && !form.state} errorMessage='Select your state.'>
-          <Select id='state' value={form.state} onChange={(event) => update({ state: event.target.value })} hasError={attempted && !form.state} inputWidth='md' autoComplete='address-level1' options={[
-            { value: 'NSW', text: 'NSW' },
-            { value: 'VIC', text: 'VIC' },
-            { value: 'QLD', text: 'QLD' },
-            { value: 'ACT', text: 'ACT' },
-          ]} />
-        </Field>
-        <Field id='postcode' label='Postcode' hasError={attempted && !/^\d{4}$/.test(form.postcode)} errorMessage='Enter a valid 4-digit postcode.'>
-          <Input id='postcode' value={form.postcode} onChange={(event) => update({ postcode: event.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={attempted && !/^\d{4}$/.test(form.postcode)} inputWidth='xs' maxLength={4} autoComplete='postal-code' />
-        </Field>
-      </RepeatableGroup>
-      <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
+      <span id='applicant-heading' hidden>Applicant details</span>
+      <MpsApplicantDetailsFramePreview
+        addressMode={form.applicantAddressMode}
+        value={applicantFrameValue(form)}
+        onChange={handleFrameChange}
+        onManualAddress={() => update({ applicantAddressMode: 'manual' })}
+        onAddressSearch={() => update({ applicantAddressMode: 'search' })}
+        onBack={onBack}
+        onContinue={onContinue}
+        showErrors={attempted}
+      />
+      <Button variant='link' onClick={onExit}>Exit</Button>
     </section>
   )
+}
+
+function applicantFrameValue(form: FormState): MpsApplicantDetailsFrameValue {
+  return {
+    firstName: form.firstName,
+    lastName: form.lastName,
+    dateOfBirthDay: form.day,
+    dateOfBirthMonth: form.month,
+    dateOfBirthYear: form.year,
+    residentialAddress: form.residentialAddress,
+    unitNumber: form.unitNumber,
+    streetNumber: form.streetNumber,
+    streetName: form.streetName,
+    streetType: form.streetType,
+    suburb: form.suburb,
+    state: form.state,
+    postcode: form.postcode,
+    email: form.email,
+    phone: form.phone,
+  }
+}
+
+function formatManualStreet(value: MpsApplicantDetailsFrameValue) {
+  return [value.unitNumber, value.streetNumber, value.streetName, streetTypeLabel(value.streetType)]
+    .filter(Boolean)
+    .join(' ')
 }
 
 interface RepresentativeStepProps extends StepProps {
@@ -830,10 +875,10 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
             title: 'Personal details',
             rows: [
               { label: 'Full name', value: form.fullName },
-              { label: 'Date of birth', value: `${form.day}/${form.month}/${form.year}` },
+              { label: 'Date of birth', value: dateOfBirthLabel(form) },
               { label: 'Email', value: form.email },
               { label: 'Phone', value: form.phone },
-              { label: 'Address', value: `${form.street}, ${form.suburb} ${form.state} ${form.postcode}` },
+              { label: 'Address', value: addressLabel(form) },
             ],
           },
           {
@@ -974,6 +1019,42 @@ function deliveryLabel(form: FormState) {
   if (form.deliveryMethod === 'post') return 'Post to residential address'
   if (form.deliveryMethod === 'service-centre') return 'Collect at a service centre'
   return 'Not selected'
+}
+
+function dateOfBirthLabel(form: FormState) {
+  return [form.day, monthLabel(form.month), form.year].filter(Boolean).join(' ')
+}
+
+function addressLabel(form: FormState) {
+  if (form.applicantAddressMode === 'search') return form.residentialAddress || 'Not provided'
+  const suburbLine = [form.suburb, form.state, form.postcode].filter(Boolean).join(' ')
+  return [form.street, suburbLine].filter(Boolean).join(', ') || 'Not provided'
+}
+
+function streetTypeLabel(value?: string) {
+  if (value === 'street') return 'Street'
+  if (value === 'road') return 'Road'
+  if (value === 'avenue') return 'Avenue'
+  if (value === 'drive') return 'Drive'
+  return value || ''
+}
+
+function monthLabel(value: string) {
+  const labels: Record<string, string> = {
+    jan: 'Jan',
+    feb: 'Feb',
+    mar: 'Mar',
+    apr: 'Apr',
+    may: 'May',
+    jun: 'Jun',
+    jul: 'Jul',
+    aug: 'Aug',
+    sep: 'Sep',
+    oct: 'Oct',
+    nov: 'Nov',
+    dec: 'Dec',
+  }
+  return labels[value] || value
 }
 
 function yesNo(value: 'yes' | 'no' | '') {

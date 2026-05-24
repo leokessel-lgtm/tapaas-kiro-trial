@@ -1,0 +1,48 @@
+# Transaction Coverage Matrix
+
+## Purpose
+
+This matrix keeps MPS transaction assembly connected to source-backed preview artefacts, Storybook review stories, transaction skeleton usage, tests and evidence.
+
+It is trial guidance only. It does not claim production readiness, WCAG compliance, GEL approval, TaPaaS approval, legal approval, privacy approval or policy approval.
+
+Status values:
+
+- `aligned`: source-backed preview, Storybook review surface, transaction usage, tests and evidence are connected.
+- `partial`: some connection exists, but one or more surfaces are missing or weak.
+- `skeleton-only`: implemented mainly in the transaction skeleton without a source-backed preview frame/story.
+- `story-only`: available in Storybook but not used in the transaction skeleton.
+- `review-gated`: bounded preview exists, but owner, Figma, backend, content, policy/privacy or accessibility evidence is still needed.
+- `missing`: no useful preview/story/skeleton coverage yet.
+- `out-of-scope`: deliberately excluded from the current preview transaction.
+
+## MPS Transaction Coverage
+
+| Transaction stage | Preview artefact | Storybook review story | Transaction skeleton usage | Test coverage | Evidence/map status | Status | Unknowns / review gate |
+|---|---|---|---|---|---|---|---|
+| privacy/start | Privacy page guidance; `InPageAlert`, `Checkbox`, `TransactionCtaGroup`; mock account context uses `InteractiveDetailsCard` | No isolated MPS privacy/start fidelity story | `PrivacyStep` and `AccountStep` in `MobilityParkingPermitSkeleton.tsx` | MPS flow test blocks privacy step and exercises account acknowledgement | Privacy card is registered as page guidance only; relationship map says wording must be owner-confirmed | partial | Final privacy collection notice, account/identity source parity, identity behaviour, privacy approval and assistive-technology behaviour remain review-gated. |
+| application type / branching | `RadioButtonCards` for new/renew/replace; GEL `Field`, `Input`, `Select` for conditional permit/replacement inputs | `RadioButtonCardStates`; selected maturity components story includes radio cards | `ApplicationTypeStep` uses `RadioButtonCards` and conditional inputs | MPS flow test selects new application; preview tests cover radio-card semantics and state fallback | Radio-button cards mapped to source node `31:63988`; relationship map marks Figma status `CONCEPT` | partial | Renewal/replacement branch fidelity, selected/hover/focus parity, final branch copy and accessibility behaviour need review. |
+| applicant details / manual address | `MpsApplicantDetailsFramePreview` | `MPS Applicant Details Frames - Figma Fidelity`; transaction assembly story includes the frame | `ApplicantStep` now uses `MpsApplicantDetailsFramePreview` through a thin adapter | MPS test covers search-address/default state, manual-address state, navigation and mocked review carry-through; preview tests cover both frame variants | Registry and relationship map include MPS applicant details frames `0:17387`, `0:17405`; evidence log records extraction, mobile overflow fix and transaction alignment | aligned | Real address lookup, address result/no-result states, final validation/error-summary behaviour, customer-record behaviour, final content, mobile pixel parity and assistive-technology behaviour remain review-gated. |
+| representative/contact details | `ConditionalQuestionPanel`, `RepeatableGroup`, GEL `Field`/`Input` | No isolated representative/contact fidelity story | `RepresentativeStep` in the MPS skeleton | MPS flow test covers no-representative path only | Relationship map notes representative and repeatable authorised contacts as an intended MPS simulation area; no dedicated source-backed frame pattern yet | skeleton-only | Representative frame fidelity, repeatable-contact variants, validation rules, owner-approved content and accessibility review remain unknown. |
+| evidence/medical | `EvidenceChecklistCard`, `AssessmentSummaryPanel`, GEL radio lists, GEL accordion | `Mps Evidence And Assessment` | `MedicalEvidenceStep`, review evidence status and assessment summary | MPS flow test covers medical certificate and mock uploaded path | Evidence checklist mapped to MPS medical frames and GEL file-upload/status-label evidence; relationship map explicitly excludes real upload/storage/validation | partial | Exact medical evidence frames, upload states, file validation, storage, privacy/security handling, medical content and assistive-technology behaviour remain review-gated. |
+| concession | GEL `Select`, GEL radio lists, `AssessmentSummaryPanel`, `BackendErrorExamplePage` for mock hard stops | Covered indirectly in selected maturity/backend error examples and `Mps Evidence And Assessment`; no isolated concession frame story | `ConcessionStep`, review status, outcome hard-stop branch | MPS flow test covers no-concession happy path; backend examples covered in preview tests | Relationship map identifies concession frames and backend/business error patterns but says real backend validation requires source-confirmed rules | partial | Centrelink/DVA invalid, duplicate and mismatch frame parity; backend validation rules; recovery routes; content and policy review remain unknown. |
+| declaration | `DeclarationReview` exists; MPS skeleton declaration step uses GEL checkbox plus warning; `MpsReviewFramePreview` includes checked declaration preview | `Selected Maturity Components`; `MPS Review Frame - Figma Fidelity` | `DeclarationStep` uses skeleton-only checkbox wording; review page uses `MpsReviewFramePreview` declaration area | MPS flow test accepts declaration; preview tests cover declaration review and MPS review declaration rendering | Declaration review and MPS review frame are registered/mapped; final declaration/legal wording is explicitly unresolved | partial | Final legal/privacy/declaration wording, checkbox validation semantics, whether declaration playback/card/accordion is correct, and policy/legal approval remain review-gated. |
+| review | `MpsReviewFramePreview`, `LegalInfoAccordion`, `ReviewFeesCard`, `EvidenceChecklistCard`, `AssessmentSummaryPanel` | `MPS Review Frame - Figma Fidelity`; `Review and Confirmation - Transaction Assembly`; selected maturity story for supporting components | `ReviewStep` uses `MpsReviewFramePreview` and supporting preview components | MPS flow test reaches review and submits; preview tests cover MPS review frame and supporting components | Registry and relationship map include MPS review frame `0:33185`, legal accordion, review fees and declaration review | aligned | Edit routing, exact source text, legal/privacy content, payment/fee rules, mobile pixel parity and assistive-technology behaviour remain review-gated. |
+| confirmation | `MpsConfirmationFramePreview`, `NextStepsCardPreview` internally, `TransactionCtaGroup` | `MPS Confirmation Frame - Figma Fidelity`; `Review and Confirmation - Transaction Assembly`; `Next Steps Card` | `OutcomeStep` uses `MpsConfirmationFramePreview` for submitted/manual-review outcomes | MPS flow test checks successful confirmation reference; preview tests cover confirmation and next-steps patterns | Registry and relationship map include MPS confirmation frame `0:33222` and next steps card `11:4848` | aligned | Real reference format, notification timing, feedback behaviour, related transaction routing, receipt/outcome content, mobile pixel parity and assistive-technology behaviour remain review-gated. |
+| recoverable/business errors | `BackendErrorExamplePage`, `backendErrorExamples`, `BusinessErrorPage` | `Selected Maturity Components`; backend/business error example story | `OutcomeStep` uses backend examples for mock payment and concession hard stops | Preview tests cover backend error rendering; MPS flow test does not cover error branches | Backend error examples mapped to source node `31:73426`; relationship map says real use requires source-confirmed business rules | review-gated | Real backend error routing, recovery rules, source-confirmed codes, retry/start-again behaviour, analytics/storage and operational ownership remain unknown. |
+
+## Current Strongest Connections
+
+- Applicant details/manual address is the strongest early/middle aligned stage because it now connects source-backed frame extraction, isolated Storybook review, transaction skeleton usage, tests and evidence.
+- Review is strongly connected through `MpsReviewFramePreview`, supporting preview components, Storybook fidelity and transaction usage.
+- Confirmation is strongly connected through `MpsConfirmationFramePreview`, next-steps preview content, Storybook fidelity and outcome usage.
+
+## Current Weakest Connections
+
+- Privacy/start remains partial because privacy wording and identity/account behaviour are page guidance and placeholders only.
+- Representative/contact details remains skeleton-only and should not be treated as source-backed until a dedicated frame/pattern review is done.
+- Concession and recoverable/business errors remain review-gated because real backend validation and recovery rules are not evidenced.
+
+## Next Alignment Action
+
+The next highest-value transaction alignment action is to source-check the representative/contact-details stage or concession/error branch, then either extract a bounded preview frame/pattern or explicitly record it as skeleton-only until owner/backend evidence is available.

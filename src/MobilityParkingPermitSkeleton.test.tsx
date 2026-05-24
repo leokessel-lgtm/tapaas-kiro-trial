@@ -4,7 +4,19 @@ import { describe, expect, it } from 'vitest'
 import { MobilityParkingPermitSkeleton } from './MobilityParkingPermitSkeleton'
 
 async function continueFromCurrentStep(user: ReturnType<typeof userEvent.setup>) {
-  await user.click(screen.getByRole('button', { name: 'Continue' }))
+  await user.click(screen.queryByRole('button', { name: 'Continue' }) ?? screen.getByRole('button', { name: 'Next' }))
+}
+
+async function reachApplicantDetailsStep(user: ReturnType<typeof userEvent.setup>) {
+  await user.click(screen.getByRole('checkbox', { name: 'I have read and understand the privacy information.' }))
+  await continueFromCurrentStep(user)
+
+  await user.click(screen.getByRole('radio', { name: 'Signed in with verified account details (mock)' }))
+  await user.click(screen.getByRole('checkbox', { name: 'I understand proof of identity is not performed in this prototype.' }))
+  await continueFromCurrentStep(user)
+
+  await user.click(screen.getByRole('radio', { name: 'Apply for a new permit (mock)' }))
+  await continueFromCurrentStep(user)
 }
 
 describe('MobilityParkingPermitSkeleton', () => {
@@ -17,29 +29,18 @@ describe('MobilityParkingPermitSkeleton', () => {
     await continueFromCurrentStep(user)
     expect(screen.getByRole('link', { name: 'Confirm that you have read the privacy information' })).toHaveAttribute('href', '#privacy-confirmation')
 
-    await user.click(screen.getByRole('checkbox', { name: 'I have read and understand the privacy information.' }))
-    await continueFromCurrentStep(user)
+    await reachApplicantDetailsStep(user)
 
-    expect(screen.getByRole('heading', { name: 'Account and identity' })).toBeInTheDocument()
-    await user.click(screen.getByRole('radio', { name: 'Signed in with verified account details (mock)' }))
-    await user.click(screen.getByRole('checkbox', { name: 'I understand proof of identity is not performed in this prototype.' }))
-    await continueFromCurrentStep(user)
-
-    expect(screen.getByRole('heading', { name: 'Application type' })).toBeInTheDocument()
-    await user.click(screen.getByRole('radio', { name: 'Apply for a new permit (mock)' }))
-    await continueFromCurrentStep(user)
-
-    expect(screen.getByRole('heading', { name: 'Applicant details' })).toBeInTheDocument()
-    await user.type(screen.getByLabelText('Full name'), 'Alex Citizen')
+    expect(screen.getByRole('heading', { name: 'Personal details' })).toBeInTheDocument()
+    expect(screen.getByLabelText('Residential address *')).toBeInTheDocument()
+    await user.type(screen.getByLabelText('First name *'), 'Alex')
+    await user.type(screen.getByLabelText('Last name *'), 'Citizen')
     await user.type(screen.getByLabelText('Day'), '15')
-    await user.type(screen.getByLabelText('Month'), '03')
+    await user.selectOptions(screen.getByLabelText('Month'), 'mar')
     await user.type(screen.getByLabelText('Year'), '1990')
-    await user.type(screen.getByLabelText('Email address'), 'alex@example.test')
-    await user.type(screen.getByLabelText('Phone number'), '0400000000')
-    await user.type(screen.getByLabelText('Street address'), '1 Mock Street')
-    await user.type(screen.getByLabelText('Suburb'), 'Sydney')
-    await user.selectOptions(screen.getByLabelText('State'), 'NSW')
-    await user.type(screen.getByLabelText('Postcode'), '2000')
+    await user.type(screen.getByLabelText('Email address *'), 'alex@example.test')
+    await user.type(screen.getByLabelText('Phone number *'), '0400000000')
+    await user.type(screen.getByLabelText('Residential address *'), '1 Mock Street, Sydney NSW 2000')
     await continueFromCurrentStep(user)
 
     expect(screen.getByRole('heading', { name: 'Representative and authorised contacts' })).toBeInTheDocument()
@@ -78,11 +79,45 @@ describe('MobilityParkingPermitSkeleton', () => {
     expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
     expect(screen.getByText('Alex Citizen')).toBeInTheDocument()
     expect(screen.getByText('New application')).toBeInTheDocument()
+    expect(screen.getByText('1 Mock Street, Sydney NSW 2000')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'Submit mock application' }))
 
     const status = screen.getByRole('status', { name: 'Transaction completed' })
     expect(within(status).getByRole('heading', { name: 'Your application has been submitted' })).toBeInTheDocument()
     expect(screen.getByText('MPS-MOCK-000000')).toBeInTheDocument()
+  })
+
+  it('shows the source-backed manual address frame state without address lookup or backend behaviour', async () => {
+    const user = userEvent.setup()
+    render(<MobilityParkingPermitSkeleton />)
+
+    await reachApplicantDetailsStep(user)
+
+    expect(screen.getByRole('heading', { name: 'Personal details' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Enter address manually' }))
+
+    expect(screen.getByRole('group', { name: 'Residential address' })).toBeInTheDocument()
+    expect(screen.getByLabelText('Street number *')).toBeInTheDocument()
+    expect(screen.getByLabelText('Street name *')).toBeInTheDocument()
+    expect(screen.getByLabelText('Street type *')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /find|lookup/i })).not.toBeInTheDocument()
+
+    await user.type(screen.getByLabelText('First name *'), 'Alex')
+    await user.type(screen.getByLabelText('Last name *'), 'Citizen')
+    await user.type(screen.getByLabelText('Day'), '15')
+    await user.selectOptions(screen.getByLabelText('Month'), 'mar')
+    await user.type(screen.getByLabelText('Year'), '1990')
+    await user.type(screen.getByLabelText('Street number *'), '1')
+    await user.type(screen.getByLabelText('Street name *'), 'Mock')
+    await user.selectOptions(screen.getByLabelText('Street type *'), 'street')
+    await user.type(screen.getByLabelText('Suburb *'), 'Sydney')
+    await user.selectOptions(screen.getByLabelText('State *'), 'NSW')
+    await user.type(screen.getByLabelText('Postcode *'), '2000')
+    await user.type(screen.getByLabelText('Email address *'), 'alex@example.test')
+    await user.type(screen.getByLabelText('Phone number *'), '0400000000')
+    await continueFromCurrentStep(user)
+
+    expect(screen.getByRole('heading', { name: 'Representative and authorised contacts' })).toBeInTheDocument()
   })
 })
