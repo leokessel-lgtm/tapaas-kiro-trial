@@ -18,7 +18,8 @@
 | maturity | `coded-preview` |
 | validation_status | `build-tested` |
 | implementation_boundary | Preview-only mock form capture. Uses local GEL preview Field, Input, Select and native fieldsets for date and manual-address grouping. ManualAddress is mapped as source evidence but not imported as a production component. |
-| unknowns | Production address lookup behaviour, result-list/no-result states, error-summary expectations, complete street-type options, state restriction rules, mobile frame variant, assistive-technology behaviour, owner-approved real-service labels/helper text and final DOB input treatment. |
+| responsive_hotfix | Scoped CSS hotfix allows `xl` preview inputs, selects and the manual-address fieldset to shrink inside the 390px Storybook preview without changing the desktop frame rhythm unnecessarily. |
+| unknowns | Production address lookup behaviour, result-list/no-result states, error-summary expectations, complete street-type options, state restriction rules, mobile frame variant, mobile pixel parity with Figma, assistive-technology behaviour, owner-approved real-service labels/helper text and final DOB input treatment. |
 | review_reason | `engineer`, `accessibility`, `owner`, `privacy`, `policy` |
 
 ## Suitability gate
@@ -41,5 +42,5 @@
 - The coded preview intentionally excludes global navigation and footer because the active preview app provides the outer shell.
 - Address search is a static text input with a manual-entry action only. It does not search, validate or return address results.
 - Manual address preserves the extracted field order and required/optional treatment.
+- The 2026-05-24 hotfix is responsive CSS only. It fixes the 390px Storybook preview overflow path while keeping the preview-only boundary intact.
 - Content is mock/placeholder only until service owners confirm real wording and rules.
-

@@ -124,7 +124,7 @@ The coded preview includes optional inline test error display only for Storybook
 
 Only desktop frames were extracted in this pass.
 
-Mobile behaviour remains unresolved. The preview uses responsive CSS so it can be inspected at narrow widths, but that is an implementation smoke path rather than Figma mobile evidence.
+Mobile behaviour remains unresolved as Figma source evidence. The preview uses responsive CSS so it can be inspected at narrow widths, and the 2026-05-24 hotfix specifically constrains the `xl` preview input/select widths and manual-address fieldset so the 390px Storybook preview does not horizontally overflow. This is an implementation smoke path rather than Figma mobile pixel-parity evidence.
 
 ## Mapping To TaPaaS Templates
 
@@ -166,6 +166,7 @@ The preview implementation:
 - whether street type options are complete and source-approved
 - whether state restriction rules apply
 - mobile frame variant
+- mobile pixel parity with Figma
 - assistive-technology behaviour
 - owner-approved labels and helper text for a real service
 - whether date of birth should use free-text month, select month, or another GEL-specific input in production
@@ -186,4 +187,12 @@ Broader checks:
 
 - `npm run build:all`
 - `npm run parity`
+- local deployed-equivalent Storybook visual check at 390px for `MPS Applicant Details Frames - Figma Fidelity`
 
+## Responsive Hotfix
+
+- Date: 2026-05-24
+- Change: scoped responsive CSS only for `MpsApplicantDetailsFramePreview`.
+- Reason: deployed Storybook iframe measured `clientWidth: 390px`, `scrollWidth: 432px`; main offenders were fixed-width `xl` `.gel-input` controls and the manual-address fieldset/text-action area.
+- Result: local deployed-equivalent Storybook preview at 390px measured `clientWidth: 390px` and `scrollWidth: 390px`, with no horizontal overflow offenders.
+- Boundary unchanged: preview-only mock form capture. No address lookup, validation logic, backend persistence, identity verification, customer record update, age eligibility logic, privacy approval, legal approval or policy approval added.
