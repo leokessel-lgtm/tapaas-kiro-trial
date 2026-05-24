@@ -6,6 +6,7 @@ import {
   DeclarationReview,
   InteractiveDetailsCard,
   LegalInfoAccordion,
+  MpsApplicantDetailsFramePreview,
   MpsConfirmationFramePreview,
   MpsReviewFramePreview,
   NextStepsCardPreview,
@@ -164,6 +165,65 @@ describe('selected TaPaaS maturity components', () => {
     expect(within(declarationGroup).getAllByText('*')).toHaveLength(2)
     expect(within(declarationGroup).getByText(/Legal, privacy and policy wording is placeholder-only/)).toHaveClass('gel-sr-only')
     expect(screen.getByRole('button', { name: 'Submit mock application' })).toBeInTheDocument()
+  })
+
+  it('renders the MPS applicant details frame in search-address and manual-address variants', async () => {
+    const user = userEvent.setup()
+    const onManualAddress = vi.fn()
+    const onAddressSearch = vi.fn()
+
+    const { rerender } = render(
+      <MpsApplicantDetailsFramePreview
+        addressMode='search'
+        value={{ firstName: 'Alex', lastName: 'Citizen', dateOfBirthDay: '01', dateOfBirthMonth: 'jan', dateOfBirthYear: '1980' }}
+        onManualAddress={onManualAddress}
+        onContinue={() => undefined}
+        onBack={() => undefined}
+      />,
+    )
+
+    expect(screen.getByRole('heading', { name: 'Personal details' })).toBeInTheDocument()
+    expect(screen.getByText(/indicates a required field/)).toBeInTheDocument()
+    expect(screen.getByLabelText('First name *')).toHaveValue('Alex')
+    expect(screen.getByLabelText('Last name *')).toHaveValue('Citizen')
+    expect(screen.getByRole('group', { name: 'Date of birth *' })).toBeInTheDocument()
+    expect(screen.getByLabelText('Residential address *')).toBeInTheDocument()
+    expect(screen.getByText(/Start typing and select your address/)).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Enter address manually' }))
+    expect(onManualAddress).toHaveBeenCalledTimes(1)
+
+    rerender(
+      <MpsApplicantDetailsFramePreview
+        addressMode='manual'
+        value={{
+          firstName: 'Alex',
+          lastName: 'Citizen',
+          dateOfBirthDay: '01',
+          dateOfBirthMonth: 'jan',
+          dateOfBirthYear: '1980',
+          streetNumber: '1',
+          streetName: 'Mock',
+          streetType: 'street',
+          suburb: 'Sydney',
+          state: 'NSW',
+          postcode: '2000',
+          email: 'alex@example.test',
+          phone: '0212345678',
+        }}
+        onAddressSearch={onAddressSearch}
+        onContinue={() => undefined}
+        onBack={() => undefined}
+      />,
+    )
+
+    const addressGroup = screen.getByRole('group', { name: 'Residential address' })
+    expect(within(addressGroup).getByLabelText('Unit number')).toBeInTheDocument()
+    expect(within(addressGroup).getByLabelText('Street number *')).toHaveValue('1')
+    expect(within(addressGroup).getByLabelText('Street type *')).toHaveValue('street')
+    expect(within(addressGroup).getByLabelText('State *')).toHaveValue('NSW')
+    await user.click(within(addressGroup).getByRole('button', { name: 'Back to search' }))
+    expect(onAddressSearch).toHaveBeenCalledTimes(1)
   })
 
   it('renders the MPS confirmation frame preview with next steps and feedback', async () => {

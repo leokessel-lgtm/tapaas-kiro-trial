@@ -14,6 +14,7 @@ import {
   ExitModal,
   InteractiveDetailsCard,
   LegalInfoAccordion,
+  MpsApplicantDetailsFramePreview,
   MpsConfirmationFramePreview,
   MpsReviewFramePreview,
   NextStepsCardPreview,
@@ -140,6 +141,24 @@ const mpsDeclarationStatements = [
   'I understand this preview does not submit to a real service.',
 ]
 
+const mpsApplicantDetailsValue = {
+  firstName: 'Jane',
+  lastName: 'Citizen',
+  dateOfBirthDay: '12',
+  dateOfBirthMonth: 'jan',
+  dateOfBirthYear: '1984',
+  residentialAddress: '1 Mock Street, Sydney NSW 2000',
+  unitNumber: '',
+  streetNumber: '1',
+  streetName: 'Mock',
+  streetType: 'street',
+  suburb: 'Sydney',
+  state: 'NSW',
+  postcode: '2000',
+  email: 'jane.citizen@example.test',
+  phone: '0212345678',
+}
+
 const mpsApplicationDetails = [
   { label: 'Applicant', value: 'Jane Citizen' },
   { label: 'Application type', value: 'Renewal' },
@@ -181,6 +200,46 @@ export const MpsReviewFrameFigmaFidelity: Story = {
         onSubmit={() => undefined}
         onBack={() => undefined}
         onExit={() => undefined}
+      />
+    </div>
+  ),
+}
+
+export const MpsApplicantDetailsFrameFigmaFidelity: Story = {
+  name: 'MPS Applicant Details Frames - Figma Fidelity',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Paired extraction preview for MPS `2.A - Personal details` and `2.B - Personal details - Manual address`. Use this for early/middle transaction assembly QA only.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>MPS Applicant Details Frames - Figma fidelity</strong>
+        <p>Paired preview of source frames 0:17387 and 0:17405. Use this story to compare field order, section grouping, address-search/manual-address variants, required markers, helper text and CTA relationship.</p>
+        <ul>
+          <li>Sources: Mobility_Parking_Scheme.sketch 1 (Copy), page MPS Final, frames 2.A - Personal details and 2.B - Personal details - Manual address.</li>
+          <li>Source context nodes: 0:17387 and 0:17405. Implementation boundary: form content/page skeleton only, excluding global nav/footer and real address lookup.</li>
+          <li>Boundary: preview-only mock form capture with no identity verification, customer-record update, backend persistence, age eligibility or address lookup.</li>
+          <li>Review: compare personal details, date of birth, contact details, residential address search, manual-address field order and Cancel/Next placement.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, privacy-approved, legal-approved or policy-approved.</li>
+        </ul>
+      </div>
+      <MpsApplicantDetailsFramePreview
+        addressMode='search'
+        value={mpsApplicantDetailsValue}
+        onManualAddress={() => undefined}
+        onContinue={() => undefined}
+        onBack={() => undefined}
+      />
+      <MpsApplicantDetailsFramePreview
+        addressMode='manual'
+        value={mpsApplicantDetailsValue}
+        onAddressSearch={() => undefined}
+        onContinue={() => undefined}
+        onBack={() => undefined}
       />
     </div>
   ),
@@ -241,6 +300,13 @@ export const ReviewAndConfirmation: Story = {
         onSubmit={() => undefined}
         onBack={() => undefined}
         onExit={() => undefined}
+      />
+      <MpsApplicantDetailsFramePreview
+        addressMode='manual'
+        value={mpsApplicantDetailsValue}
+        onAddressSearch={() => undefined}
+        onContinue={() => undefined}
+        onBack={() => undefined}
       />
       <ReviewInfoCard
         title='Applicant details'

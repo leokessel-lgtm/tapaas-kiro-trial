@@ -261,6 +261,176 @@
   font-weight: 700;
 }
 
+.tapaas-mps-applicant-frame {
+  max-width: 72.75rem;
+}
+
+.tapaas-mps-applicant-frame__step {
+  border-bottom: 6px solid var(--gel-color-primary);
+  color: var(--gel-color-primary);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0 0 1.75rem;
+  max-width: 18rem;
+  padding-bottom: 0.5rem;
+}
+
+.tapaas-mps-applicant-frame__hint {
+  font-size: 0.875rem;
+  margin: -0.5rem 0 1.5rem;
+}
+
+.tapaas-mps-applicant-frame__hint span {
+  color: var(--gel-color-error);
+  font-weight: 700;
+}
+
+.tapaas-mps-applicant-frame__section {
+  max-width: 41.25rem;
+}
+
+.tapaas-mps-applicant-frame__section + .tapaas-mps-applicant-frame__section {
+  margin-top: 2rem;
+}
+
+.tapaas-mps-applicant-frame__section [data-gelweb-component='field'] {
+  max-width: 41.25rem !important;
+}
+
+.tapaas-mps-applicant-frame__section .gel-input,
+.tapaas-mps-applicant-frame__section .gel-select {
+  max-width: 29.375rem;
+}
+
+.tapaas-mps-applicant-frame__text-action {
+  background: none;
+  border: 0;
+  color: var(--gel-color-link);
+  cursor: pointer;
+  font-family: var(--gel-font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.tapaas-mps-applicant-frame__text-action:focus-visible {
+  outline: 3px solid var(--gel-color-focus);
+  outline-offset: 3px;
+}
+
+.tapaas-mps-applicant-frame__inline-error {
+  align-items: flex-start;
+  background-color: var(--gel-color-error-bg);
+  display: flex;
+  font-size: 1rem;
+  font-weight: 700;
+  gap: 0.5rem;
+  line-height: 1.5;
+  margin: -0.5rem 0 1.5rem;
+  padding: 0.5rem 1rem 0.5rem 0.625rem;
+}
+
+.tapaas-mps-date-group,
+.tapaas-mps-manual-address {
+  border: 0;
+  margin: 0 0 1.5rem;
+  padding: 0;
+}
+
+.tapaas-mps-date-group legend,
+.tapaas-mps-manual-address legend {
+  color: var(--gel-color-text);
+  display: block;
+  font-family: var(--gel-font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  width: 100%;
+}
+
+.tapaas-mps-date-group__fields {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+.tapaas-mps-date-group__fields [data-gelweb-component='field'] {
+  margin-bottom: 1rem !important;
+  max-width: none !important;
+}
+
+.tapaas-mps-date-group__fields label {
+  font-size: 0.875rem !important;
+  font-weight: 400 !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.tapaas-mps-address-search {
+  margin-bottom: 1.5rem;
+}
+
+.tapaas-mps-address-search__heading {
+  position: relative;
+}
+
+.tapaas-mps-address-search__heading .tapaas-mps-applicant-frame__text-action {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.tapaas-mps-manual-address {
+  max-width: 41.375rem;
+  position: relative;
+}
+
+.tapaas-mps-manual-address > .tapaas-mps-applicant-frame__text-action {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.tapaas-mps-applicant-frame__actions {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3.5rem;
+  max-width: 72.75rem;
+}
+
+.tapaas-mps-applicant-frame__actions .gel-btn {
+  min-width: 12.5rem;
+}
+
+@media (max-width: 767px) {
+  .tapaas-mps-applicant-frame__step {
+    max-width: 100%;
+  }
+
+  .tapaas-mps-address-search__heading .tapaas-mps-applicant-frame__text-action,
+  .tapaas-mps-manual-address > .tapaas-mps-applicant-frame__text-action {
+    display: inline-block;
+    margin-bottom: 1rem;
+    position: static;
+  }
+
+  .tapaas-mps-applicant-frame__actions {
+    align-items: stretch;
+    flex-direction: column-reverse;
+    gap: 1rem;
+  }
+
+  .tapaas-mps-applicant-frame__actions .gel-btn {
+    width: 100%;
+  }
+}
+
 .tapaas-mps-confirmation-frame__reference {
   margin: -1rem 0 1.5rem 3.75rem;
 }

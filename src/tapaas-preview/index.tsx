@@ -1,5 +1,5 @@
 import React from 'react'
-import { Accordion, Button, Field, Heading, InPageAlert, Input, TextLink } from '../gel'
+import { Accordion, Button, Field, Heading, InPageAlert, Input, Select, TextLink } from '../gel'
 import './styles.css'
 
 export interface SummaryItem {
@@ -84,6 +84,35 @@ export interface TapaasSearchActionProps {
   buttonLabel?: string
   placeholder?: string
   defaultValue?: string
+}
+
+export interface MpsApplicantDetailsFrameValue {
+  firstName?: string
+  lastName?: string
+  dateOfBirthDay?: string
+  dateOfBirthMonth?: string
+  dateOfBirthYear?: string
+  residentialAddress?: string
+  unitNumber?: string
+  streetNumber?: string
+  streetName?: string
+  streetType?: string
+  suburb?: string
+  state?: string
+  postcode?: string
+  email?: string
+  phone?: string
+}
+
+export interface MpsApplicantDetailsFramePreviewProps {
+  addressMode?: 'search' | 'manual'
+  value?: MpsApplicantDetailsFrameValue
+  onChange?: (value: MpsApplicantDetailsFrameValue) => void
+  onManualAddress?: () => void
+  onAddressSearch?: () => void
+  onBack?: () => void
+  onContinue?: () => void
+  showErrors?: boolean
 }
 
 export interface EmailConfirmationModalProps {
@@ -214,6 +243,266 @@ export function ReviewFeesCard({
       </dl>
     </section>
   )
+}
+
+// ---------------------------------------------------------------------------
+// MpsApplicantDetailsFramePreview
+// MPS applicant-details frame pattern extracted as a paired sequence from
+// `MPS Final` frames `2.A - Personal details` (`0:17387`) and
+// `2.B - Personal details - Manual address` (`0:17405`).
+// Address lookup, identity, persistence, age eligibility and policy logic stay unresolved.
+// ---------------------------------------------------------------------------
+export function MpsApplicantDetailsFramePreview({
+  addressMode = 'search',
+  value,
+  onChange,
+  onManualAddress,
+  onAddressSearch,
+  onBack,
+  onContinue,
+  showErrors = false,
+}: MpsApplicantDetailsFramePreviewProps) {
+  const formValue = value || {}
+
+  function update(field: keyof MpsApplicantDetailsFrameValue, nextValue: string) {
+    onChange?.({ ...formValue, [field]: nextValue })
+  }
+
+  const requiredErrors = getMpsApplicantDetailsErrors(formValue, addressMode)
+
+  return (
+    <section
+      className='tapaas-mps-applicant-frame'
+      aria-labelledby='mps-applicant-frame-heading'
+      data-tapaas-component='mps-applicant-details-frame-preview'
+      data-preview-boundary='preview implementation; mock form capture only; not production-approved'
+    >
+      <p className='tapaas-mps-applicant-frame__step'>Step 1 of 4</p>
+      <Heading level={2} id='mps-applicant-frame-heading'>Personal details</Heading>
+      <p className='tapaas-mps-applicant-frame__hint'>
+        <span>*</span> indicates a required field
+      </p>
+      {showErrors && requiredErrors.length > 0 && (
+        <InPageAlert variant='error' title='Check the applicant details'>
+          <ul>
+            {requiredErrors.map((error) => <li key={error}>{error}</li>)}
+          </ul>
+        </InPageAlert>
+      )}
+      <div className='tapaas-mps-applicant-frame__section'>
+        <Field id='mps-applicant-first-name' label='First name *' hasError={showErrors && !formValue.firstName?.trim()} errorMessage='Enter a first name.'>
+          <Input id='mps-applicant-first-name' value={formValue.firstName || ''} onChange={(event) => update('firstName', event.target.value)} inputWidth='xl' autoComplete='given-name' />
+        </Field>
+        <Field id='mps-applicant-last-name' label='Last name *' hasError={showErrors && !formValue.lastName?.trim()} errorMessage='Enter a last name.'>
+          <Input id='mps-applicant-last-name' value={formValue.lastName || ''} onChange={(event) => update('lastName', event.target.value)} inputWidth='xl' autoComplete='family-name' />
+        </Field>
+        <MpsDateInputGroup value={formValue} update={update} showErrors={showErrors} />
+      </div>
+      <div className='tapaas-mps-applicant-frame__section'>
+        <Heading level={3}>Contact details</Heading>
+        {addressMode === 'manual' ? (
+          <MpsManualAddressGroup value={formValue} update={update} onAddressSearch={onAddressSearch} showErrors={showErrors} />
+        ) : (
+          <MpsAddressSearchGroup value={formValue} update={update} onManualAddress={onManualAddress} showErrors={showErrors} />
+        )}
+        <Field id='mps-applicant-email' label='Email address *' hasError={showErrors && !formValue.email?.trim()} errorMessage='Enter an email address.'>
+          <Input id='mps-applicant-email' value={formValue.email || ''} onChange={(event) => update('email', event.target.value)} inputWidth='xl' autoComplete='email' />
+        </Field>
+        <Field
+          id='mps-applicant-phone'
+          label='Phone number *'
+          helpMessage='Enter your phone number using 10 digits with no spaces or symbols. Include the area code if you are entering a landline.'
+          hasError={showErrors && !formValue.phone?.trim()}
+          errorMessage='Enter a phone number.'
+        >
+          <Input id='mps-applicant-phone' value={formValue.phone || ''} onChange={(event) => update('phone', event.target.value)} inputWidth='xl' autoComplete='tel' inputMode='tel' />
+        </Field>
+      </div>
+      <div className='tapaas-mps-applicant-frame__actions' role='group' aria-label='Applicant details actions'>
+        {onBack ? <Button variant='secondary' onClick={onBack}>Cancel</Button> : <span aria-hidden='true' />}
+        {onContinue && <Button onClick={onContinue}>Next</Button>}
+      </div>
+    </section>
+  )
+}
+
+function MpsDateInputGroup({
+  value,
+  update,
+  showErrors,
+}: {
+  value: MpsApplicantDetailsFrameValue
+  update: (field: keyof MpsApplicantDetailsFrameValue, nextValue: string) => void
+  showErrors: boolean
+}) {
+  const hasDateError = showErrors && (!value.dateOfBirthDay?.trim() || !value.dateOfBirthMonth?.trim() || !value.dateOfBirthYear?.trim())
+  const errorId = 'mps-applicant-date-of-birth-error'
+
+  return (
+    <fieldset className='tapaas-mps-date-group' aria-describedby={hasDateError ? errorId : undefined} aria-invalid={hasDateError || undefined}>
+      <legend>Date of birth *</legend>
+      <div className='tapaas-mps-date-group__fields'>
+        <Field id='mps-applicant-dob-day' label='Day'>
+          <Input id='mps-applicant-dob-day' value={value.dateOfBirthDay || ''} onChange={(event) => update('dateOfBirthDay', event.target.value)} inputWidth='xxs' placeholder='DD' autoComplete='bday-day' inputMode='numeric' maxLength={2} />
+        </Field>
+        <Field id='mps-applicant-dob-month' label='Month'>
+          <Select
+            id='mps-applicant-dob-month'
+            value={value.dateOfBirthMonth || ''}
+            onChange={(event) => update('dateOfBirthMonth', event.target.value)}
+            inputWidth='xs'
+            options={[
+              { value: 'jan', text: 'Jan' },
+              { value: 'feb', text: 'Feb' },
+              { value: 'mar', text: 'Mar' },
+              { value: 'apr', text: 'Apr' },
+              { value: 'may', text: 'May' },
+              { value: 'jun', text: 'Jun' },
+              { value: 'jul', text: 'Jul' },
+              { value: 'aug', text: 'Aug' },
+              { value: 'sep', text: 'Sep' },
+              { value: 'oct', text: 'Oct' },
+              { value: 'nov', text: 'Nov' },
+              { value: 'dec', text: 'Dec' },
+            ]}
+            placeholder='MMM'
+            autoComplete='bday-month'
+          />
+        </Field>
+        <Field id='mps-applicant-dob-year' label='Year'>
+          <Input id='mps-applicant-dob-year' value={value.dateOfBirthYear || ''} onChange={(event) => update('dateOfBirthYear', event.target.value)} inputWidth='xs' placeholder='YYYY' autoComplete='bday-year' inputMode='numeric' maxLength={4} />
+        </Field>
+      </div>
+      {hasDateError && (
+        <div id={errorId} className='tapaas-mps-applicant-frame__inline-error'>
+          Enter a date of birth.
+        </div>
+      )}
+    </fieldset>
+  )
+}
+
+function MpsAddressSearchGroup({
+  value,
+  update,
+  onManualAddress,
+  showErrors,
+}: {
+  value: MpsApplicantDetailsFrameValue
+  update: (field: keyof MpsApplicantDetailsFrameValue, nextValue: string) => void
+  onManualAddress?: () => void
+  showErrors: boolean
+}) {
+  return (
+    <div className='tapaas-mps-address-search'>
+      <div className='tapaas-mps-address-search__heading'>
+        <Field
+          id='mps-applicant-residential-address'
+          label='Residential address *'
+          helpMessage='Start typing and select your address from the results that appear. If you are unable to locate your address please enter it manually.'
+          hasError={showErrors && !value.residentialAddress?.trim()}
+          errorMessage='Enter a residential address.'
+        >
+          <Input id='mps-applicant-residential-address' value={value.residentialAddress || ''} onChange={(event) => update('residentialAddress', event.target.value)} inputWidth='xl' autoComplete='street-address' />
+        </Field>
+        {onManualAddress && (
+          <button type='button' className='tapaas-mps-applicant-frame__text-action' onClick={onManualAddress}>
+            Enter address manually
+          </button>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function MpsManualAddressGroup({
+  value,
+  update,
+  onAddressSearch,
+  showErrors,
+}: {
+  value: MpsApplicantDetailsFrameValue
+  update: (field: keyof MpsApplicantDetailsFrameValue, nextValue: string) => void
+  onAddressSearch?: () => void
+  showErrors: boolean
+}) {
+  return (
+    <fieldset className='tapaas-mps-manual-address'>
+      <legend>Residential address</legend>
+      {onAddressSearch && (
+        <button type='button' className='tapaas-mps-applicant-frame__text-action' onClick={onAddressSearch}>
+          Back to search
+        </button>
+      )}
+      <Field id='mps-applicant-unit-number' label='Unit number'>
+        <Input id='mps-applicant-unit-number' value={value.unitNumber || ''} onChange={(event) => update('unitNumber', event.target.value)} inputWidth='xl' autoComplete='address-line2' />
+      </Field>
+      <Field id='mps-applicant-street-number' label='Street number *' hasError={showErrors && !value.streetNumber?.trim()} errorMessage='Enter a street number.'>
+        <Input id='mps-applicant-street-number' value={value.streetNumber || ''} onChange={(event) => update('streetNumber', event.target.value)} inputWidth='xl' autoComplete='address-line1' />
+      </Field>
+      <Field id='mps-applicant-street-name' label='Street name *' hasError={showErrors && !value.streetName?.trim()} errorMessage='Enter a street name.'>
+        <Input id='mps-applicant-street-name' value={value.streetName || ''} onChange={(event) => update('streetName', event.target.value)} inputWidth='xl' />
+      </Field>
+      <Field id='mps-applicant-street-type' label='Street type *' hasError={showErrors && !value.streetType} errorMessage='Select a street type.'>
+        <Select
+          id='mps-applicant-street-type'
+          value={value.streetType || ''}
+          onChange={(event) => update('streetType', event.target.value)}
+          inputWidth='xl'
+          options={[
+            { value: 'street', text: 'Street' },
+            { value: 'road', text: 'Road' },
+            { value: 'avenue', text: 'Avenue' },
+            { value: 'drive', text: 'Drive' },
+          ]}
+        />
+      </Field>
+      <Field id='mps-applicant-suburb' label='Suburb *' hasError={showErrors && !value.suburb?.trim()} errorMessage='Enter a suburb.'>
+        <Input id='mps-applicant-suburb' value={value.suburb || ''} onChange={(event) => update('suburb', event.target.value)} inputWidth='xl' autoComplete='address-level2' />
+      </Field>
+      <Field id='mps-applicant-state' label='State *' hasError={showErrors && !value.state} errorMessage='Select a state.'>
+        <Select
+          id='mps-applicant-state'
+          value={value.state || ''}
+          onChange={(event) => update('state', event.target.value)}
+          inputWidth='xl'
+          options={[
+            { value: 'NSW', text: 'NSW' },
+            { value: 'ACT', text: 'ACT' },
+            { value: 'QLD', text: 'QLD' },
+            { value: 'VIC', text: 'VIC' },
+            { value: 'SA', text: 'SA' },
+            { value: 'WA', text: 'WA' },
+            { value: 'TAS', text: 'TAS' },
+            { value: 'NT', text: 'NT' },
+          ]}
+          autoComplete='address-level1'
+        />
+      </Field>
+      <Field id='mps-applicant-postcode' label='Postcode *' hasError={showErrors && !value.postcode?.trim()} errorMessage='Enter a postcode.'>
+        <Input id='mps-applicant-postcode' value={value.postcode || ''} onChange={(event) => update('postcode', event.target.value)} inputWidth='xl' autoComplete='postal-code' inputMode='numeric' maxLength={4} />
+      </Field>
+    </fieldset>
+  )
+}
+
+function getMpsApplicantDetailsErrors(value: MpsApplicantDetailsFrameValue, addressMode: 'search' | 'manual') {
+  const errors: string[] = []
+  if (!value.firstName?.trim()) errors.push('Enter a first name.')
+  if (!value.lastName?.trim()) errors.push('Enter a last name.')
+  if (!value.dateOfBirthDay?.trim() || !value.dateOfBirthMonth?.trim() || !value.dateOfBirthYear?.trim()) errors.push('Enter a date of birth.')
+  if (addressMode === 'search' && !value.residentialAddress?.trim()) errors.push('Enter a residential address.')
+  if (addressMode === 'manual') {
+    if (!value.streetNumber?.trim()) errors.push('Enter a street number.')
+    if (!value.streetName?.trim()) errors.push('Enter a street name.')
+    if (!value.streetType) errors.push('Select a street type.')
+    if (!value.suburb?.trim()) errors.push('Enter a suburb.')
+    if (!value.state) errors.push('Select a state.')
+    if (!value.postcode?.trim()) errors.push('Enter a postcode.')
+  }
+  if (!value.email?.trim()) errors.push('Enter an email address.')
+  if (!value.phone?.trim()) errors.push('Enter a phone number.')
+  return errors
 }
 
 // ---------------------------------------------------------------------------
