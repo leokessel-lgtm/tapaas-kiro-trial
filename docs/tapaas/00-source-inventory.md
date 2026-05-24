@@ -32,7 +32,7 @@ Use this MCP result as **trial design evidence**, not implementation-ready evide
 | End of Transaction CTA buttons | `9:791` | Confirmation-page action group | MCP text extracted |
 | Confirmation page header | `9:10494` | Success-state page header | MCP text extracted |
 | Transaction summary card | `10:1861` | Confirmation summary | MCP text extracted |
-| Next steps card | `10:1862` | Confirmation next steps | MCP text extracted |
+| Next steps card | `10:1862` page; `11:4848` component set | Confirmation next steps | MCP targeted extraction; coded preview |
 | Review info card | `18:4448` | Review page data playback | MCP text extracted |
 | Review fees card | `18:4449` | Review page fee playback | MCP text extracted |
 | Search vehicle input | `22:16683` | Vehicle search input pattern | MCP text extracted |

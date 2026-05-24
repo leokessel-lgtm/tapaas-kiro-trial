@@ -16,6 +16,7 @@ import {
   LegalInfoAccordion,
   MpsConfirmationFramePreview,
   MpsReviewFramePreview,
+  NextStepsCardPreview,
   RadioButtonCards,
   RepeatableGroup,
   ReviewFeesCard,
@@ -191,6 +192,54 @@ export const ReviewAndConfirmation: Story = {
       >
         <p>Next-step and timeframe content needs owner confirmation before reuse.</p>
       </TransactionSummaryCard>
+    </div>
+  ),
+}
+
+export const NextStepsCard: Story = {
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Next steps card</strong>
+        <p>Preview-only post-submit guidance. Step content is mock/static and needs owner confirmation before service use.</p>
+      </div>
+      <NextStepsCardPreview
+        items={[
+          {
+            id: 'assessment',
+            heading: 'Application assessment',
+            body: <p>Your mock application will be assessed within [confirmed timeframe].</p>,
+          },
+          {
+            id: 'updates',
+            heading: 'Application updates',
+            body: <p>You will receive updates by [confirmed contact channel].</p>,
+          },
+          {
+            id: 'outcome',
+            heading: 'Permit outcome',
+            body: <p>If approved by the real service, the permit would be issued using confirmed delivery rules.</p>,
+          },
+        ]}
+      />
+      <NextStepsCardPreview
+        heading='Other ways to keep going'
+        showStepNumbers={false}
+        showIcon={false}
+        headingLevel={3}
+        items={[
+          {
+            id: 'save',
+            heading: 'Save your reference',
+            body: <p>Keep the mock reference number for review conversations.</p>,
+          },
+          {
+            id: 'review',
+            heading: 'Review related transactions',
+            body: <p>Related transaction links and routing need owner confirmation.</p>,
+          },
+        ]}
+      />
     </div>
   ),
 }

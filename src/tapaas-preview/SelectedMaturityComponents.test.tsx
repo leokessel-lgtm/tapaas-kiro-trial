@@ -8,6 +8,7 @@ import {
   LegalInfoAccordion,
   MpsConfirmationFramePreview,
   MpsReviewFramePreview,
+  NextStepsCardPreview,
   RadioButtonCards,
   TapaasSearchAction,
   backendErrorExamples,
@@ -176,5 +177,25 @@ describe('selected TaPaaS maturity components', () => {
     expect(screen.getByRole('heading', { name: 'What happens next?' })).toBeInTheDocument()
     expect(screen.getByLabelText('Was this page useful?')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Start again' })).toBeInTheDocument()
+  })
+
+  it('renders the Next steps card as ordered and unordered preview guidance', () => {
+    const items = [
+      { id: 'assessment', heading: 'Application assessment', body: 'Your mock application will be assessed within [confirmed timeframe].' },
+      { id: 'updates', heading: 'Application updates', body: 'You will receive updates by [confirmed contact channel].' },
+    ]
+
+    const { rerender } = render(<NextStepsCardPreview items={items} />)
+
+    const orderedCard = screen.getByRole('region', { name: 'Next steps' })
+    expect(within(orderedCard).getByRole('list')).toBeInTheDocument()
+    expect(within(orderedCard).getByRole('heading', { name: 'Application assessment' })).toBeInTheDocument()
+    expect(within(orderedCard).getByText('Your mock application will be assessed within [confirmed timeframe].')).toBeInTheDocument()
+
+    rerender(<NextStepsCardPreview heading='Other ways to keep going' showStepNumbers={false} showIcon={false} items={items} />)
+
+    const unorderedCard = screen.getByRole('region', { name: 'Other ways to keep going' })
+    expect(within(unorderedCard).getByRole('list')).toBeInTheDocument()
+    expect(within(unorderedCard).getByRole('heading', { name: 'Application updates' })).toBeInTheDocument()
   })
 })

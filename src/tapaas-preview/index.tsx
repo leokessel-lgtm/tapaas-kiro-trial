@@ -63,6 +63,20 @@ export interface MpsConfirmationNextStep {
   content: React.ReactNode
 }
 
+export interface NextStepsCardItem {
+  id: string
+  heading: React.ReactNode
+  body: React.ReactNode
+}
+
+export interface NextStepsCardPreviewProps {
+  heading?: string
+  items: NextStepsCardItem[]
+  showStepNumbers?: boolean
+  showIcon?: boolean
+  headingLevel?: 2 | 3
+}
+
 export interface TapaasSearchActionProps {
   id?: string
   label?: string
@@ -327,6 +341,56 @@ export function MpsConfirmationFramePreview({
         </div>
       </div>
       {onStartAgain && <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start again' />}
+    </section>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// NextStepsCardPreview
+// TaPaaS confirmation/post-submit guidance card extracted from component set
+// `Next steps card` (`11:4848`) on the component-library page `10:1862`.
+// Variants evidence 2-5 rows, desktop/mobile widths and step numbers on/off.
+// ---------------------------------------------------------------------------
+export function NextStepsCardPreview({
+  heading = 'Next steps',
+  items,
+  showStepNumbers = true,
+  showIcon = true,
+  headingLevel = 2,
+}: NextStepsCardPreviewProps) {
+  const generatedId = React.useId()
+  const headingId = `next-steps-card-${generatedId}`
+  const ListTag = showStepNumbers ? 'ol' : 'ul'
+
+  return (
+    <section
+      className={`tapaas-next-steps-card${showStepNumbers ? '' : ' tapaas-next-steps-card--unordered'}`}
+      aria-labelledby={headingId}
+      data-tapaas-component='next-steps-card-preview'
+      data-preview-boundary='preview implementation; not production-approved'
+    >
+      <div className='tapaas-next-steps-card__heading'>
+        {showIcon && <span className='tapaas-next-steps-card__icon' aria-hidden='true' />}
+        <Heading level={headingLevel} id={headingId} style={{ marginBottom: 0 }}>
+          {heading}
+        </Heading>
+      </div>
+      <ListTag className='tapaas-next-steps-card__list'>
+        {items.map((item, index) => (
+          <li className='tapaas-next-steps-card__item' key={item.id}>
+            {showStepNumbers && (
+              <span className='tapaas-next-steps-card__step' aria-hidden='true'>
+                <span className='tapaas-next-steps-card__step-number'>{index + 1}</span>
+                {index < items.length - 1 && <span className='tapaas-next-steps-card__line' />}
+              </span>
+            )}
+            <div className='tapaas-next-steps-card__copy'>
+              <h3>{item.heading}</h3>
+              <div>{item.body}</div>
+            </div>
+          </li>
+        ))}
+      </ListTag>
     </section>
   )
 }

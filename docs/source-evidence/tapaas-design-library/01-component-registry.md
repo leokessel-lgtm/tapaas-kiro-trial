@@ -7,7 +7,7 @@
 | Confirmation page header | `9:10494` | GEL variant | needs engineer review | Confirmation step success header | Preview component: `ConfirmationHeader` |
 | Transaction summary card | `10:1861` | TaPaaS-specific composite | needs engineer review | Confirmation summary and receipt details | Preview component: `TransactionSummaryCard` |
 | MPS confirmation frame | `0:33222` | TaPaaS-specific transaction frame pattern | coded-preview | Mobility Parking Scheme confirmation layout | Preview component: `MpsConfirmationFramePreview`. Preserves confirmation heading, reference/application details, next-step content, feedback prompt and action/footer relationship with mock content only. |
-| Next steps card | `10:1862` | TaPaaS-specific composite | draft | Confirmation next steps | Documented only |
+| Next steps card | `10:1862` page; `11:4848` component set | TaPaaS-specific composite | coded-preview | Confirmation and post-submit next-step guidance | Preview component: `NextStepsCardPreview`. Supports 2 to 5 static steps, optional numbered rail and optional icon with mock/static content only. |
 | Review info card | `18:4448` | TaPaaS-specific composite | needs engineer review | Review page information playback | Preview component: `ReviewInfoCard` |
 | Review fees card | `18:4449` | TaPaaS-specific composite | needs engineer review | Review page fee breakdown | Preview component: `ReviewFeesCard` |
 | Privacy card | `1:198` | TaPaaS-specific composite | draft | Privacy collection notice | Used as page guidance only |
@@ -33,6 +33,7 @@ These are **trial-only composites** in `src/tapaas-preview/`. They are not real 
 | `ConfirmationHeader` | `title`, `transactionName` | Confirmation page header `9:10494` | Uses a visual success mark and plain text. Requires accessibility review before reuse. |
 | `TransactionSummaryCard` | `heading`, `items`, optional `children` | Transaction summary card `10:1861` | Uses semantic section and definition-list style rows. |
 | `MpsConfirmationFramePreview` | `title`, `referenceNumber`, `applicationDetails`, `nextSteps`, optional related content/start callback | MPS Confirmation frame `0:33222` | Preview-only MPS confirmation-frame layout. Keeps reference number, timeframe, notification, related transaction and receipt details as mock/placeholder content. |
+| `NextStepsCardPreview` | `heading`, `items`, optional `showStepNumbers`, optional `showIcon`, `headingLevel` | Next steps card page `10:1862`, component set `11:4848` | Preview-only post-submit guidance card. Supports ordered/unordered treatment and 2 to 5 mock/static steps. |
 | `ReviewInfoCard` | `title`, `sections`, optional edit action | Review info card `18:4448` | Supports stacked review rows only for this trial. |
 | `ReviewFeesCard` | `title`, `fees`, `totalLabel`, `totalAmount` | Review fees card `18:4449` | Mock amounts only. No payment logic. |
 | `TransactionCtaGroup` | `onBack`, `onContinue`, `onExit`, labels | Transaction CTA button guidance and end-of-transaction CTA guidance | Uses GEL preview buttons. No modal behaviour included. |
