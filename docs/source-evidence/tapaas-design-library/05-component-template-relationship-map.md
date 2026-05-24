@@ -26,7 +26,7 @@ This is **trial guidance only**. It does not claim production readiness, GEL com
 | Component or pattern | Source node | Appears in templates | Classification | Current code status | Kiro rule |
 |---|---|---|---|---|---|
 | Privacy card | `1:198` | Privacy step `3395:41359` | TaPaaS-specific composite | Page guidance only | Use for privacy-page structure. Privacy wording must be owner-confirmed. |
-| Search vehicle input | `22:16683` | Search input page `16274:18397` | TaPaaS-specific composite | Composed from `Field`, `Input`, `Button` | Use mock search only. Do not add backend lookup. |
+| Search vehicle input | `22:16683` | Search input page `16274:18397` | TaPaaS-specific composite | `TapaasSearchAction` with `Input` and `Button` | Use mock search only. Do not add backend lookup, validation or result states. |
 | Form input pattern | Template `8410:37703` | Form input page | GEL-aligned composition | Built across skeletons | Use multiple focused form pages for 6+ step flows. |
 | Conditional declaration | `27:56000` | Declaration step `9894:3936`, Review step `8143:15161` | GEL variant | Composed from checkbox/radio patterns | Legal wording must be source-confirmed. |
 | Declaration review | `27:38386` | Review step `8143:15161` | TaPaaS-specific composite | `DeclarationReview` | Use card variant when declarations must remain visibly available. Accordion variant needs legal/content confirmation. |

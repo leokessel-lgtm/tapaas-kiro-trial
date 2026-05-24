@@ -47,6 +47,16 @@ Implemented as `InteractiveDetailsCard` in `src/tapaas-preview/`.
 
 Status: `coded preview`, still `needs engineer review`.
 
+## Fidelity pass
+
+2026-05-24 Storybook comparison pass tuned the preview toward the source anatomy:
+
+- 48px leading icon, information group and action area now align more closely with the Figma frame
+- example content uses `Key information`, status text and `Label: Value` row treatment from the source
+- link-style action support was added for the source-like `Remove this vehicle` treatment
+
+Action behaviour is still preview-only. Real remove, restore, modal, routing or persistence behaviour is unresolved.
+
 ## Open questions
 
 - Which actions are allowed in production TaPaaS contexts?

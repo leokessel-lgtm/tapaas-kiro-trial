@@ -47,6 +47,17 @@ Implemented as `LegalInfoAccordion` in `src/tapaas-preview/`.
 
 Status: `coded preview`, still `needs engineer review`.
 
+## Fidelity pass
+
+2026-05-24 Storybook comparison pass tuned the default preview toward the source:
+
+- default heading now uses `Privacy`
+- default sections use source-like labels for privacy collection notice, terms and conditions, and notifications
+- panel content keeps explicit placeholders for agency, transaction and product wording
+- content remains mock/static and must not be treated as approved legal, privacy or policy copy
+
+Mobile and desktop pixel parity remain unknown.
+
 ## Open questions
 
 - Which legal/privacy content must always be visible?

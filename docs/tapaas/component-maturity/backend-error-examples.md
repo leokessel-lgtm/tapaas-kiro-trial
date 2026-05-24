@@ -55,6 +55,16 @@ Implemented as `backendErrorExamples` data and `BackendErrorExamplePage` in `src
 
 Status: `coded preview` for mock variants only. Real backend behaviour remains out of scope.
 
+## Fidelity pass
+
+2026-05-24 comparison against the backend errors repository tuned the visible preview alert treatment:
+
+- hard-stop alert content now includes a small error icon treatment closer to the source notification-error anatomy
+- examples remain source-code/mock-message previews only
+- no real backend routing, recovery handling, validation, persistence or escalation behaviour was added
+
+Exact mapping from backend codes to full-page, inline or recoverable error states remains unresolved.
+
 ## Open questions
 
 - Which MPS error variants should appear in the final trial candidate?

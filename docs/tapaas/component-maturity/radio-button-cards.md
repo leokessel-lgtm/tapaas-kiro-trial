@@ -73,6 +73,17 @@ The preview was adjusted to:
 
 This improves visual and behavioural review quality, but it is still not a pixel-perfect implementation. Exact TaPaaS pictogram assets, final spacing and final selected/error state treatment still need TaPaaS/GEL confirmation.
 
+## Additional fidelity pass
+
+2026-05-24 comparison against node `31:63988` further tuned the preview:
+
+- desktop cards use the evidenced 335px card width with a two-column row and 24px gap
+- mobile stacks at narrow widths with 16px spacing
+- option labels use the source-like 24px bold treatment
+- default error text now matches the source example: `Please select an option.`
+
+The source remains marked `CONCEPT`, so this is still a coded-preview candidate only.
+
 ## Open questions
 
 - Which pictogram library should be used when GEL and TaPaaS differ?

@@ -45,6 +45,16 @@ Implemented as `DeclarationReview` in `src/tapaas-preview/`.
 
 Status: `coded preview`, still `needs engineer review`.
 
+## Fidelity pass
+
+2026-05-24 Storybook comparison pass tuned the card variant toward the source anatomy:
+
+- default heading and intro retain the source pattern `Declaration` and `You have accepted these declarations:`
+- card playback now uses visible paragraph statements rather than list bullets
+- section grouping remains explicit, but final legal/declaration wording is placeholder/mock unless owner-confirmed
+
+The accordion variant remains a preview of the source relationship only. Whether legally material declaration playback can be collapsed is unresolved.
+
 ## Open questions
 
 - Which variant should be preferred for MPS and similar flows?

@@ -31,4 +31,5 @@
 
 - Current selected node was not exposed through Figma selection state, so implementation used targeted live MCP extraction of the bounded component set and representative variant.
 - Source page `10:1862` resolves as a page-like node and should not be used as the component implementation boundary.
+- The 2026-05-24 fidelity tuning pass replaced the CSS-drawn placeholder icon with an inline preview pictogram, aligned the desktop/mobile icon sizing closer to source evidence, and kept step content mock/static.
 - The preview component is suitable for Storybook and mock confirmation screens, but is not approved for production use.
