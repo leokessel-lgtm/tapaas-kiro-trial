@@ -3,6 +3,298 @@
   "purpose": "Static acceptance connections for coded-preview TaPaaS artefacts. This manifest checks preview, story, transaction, test and evidence links only.",
   "entries": [
     {
+      "id": "next-steps-card",
+      "name": "Next steps card",
+      "classification": "TaPaaS-specific composite",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "NextStepsCardPreview"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--next-steps-card",
+            "mode": "isolated-review",
+            "expectedText": "Application assessment",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "used",
+        "files": ["src/tapaas-preview/index.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "confirmation"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/next-steps-card.md",
+          "docs/source-evidence/tapaas-design-library/components/next-steps-card.md"
+        ],
+        "logKey": "Extract Next steps card into preview component",
+        "relationshipMapKey": "Next steps card",
+        "coverageMatrixKey": "confirmation"
+      },
+      "boundaries": [
+        "preview-only",
+        "mock or static guidance only",
+        "no notification timing",
+        "no routing",
+        "no backend behaviour",
+        "no service outcome logic"
+      ]
+    },
+    {
+      "id": "radio-button-cards",
+      "name": "TaPaaS radio button cards",
+      "classification": "TaPaaS-specific composite",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "RadioButtonCards"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--radio-button-card-states",
+            "mode": "isolated-review",
+            "expectedText": "Radio button cards",
+            "mobileNoOverflow": true
+          },
+          {
+            "id": "tapaas-preview-composites--selected-maturity-components",
+            "mode": "catalogue-review",
+            "expectedText": "Selected maturity backlog components",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "used",
+        "files": ["src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "application type / branching"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx",
+        "src/MobilityParkingPermitSkeleton.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/component-maturity/radio-button-cards.md",
+          "docs/source-evidence/tapaas-design-library/component-maturity/radio-button-cards.md"
+        ],
+        "logKey": "Mature selected five TaPaaS components into trial previews",
+        "relationshipMapKey": "Radio button cards",
+        "coverageMatrixKey": "application type / branching"
+      },
+      "boundaries": [
+        "preview-only",
+        "native radio behaviour only",
+        "decorative pictograms only",
+        "no production promotion",
+        "no final selected, hover or focus parity claim"
+      ]
+    },
+    {
+      "id": "email-confirmation-modal",
+      "name": "Email confirmation modal",
+      "classification": "TaPaaS-specific composite",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "EmailConfirmationModal"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--email-confirmation-modal-desktop",
+            "mode": "isolated-review",
+            "expectedText": "samplemail@email.com",
+            "mobileNoOverflow": true
+          },
+          {
+            "id": "tapaas-preview-composites--email-confirmation-modal-mobile",
+            "mode": "isolated-review",
+            "expectedText": "samplemail@email.com",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "catalogue-only",
+        "files": ["src/tapaas-preview/index.tsx"]
+      },
+      "tests": [
+        "src/tapaas-preview/EmailConfirmationModal.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/source-evidence/tapaas-design-library/components/email-confirmation-modal.md"
+        ],
+        "logKey": "Extract Email confirmation modal into preview component",
+        "relationshipMapKey": "Email confirmation modal"
+      },
+      "boundaries": [
+        "preview-only callbacks",
+        "no email delivery",
+        "no persistence",
+        "no transaction routing",
+        "no critical-error handling"
+      ]
+    },
+    {
+      "id": "backend-error-examples",
+      "name": "Backend error examples",
+      "classification": "TaPaaS-specific pattern set",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "BackendErrorExamplePage"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--selected-maturity-components",
+            "mode": "catalogue-review",
+            "expectedText": "Mock backend code:",
+            "mobileNoOverflow": true
+          },
+          {
+            "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
+            "mode": "transaction-assembly",
+            "expectedText": "Privacy information",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "used",
+        "files": ["src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "recoverable/business errors"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx",
+        "src/MobilityParkingPermitSkeleton.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/component-maturity/backend-error-examples.md",
+          "docs/source-evidence/tapaas-design-library/component-maturity/backend-error-examples.md"
+        ],
+        "logKey": "Mature selected five TaPaaS components into trial previews",
+        "relationshipMapKey": "Business error page",
+        "coverageMatrixKey": "recoverable/business errors"
+      },
+      "boundaries": [
+        "preview-only mock hard stops",
+        "no real backend routing",
+        "no source-confirmed business rules",
+        "no retry or recovery behaviour",
+        "no analytics or operational ownership"
+      ]
+    },
+    {
+      "id": "search-vehicle-input",
+      "name": "Search vehicle input",
+      "classification": "TaPaaS-specific composite",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "TapaasSearchAction"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--search-vehicle-input",
+            "mode": "isolated-review",
+            "expectedText": "Enter a NSW plate number",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "catalogue-only",
+        "files": ["src/tapaas-preview/index.tsx"]
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/04-evidence-log.md"
+        ],
+        "logKey": "Migrate `TapaasSearchAction` into active v0.3 preview package",
+        "relationshipMapKey": "Search vehicle input"
+      },
+      "boundaries": [
+        "static preview only",
+        "no search behaviour",
+        "no validation",
+        "no result states",
+        "no backend lookup"
+      ]
+    },
+    {
+      "id": "declaration-review",
+      "name": "Declaration review",
+      "classification": "TaPaaS-specific composite",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "DeclarationReview"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--selected-maturity-components",
+            "mode": "catalogue-review",
+            "expectedText": "Declaration review",
+            "mobileNoOverflow": true
+          },
+          {
+            "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
+            "mode": "transaction-assembly",
+            "expectedText": "Privacy information",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "review-gated",
+        "files": ["src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "declaration"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx",
+        "src/MobilityParkingPermitSkeleton.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/component-maturity/declaration-review.md",
+          "docs/source-evidence/tapaas-design-library/component-maturity/declaration-review.md"
+        ],
+        "logKey": "Mature selected five TaPaaS components into trial previews",
+        "relationshipMapKey": "Declaration review",
+        "coverageMatrixKey": "declaration"
+      },
+      "boundaries": [
+        "preview-only declaration playback",
+        "placeholder wording only",
+        "no legal interpretation",
+        "privacy and policy decisions remain review-gated",
+        "no submission validation behaviour"
+      ]
+    },
+    {
       "id": "mps-application-type-branching",
       "name": "MPS application type / branching",
       "classification": "TaPaaS-specific transaction branch pattern",
