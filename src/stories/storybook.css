@@ -12,16 +12,26 @@
 }
 
 .storybook-stack {
+  box-sizing: border-box;
   display: grid;
   gap: 1.5rem;
   max-width: 760px;
+  width: 100%;
+}
+
+.storybook-stack > * {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .storybook-note {
   border-left: 4px solid #2e5299;
+  box-sizing: border-box;
   background: #eaedf4;
+  overflow-wrap: anywhere;
   padding: 1rem 1.25rem;
   margin: 0 0 1.5rem;
+  width: 100%;
 }
 
 .storybook-note p {

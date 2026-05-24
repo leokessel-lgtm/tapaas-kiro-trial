@@ -251,8 +251,8 @@ export function MpsReviewFramePreview({
       data-preview-boundary='preview implementation; not production-approved'
     >
       <Heading level={2} id='mps-review-frame-heading'>Review your application</Heading>
-      <p className='tapaas-mps-review-frame__hint'>
-        <span aria-hidden='true'>*</span> indicates a required field
+      <p id='mps-review-required-hint' className='tapaas-mps-review-frame__hint'>
+        <span>*</span> indicates a required field
       </p>
       <InPageAlert variant='info' title={calloutTitle}>
         <p>{calloutText}</p>
@@ -263,7 +263,14 @@ export function MpsReviewFramePreview({
             <div className='tapaas-mps-review-frame__section-heading'>
               <Heading level={3} id={`${section.id}-heading`} style={{ marginBottom: 0 }}>{section.title}</Heading>
               {onEdit && (
-                <TextLink onClick={() => onEdit(section.id)}>{section.editLabel || `Edit ${section.title}`}</TextLink>
+                <button
+                  type='button'
+                  className='tapaas-mps-review-frame__edit'
+                  aria-label={section.editLabel || `Edit ${section.title}`}
+                  onClick={() => onEdit(section.id)}
+                >
+                  Edit
+                </button>
               )}
             </div>
             <dl className='tapaas-summary-list'>
@@ -280,13 +287,42 @@ export function MpsReviewFramePreview({
           </section>
         ))}
       </div>
-      <DeclarationReview
-        title='Declaration'
-        intro='Accepted declaration shown on the MPS review frame. Final wording needs owner confirmation.'
-        sections={[{ title: 'Accepted declaration', statements: declarationStatements }]}
-      />
+      <MpsReviewDeclarationPreview reviewNotes={declarationStatements} />
       <TransactionCtaGroup onBack={onBack} onContinue={onSubmit} onExit={onExit} continueLabel={submitLabel} />
     </section>
+  )
+}
+
+function MpsReviewDeclarationPreview({ reviewNotes }: { reviewNotes: React.ReactNode[] }) {
+  return (
+    <fieldset
+      className='tapaas-mps-review-declaration'
+      aria-describedby='mps-review-required-hint mps-review-declaration-boundary'
+      data-preview-boundary='preview-only checked checkbox state; no persistence or submission validation'
+    >
+      <legend>Declaration</legend>
+      <label className='tapaas-mps-review-declaration__row'>
+        <input type='checkbox' checked readOnly required />
+        <span>
+          I have read and accept the applicant{' '}
+          <span className='tapaas-link-like'>[Applicant Terms and Conditions]</span>{' '}
+          <span className='tapaas-required-marker'>*</span>
+        </span>
+      </label>
+      <label className='tapaas-mps-review-declaration__row'>
+        <input type='checkbox' checked readOnly required />
+        <span>
+          I have read and understood the{' '}
+          <span className='tapaas-link-like'>[Information Collection Notice]</span>{' '}
+          and agree to save and reuse my details for future transactions.{' '}
+          <span className='tapaas-required-marker'>*</span>
+        </span>
+      </label>
+      <p id='mps-review-declaration-boundary' className='tapaas-help-text'>
+        Legal, privacy and policy wording is placeholder-only and needs owner review.
+        {reviewNotes.length > 0 && ' Supplied declaration notes are treated as evidence only.'}
+      </p>
+    </fieldset>
   )
 }
 
@@ -303,7 +339,7 @@ export function MpsConfirmationFramePreview({
   nextSteps,
   relatedContent,
   onStartAgain,
-  feedbackLabel = 'Was this page useful?',
+  feedbackLabel = 'How was the Mobility Parking Scheme permit?',
 }: {
   title?: string
   transactionName?: string
@@ -314,6 +350,8 @@ export function MpsConfirmationFramePreview({
   onStartAgain?: () => void
   feedbackLabel?: string
 }) {
+  const [feedbackChoice, setFeedbackChoice] = React.useState<string | null>(null)
+
   return (
     <section
       className='tapaas-mps-confirmation-frame'
@@ -336,9 +374,12 @@ export function MpsConfirmationFramePreview({
       <div className='tapaas-mps-confirmation-frame__feedback' aria-label={feedbackLabel}>
         <p>{feedbackLabel}</p>
         <div className='tapaas-mps-confirmation-frame__feedback-actions'>
-          <Button variant='secondary'>Yes</Button>
-          <Button variant='secondary'>No</Button>
+          <Button variant='secondary' onClick={() => setFeedbackChoice('positive')}>Yes</Button>
+          <Button variant='secondary' onClick={() => setFeedbackChoice('negative')}>No</Button>
         </div>
+        <p className='tapaas-mps-confirmation-frame__feedback-status' aria-live='polite'>
+          {feedbackChoice ? 'Mock feedback selected. Feedback capture is not implemented in this preview.' : ''}
+        </p>
       </div>
       {onStartAgain && <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start again' />}
     </section>

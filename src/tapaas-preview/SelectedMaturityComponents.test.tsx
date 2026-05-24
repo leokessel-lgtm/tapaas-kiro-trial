@@ -151,14 +151,24 @@ describe('selected TaPaaS maturity components', () => {
     )
 
     expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
-    expect(screen.getByText('*')).toBeInTheDocument()
+    expect(screen.getByText(/indicates a required field/)).toBeInTheDocument()
     expect(screen.getByText(/Please ensure that the details listed below are correct/)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Edit Application details' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Declaration' })).toBeInTheDocument()
+    const declarationGroup = screen.getByRole('group', { name: 'Declaration' })
+    expect(declarationGroup).toHaveAccessibleDescription(/indicates a required field/)
+    const declarationCheckboxes = within(declarationGroup).getAllByRole('checkbox')
+    expect(declarationCheckboxes).toHaveLength(2)
+    declarationCheckboxes.forEach((checkbox) => expect(checkbox).toBeChecked())
+    expect(within(declarationGroup).getByText(/Applicant Terms and Conditions/)).toBeInTheDocument()
+    expect(within(declarationGroup).getByText(/Information Collection Notice/)).toBeInTheDocument()
+    expect(within(declarationGroup).getAllByText('*')).toHaveLength(2)
+    expect(within(declarationGroup).getByText(/Legal, privacy and policy wording is placeholder-only/)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Submit mock application' })).toBeInTheDocument()
   })
 
-  it('renders the MPS confirmation frame preview with next steps and feedback', () => {
+  it('renders the MPS confirmation frame preview with next steps and feedback', async () => {
+    const user = userEvent.setup()
+
     render(
       <MpsConfirmationFramePreview
         referenceNumber='MPS-MOCK-000000'
@@ -175,7 +185,9 @@ describe('selected TaPaaS maturity components', () => {
     expect(screen.getByRole('status', { name: 'Transaction completed' })).toHaveTextContent('Your application has been submitted')
     expect(screen.getByText('MPS-MOCK-000000')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'What happens next?' })).toBeInTheDocument()
-    expect(screen.getByLabelText('Was this page useful?')).toBeInTheDocument()
+    expect(screen.getByLabelText('How was the Mobility Parking Scheme permit?')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Yes' }))
+    expect(screen.getByText('Mock feedback selected. Feedback capture is not implemented in this preview.')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Start again' })).toBeInTheDocument()
   })
 

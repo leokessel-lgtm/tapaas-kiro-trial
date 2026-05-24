@@ -108,40 +108,135 @@ function ModalAndBusinessErrorExample() {
   )
 }
 
-export const ReviewAndConfirmation: Story = {
+const mpsReviewSections = [
+  {
+    id: 'storybook-mps-review-application',
+    title: 'Application details',
+    rows: [
+      { label: 'Application type', value: 'Renewal' },
+      { label: 'Existing permit', value: 'MPS-MOCK-123456' },
+    ],
+  },
+  {
+    id: 'storybook-mps-review-personal',
+    title: 'Personal details',
+    rows: [
+      { label: 'Full name', value: 'Jane Citizen' },
+      { label: 'Address', value: '1 Mock Street, Sydney NSW 2000' },
+    ],
+  },
+  {
+    id: 'storybook-mps-review-concession',
+    title: 'Concession card details',
+    rows: [
+      { label: 'Card type', value: 'None' },
+      { label: 'Delivery method', value: 'Post to residential address' },
+    ],
+  },
+]
+
+const mpsDeclarationStatements = [
+  'I declare that the information provided is true and correct.',
+  'I understand this preview does not submit to a real service.',
+]
+
+const mpsApplicationDetails = [
+  { label: 'Applicant', value: 'Jane Citizen' },
+  { label: 'Application type', value: 'Renewal' },
+  { label: 'Outcome route', value: 'Submitted', helpText: 'Mock outcome only.' },
+]
+
+const mpsNextSteps = [
+  { id: 'assessment', content: 'Your mock application will be assessed within [confirmed timeframe].' },
+  { id: 'updates', content: 'You will receive updates by [confirmed contact channel].' },
+  { id: 'issue', content: 'If approved by the real service, the permit would be issued using confirmed delivery rules.' },
+]
+
+export const MpsReviewFrameFigmaFidelity: Story = {
+  name: 'MPS Review Frame - Figma Fidelity',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Isolated review of the MPS `6.A - Review` frame preview. Use this story for Figma fidelity QA only; content remains mock and owner-confirmation required.',
+      },
+    },
+  },
   render: () => (
     <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>MPS Review Frame - Figma fidelity</strong>
+        <p>Isolated preview of source frame 0:33185. Use this story to compare layout, callout treatment, section order, edit links, declaration placement and CTA relationship.</p>
+        <ul>
+          <li>Source: Mobility_Parking_Scheme.sketch 1 (Copy), page MPS Final, frame 6.A - Review, node 0:33185.</li>
+          <li>Boundary: preview-only frame pattern with mock content and unresolved edit routes.</li>
+          <li>Unresolved: 6.B review variant, final declaration wording, checkbox validation semantics and assistive-technology behaviour.</li>
+          <li>Review: compare edit button treatment, declaration checkboxes, required markers, CTA placement and section order.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved or TaPaaS-approved.</li>
+        </ul>
+      </div>
       <MpsReviewFramePreview
-        sections={[
-          {
-            id: 'storybook-mps-review-application',
-            title: 'Application details',
-            rows: [
-              { label: 'Application type', value: 'Renewal' },
-              { label: 'Existing permit', value: 'MPS-MOCK-123456' },
-            ],
-          },
-          {
-            id: 'storybook-mps-review-personal',
-            title: 'Personal details',
-            rows: [
-              { label: 'Full name', value: 'Jane Citizen' },
-              { label: 'Address', value: '1 Mock Street, Sydney NSW 2000' },
-            ],
-          },
-          {
-            id: 'storybook-mps-review-concession',
-            title: 'Concession card details',
-            rows: [
-              { label: 'Card type', value: 'None' },
-              { label: 'Delivery method', value: 'Post to residential address' },
-            ],
-          },
-        ]}
-        declarationStatements={[
-          'I declare that the information provided is true and correct.',
-          'I understand this preview does not submit to a real service.',
-        ]}
+        sections={mpsReviewSections}
+        declarationStatements={mpsDeclarationStatements}
+        onEdit={() => undefined}
+        onSubmit={() => undefined}
+        onBack={() => undefined}
+        onExit={() => undefined}
+      />
+    </div>
+  ),
+}
+
+export const MpsConfirmationFrameFigmaFidelity: Story = {
+  name: 'MPS Confirmation Frame - Figma Fidelity',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Isolated review of the MPS `6.A Confirmation screen` frame preview. Use this story for Figma fidelity QA only; reference, timeframe and notification content remain mock.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>MPS Confirmation Frame - Figma fidelity</strong>
+        <p>Isolated preview of source frame 0:33222. Use this story to compare confirmation heading, reference/application details, next-step content, feedback prompt and action/footer relationship.</p>
+        <ul>
+          <li>Source: Mobility_Parking_Scheme.sketch 1 (Copy), page MPS Final, frame 6.A Confirmation screen, node 0:33222.</li>
+          <li>Boundary: preview-only frame pattern with mock reference, timeframe, notification and feedback behaviour.</li>
+          <li>Unresolved: 6.B tile variant, real reference format, final next-step wording, feedback capture and assistive-technology behaviour.</li>
+          <li>Review: compare status heading, details layout, next-step content, feedback prompt and footer/action relationship.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved or TaPaaS-approved.</li>
+        </ul>
+      </div>
+      <MpsConfirmationFramePreview
+        referenceNumber='MPS-MOCK-000000'
+        applicationDetails={mpsApplicationDetails}
+        nextSteps={mpsNextSteps}
+        relatedContent={<p>Related transactions and notification wording need owner confirmation.</p>}
+        onStartAgain={() => undefined}
+      />
+    </div>
+  ),
+}
+
+export const ReviewAndConfirmation: Story = {
+  name: 'Review and Confirmation - Transaction Assembly',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Composite transaction assembly story showing how review, fee, confirmation, summary and next-step patterns can sit together. Use the isolated MPS stories for Figma fidelity QA.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Review and Confirmation - transaction assembly</strong>
+        <p>Composite review surface for pattern relationships. For frame-by-frame Figma fidelity, use the isolated MPS Review Frame and MPS Confirmation Frame stories.</p>
+      </div>
+      <MpsReviewFramePreview
+        sections={mpsReviewSections}
+        declarationStatements={mpsDeclarationStatements}
         onEdit={() => undefined}
         onSubmit={() => undefined}
         onBack={() => undefined}
@@ -171,16 +266,8 @@ export const ReviewAndConfirmation: Story = {
       <ConfirmationHeader title='Application submitted' transactionName='Mock transaction' />
       <MpsConfirmationFramePreview
         referenceNumber='MPS-MOCK-000000'
-        applicationDetails={[
-          { label: 'Applicant', value: 'Jane Citizen' },
-          { label: 'Application type', value: 'Renewal' },
-          { label: 'Outcome route', value: 'Submitted', helpText: 'Mock outcome only.' },
-        ]}
-        nextSteps={[
-          { id: 'assessment', content: 'Your mock application will be assessed within [confirmed timeframe].' },
-          { id: 'updates', content: 'You will receive updates by [confirmed contact channel].' },
-          { id: 'issue', content: 'If approved by the real service, the permit would be issued using confirmed delivery rules.' },
-        ]}
+        applicationDetails={mpsApplicationDetails}
+        nextSteps={mpsNextSteps}
         relatedContent={<p>Related transactions and notification wording need owner confirmation.</p>}
         onStartAgain={() => undefined}
       />

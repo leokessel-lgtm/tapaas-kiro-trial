@@ -11,12 +11,12 @@
 | source_node | `0:33222` |
 | anatomy | Page header/global nav context, status check icon, past-tense confirmation heading, short supporting text, application details/reference area, `What happens next?` heading, ordered next-step content, supporting paragraph, feedback prompt and footer relationship. |
 | states_variants | Single confirmation screen extracted. Tile variant `6.B Confirmation screen with tile` remains unresolved. |
-| behaviour | Start-again and feedback actions are preview-only. No receipt, notification, related-transaction routing or persistence is implemented. |
+| behaviour | Start-again and feedback actions are preview-only. Feedback buttons set a local aria-live mock acknowledgement only. No receipt, notification, related-transaction routing, analytics, storage or persistence is implemented. |
 | classification | `TaPaaS-specific transaction frame pattern` |
 | maturity | `coded-preview` |
 | validation_status | `build-tested` |
 | implementation_boundary | Preview-only confirmation layout. Reference number, timeframe, communication channel and issue outcome are mock/placeholder values. |
-| unknowns | Exact heading/supporting text, real reference format, actual next-step wording, feedback behaviour, related transaction tile rules, tile variant, final assistive-technology behaviour. |
+| unknowns | Exact heading/supporting text, real reference format, actual next-step wording, real feedback capture behaviour, related transaction tile rules, tile variant, final assistive-technology behaviour. |
 | review_reason | `engineer`, `accessibility`, `owner`, `policy` |
 
 ## Suitability gate
@@ -30,4 +30,5 @@
 ## Notes
 
 - The component preserves the frame-level order: confirmation status, reference/application details, what-happens-next content, feedback prompt and footer/action relationship.
+- Feedback controls are mock-interactive only and do not capture, send, store or analyse feedback.
 - The broader confirmation frame remains source evidence. The reusable preview pattern is limited to layout and placeholder transaction content.
