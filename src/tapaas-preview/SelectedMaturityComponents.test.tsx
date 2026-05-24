@@ -110,6 +110,39 @@ describe('selected TaPaaS maturity components', () => {
     expect(screen.getByRole('radio', { name: /Renew a permit/ })).not.toBeChecked()
   })
 
+  it('supports keyboard movement in radio button cards preview', async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+
+    render(
+      <RadioButtonCards
+        id='application-type-keyboard'
+        legend='What do you want to do?'
+        value='renew'
+        onChange={onChange}
+        options={[
+          { value: 'new', label: 'Apply for a new permit', description: 'Start a new mock application.' },
+          { value: 'renew', label: 'Renew a permit', description: 'Use an existing permit.' },
+          { value: 'replace', label: 'Replace a permit', description: 'Replace an existing permit.' },
+        ]}
+      />,
+    )
+
+    const renew = screen.getByRole('radio', { name: /Renew a permit/ })
+    renew.focus()
+    await user.keyboard('{ArrowRight}')
+    expect(onChange).toHaveBeenCalledWith('replace')
+
+    await user.keyboard('{ArrowLeft}')
+    expect(onChange).toHaveBeenCalledWith('new')
+
+    await user.keyboard('{Home}')
+    expect(onChange).toHaveBeenCalledWith('new')
+
+    await user.keyboard('{End}')
+    expect(onChange).toHaveBeenCalledWith('replace')
+  })
+
   it('renders the search vehicle input as a static preview action', () => {
     render(<TapaasSearchAction />)
 

@@ -1431,6 +1431,11 @@ export function RadioButtonCards({
   required?: boolean
 }) {
   const errorId = `${id}-error`
+  function selectByOffset(currentIndex: number, offset: number) {
+    const nextIndex = (currentIndex + offset + options.length) % options.length
+    onChange(options[nextIndex].value)
+  }
+
   return (
     <fieldset
       className={`tapaas-radio-card-fieldset ${hasError ? 'tapaas-radio-card-fieldset--error' : ''}`}
@@ -1439,7 +1444,7 @@ export function RadioButtonCards({
     >
       <legend className='tapaas-radio-card-legend'>{legend}</legend>
       <div className='tapaas-radio-card-set'>
-        {options.map((option) => {
+        {options.map((option, index) => {
           const optionId = `${id}-${option.value}`
           const labelId = `${optionId}-label`
           const descriptionId = option.description ? `${optionId}-description` : undefined
@@ -1461,6 +1466,24 @@ export function RadioButtonCards({
                 aria-labelledby={labelId}
                 aria-describedby={[descriptionId, hasError ? errorId : undefined].filter(Boolean).join(' ') || undefined}
                 onChange={() => onChange(option.value)}
+                onKeyDown={(event) => {
+                  if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+                    event.preventDefault()
+                    selectByOffset(index, 1)
+                  }
+                  if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+                    event.preventDefault()
+                    selectByOffset(index, -1)
+                  }
+                  if (event.key === 'Home') {
+                    event.preventDefault()
+                    onChange(options[0].value)
+                  }
+                  if (event.key === 'End') {
+                    event.preventDefault()
+                    onChange(options[options.length - 1].value)
+                  }
+                }}
               />
               <span className='tapaas-radio-card__body'>
                 <span className='tapaas-radio-card__pictogram' aria-hidden='true'>{option.pictogram || '○'}</span>

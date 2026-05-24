@@ -21,7 +21,9 @@ describe('EmailConfirmationModal', () => {
     )
 
     expect(screen.getByRole('dialog', { name: 'Confirm email address' })).toBeInTheDocument()
+    expect(screen.getByRole('dialog', { name: 'Confirm email address' })).toHaveAttribute('aria-modal', 'true')
     expect(screen.getByText('samplemail@email.com')).toBeInTheDocument()
+    expect(screen.getByText(/Check the address/)).toHaveTextContent("Check the address. We'll send your receipt to samplemail@email.com")
 
     await user.click(screen.getByRole('button', { name: 'Send' }))
     expect(onSend).toHaveBeenCalledTimes(1)

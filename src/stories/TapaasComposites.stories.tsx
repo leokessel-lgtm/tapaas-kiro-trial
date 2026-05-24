@@ -565,8 +565,8 @@ export const ExitModalIsolated: Story = {
   render: () => <ExitModalIsolatedExample />,
 }
 
-function EmailConfirmationModalExample({ mode }: { mode: 'desktop' | 'mobile' }) {
-  const [isOpen, setIsOpen] = useState(false)
+function EmailConfirmationModalExample({ mode, initiallyOpen = true }: { mode: 'desktop' | 'mobile'; initiallyOpen?: boolean }) {
+  const [isOpen, setIsOpen] = useState(initiallyOpen)
   const [lastAction, setLastAction] = useState('No action selected')
   const isMobile = mode === 'mobile'
 
@@ -575,6 +575,7 @@ function EmailConfirmationModalExample({ mode }: { mode: 'desktop' | 'mobile' })
       <div className='storybook-note'>
         <strong>{isMobile ? 'Email confirmation modal — mobile bottom modal' : 'Email confirmation modal — desktop centred modal'}</strong>
         <p>Source: TaPaaS Email confirmation modal <code>9290:50392</code>, component frame <code>9241:18447</code>. Preview callbacks only.</p>
+        <p>The modal opens by default in this story so desktop/mobile source-parity review can inspect the actual dialog without an extra interaction.</p>
         {isMobile
           ? <p>Set the Storybook viewport below 640px to verify the bottom-modal treatment. The constrained container shows intended mobile review width but cannot force CSS media queries by itself.</p>
           : <p>Use a desktop-width Storybook viewport to verify centred modal placement and horizontal action order.</p>}
@@ -598,4 +599,44 @@ export const EmailConfirmationModalDesktop: Story = {
 
 export const EmailConfirmationModalMobile: Story = {
   render: () => <EmailConfirmationModalExample mode='mobile' />,
+}
+
+function RadioButtonCardStatesExample() {
+  const [selected, setSelected] = useState('renew')
+
+  return (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Radio button cards — state review</strong>
+        <p>Preview-only state surface for selected, unselected, focus, keyboard and error review. Source node <code>31:63988</code> remains marked CONCEPT.</p>
+      </div>
+      <RadioButtonCards
+        id='storybook-radio-card-state-review'
+        legend='What do you want to do?'
+        value={selected}
+        onChange={setSelected}
+        options={[
+          { value: 'new', label: 'Apply for a new permit', description: 'Start a new mock application.', pictogram: <PermitIcon /> },
+          { value: 'renew', label: 'Renew a permit', description: 'Use an existing mock permit number.', pictogram: <RefreshIcon /> },
+        ]}
+        required
+      />
+      <RadioButtonCards
+        id='storybook-radio-card-error-review'
+        legend='Select a mock option'
+        value=''
+        onChange={() => undefined}
+        options={[
+          { value: 'first', label: 'First option', description: 'Decorative pictogram placeholder.', pictogram: <PermitIcon /> },
+          { value: 'second', label: 'Second option', description: 'Decorative pictogram placeholder.', pictogram: <RefreshIcon /> },
+        ]}
+        hasError
+        required
+      />
+    </div>
+  )
+}
+
+export const RadioButtonCardStates: Story = {
+  render: () => <RadioButtonCardStatesExample />,
 }
