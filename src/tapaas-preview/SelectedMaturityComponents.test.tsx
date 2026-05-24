@@ -162,7 +162,7 @@ describe('selected TaPaaS maturity components', () => {
     expect(within(declarationGroup).getByText(/Applicant Terms and Conditions/)).toBeInTheDocument()
     expect(within(declarationGroup).getByText(/Information Collection Notice/)).toBeInTheDocument()
     expect(within(declarationGroup).getAllByText('*')).toHaveLength(2)
-    expect(within(declarationGroup).getByText(/Legal, privacy and policy wording is placeholder-only/)).toBeInTheDocument()
+    expect(within(declarationGroup).getByText(/Legal, privacy and policy wording is placeholder-only/)).toHaveClass('gel-sr-only')
     expect(screen.getByRole('button', { name: 'Submit mock application' })).toBeInTheDocument()
   })
 

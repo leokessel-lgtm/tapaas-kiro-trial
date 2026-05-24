@@ -262,16 +262,6 @@ export function MpsReviewFramePreview({
           <section className='tapaas-mps-review-frame__section' aria-labelledby={`${section.id}-heading`} key={section.id}>
             <div className='tapaas-mps-review-frame__section-heading'>
               <Heading level={3} id={`${section.id}-heading`} style={{ marginBottom: 0 }}>{section.title}</Heading>
-              {onEdit && (
-                <button
-                  type='button'
-                  className='tapaas-mps-review-frame__edit'
-                  aria-label={section.editLabel || `Edit ${section.title}`}
-                  onClick={() => onEdit(section.id)}
-                >
-                  Edit
-                </button>
-              )}
             </div>
             <dl className='tapaas-summary-list'>
               {section.rows.map((row) => (
@@ -284,6 +274,18 @@ export function MpsReviewFramePreview({
                 </div>
               ))}
             </dl>
+            {onEdit && (
+              <div className='tapaas-mps-review-frame__section-action'>
+                <button
+                  type='button'
+                  className='tapaas-mps-review-frame__edit'
+                  aria-label={section.editLabel || `Edit ${section.title}`}
+                  onClick={() => onEdit(section.id)}
+                >
+                  Edit
+                </button>
+              </div>
+            )}
           </section>
         ))}
       </div>
@@ -303,7 +305,8 @@ function MpsReviewDeclarationPreview({ reviewNotes }: { reviewNotes: React.React
       <legend>Declaration</legend>
       <label className='tapaas-mps-review-declaration__row'>
         <input type='checkbox' checked readOnly required />
-        <span>
+        <span className='tapaas-mps-review-declaration__box' aria-hidden='true' />
+        <span className='tapaas-mps-review-declaration__label'>
           I have read and accept the applicant{' '}
           <span className='tapaas-link-like'>[Applicant Terms and Conditions]</span>{' '}
           <span className='tapaas-required-marker'>*</span>
@@ -311,14 +314,15 @@ function MpsReviewDeclarationPreview({ reviewNotes }: { reviewNotes: React.React
       </label>
       <label className='tapaas-mps-review-declaration__row'>
         <input type='checkbox' checked readOnly required />
-        <span>
+        <span className='tapaas-mps-review-declaration__box' aria-hidden='true' />
+        <span className='tapaas-mps-review-declaration__label'>
           I have read and understood the{' '}
           <span className='tapaas-link-like'>[Information Collection Notice]</span>{' '}
           and agree to save and reuse my details for future transactions.{' '}
           <span className='tapaas-required-marker'>*</span>
         </span>
       </label>
-      <p id='mps-review-declaration-boundary' className='tapaas-help-text'>
+      <p id='mps-review-declaration-boundary' className='gel-sr-only'>
         Legal, privacy and policy wording is placeholder-only and needs owner review.
         {reviewNotes.length > 0 && ' Supplied declaration notes are treated as evidence only.'}
       </p>
