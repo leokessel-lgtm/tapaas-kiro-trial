@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Static acceptance connections for coded-preview TaPaaS artefacts. This manifest checks preview, story, transaction, test and evidence links only.",
+  "entries": [
+    {
+      "id": "mps-applicant-details-frame",
+      "name": "MPS applicant details/manual address frame",
+      "classification": "TaPaaS-specific transaction frame pattern",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "MpsApplicantDetailsFramePreview"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--mps-applicant-details-frame-figma-fidelity",
+            "mode": "isolated-review"
+          },
+          {
+            "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
+            "mode": "transaction-assembly"
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "used",
+        "files": ["src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "applicant details / manual address"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx",
+        "src/MobilityParkingPermitSkeleton.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/mps-applicant-details-frame.md",
+          "docs/source-evidence/tapaas-design-library/components/mps-applicant-details-frame.md"
+        ],
+        "logKey": "Extract MPS applicant details and manual address frames into preview pattern",
+        "relationshipMapKey": "MPS applicant details frame",
+        "coverageMatrixKey": "applicant details / manual address"
+      },
+      "boundaries": [
+        "preview-only",
+        "mock form capture only",
+        "no real address lookup",
+        "no identity verification",
+        "no customer record update",
+        "no backend persistence",
+        "no age eligibility logic"
+      ]
+    },
+    {
+      "id": "mps-review-frame",
+      "name": "MPS review frame",
+      "classification": "TaPaaS-specific transaction frame pattern",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "MpsReviewFramePreview"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--mps-review-frame-figma-fidelity",
+            "mode": "isolated-review"
+          },
+          {
+            "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
+            "mode": "transaction-assembly"
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "used",
+        "files": ["src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "review"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx",
+        "src/MobilityParkingPermitSkeleton.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/mps-review-frame.md",
+          "docs/source-evidence/tapaas-design-library/components/mps-review-frame.md"
+        ],
+        "logKey": "Extract MPS Review frame into preview pattern",
+        "relationshipMapKey": "MPS review frame",
+        "coverageMatrixKey": "review"
+      },
+      "boundaries": [
+        "preview-only",
+        "mock review layout only",
+        "no real edit routing",
+        "no persistence",
+        "no validation engine",
+        "no identity, eligibility, medical, concession, payment, legal, privacy, policy or backend logic"
+      ]
+    },
+    {
+      "id": "mps-confirmation-frame",
+      "name": "MPS confirmation frame",
+      "classification": "TaPaaS-specific transaction frame pattern",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "MpsConfirmationFramePreview"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--mps-confirmation-frame-figma-fidelity",
+            "mode": "isolated-review"
+          },
+          {
+            "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
+            "mode": "transaction-assembly"
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "used",
+        "files": ["src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "confirmation"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx",
+        "src/MobilityParkingPermitSkeleton.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/mps-confirmation-frame.md",
+          "docs/source-evidence/tapaas-design-library/components/mps-confirmation-frame.md"
+        ],
+        "logKey": "Extract MPS Confirmation screen into preview pattern",
+        "relationshipMapKey": "MPS confirmation frame",
+        "coverageMatrixKey": "confirmation"
+      },
+      "boundaries": [
+        "preview-only",
+        "mock outcome layout only",
+        "no receipt issuing",
+        "no notification sending",
+        "no feedback capture",
+        "no related-transaction routing",
+        "no backend, payment, legal, privacy or policy logic"
+      ]
+    }
+  ]
+}
