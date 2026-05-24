@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 import { Button, Field, Input, InPageAlert, Textarea } from '../gel'
+import { MobilityParkingPermitSkeleton } from '../MobilityParkingPermitSkeleton'
 import {
   AssessmentSummaryPanel,
   BackendErrorExamplePage,
@@ -345,6 +346,32 @@ export const ReviewAndConfirmation: Story = {
       >
         <p>Next-step and timeframe content needs owner confirmation before reuse.</p>
       </TransactionSummaryCard>
+    </div>
+  ),
+}
+
+export const MpsEndToEndTransactionAssemblyV1: Story = {
+  name: 'MPS End-to-End Transaction Assembly v1',
+  parameters: {
+    docs: {
+      description: {
+        story: 'End-to-end review surface for the current MPS transaction skeleton. It composes the strongest available coded-preview artefacts while keeping unresolved backend, identity, upload, validation, legal, privacy and policy behaviour review-gated.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>MPS End-to-End Transaction Assembly v1</strong>
+        <p>Interactive transaction skeleton for preview/story/transaction alignment review. Use isolated frame stories for strict Figma fidelity checks.</p>
+        <ul>
+          <li>Source-backed preview artefacts currently composed: applicant details/manual address frame, radio-card application type, MPS review frame, MPS confirmation frame, evidence/status summaries and mock backend error examples.</li>
+          <li>Review-gated areas: privacy/start content, representative/contact frame parity, medical upload states, concession validation, declaration wording, backend recovery, identity, payment and assistive-technology behaviour.</li>
+          <li>Boundary: preview-only mock transaction assembly; no real address lookup, identity verification, upload/storage, backend persistence, validation engine, eligibility, payment, legal, privacy or policy behaviour.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.</li>
+        </ul>
+      </div>
+      <MobilityParkingPermitSkeleton />
     </div>
   ),
 }
