@@ -70,6 +70,9 @@ test.describe('component acceptance Storybook runtime smoke', () => {
     const response = await request.get('storybook/index.json')
     expect(response.ok()).toBe(true)
 
+    const workerResponse = await request.get('storybook/mockServiceWorker.js')
+    expect(workerResponse.ok()).toBe(true)
+
     const body = await response.json()
     storyIndex = body.entries
   })
