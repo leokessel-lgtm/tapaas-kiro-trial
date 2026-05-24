@@ -481,7 +481,6 @@ function SelectedMaturityComponentsExample() {
           { value: 'new', label: 'Apply for a new permit', description: 'Start a new mock application.', pictogram: <PermitIcon /> },
           { value: 'renew', label: 'Renew a permit', description: 'Use an existing mock permit number.', pictogram: <RefreshIcon /> },
         ]}
-        errorMessage='Select an option to continue'
         required
       />
       <DeclarationReview
@@ -498,15 +497,15 @@ function SelectedMaturityComponentsExample() {
       />
       <LegalInfoAccordion />
       <InteractiveDetailsCard
-        title='Mock permit holder'
-        description='Interactive details card example. Actions use buttons because they change local state.'
+        title='Key information'
+        description='Interactive details card example. Action uses a preview link-button pattern.'
         statusLabel={removed ? 'Removed in mock state' : 'Mock active'}
         rows={[
           { label: 'Name', value: 'Alex Citizen' },
           { label: 'Permit type', value: 'Individual MPS permit' },
         ]}
         actions={[
-          { label: removed ? 'Restore mock holder' : 'Remove this holder', onAction: () => setRemoved((value) => !value), variant: 'secondary' },
+          { label: removed ? 'Restore mock holder' : 'Remove this vehicle', onAction: () => setRemoved((value) => !value), variant: 'link' },
         ]}
       />
       <BackendErrorExamplePage example={backendErrorExamples.addressNotNsw} onStartAgain={() => undefined} />

@@ -704,7 +704,15 @@ export function NextStepsCardPreview({
       data-preview-boundary='preview implementation; not production-approved'
     >
       <div className='tapaas-next-steps-card__heading'>
-        {showIcon && <span className='tapaas-next-steps-card__icon' aria-hidden='true' />}
+        {showIcon && (
+          <span className='tapaas-next-steps-card__icon' aria-hidden='true'>
+            <svg viewBox='0 0 48 48' focusable='false'>
+              <path d='M15 5h18v5h5v33H10V10h5V5Z' fill='none' stroke='currentColor' strokeWidth='3' strokeLinejoin='round' />
+              <path d='M17 10h14' fill='none' stroke='currentColor' strokeWidth='3' strokeLinecap='round' />
+              <path className='tapaas-next-steps-card__icon-accent' d='m16 25 4 4 7-10m-11 17 4 4 11-15' fill='none' strokeWidth='3' strokeLinecap='round' strokeLinejoin='round' />
+            </svg>
+          </span>
+        )}
         <Heading level={headingLevel} id={headingId} style={{ marginBottom: 0 }}>
           {heading}
         </Heading>
@@ -766,7 +774,7 @@ export function TransactionCtaGroup({
 export function TapaasSearchAction({
   id,
   label = 'Enter a NSW plate number',
-  helpText = 'Use placeholder content until service search rules are confirmed.',
+  helpText = 'For example ABC123. Do not include spaces or special characters.',
   buttonLabel = 'Find vehicle',
   placeholder,
   defaultValue,
@@ -780,12 +788,12 @@ export function TapaasSearchAction({
       data-tapaas-component='search-vehicle-input'
       data-preview-boundary='static preview only'
     >
-      <div className='tapaas-search-action__field'>
-        <Field id={inputId} label={label} helpMessage={helpText}>
-          <Input id={inputId} defaultValue={defaultValue} placeholder={placeholder} inputWidth='xl' />
-        </Field>
-      </div>
-      <div className='tapaas-search-action__button'>
+      <label className='tapaas-search-action__label' htmlFor={inputId}>
+        {label}
+      </label>
+      {helpText && <p className='tapaas-search-action__help'>{helpText}</p>}
+      <div className='tapaas-search-action__controls'>
+        <Input id={inputId} defaultValue={defaultValue} placeholder={placeholder} inputWidth='xl' />
         <Button>{buttonLabel}</Button>
       </div>
     </div>
@@ -1018,8 +1026,11 @@ export function BusinessErrorPage({
   return (
     <section className='tapaas-error-page' aria-labelledby='business-error-heading'>
       <div role='alert' className='tapaas-error-page__alert'>
-        <Heading level={2} id='business-error-heading'>{title}</Heading>
-        <div>{message}</div>
+        <span className='tapaas-error-page__icon' aria-hidden='true'>!</span>
+        <div className='tapaas-error-page__content'>
+          <Heading level={2} id='business-error-heading'>{title}</Heading>
+          <div>{message}</div>
+        </div>
       </div>
       {reference && (
         <p className='tapaas-error-page__reference'>
@@ -1213,15 +1224,15 @@ export function DeclarationReview({
   }
 
   return (
-    <section className='tapaas-card tapaas-declaration-review' aria-labelledby={`${slugify(title)}-declaration-review-heading`}>
+    <section className='tapaas-card tapaas-declaration-review tapaas-declaration-review--card' aria-labelledby={`${slugify(title)}-declaration-review-heading`}>
       <Heading level={3} id={`${slugify(title)}-declaration-review-heading`}>{title}</Heading>
-      <p>{intro}</p>
+      <p className='tapaas-declaration-review__intro'>{intro}</p>
       {sections.map((section) => (
         <div className='tapaas-declaration-section' key={section.title}>
           <Heading level={4}>{section.title}</Heading>
-          <ul className='tapaas-declaration-list'>
-            {section.statements.map((statement, index) => <li key={index}>{statement}</li>)}
-          </ul>
+          <div className='tapaas-declaration-list'>
+            {section.statements.map((statement, index) => <p key={index}>{statement}</p>)}
+          </div>
         </div>
       ))}
     </section>
@@ -1234,7 +1245,7 @@ export function DeclarationReview({
 // Source evidence: Legal info accordion `22:35625`.
 // ---------------------------------------------------------------------------
 export function LegalInfoAccordion({
-  title = 'Privacy and notifications',
+  title = 'Privacy',
   items = defaultLegalInfoItems,
 }: {
   title?: string
@@ -1263,19 +1274,19 @@ const defaultLegalInfoItems = [
     title: 'Privacy Collection Notice',
     content: (
       <p>
-        Service NSW delivers this service on behalf of the responsible agency. Replace this placeholder with the confirmed privacy collection notice before reuse.
+        Service NSW delivers this service on behalf of <span aria-label='agency name placeholder'>[Agency name]</span> and some personal information will be shared with them. Replace this placeholder with the confirmed privacy collection notice before reuse.
       </p>
     ),
   },
   {
     id: 'terms-and-conditions',
     title: 'Terms and Conditions',
-    content: <p>You have agreed to the terms and conditions for this mock transaction. Confirm the real wording with the service owner.</p>,
+    content: <p>You have agreed to the Terms and Conditions for <span aria-label='transaction name placeholder'>[Transaction name]</span>. Confirm the real wording with the service owner.</p>,
   },
   {
     id: 'notifications',
     title: 'Notifications',
-    content: <p>We may send mock updates about this transaction. Real notification wording and channels need owner confirmation.</p>,
+    content: <p>We will send you an email with the details of your <span aria-label='transaction product placeholder'>[transaction product]</span> after you complete and submit this form online. Real notification wording and channels need owner confirmation.</p>,
   },
 ]
 
@@ -1355,31 +1366,41 @@ export function InteractiveDetailsCard({ title, description, rows, statusLabel, 
   const id = slugify(title) + '-interactive-details'
   return (
     <section className='tapaas-card tapaas-interactive-details-card' aria-labelledby={id} data-tapaas-component='interactive-details-card'>
-      <div className='tapaas-card-heading-row'>
-        <div>
+      <div className='tapaas-interactive-details-card__primary'>
+        <span className='tapaas-interactive-details-card__icon' aria-hidden='true'>
+          <svg viewBox='0 0 48 48' focusable='false'>
+            <path d='M12 9h24v30H12V9Zm6 9h12M18 24h18M18 30h14' fill='none' stroke='currentColor' strokeWidth='3' strokeLinecap='round' strokeLinejoin='round' />
+          </svg>
+        </span>
+        <div className='tapaas-interactive-details-card__info'>
           <Heading level={headingLevel} style={{ marginBottom: description ? '0.25rem' : 0 }} id={id}>{title}</Heading>
           {description && <p className='tapaas-help-text'>{description}</p>}
+          {statusLabel && <span className='tapaas-status-pill tapaas-status-pill--needs-review'>{statusLabel}</span>}
+          <dl className='tapaas-summary-list tapaas-interactive-details-card__rows'>
+            {rows.map((row) => (
+              <div className='tapaas-summary-row' key={row.label}>
+                <dt>{row.label}</dt>
+                <dd>{row.value}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
-        {statusLabel && <span className='tapaas-status-pill tapaas-status-pill--needs-review'>{statusLabel}</span>}
       </div>
-      <dl className='tapaas-summary-list'>
-        {rows.map((row) => (
-          <div className='tapaas-summary-row' key={row.label}>
-            <dt>{row.label}</dt>
-            <dd>{row.value}</dd>
-          </div>
-        ))}
-      </dl>
       <div className='tapaas-card-actions' aria-label={`${title} actions`}>
-        {actions.map((action) => (
-          <Button
-            key={action.label}
-            variant={action.variant || 'secondary'}
-            onClick={action.onAction}
-          >
-            {action.label}
-          </Button>
-        ))}
+        {actions.map((action) => {
+          if (action.variant === 'link') {
+            return <TextLink key={action.label} onClick={action.onAction}>{action.label}</TextLink>
+          }
+          return (
+            <Button
+              key={action.label}
+              variant={action.variant || 'secondary'}
+              onClick={action.onAction}
+            >
+              {action.label}
+            </Button>
+          )
+        })}
       </div>
     </section>
   )
@@ -1397,7 +1418,7 @@ export function RadioButtonCards({
   value,
   onChange,
   hasError,
-  errorMessage = 'Select an option to continue',
+  errorMessage = 'Please select an option.',
   required,
 }: {
   id: string

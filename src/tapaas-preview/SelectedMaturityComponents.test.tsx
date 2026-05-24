@@ -39,13 +39,13 @@ describe('selected TaPaaS maturity components', () => {
     const user = userEvent.setup()
     render(<LegalInfoAccordion />)
 
-    expect(screen.getByRole('heading', { name: 'Privacy and notifications' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Privacy' })).toBeInTheDocument()
     const privacyButton = screen.getByRole('button', { name: 'Privacy Collection Notice' })
     expect(privacyButton).toHaveAttribute('aria-expanded', 'false')
 
     await user.click(privacyButton)
     expect(privacyButton).toHaveAttribute('aria-expanded', 'true')
-    expect(screen.getByText(/responsible agency/i)).toBeInTheDocument()
+    expect(screen.getByText(/Agency name/)).toBeInTheDocument()
   })
 
   it('renders interactive details actions as buttons', async () => {
@@ -54,16 +54,16 @@ describe('selected TaPaaS maturity components', () => {
 
     render(
       <InteractiveDetailsCard
-        title='Mock permit holder'
+        title='Key information'
         rows={[{ label: 'Name', value: 'Alex Citizen' }]}
         statusLabel='Mock active'
-        actions={[{ label: 'Remove this holder', onAction, variant: 'secondary' }]}
+        actions={[{ label: 'Remove this vehicle', onAction, variant: 'link' }]}
       />,
     )
 
-    const card = screen.getByRole('region', { name: 'Mock permit holder' })
+    const card = screen.getByRole('region', { name: 'Key information' })
     expect(within(card).getByText('Mock active')).toBeInTheDocument()
-    await user.click(within(card).getByRole('button', { name: 'Remove this holder' }))
+    await user.click(within(card).getByRole('button', { name: 'Remove this vehicle' }))
     expect(onAction).toHaveBeenCalledTimes(1)
   })
 
@@ -88,7 +88,7 @@ describe('selected TaPaaS maturity components', () => {
 
     const group = screen.getByRole('group', { name: 'What do you want to do?' })
     expect(group).toHaveAttribute('aria-invalid', 'true')
-    expect(screen.getByText('Select an option to continue')).toBeInTheDocument()
+    expect(screen.getByText('Please select an option.')).toBeInTheDocument()
 
     await user.click(screen.getByRole('radio', { name: /Apply for a new permit/ }))
     expect(onChange).toHaveBeenCalledWith('new')
@@ -114,7 +114,7 @@ describe('selected TaPaaS maturity components', () => {
     render(<TapaasSearchAction />)
 
     expect(screen.getByLabelText('Enter a NSW plate number')).toHaveAttribute('type', 'text')
-    expect(screen.getByText('Use placeholder content until service search rules are confirmed.')).toBeInTheDocument()
+    expect(screen.getByText('For example ABC123. Do not include spaces or special characters.')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Find vehicle' })).toBeInTheDocument()
   })
 
