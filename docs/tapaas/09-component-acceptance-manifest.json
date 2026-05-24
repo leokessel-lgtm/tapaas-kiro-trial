@@ -16,11 +16,15 @@
         "stories": [
           {
             "id": "tapaas-preview-composites--mps-applicant-details-frame-figma-fidelity",
-            "mode": "isolated-review"
+            "mode": "isolated-review",
+            "expectedText": "Personal details",
+            "mobileNoOverflow": true
           },
           {
             "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
-            "mode": "transaction-assembly"
+            "mode": "transaction-assembly",
+            "expectedText": "Privacy information",
+            "mobileNoOverflow": true
           }
         ]
       },
@@ -66,11 +70,15 @@
         "stories": [
           {
             "id": "tapaas-preview-composites--mps-review-frame-figma-fidelity",
-            "mode": "isolated-review"
+            "mode": "isolated-review",
+            "expectedText": "Review your application",
+            "mobileNoOverflow": true
           },
           {
             "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
-            "mode": "transaction-assembly"
+            "mode": "transaction-assembly",
+            "expectedText": "Privacy information",
+            "mobileNoOverflow": true
           }
         ]
       },
@@ -115,11 +123,15 @@
         "stories": [
           {
             "id": "tapaas-preview-composites--mps-confirmation-frame-figma-fidelity",
-            "mode": "isolated-review"
+            "mode": "isolated-review",
+            "expectedText": "Your application has been submitted",
+            "mobileNoOverflow": true
           },
           {
             "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
-            "mode": "transaction-assembly"
+            "mode": "transaction-assembly",
+            "expectedText": "Privacy information",
+            "mobileNoOverflow": true
           }
         ]
       },

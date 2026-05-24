@@ -6,6 +6,7 @@
   "description": "Active v0.3 Kiro trial build pack for TaPaaS transaction skeletons.",
   "scripts": {
     "acceptance:static": "node scripts/check-acceptance-manifest.mjs",
+    "acceptance:storybook": "playwright test tests/browser/component-acceptance.spec.ts --project=chromium",
     "dev": "vite",
     "build": "tsc && vite build",
     "build:all": "npm run build && npm run build:storybook",
