@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import {
   AssessmentSummaryPanel,
+  BusinessErrorPage,
   BackendErrorExamplePage,
   DeclarationReview,
   EvidenceChecklistCard,
@@ -47,6 +48,26 @@ describe('selected TaPaaS maturity components', () => {
     expect(button).toHaveAttribute('aria-expanded', 'true')
   })
 
+  it('renders declaration review paired variants without duplicate IDs', () => {
+    const sections = [
+      {
+        title: 'Accepted declaration',
+        statements: ['I declare the mock information is correct.'],
+      },
+    ]
+
+    const { container } = render(
+      <>
+        <DeclarationReview title='Declaration review card' sections={sections} />
+        <DeclarationReview title='Declaration review accordion' sections={sections} variant='accordion' />
+      </>,
+    )
+
+    expect(screen.getByRole('heading', { name: 'Declaration review card' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Declaration review accordion' })).toBeInTheDocument()
+    expect(duplicateIds(container)).toEqual([])
+  })
+
   it('renders legal info accordion sections using accordion buttons', async () => {
     const user = userEvent.setup()
     render(<LegalInfoAccordion />)
@@ -58,6 +79,17 @@ describe('selected TaPaaS maturity components', () => {
     await user.click(privacyButton)
     expect(privacyButton).toHaveAttribute('aria-expanded', 'true')
     expect(screen.getByText(/Agency name/)).toBeInTheDocument()
+  })
+
+  it('keeps legal info accordion content as placeholder review text', async () => {
+    const user = userEvent.setup()
+    render(<LegalInfoAccordion />)
+
+    const termsButton = screen.getByRole('button', { name: 'Terms and Conditions' })
+    await user.click(termsButton)
+
+    expect(termsButton).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByText(/Confirm the real wording with the service owner/)).toBeInTheDocument()
   })
 
   it('renders interactive details actions as buttons', async () => {
@@ -77,6 +109,32 @@ describe('selected TaPaaS maturity components', () => {
     expect(within(card).getByText('Mock active')).toBeInTheDocument()
     await user.click(within(card).getByRole('button', { name: 'Remove this vehicle' }))
     expect(onAction).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders interactive details multiple preview actions without navigation', async () => {
+    const user = userEvent.setup()
+    const onReview = vi.fn()
+    const onRemove = vi.fn()
+
+    render(
+      <InteractiveDetailsCard
+        title='Key information'
+        rows={[{ label: 'Name', value: 'Alex Citizen' }]}
+        statusLabel='Mock active'
+        actions={[
+          { label: 'Review details', onAction: onReview, variant: 'secondary' },
+          { label: 'Remove this vehicle', onAction: onRemove, variant: 'link' },
+        ]}
+      />,
+    )
+
+    const card = screen.getByRole('region', { name: 'Key information' })
+    const actionGroup = within(card).getByLabelText('Key information actions')
+    await user.click(within(actionGroup).getByRole('button', { name: 'Review details' }))
+    await user.click(within(actionGroup).getByRole('button', { name: 'Remove this vehicle' }))
+
+    expect(onReview).toHaveBeenCalledTimes(1)
+    expect(onRemove).toHaveBeenCalledTimes(1)
   })
 
   it('preserves native radio behaviour in radio button cards', async () => {
@@ -306,6 +364,27 @@ describe('selected TaPaaS maturity components', () => {
     expect(screen.getByText('Mock backend code:')).toBeInTheDocument()
     expect(screen.getByText('INVALID_PAYMENT_DETAILS')).toBeInTheDocument()
     expect(screen.getByText(/MPS-PAYMENT-MOCK/)).toBeInTheDocument()
+  })
+
+  it('renders business error page as a mock-only hard-stop alert', async () => {
+    const user = userEvent.setup()
+    const onStartAgain = vi.fn()
+
+    render(
+      <BusinessErrorPage
+        title='Unable to continue this mock application'
+        message={<p>The selected mock outcome cannot progress automatically.</p>}
+        guidance={<p>Real recovery wording needs source-confirmed business rules.</p>}
+        reference='MPS-BUSINESS-MOCK'
+        onStartAgain={onStartAgain}
+      />,
+    )
+
+    expect(screen.getByRole('alert')).toHaveTextContent('Unable to continue this mock application')
+    expect(screen.getByText(/MPS-BUSINESS-MOCK/)).toBeInTheDocument()
+    expect(screen.getByText(/source-confirmed business rules/)).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Start again' }))
+    expect(onStartAgain).toHaveBeenCalledTimes(1)
   })
 
   it('renders the MPS review frame preview with frame order and edit labels', () => {

@@ -201,6 +201,60 @@
       ]
     },
     {
+      "id": "business-error-page",
+      "name": "Business error page",
+      "classification": "TaPaaS page pattern",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "BusinessErrorPage"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--business-error-page-pattern",
+            "mode": "isolated-review",
+            "expectedText": "Business error page",
+            "mobileNoOverflow": true
+          },
+          {
+            "id": "tapaas-preview-composites--selected-maturity-components",
+            "mode": "catalogue-review",
+            "expectedText": "Mock backend code:",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "review-gated",
+        "files": ["src/tapaas-preview/index.tsx", "src/stories/TapaasComposites.stories.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "recoverable/business errors"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx",
+        "src/MobilityParkingPermitSkeleton.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/business-error-page.md",
+          "docs/source-evidence/tapaas-design-library/components/business-error-page.md"
+        ],
+        "logKey": "Promote interactive details, business error, legal accordion and declaration review into isolated acceptance coverage",
+        "relationshipMapKey": "Business error page",
+        "coverageMatrixKey": "recoverable/business errors"
+      },
+      "boundaries": [
+        "preview-only mock hard stop",
+        "no source-confirmed business rules",
+        "no real backend routing",
+        "no retry or recovery behaviour",
+        "no analytics or storage",
+        "no operational workflow",
+        "no concession, payment, eligibility, legal, privacy or policy decisioning"
+      ]
+    },
+    {
       "id": "search-vehicle-input",
       "name": "Search vehicle input",
       "classification": "TaPaaS-specific composite",
@@ -520,6 +574,58 @@
       ]
     },
     {
+      "id": "interactive-details-card",
+      "name": "Interactive details card",
+      "classification": "TaPaaS-specific composite",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "InteractiveDetailsCard"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--interactive-details-card-pattern",
+            "mode": "isolated-review",
+            "expectedText": "Interactive details card",
+            "mobileNoOverflow": true
+          },
+          {
+            "id": "tapaas-preview-composites--selected-maturity-components",
+            "mode": "catalogue-review",
+            "expectedText": "Key information",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "review-gated",
+        "files": ["src/tapaas-preview/index.tsx", "src/stories/TapaasComposites.stories.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "review"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/interactive-details-card.md",
+          "docs/source-evidence/tapaas-design-library/components/interactive-details-card.md"
+        ],
+        "logKey": "Promote interactive details, business error, legal accordion and declaration review into isolated acceptance coverage",
+        "relationshipMapKey": "Details card single interactive",
+        "coverageMatrixKey": "review"
+      },
+      "boundaries": [
+        "preview-only action callbacks",
+        "no real navigation or route change",
+        "no persistence",
+        "no analytics",
+        "no backend action",
+        "no identity or customer-record behaviour"
+      ]
+    },
+    {
       "id": "declaration-review",
       "name": "Declaration review",
       "classification": "TaPaaS-specific composite",
@@ -531,6 +637,12 @@
       "storybook": {
         "required": true,
         "stories": [
+          {
+            "id": "tapaas-preview-composites--declaration-review-pattern",
+            "mode": "isolated-review",
+            "expectedText": "Declaration review",
+            "mobileNoOverflow": true
+          },
           {
             "id": "tapaas-preview-composites--selected-maturity-components",
             "mode": "catalogue-review",
@@ -556,10 +668,10 @@
       ],
       "evidence": {
         "notes": [
-          "docs/tapaas/component-maturity/declaration-review.md",
-          "docs/source-evidence/tapaas-design-library/component-maturity/declaration-review.md"
+          "docs/tapaas/components/declaration-review.md",
+          "docs/source-evidence/tapaas-design-library/components/declaration-review.md"
         ],
-        "logKey": "Mature selected five TaPaaS components into trial previews",
+        "logKey": "Promote interactive details, business error, legal accordion and declaration review into isolated acceptance coverage",
         "relationshipMapKey": "Declaration review",
         "coverageMatrixKey": "declaration"
       },
@@ -569,6 +681,57 @@
         "no legal interpretation",
         "privacy and policy decisions remain review-gated",
         "no submission validation behaviour"
+      ]
+    },
+    {
+      "id": "legal-info-accordion",
+      "name": "Legal info accordion",
+      "classification": "TaPaaS-specific composite using GEL accordion behaviour",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "LegalInfoAccordion"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--legal-info-accordion-pattern",
+            "mode": "isolated-review",
+            "expectedText": "Legal info accordion",
+            "mobileNoOverflow": true
+          },
+          {
+            "id": "tapaas-preview-composites--selected-maturity-components",
+            "mode": "catalogue-review",
+            "expectedText": "Privacy Collection Notice",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "review-gated",
+        "files": ["src/tapaas-preview/index.tsx", "src/stories/TapaasComposites.stories.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "review"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/legal-info-accordion.md",
+          "docs/source-evidence/tapaas-design-library/components/legal-info-accordion.md"
+        ],
+        "logKey": "Promote interactive details, business error, legal accordion and declaration review into isolated acceptance coverage",
+        "relationshipMapKey": "Legal info accordion",
+        "coverageMatrixKey": "review"
+      },
+      "boundaries": [
+        "preview-only accordion wrapper",
+        "placeholder content only",
+        "no final legal, privacy or policy wording",
+        "no approval that critical content may be collapsed",
+        "manual assistive-technology review remains required"
       ]
     },
     {

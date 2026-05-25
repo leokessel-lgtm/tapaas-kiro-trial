@@ -788,6 +788,153 @@ export const DetailsCardContext: Story = {
   ),
 }
 
+function InteractiveDetailsCardPatternExample() {
+  const [lastAction, setLastAction] = useState('No preview action selected')
+
+  return (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Interactive details card</strong>
+        <p>Preview-only context card with explicit local actions. Use for review of action placement only.</p>
+        <ul>
+          <li>Source context node: <code>2958:2499</code>.</li>
+          <li>Implementation boundary node: existing <code>InteractiveDetailsCard</code> preview component.</li>
+          <li>Unresolved: action semantics, focus expectations, real routes, persistence, analytics and assistive-technology behaviour.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.</li>
+        </ul>
+      </div>
+      <p aria-live='polite'>{lastAction}</p>
+      <InteractiveDetailsCard
+        title='Key information'
+        description='Interactive details card example with preview-only actions.'
+        statusLabel='Mock active'
+        rows={[
+          { label: 'Name', value: 'Alex Citizen' },
+          { label: 'Permit type', value: 'Individual MPS permit' },
+          { label: 'Status', value: 'Static preview only' },
+        ]}
+        actions={[
+          { label: 'Review details', onAction: () => setLastAction('Review details selected in preview'), variant: 'secondary' },
+          { label: 'Remove this vehicle', onAction: () => setLastAction('Remove selected in preview'), variant: 'link' },
+        ]}
+      />
+    </div>
+  )
+}
+
+export const InteractiveDetailsCardPattern: Story = {
+  name: 'Interactive Details Card',
+  render: () => <InteractiveDetailsCardPatternExample />,
+}
+
+export const BusinessErrorPagePattern: Story = {
+  name: 'Business Error Page',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Isolated review of the TaPaaS business error page pattern. This is a mock hard-stop page only and does not include real backend routing, retry, recovery or analytics behaviour.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Business error page</strong>
+        <p>Preview-only hard-stop business outcome. Use source-confirmed rules before any real transaction use.</p>
+        <ul>
+          <li>Source context nodes: business error page <code>8931:31271</code>; backend examples <code>31:73426</code>.</li>
+          <li>Implementation boundary node: existing <code>BusinessErrorPage</code> preview component.</li>
+          <li>Unresolved: real business rules, recovery wording, backend routing, retry/start-again behaviour, analytics, storage and operational ownership.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.</li>
+        </ul>
+      </div>
+      <BusinessErrorPage
+        title='Unable to continue this mock application'
+        message={<p>The selected mock outcome cannot progress automatically.</p>}
+        guidance={<p>Real recovery wording and support channels need source-confirmed business rules.</p>}
+        reference='MPS-BUSINESS-MOCK'
+        onStartAgain={() => undefined}
+      />
+    </div>
+  ),
+}
+
+export const LegalInfoAccordionPattern: Story = {
+  name: 'Legal Info Accordion',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Isolated review of the legal information accordion wrapper. Placeholder legal/privacy content remains owner-gated and must not be treated as approved wording.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Legal info accordion</strong>
+        <p>Preview-only accordion wrapper with placeholder legal/privacy content. Required or critical legal/privacy content must not be hidden without owner confirmation.</p>
+        <ul>
+          <li>Source context node: <code>22:35625</code>.</li>
+          <li>Implementation boundary node: existing <code>LegalInfoAccordion</code> preview wrapper over GEL accordion behaviour.</li>
+          <li>Unresolved: final legal/privacy wording, whether content may be collapsed, critical-content treatment and assistive-technology behaviour.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.</li>
+        </ul>
+      </div>
+      <LegalInfoAccordion />
+    </div>
+  ),
+}
+
+export const DeclarationReviewPattern: Story = {
+  name: 'Declaration Review',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Isolated review of declaration playback variants. The statements are mock placeholders and do not represent approved legal, privacy or policy wording.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Declaration review</strong>
+        <p>Preview-only declaration playback in card and accordion variants. Use owner-confirmed wording before any real transaction use.</p>
+        <ul>
+          <li>Source context node: <code>27:38386</code>.</li>
+          <li>Implementation boundary node: existing <code>DeclarationReview</code> preview component.</li>
+          <li>Unresolved: final statements, legal/privacy/policy treatment, whether card or accordion is appropriate and assistive-technology behaviour.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.</li>
+        </ul>
+      </div>
+      <DeclarationReview
+        title='Declaration review card'
+        sections={[
+          {
+            title: 'Accepted declaration',
+            statements: [
+              'I declare that the mock information provided is true and correct.',
+              'I understand this preview does not submit to a real service.',
+            ],
+          },
+        ]}
+      />
+      <DeclarationReview
+        title='Declaration review accordion'
+        variant='accordion'
+        sections={[
+          {
+            title: 'Accepted declaration',
+            statements: [
+              'I declare that the mock information provided is true and correct.',
+              'I understand this preview does not submit to a real service.',
+            ],
+          },
+        ]}
+      />
+    </div>
+  ),
+}
+
 function SelectedMaturityComponentsExample() {
   const [applicationType, setApplicationType] = useState('renew')
   const [removed, setRemoved] = useState(false)
