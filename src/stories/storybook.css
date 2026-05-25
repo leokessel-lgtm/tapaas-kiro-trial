@@ -25,9 +25,9 @@
 }
 
 .storybook-note {
-  border-left: 4px solid #2e5299;
+  border-left: 4px solid #646974;
   box-sizing: border-box;
-  background: #eaedf4;
+  background: #f4f7f9;
   overflow-wrap: anywhere;
   padding: 1rem 1.25rem;
   margin: 0 0 1.5rem;

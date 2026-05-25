@@ -553,8 +553,8 @@
 
 .tapaas-next-steps-card__step-number {
   align-items: center;
-  background: var(--gel-color-primary);
-  border: 2px solid var(--gel-color-primary);
+  background: var(--gel-color-brand-dark);
+  border: 2px solid var(--gel-color-brand-dark);
   border-radius: 50%;
   color: var(--gel-color-white);
   display: inline-flex;
@@ -568,7 +568,7 @@
 
 .tapaas-next-steps-card__item:not(:first-child) .tapaas-next-steps-card__step-number {
   background: var(--gel-color-white);
-  color: var(--gel-color-primary);
+  color: var(--gel-color-brand-dark);
 }
 
 .tapaas-next-steps-card__line {
