@@ -25,6 +25,7 @@ import {
   RepeatableGroup,
   ReviewFeesCard,
   ReviewInfoCard,
+  SystemErrorPage,
   TapaasSearchAction,
   TransactionCtaGroup,
   TransactionSummaryCard,
@@ -393,6 +394,43 @@ export const ReviewInfoCardPattern: Story = {
   ),
 }
 
+export const DetailsCardPattern: Story = {
+  name: 'Details Card',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Isolated review of the TaPaaS details card from component node 2413:787. This is a read-only contextual summary pattern with optional local action only.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Details card</strong>
+        <p>Preview-only read-only context card. Use for orientation or static detail playback only.</p>
+        <ul>
+          <li>Source context node: <code>2413:787</code>.</li>
+          <li>Implementation boundary node: existing <code>DetailsCard</code> preview component.</li>
+          <li>Unresolved: final status-label treatment, action availability, real route destinations and assistive-technology behaviour.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.</li>
+        </ul>
+      </div>
+      <DetailsCard
+        title='Account context'
+        description='Read-only preview content. No real account or identity data is used.'
+        statusLabel='Mock verified'
+        rows={[
+          { label: 'Name', value: 'Alex Citizen' },
+          { label: 'Customer number', value: 'MOCK-0000' },
+          { label: 'Contact email', value: 'alex.citizen@example.test' },
+        ]}
+        onAction={() => undefined}
+        actionLabel='Review mock details'
+      />
+    </div>
+  ),
+}
+
 export const TransactionSummaryCardPattern: Story = {
   name: 'Transaction Summary Card',
   parameters: {
@@ -424,6 +462,32 @@ export const TransactionSummaryCardPattern: Story = {
       >
         <p>Final receipt and notification content needs owner confirmation before service use.</p>
       </TransactionSummaryCard>
+    </div>
+  ),
+}
+
+export const ConfirmationHeaderPattern: Story = {
+  name: 'Confirmation Header',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Isolated review of the confirmation page header from source node 9:10494. This is a preview-only status header and does not prove a real submitted outcome.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Confirmation header</strong>
+        <p>Preview-only success/status header. Use past-tense transaction outcomes only when the surrounding transaction result is mock or owner-confirmed.</p>
+        <ul>
+          <li>Source context node: <code>9:10494</code>.</li>
+          <li>Implementation boundary node: existing <code>ConfirmationHeader</code> preview component.</li>
+          <li>Unresolved: exact icon treatment, final transaction name, real outcome semantics and assistive-technology behaviour.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.</li>
+        </ul>
+      </div>
+      <ConfirmationHeader title='Application submitted' transactionName='Mock transaction' />
     </div>
   ),
 }
@@ -854,6 +918,37 @@ export const BusinessErrorPagePattern: Story = {
         guidance={<p>Real recovery wording and support channels need source-confirmed business rules.</p>}
         reference='MPS-BUSINESS-MOCK'
         onStartAgain={() => undefined}
+      />
+    </div>
+  ),
+}
+
+export const SystemErrorPagePattern: Story = {
+  name: 'System Error Page',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Isolated extraction of the system error page template from source node 17628:2069. This is a mock technical hard-stop surface only.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>System error page</strong>
+        <p>Preview-only technical hard-stop surface. Retry, start-over and logout actions are inert local callbacks.</p>
+        <ul>
+          <li>Source context node: Templates - TaPaaS Design Library System error page <code>17628:2069</code>.</li>
+          <li>Implementation boundary node: new <code>SystemErrorPage</code> preview component.</li>
+          <li>Unresolved: real error routing, retry behaviour, start-over routing, logout/session handling, operational ownership and assistive-technology behaviour.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.</li>
+        </ul>
+      </div>
+      <SystemErrorPage
+        reference='SYS-MOCK-000'
+        onRetry={() => undefined}
+        onStartAgain={() => undefined}
+        onLogout={() => undefined}
       />
     </div>
   ),

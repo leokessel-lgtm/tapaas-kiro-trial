@@ -24,7 +24,10 @@
       },
       "transactionUsage": {
         "decision": "used",
-        "files": ["src/tapaas-preview/index.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/tapaas-preview/index.tsx",
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "confirmation"
       },
       "tests": [
@@ -46,6 +49,61 @@
         "no routing",
         "no backend behaviour",
         "no service outcome logic"
+      ]
+    },
+    {
+      "id": "confirmation-header",
+      "name": "Confirmation header",
+      "classification": "GEL variant",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "ConfirmationHeader"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--confirmation-header-pattern",
+            "mode": "isolated-review",
+            "expectedText": "Confirmation header",
+            "mobileNoOverflow": true
+          },
+          {
+            "id": "tapaas-preview-composites--mps-confirmation-frame-figma-fidelity",
+            "mode": "frame-review",
+            "expectedText": "Your application has been submitted",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "catalogue-only",
+        "files": [
+          "src/tapaas-preview/index.tsx"
+        ],
+        "matrixStage": "confirmation"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/confirmation-header.md",
+          "docs/source-evidence/tapaas-design-library/components/confirmation-header.md"
+        ],
+        "logKey": "Mixed extraction stress test for system error, details card and confirmation header",
+        "relationshipMapKey": "Confirmation page header",
+        "coverageMatrixKey": "confirmation"
+      },
+      "boundaries": [
+        "preview-only",
+        "mock completion/status header only",
+        "no real submission outcome",
+        "no reference creation",
+        "no notification sending",
+        "no receipt issuing",
+        "no backend, payment, legal, privacy or policy logic"
       ]
     },
     {
@@ -76,7 +134,9 @@
       },
       "transactionUsage": {
         "decision": "used",
-        "files": ["src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "application type / branching"
       },
       "tests": [
@@ -128,7 +188,9 @@
       },
       "transactionUsage": {
         "decision": "catalogue-only",
-        "files": ["src/tapaas-preview/index.tsx"]
+        "files": [
+          "src/tapaas-preview/index.tsx"
+        ]
       },
       "tests": [
         "src/tapaas-preview/EmailConfirmationModal.test.tsx"
@@ -176,7 +238,9 @@
       },
       "transactionUsage": {
         "decision": "used",
-        "files": ["src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "recoverable/business errors"
       },
       "tests": [
@@ -228,7 +292,11 @@
       },
       "transactionUsage": {
         "decision": "review-gated",
-        "files": ["src/tapaas-preview/index.tsx", "src/stories/TapaasComposites.stories.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/tapaas-preview/index.tsx",
+          "src/stories/TapaasComposites.stories.tsx",
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "recoverable/business errors"
       },
       "tests": [
@@ -255,6 +323,54 @@
       ]
     },
     {
+      "id": "system-error-page",
+      "name": "System error page",
+      "classification": "TaPaaS page template",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "SystemErrorPage"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--system-error-page-pattern",
+            "mode": "isolated-review",
+            "expectedText": "System error page",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "catalogue-only",
+        "files": [
+          "src/tapaas-preview/index.tsx"
+        ],
+        "matrixStage": "technical hard-stop/error-shell preview coverage"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/system-error-page.md",
+          "docs/source-evidence/tapaas-design-library/components/system-error-page.md"
+        ],
+        "logKey": "Mixed extraction stress test for system error, details card and confirmation header",
+        "relationshipMapKey": "System error page",
+        "coverageMatrixKey": "technical hard-stop/error-shell preview coverage"
+      },
+      "boundaries": [
+        "preview-only",
+        "mock technical hard stop only",
+        "callback-only retry/start-again/logout actions",
+        "no real retry or recovery routing",
+        "no logout or session handling",
+        "no backend, analytics, storage or operational ownership behaviour"
+      ]
+    },
+    {
       "id": "search-vehicle-input",
       "name": "Search vehicle input",
       "classification": "TaPaaS-specific composite",
@@ -276,7 +392,9 @@
       },
       "transactionUsage": {
         "decision": "catalogue-only",
-        "files": ["src/tapaas-preview/index.tsx"]
+        "files": [
+          "src/tapaas-preview/index.tsx"
+        ]
       },
       "tests": [
         "src/tapaas-preview/SelectedMaturityComponents.test.tsx"
@@ -318,7 +436,9 @@
       },
       "transactionUsage": {
         "decision": "catalogue-only",
-        "files": ["src/tapaas-preview/index.tsx"],
+        "files": [
+          "src/tapaas-preview/index.tsx"
+        ],
         "matrixStage": "privacy/start"
       },
       "tests": [
@@ -365,7 +485,10 @@
       },
       "transactionUsage": {
         "decision": "used",
-        "files": ["src/tapaas-preview/index.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/tapaas-preview/index.tsx",
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "privacy/start"
       },
       "tests": [
@@ -411,7 +534,10 @@
       },
       "transactionUsage": {
         "decision": "used",
-        "files": ["src/tapaas-preview/index.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/tapaas-preview/index.tsx",
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "representative/contact details"
       },
       "tests": [
@@ -457,7 +583,10 @@
       },
       "transactionUsage": {
         "decision": "used",
-        "files": ["src/tapaas-preview/index.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/tapaas-preview/index.tsx",
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "privacy/start"
       },
       "tests": [
@@ -503,7 +632,10 @@
       },
       "transactionUsage": {
         "decision": "used",
-        "files": ["src/tapaas-preview/index.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/tapaas-preview/index.tsx",
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "review"
       },
       "tests": [
@@ -549,7 +681,10 @@
       },
       "transactionUsage": {
         "decision": "used",
-        "files": ["src/tapaas-preview/index.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/tapaas-preview/index.tsx",
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "confirmation"
       },
       "tests": [
@@ -601,7 +736,11 @@
       },
       "transactionUsage": {
         "decision": "review-gated",
-        "files": ["src/tapaas-preview/index.tsx", "src/stories/TapaasComposites.stories.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/tapaas-preview/index.tsx",
+          "src/stories/TapaasComposites.stories.tsx",
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "review"
       },
       "tests": [
@@ -623,6 +762,60 @@
         "no analytics",
         "no backend action",
         "no identity or customer-record behaviour"
+      ]
+    },
+    {
+      "id": "details-card",
+      "name": "Details card",
+      "classification": "TaPaaS-specific composite",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "DetailsCard"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--details-card-pattern",
+            "mode": "isolated-review",
+            "expectedText": "Details card",
+            "mobileNoOverflow": true
+          },
+          {
+            "id": "tapaas-preview-composites--details-card-context",
+            "mode": "catalogue-review",
+            "expectedText": "Mock account context",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "catalogue-only",
+        "files": [
+          "src/tapaas-preview/index.tsx"
+        ],
+        "matrixStage": "privacy/start"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/details-card.md",
+          "docs/source-evidence/tapaas-design-library/components/details-card.md"
+        ],
+        "logKey": "Mixed extraction stress test for system error, details card and confirmation header",
+        "relationshipMapKey": "Details card single",
+        "coverageMatrixKey": "privacy/start"
+      },
+      "boundaries": [
+        "preview-only",
+        "read-only context rows only",
+        "callback-only optional action",
+        "no real account data",
+        "no identity behaviour",
+        "no routing, persistence, backend or analytics behaviour"
       ]
     },
     {
@@ -659,7 +852,9 @@
       },
       "transactionUsage": {
         "decision": "review-gated",
-        "files": ["src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "declaration"
       },
       "tests": [
@@ -711,7 +906,11 @@
       },
       "transactionUsage": {
         "decision": "review-gated",
-        "files": ["src/tapaas-preview/index.tsx", "src/stories/TapaasComposites.stories.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/tapaas-preview/index.tsx",
+          "src/stories/TapaasComposites.stories.tsx",
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "review"
       },
       "tests": [
@@ -762,7 +961,9 @@
       },
       "transactionUsage": {
         "decision": "used",
-        "files": ["src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "application type / branching"
       },
       "tests": [
@@ -817,7 +1018,9 @@
       },
       "transactionUsage": {
         "decision": "used",
-        "files": ["src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "applicant details / manual address"
       },
       "tests": [
@@ -871,7 +1074,11 @@
       },
       "transactionUsage": {
         "decision": "review-gated",
-        "files": ["src/tapaas-preview/index.tsx", "src/stories/TapaasComposites.stories.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/tapaas-preview/index.tsx",
+          "src/stories/TapaasComposites.stories.tsx",
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "evidence/medical"
       },
       "tests": [
@@ -932,7 +1139,11 @@
       },
       "transactionUsage": {
         "decision": "review-gated",
-        "files": ["src/tapaas-preview/index.tsx", "src/stories/TapaasComposites.stories.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/tapaas-preview/index.tsx",
+          "src/stories/TapaasComposites.stories.tsx",
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "evidence/medical"
       },
       "tests": [
@@ -988,7 +1199,11 @@
       },
       "transactionUsage": {
         "decision": "review-gated",
-        "files": ["src/tapaas-preview/index.tsx", "src/stories/TapaasComposites.stories.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/tapaas-preview/index.tsx",
+          "src/stories/TapaasComposites.stories.tsx",
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "evidence/medical"
       },
       "tests": [
@@ -1043,7 +1258,9 @@
       },
       "transactionUsage": {
         "decision": "used",
-        "files": ["src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "review"
       },
       "tests": [
@@ -1096,7 +1313,9 @@
       },
       "transactionUsage": {
         "decision": "used",
-        "files": ["src/MobilityParkingPermitSkeleton.tsx"],
+        "files": [
+          "src/MobilityParkingPermitSkeleton.tsx"
+        ],
         "matrixStage": "confirmation"
       },
       "tests": [

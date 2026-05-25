@@ -1154,6 +1154,59 @@ export function BusinessErrorPage({
   )
 }
 
+export function SystemErrorPage({
+  title = 'Our system is temporarily unavailable',
+  message = 'We are working to resolve this technical issue.',
+  guidance = 'Try again later. This preview does not connect to a real system.',
+  reference,
+  onRetry,
+  onStartAgain,
+  onLogout,
+}: {
+  title?: string
+  message?: React.ReactNode
+  guidance?: React.ReactNode
+  reference?: string
+  onRetry?: () => void
+  onStartAgain?: () => void
+  onLogout?: () => void
+}) {
+  return (
+    <section
+      className='tapaas-error-page tapaas-system-error-page'
+      aria-labelledby='system-error-heading'
+      data-tapaas-component='system-error-page'
+      data-preview-boundary='preview-only technical hard stop; no retry, logout, session or backend behaviour'
+    >
+      <div role='alert' className='tapaas-error-page__alert tapaas-system-error-page__alert'>
+        <span className='tapaas-error-page__icon' aria-hidden='true'>!</span>
+        <div className='tapaas-error-page__content'>
+          <Heading level={2} id='system-error-heading'>{title}</Heading>
+          <div>{typeof message === 'string' ? <p>{message}</p> : message}</div>
+        </div>
+      </div>
+      {reference && (
+        <p className='tapaas-error-page__reference'>
+          Reference: <strong>{reference}</strong>
+        </p>
+      )}
+      {guidance && (
+        <div className='tapaas-error-page__guidance'>
+          {typeof guidance === 'string' ? <p>{guidance}</p> : guidance}
+        </div>
+      )}
+      <div className='tapaas-system-error-page__actions' role='group' aria-label='System error preview actions'>
+        {onRetry && <Button onClick={onRetry}>Try again</Button>}
+        {onStartAgain && <Button variant='secondary' onClick={onStartAgain}>Start again</Button>}
+        {onLogout && <Button variant='link' onClick={onLogout}>Log out</Button>}
+      </div>
+      <p className='tapaas-help-text'>
+        Preview-only system error surface. Retry, start-over, logout and recovery behaviour need app and engineering evidence.
+      </p>
+    </section>
+  )
+}
+
 // ---------------------------------------------------------------------------
 // BackendErrorExamplePage
 // TaPaaS preview composite — mock-only business/backend error variants.

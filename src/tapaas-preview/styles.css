@@ -1064,6 +1064,14 @@
   margin-bottom: 1.5rem;
 }
 
+.tapaas-system-error-page__actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
 .tapaas-declaration-review,
 .tapaas-legal-info {
   margin: 0 0 1.5rem;

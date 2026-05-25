@@ -5,7 +5,9 @@ import {
   AssessmentSummaryPanel,
   BusinessErrorPage,
   BackendErrorExamplePage,
+  ConfirmationHeader,
   DeclarationReview,
+  DetailsCard,
   EvidenceChecklistCard,
   InteractiveDetailsCard,
   LegalInfoAccordion,
@@ -17,6 +19,7 @@ import {
   PrivacyCardPreview,
   RadioButtonCards,
   ReviewInfoCard,
+  SystemErrorPage,
   TapaasSearchAction,
   TransactionCtaGroup,
   TransactionSummaryCard,
@@ -135,6 +138,39 @@ describe('selected TaPaaS maturity components', () => {
 
     expect(onReview).toHaveBeenCalledTimes(1)
     expect(onRemove).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders read-only details card with optional preview action', async () => {
+    const user = userEvent.setup()
+    const onAction = vi.fn()
+
+    render(
+      <DetailsCard
+        title='Account context'
+        description='Read-only preview content. No real account data is used.'
+        statusLabel='Mock verified'
+        rows={[
+          { label: 'Name', value: 'Alex Citizen' },
+          { label: 'Customer number', value: 'MOCK-0000' },
+        ]}
+        onAction={onAction}
+        actionLabel='Review mock details'
+      />,
+    )
+
+    const card = screen.getByRole('region', { name: 'Account context' })
+    expect(within(card).getByText('Mock verified')).toBeInTheDocument()
+    expect(within(card).getByText('MOCK-0000')).toBeInTheDocument()
+    await user.click(within(card).getByRole('button', { name: 'Review mock details' }))
+    expect(onAction).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders confirmation header as a status surface', () => {
+    render(<ConfirmationHeader title='Application submitted' transactionName='Mock transaction' />)
+
+    const status = screen.getByRole('status', { name: 'Transaction completed' })
+    expect(within(status).getByRole('heading', { name: 'Application submitted' })).toBeInTheDocument()
+    expect(within(status).getByText('Mock transaction')).toBeInTheDocument()
   })
 
   it('preserves native radio behaviour in radio button cards', async () => {
@@ -385,6 +421,35 @@ describe('selected TaPaaS maturity components', () => {
     expect(screen.getByText(/source-confirmed business rules/)).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Start again' }))
     expect(onStartAgain).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders system error page as a mock-only technical hard stop', async () => {
+    const user = userEvent.setup()
+    const onRetry = vi.fn()
+    const onStartAgain = vi.fn()
+    const onLogout = vi.fn()
+
+    render(
+      <SystemErrorPage
+        reference='SYS-MOCK-000'
+        onRetry={onRetry}
+        onStartAgain={onStartAgain}
+        onLogout={onLogout}
+      />,
+    )
+
+    expect(screen.getByRole('alert')).toHaveTextContent('Our system is temporarily unavailable')
+    expect(screen.getByText(/does not connect to a real system/)).toBeInTheDocument()
+    expect(screen.getByText(/Retry, start-over, logout and recovery behaviour need app and engineering evidence/)).toBeInTheDocument()
+
+    const actions = screen.getByRole('group', { name: 'System error preview actions' })
+    await user.click(within(actions).getByRole('button', { name: 'Try again' }))
+    await user.click(within(actions).getByRole('button', { name: 'Start again' }))
+    await user.click(within(actions).getByRole('button', { name: 'Log out' }))
+
+    expect(onRetry).toHaveBeenCalledTimes(1)
+    expect(onStartAgain).toHaveBeenCalledTimes(1)
+    expect(onLogout).toHaveBeenCalledTimes(1)
   })
 
   it('renders the MPS review frame preview with frame order and edit labels', () => {
