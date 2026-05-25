@@ -1370,6 +1370,15 @@
     width: 100%;
   }
 
+  .tapaas-email-confirmation-modal__close {
+    min-height: 3rem;
+    min-width: 3rem;
+    max-width: 3rem;
+    right: 0.25rem;
+    top: 0.25rem;
+    width: 3rem !important;
+  }
+
   .tapaas-email-confirmation-modal__actions {
     flex-direction: column;
     margin-top: 1.5rem;

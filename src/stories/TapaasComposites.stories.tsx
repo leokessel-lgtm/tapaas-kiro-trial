@@ -186,6 +186,14 @@ export const MpsReviewFrameFigmaFidelity: Story = {
   },
   render: () => (
     <div className='storybook-stack'>
+      <MpsReviewFramePreview
+        sections={mpsReviewSections}
+        declarationStatements={mpsDeclarationStatements}
+        onEdit={() => undefined}
+        onSubmit={() => undefined}
+        onBack={() => undefined}
+        onExit={() => undefined}
+      />
       <div className='storybook-note'>
         <strong>MPS Review Frame - Figma fidelity</strong>
         <p>Isolated preview of source frame 0:33185. Use this story to compare layout, callout treatment, section order, edit links, declaration placement and CTA relationship.</p>
@@ -197,14 +205,6 @@ export const MpsReviewFrameFigmaFidelity: Story = {
           <li>Not production-ready, WCAG-compliant, GEL-approved or TaPaaS-approved.</li>
         </ul>
       </div>
-      <MpsReviewFramePreview
-        sections={mpsReviewSections}
-        declarationStatements={mpsDeclarationStatements}
-        onEdit={() => undefined}
-        onSubmit={() => undefined}
-        onBack={() => undefined}
-        onExit={() => undefined}
-      />
     </div>
   ),
 }
@@ -220,17 +220,6 @@ export const MpsApplicantDetailsFrameFigmaFidelity: Story = {
   },
   render: () => (
     <div className='storybook-stack'>
-      <div className='storybook-note'>
-        <strong>MPS Applicant Details Frames - Figma fidelity</strong>
-        <p>Paired preview of source frames 0:17387 and 0:17405. Use this story to compare field order, section grouping, address-search/manual-address variants, required markers, helper text and CTA relationship.</p>
-        <ul>
-          <li>Sources: Mobility_Parking_Scheme.sketch 1 (Copy), page MPS Final, frames 2.A - Personal details and 2.B - Personal details - Manual address.</li>
-          <li>Source context nodes: 0:17387 and 0:17405. Implementation boundary: form content/page skeleton only, excluding global nav/footer and real address lookup.</li>
-          <li>Boundary: preview-only mock form capture with no identity verification, customer-record update, backend persistence, age eligibility or address lookup.</li>
-          <li>Review: compare personal details, date of birth, contact details, residential address search, manual-address field order and Cancel/Next placement.</li>
-          <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, privacy-approved, legal-approved or policy-approved.</li>
-        </ul>
-      </div>
       <MpsApplicantDetailsFramePreview
         addressMode='search'
         idPrefix='mps-applicant-search'
@@ -247,6 +236,17 @@ export const MpsApplicantDetailsFrameFigmaFidelity: Story = {
         onContinue={() => undefined}
         onBack={() => undefined}
       />
+      <div className='storybook-note'>
+        <strong>MPS Applicant Details Frames - Figma fidelity</strong>
+        <p>Paired preview of source frames 0:17387 and 0:17405. Use this story to compare field order, section grouping, address-search/manual-address variants, required markers, helper text and CTA relationship.</p>
+        <ul>
+          <li>Sources: Mobility_Parking_Scheme.sketch 1 (Copy), page MPS Final, frames 2.A - Personal details and 2.B - Personal details - Manual address.</li>
+          <li>Source context nodes: 0:17387 and 0:17405. Implementation boundary: form content/page skeleton only, excluding global nav/footer and real address lookup.</li>
+          <li>Boundary: preview-only mock form capture with no identity verification, customer-record update, backend persistence, age eligibility or address lookup.</li>
+          <li>Review: compare personal details, date of birth, contact details, residential address search, manual-address field order and Cancel/Next placement.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, privacy-approved, legal-approved or policy-approved.</li>
+        </ul>
+      </div>
     </div>
   ),
 }
@@ -262,6 +262,13 @@ export const MpsConfirmationFrameFigmaFidelity: Story = {
   },
   render: () => (
     <div className='storybook-stack'>
+      <MpsConfirmationFramePreview
+        referenceNumber='MPS-MOCK-000000'
+        applicationDetails={mpsApplicationDetails}
+        nextSteps={mpsNextSteps}
+        relatedContent={<p>Related transactions and notification wording need owner confirmation.</p>}
+        onStartAgain={() => undefined}
+      />
       <div className='storybook-note'>
         <strong>MPS Confirmation Frame - Figma fidelity</strong>
         <p>Isolated preview of source frame 0:33222. Use this story to compare confirmation heading, reference/application details, next-step content, feedback prompt and action/footer relationship.</p>
@@ -273,13 +280,6 @@ export const MpsConfirmationFrameFigmaFidelity: Story = {
           <li>Not production-ready, WCAG-compliant, GEL-approved or TaPaaS-approved.</li>
         </ul>
       </div>
-      <MpsConfirmationFramePreview
-        referenceNumber='MPS-MOCK-000000'
-        applicationDetails={mpsApplicationDetails}
-        nextSteps={mpsNextSteps}
-        relatedContent={<p>Related transactions and notification wording need owner confirmation.</p>}
-        onStartAgain={() => undefined}
-      />
     </div>
   ),
 }
@@ -746,6 +746,10 @@ export const MpsMedicalEvidenceStatus: Story = {
   },
   render: () => (
     <div className='storybook-stack'>
+      <MpsMedicalEvidenceStatusPreview state='required' idPrefix='mps-medical-required' />
+      <MpsMedicalEvidenceStatusPreview state='provided' idPrefix='mps-medical-provided' />
+      <MpsMedicalEvidenceStatusPreview evidenceType='report' state='required' idPrefix='mps-medical-report-required' />
+      <MpsMedicalEvidenceStatusPreview evidenceType='report' state='provided' idPrefix='mps-medical-report-provided' />
       <div className='storybook-note'>
         <strong>MPS Medical Evidence Status - Figma evidence</strong>
         <p>Preview-only evidence-status pattern from MPS Final frames 4.A, 4.Aa, 4.B and 4.Ba.</p>
@@ -757,10 +761,6 @@ export const MpsMedicalEvidenceStatus: Story = {
           <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.</li>
         </ul>
       </div>
-      <MpsMedicalEvidenceStatusPreview state='required' idPrefix='mps-medical-required' />
-      <MpsMedicalEvidenceStatusPreview state='provided' idPrefix='mps-medical-provided' />
-      <MpsMedicalEvidenceStatusPreview evidenceType='report' state='required' idPrefix='mps-medical-report-required' />
-      <MpsMedicalEvidenceStatusPreview evidenceType='report' state='provided' idPrefix='mps-medical-report-provided' />
     </div>
   ),
 }
@@ -1174,10 +1174,6 @@ function RadioButtonCardStatesExample() {
 
   return (
     <div className='storybook-stack'>
-      <div className='storybook-note'>
-        <strong>Radio button cards — state review</strong>
-        <p>Preview-only state surface for selected, unselected, focus, keyboard and error review. Source node <code>31:63988</code> remains marked CONCEPT.</p>
-      </div>
       <RadioButtonCards
         id='storybook-radio-card-state-review'
         legend='What do you want to do?'
@@ -1201,6 +1197,10 @@ function RadioButtonCardStatesExample() {
         hasError
         required
       />
+      <div className='storybook-note'>
+        <strong>Radio button cards — state review</strong>
+        <p>Preview-only state surface for selected, unselected, focus, keyboard and error review. Source node <code>31:63988</code> remains marked CONCEPT.</p>
+      </div>
     </div>
   )
 }
