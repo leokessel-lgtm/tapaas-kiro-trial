@@ -2,8 +2,10 @@ import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import {
+  AssessmentSummaryPanel,
   BackendErrorExamplePage,
   DeclarationReview,
+  EvidenceChecklistCard,
   InteractiveDetailsCard,
   LegalInfoAccordion,
   MpsApplicantDetailsFramePreview,
@@ -221,6 +223,54 @@ describe('selected TaPaaS maturity components', () => {
     expect(within(card).getByText('MOCK-123456')).toBeInTheDocument()
     expect(within(card).getByText('Mock reference only.')).toBeInTheDocument()
     expect(within(card).getByText('Final receipt details need owner confirmation.')).toBeInTheDocument()
+  })
+
+  it('renders evidence checklist statuses without upload controls', () => {
+    render(
+      <EvidenceChecklistCard
+        title='Evidence checklist'
+        items={[
+          { id: 'identity', label: 'Proof of identity', status: 'provided', description: 'Static mock state only.' },
+          { id: 'medical', label: 'Medical evidence', status: 'required', description: 'No file is uploaded in this preview.' },
+          { id: 'concession', label: 'Concession evidence', status: 'not-required' },
+          { id: 'review', label: 'Assessment review', status: 'needs-review' },
+        ]}
+      >
+        <p>Static evidence summary only.</p>
+      </EvidenceChecklistCard>,
+    )
+
+    const card = screen.getByRole('region', { name: 'Evidence checklist' })
+    expect(within(card).getByText('Mock provided')).toBeInTheDocument()
+    expect(within(card).getByText('Required')).toBeInTheDocument()
+    expect(within(card).getByText('Not required')).toBeInTheDocument()
+    expect(within(card).getByText('Needs review')).toBeInTheDocument()
+    expect(within(card).getByText('Static evidence summary only.')).toBeInTheDocument()
+    expect(within(card).queryByRole('button', { name: /upload/i })).not.toBeInTheDocument()
+    expect(within(card).queryByLabelText(/upload/i)).not.toBeInTheDocument()
+  })
+
+  it('renders assessment summary rows as mock status display only', () => {
+    render(
+      <AssessmentSummaryPanel
+        title='Mock assessment summary'
+        items={[
+          { label: 'Eligibility decision', value: 'Not assessed', tone: 'warning' },
+          { label: 'Identity proofing', value: 'Mock acknowledged', tone: 'good' },
+          { label: 'Concession validation', value: 'Not required', tone: 'neutral' },
+          { label: 'Payment route', value: 'Not started', tone: 'error' },
+        ]}
+      >
+        <p>No eligibility, concession or payment decision is made.</p>
+      </AssessmentSummaryPanel>,
+    )
+
+    const panel = screen.getByRole('region', { name: 'Mock assessment summary' })
+    expect(within(panel).getByText('Eligibility decision')).toBeInTheDocument()
+    expect(within(panel).getByText('Not assessed')).toBeInTheDocument()
+    expect(within(panel).getByText('Mock acknowledged')).toBeInTheDocument()
+    expect(within(panel).getByText('No eligibility, concession or payment decision is made.')).toBeInTheDocument()
+    expect(within(panel).queryByRole('button')).not.toBeInTheDocument()
   })
 
   it('renders transaction action areas without routing behaviour', async () => {

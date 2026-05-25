@@ -742,6 +742,117 @@
       ]
     },
     {
+      "id": "evidence-checklist-card",
+      "name": "Evidence checklist card",
+      "classification": "GEL/TaPaaS composition",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "EvidenceChecklistCard"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--evidence-checklist-card-pattern",
+            "mode": "isolated-review",
+            "expectedText": "Evidence checklist card",
+            "mobileNoOverflow": true
+          },
+          {
+            "id": "tapaas-preview-composites--mps-evidence-and-assessment",
+            "mode": "catalogue-review",
+            "expectedText": "Evidence checklist",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "review-gated",
+        "files": ["src/tapaas-preview/index.tsx", "src/stories/TapaasComposites.stories.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "evidence/medical"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/evidence-checklist-card.md",
+          "docs/source-evidence/tapaas-design-library/components/evidence-checklist-card.md"
+        ],
+        "logKey": "Promote Evidence checklist card and Assessment summary panel into isolated acceptance coverage",
+        "relationshipMapKey": "Evidence checklist",
+        "coverageMatrixKey": "evidence/medical"
+      },
+      "boundaries": [
+        "preview-only evidence status summary",
+        "static mock states only",
+        "not a GEL FileUpload implementation",
+        "no upload controls",
+        "no remove-file controls",
+        "no progress states",
+        "no storage, file validation, virus scanning or backend integration",
+        "no medical assessment",
+        "no privacy or security approval claim",
+        "no production validation"
+      ]
+    },
+    {
+      "id": "assessment-summary-panel",
+      "name": "Assessment summary panel",
+      "classification": "GEL/TaPaaS composition",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "AssessmentSummaryPanel"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--assessment-summary-panel-pattern",
+            "mode": "isolated-review",
+            "expectedText": "Assessment summary panel",
+            "mobileNoOverflow": true
+          },
+          {
+            "id": "tapaas-preview-composites--mps-evidence-and-assessment",
+            "mode": "catalogue-review",
+            "expectedText": "Mock assessment summary",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "review-gated",
+        "files": ["src/tapaas-preview/index.tsx", "src/stories/TapaasComposites.stories.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "evidence/medical"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/assessment-summary-panel.md",
+          "docs/source-evidence/tapaas-design-library/components/assessment-summary-panel.md"
+        ],
+        "logKey": "Promote Evidence checklist card and Assessment summary panel into isolated acceptance coverage",
+        "relationshipMapKey": "Assessment summary",
+        "coverageMatrixKey": "evidence/medical"
+      },
+      "boundaries": [
+        "preview-only mock status display",
+        "no automated decisioning",
+        "no eligibility assessment",
+        "no concession validation",
+        "no payment routing or processing",
+        "no backend rules",
+        "no analytics or persistence",
+        "no legal, privacy or policy behaviour",
+        "no production validation"
+      ]
+    },
+    {
       "id": "mps-review-frame",
       "name": "MPS review frame",
       "classification": "TaPaaS-specific transaction frame pattern",
