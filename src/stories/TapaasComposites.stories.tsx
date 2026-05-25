@@ -641,6 +641,56 @@ export const SearchVehicleInput: Story = {
   ),
 }
 
+export const ConditionalQuestionPanelPattern: Story = {
+  name: 'Conditional Question Panel',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Isolated review of the conditional question panel pattern. This is a preview-only reveal pattern with mock support content and no eligibility, identity or policy decisioning.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Conditional question panel</strong>
+        <p>Preview-only conditional reveal pattern. Use for local form branching where the branch does not make a real eligibility, identity, concession or policy decision.</p>
+        <ul>
+          <li>Source context: form input template, conditional declaration pattern and MPS eligibility branch inventory.</li>
+          <li>Implementation boundary: fieldset/legend radio group, visible error text and immediate conditional content reveal only.</li>
+          <li>Unresolved: final branch labels, field rules, focus announcement behaviour and assistive-technology review.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.</li>
+        </ul>
+      </div>
+      <ConditionalQuestionPanel
+        id='storybook-conditional-panel-isolated'
+        legend='Do you need support with this application?'
+        options={[
+          { value: 'no', label: 'No' },
+          { value: 'yes', label: 'Yes' },
+        ]}
+        value='yes'
+        onChange={() => undefined}
+        showWhen='yes'
+      >
+        <p className='tapaas-help-text'>Mock support details would be collected here. Do not enter real personal information.</p>
+      </ConditionalQuestionPanel>
+      <ConditionalQuestionPanel
+        id='storybook-conditional-panel-error'
+        legend='Select a mock option'
+        options={[
+          { value: 'yes', label: 'Yes' },
+          { value: 'no', label: 'No' },
+        ]}
+        value=''
+        onChange={() => undefined}
+        hasError
+        errorMessage='Select yes or no.'
+      />
+    </div>
+  ),
+}
+
 export const ConditionalAndRepeatable: Story = {
   render: () => <ConditionalAndRepeatableExample />,
 }

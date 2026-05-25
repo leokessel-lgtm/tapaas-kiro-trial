@@ -336,6 +336,98 @@
       ]
     },
     {
+      "id": "conditional-question-panel",
+      "name": "Conditional question panel",
+      "classification": "TaPaaS-specific composite",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "ConditionalQuestionPanel"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--conditional-question-panel-pattern",
+            "mode": "isolated-review",
+            "expectedText": "Conditional question panel",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "used",
+        "files": ["src/tapaas-preview/index.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "representative/contact details"
+      },
+      "tests": [
+        "src/tapaas-preview/ConditionalQuestionPanel.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/conditional-question-panel.md",
+          "docs/source-evidence/tapaas-design-library/components/conditional-question-panel.md"
+        ],
+        "logKey": "Promote Conditional question panel and Exit modal into isolated acceptance coverage",
+        "relationshipMapKey": "Conditional question panel",
+        "coverageMatrixKey": "representative/contact details"
+      },
+      "boundaries": [
+        "preview-only conditional reveal",
+        "fieldset and legend radio grouping only",
+        "no eligibility decisioning",
+        "no identity or concession rules",
+        "no policy interpretation",
+        "no backend routing or persistence"
+      ]
+    },
+    {
+      "id": "exit-modal",
+      "name": "Exit modal",
+      "classification": "GEL/TaPaaS modal pattern",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "ExitModal"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--exit-modal-isolated",
+            "mode": "isolated-review",
+            "expectedText": "TaPaaS Exit modal template",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "used",
+        "files": ["src/tapaas-preview/index.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "privacy/start"
+      },
+      "tests": [
+        "src/tapaas-preview/ExitModal.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/exit-modal.md",
+          "docs/source-evidence/tapaas-design-library/components/exit-modal.md"
+        ],
+        "logKey": "Promote Conditional question panel and Exit modal into isolated acceptance coverage",
+        "relationshipMapKey": "Exit modal",
+        "coverageMatrixKey": "privacy/start"
+      },
+      "boundaries": [
+        "preview-only exit confirmation",
+        "basic focus containment only",
+        "no save-draft behaviour",
+        "no logout or session handling",
+        "no routing or analytics",
+        "no production modal approval claim"
+      ]
+    },
+    {
       "id": "review-info-card",
       "name": "Review info card",
       "classification": "TaPaaS-specific composite",
