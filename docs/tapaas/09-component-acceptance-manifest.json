@@ -243,6 +243,99 @@
       ]
     },
     {
+      "id": "privacy-card",
+      "name": "Privacy card",
+      "classification": "TaPaaS-specific composite",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "PrivacyCardPreview"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--privacy-card-pattern",
+            "mode": "isolated-review",
+            "expectedText": "Privacy collection notice",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "catalogue-only",
+        "files": ["src/tapaas-preview/index.tsx"],
+        "matrixStage": "privacy/start"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/privacy-card.md",
+          "docs/source-evidence/tapaas-design-library/components/privacy-card.md"
+        ],
+        "logKey": "Extract Privacy card and transaction action areas into preview review stories",
+        "relationshipMapKey": "Privacy card",
+        "coverageMatrixKey": "privacy/start"
+      },
+      "boundaries": [
+        "preview-only",
+        "placeholder privacy content only",
+        "no real collection notice",
+        "no legal or policy wording",
+        "no notification behaviour",
+        "no consent persistence",
+        "no storage or routing"
+      ]
+    },
+    {
+      "id": "transaction-action-areas",
+      "name": "Transaction action areas",
+      "classification": "GEL/TaPaaS composition",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "TransactionCtaGroup"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--transaction-action-areas",
+            "mode": "isolated-review",
+            "expectedText": "Start another application",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "used",
+        "files": ["src/tapaas-preview/index.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "privacy/start"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/transaction-action-areas.md",
+          "docs/source-evidence/tapaas-design-library/components/transaction-action-areas.md"
+        ],
+        "logKey": "Extract Privacy card and transaction action areas into preview review stories",
+        "relationshipMapKey": "Transaction CTA buttons",
+        "coverageMatrixKey": "privacy/start"
+      },
+      "boundaries": [
+        "preview-only button grouping",
+        "no routing",
+        "no save or exit behaviour",
+        "no logout or session handling",
+        "no analytics",
+        "no transaction reset or persistence"
+      ]
+    },
+    {
       "id": "declaration-review",
       "name": "Declaration review",
       "classification": "TaPaaS-specific composite",

@@ -11,8 +11,10 @@ import {
   MpsMedicalEvidenceStatusPreview,
   MpsReviewFramePreview,
   NextStepsCardPreview,
+  PrivacyCardPreview,
   RadioButtonCards,
   TapaasSearchAction,
+  TransactionCtaGroup,
   backendErrorExamples,
 } from './index'
 
@@ -155,6 +157,46 @@ describe('selected TaPaaS maturity components', () => {
     expect(screen.getByLabelText('Enter a NSW plate number')).toHaveAttribute('type', 'text')
     expect(screen.getByText('For example ABC123. Do not include spaces or special characters.')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Find vehicle' })).toBeInTheDocument()
+  })
+
+  it('renders privacy card sections with explicit acknowledgement state', () => {
+    const { rerender } = render(<PrivacyCardPreview acknowledgementChecked />)
+
+    expect(screen.getByRole('region', { name: 'Privacy information' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Privacy collection notice' })).toBeInTheDocument()
+    expect(screen.getByText(/confirmed collection notice/)).toBeInTheDocument()
+    expect(screen.getByRole('checkbox', { name: 'I have read and understood the privacy information.' })).toBeChecked()
+
+    rerender(<PrivacyCardPreview acknowledgementChecked={false} hasError />)
+
+    expect(screen.getByRole('checkbox', { name: 'I have read and understood the privacy information.' })).toHaveAccessibleDescription('Confirm that you have read the privacy information.')
+    expect(screen.getByText('Confirm that you have read the privacy information.')).toBeInTheDocument()
+  })
+
+  it('renders transaction action areas without routing behaviour', async () => {
+    const user = userEvent.setup()
+    const onContinue = vi.fn()
+    const onBack = vi.fn()
+    const onExit = vi.fn()
+
+    render(
+      <TransactionCtaGroup
+        continueLabel='Start another application'
+        exitLabel='Return to Service NSW'
+        onContinue={onContinue}
+        onBack={onBack}
+        onExit={onExit}
+      />,
+    )
+
+    const actionGroup = screen.getByRole('group', { name: 'Transaction actions' })
+    expect(actionGroup).toHaveAttribute('data-tapaas-component', 'transaction-action-area')
+    await user.click(within(actionGroup).getByRole('button', { name: 'Start another application' }))
+    await user.click(within(actionGroup).getByRole('button', { name: 'Back' }))
+    await user.click(within(actionGroup).getByRole('button', { name: 'Return to Service NSW' }))
+    expect(onContinue).toHaveBeenCalledTimes(1)
+    expect(onBack).toHaveBeenCalledTimes(1)
+    expect(onExit).toHaveBeenCalledTimes(1)
   })
 
   it('renders backend error examples as hard-stop alert pages', () => {

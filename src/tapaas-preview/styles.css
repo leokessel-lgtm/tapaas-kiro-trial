@@ -650,6 +650,39 @@
   gap: 1rem;
 }
 
+.tapaas-privacy-card {
+  max-width: 47.8125rem;
+}
+
+.tapaas-privacy-card__description {
+  color: var(--gel-color-text-grey);
+  margin: 0 0 1.25rem;
+}
+
+.tapaas-privacy-card__sections {
+  display: grid;
+  gap: 1rem;
+}
+
+.tapaas-privacy-card__section {
+  border-top: 1px solid var(--gel-color-border);
+  padding-top: 1rem;
+}
+
+.tapaas-privacy-card__section h4 {
+  margin-bottom: 0.5rem;
+}
+
+.tapaas-privacy-card__content p {
+  margin: 0;
+}
+
+.tapaas-privacy-card__acknowledgement {
+  border-top: 1px solid var(--gel-color-border);
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+}
+
 .tapaas-search-action {
   background: var(--gel-color-white);
   max-width: 47.8125rem;

@@ -20,6 +20,7 @@ import {
   MpsMedicalEvidenceStatusPreview,
   MpsReviewFramePreview,
   NextStepsCardPreview,
+  PrivacyCardPreview,
   RadioButtonCards,
   RepeatableGroup,
   ReviewFeesCard,
@@ -423,6 +424,75 @@ export const NextStepsCard: Story = {
           },
         ]}
       />
+    </div>
+  ),
+}
+
+export const PrivacyCardPattern: Story = {
+  name: 'Privacy Card Pattern',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Isolated review of the TaPaaS privacy-card structure from component node 1:198 and privacy step template 3395:41359. Placeholder privacy, terms and notification wording must be owner-confirmed before reuse.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Privacy card pattern</strong>
+        <p>Preview-only privacy/start card structure. This story is for component review, not privacy approval.</p>
+        <ul>
+          <li>Sources: Components - TaPaaS Design Library Privacy card node 1:198; Templates - TaPaaS Design Library Privacy step node 3395:41359.</li>
+          <li>Implementation boundary: visible privacy card anatomy, content sections and optional acknowledgement checkbox only.</li>
+          <li>Unresolved: agency-specific collection notice, legal/terms wording, notification channels, privacy approval and assistive-technology behaviour.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.</li>
+        </ul>
+      </div>
+      <PrivacyCardPreview acknowledgementChecked />
+      <PrivacyCardPreview
+        title='Privacy information with required acknowledgement'
+        acknowledgementChecked={false}
+        hasError
+      />
+    </div>
+  ),
+}
+
+export const TransactionActionAreas: Story = {
+  name: 'Transaction Action Areas',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Isolated review of reusable transaction action areas from transaction CTA button guidance node 27:34294 and end-of-transaction CTA buttons node 9:791.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Transaction action areas</strong>
+        <p>Preview-only action placement examples. Button callbacks are inert and no routing is included.</p>
+        <ul>
+          <li>Sources: Transaction CTA buttons node 27:34294; End of Transaction CTA buttons node 9:791.</li>
+          <li>Implementation boundary: consistent Continue/Back/Exit and Start again/Exit action grouping only.</li>
+          <li>Unresolved: real route destinations, save/exit behaviour, analytics, session handling and final content labels.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved or TaPaaS-approved.</li>
+        </ul>
+      </div>
+      <section aria-labelledby='step-actions-heading'>
+        <h3 id='step-actions-heading'>Step actions</h3>
+        <TransactionCtaGroup onContinue={() => undefined} onBack={() => undefined} onExit={() => undefined} />
+      </section>
+      <section aria-labelledby='end-actions-heading'>
+        <h3 id='end-actions-heading'>End of transaction actions</h3>
+        <TransactionCtaGroup
+          continueLabel='Start another application'
+          exitLabel='Return to Service NSW'
+          onContinue={() => undefined}
+          onExit={() => undefined}
+        />
+      </section>
     </div>
   ),
 }

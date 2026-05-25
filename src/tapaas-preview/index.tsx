@@ -1,5 +1,5 @@
 import React from 'react'
-import { Accordion, Button, Field, Heading, InPageAlert, Input, Select, TextLink } from '../gel'
+import { Accordion, Button, Checkbox, Field, Heading, InPageAlert, Input, Select, TextLink } from '../gel'
 import './styles.css'
 
 export interface SummaryItem {
@@ -91,6 +91,24 @@ export interface TapaasSearchActionProps {
   buttonLabel?: string
   placeholder?: string
   defaultValue?: string
+}
+
+export interface PrivacyCardSection {
+  id: string
+  title: string
+  content: React.ReactNode
+}
+
+export interface PrivacyCardPreviewProps {
+  title?: string
+  description?: React.ReactNode
+  sections?: PrivacyCardSection[]
+  acknowledgementLabel?: React.ReactNode
+  acknowledgementChecked?: boolean
+  onAcknowledgementChange?: (value: string) => void
+  showAcknowledgement?: boolean
+  hasError?: boolean
+  errorMessage?: string
 }
 
 export interface MpsApplicantDetailsFrameValue {
@@ -769,7 +787,13 @@ export function TransactionCtaGroup({
   exitLabel?: string
 }) {
   return (
-    <div className='tapaas-cta-group' role='group' aria-label='Transaction actions'>
+    <div
+      className='tapaas-cta-group'
+      role='group'
+      aria-label='Transaction actions'
+      data-tapaas-component='transaction-action-area'
+      data-preview-boundary='preview implementation; no routing included'
+    >
       <div className='tapaas-primary-actions'>
         {onContinue && <Button onClick={onContinue}>{continueLabel}</Button>}
         {onBack && <Button variant='secondary' onClick={onBack}>{backLabel}</Button>}
@@ -780,6 +804,77 @@ export function TransactionCtaGroup({
     </div>
   )
 }
+
+// ---------------------------------------------------------------------------
+// PrivacyCardPreview
+// TaPaaS preview composite — privacy/start card structure.
+// Source evidence: Privacy card `1:198`, Privacy step template `3395:41359`.
+// Privacy, legal, notification and terms wording remain owner-confirmation
+// required and are represented with placeholders only.
+// ---------------------------------------------------------------------------
+export function PrivacyCardPreview({
+  title = 'Privacy information',
+  description = 'This preview shows the structure of a privacy/start card. Replace all placeholder content with owner-confirmed wording before reuse.',
+  sections = defaultPrivacyCardSections,
+  acknowledgementLabel = 'I have read and understood the privacy information.',
+  acknowledgementChecked = false,
+  onAcknowledgementChange,
+  showAcknowledgement = true,
+  hasError,
+  errorMessage = 'Confirm that you have read the privacy information.',
+}: PrivacyCardPreviewProps) {
+  const headingId = `${slugify(title)}-privacy-card-heading`
+
+  return (
+    <section
+      className='tapaas-card tapaas-privacy-card'
+      aria-labelledby={headingId}
+      data-tapaas-component='privacy-card-preview'
+      data-preview-boundary='preview implementation; owner-confirmed privacy wording required'
+    >
+      <Heading level={3} id={headingId}>{title}</Heading>
+      {description && <p className='tapaas-privacy-card__description'>{description}</p>}
+      <div className='tapaas-privacy-card__sections'>
+        {sections.map((section) => (
+          <section className='tapaas-privacy-card__section' aria-labelledby={`${section.id}-heading`} key={section.id}>
+            <Heading level={4} id={`${section.id}-heading`}>{section.title}</Heading>
+            <div className='tapaas-privacy-card__content'>{section.content}</div>
+          </section>
+        ))}
+      </div>
+      {showAcknowledgement && (
+        <div className='tapaas-privacy-card__acknowledgement'>
+          <Checkbox
+            id={`${slugify(title)}-privacy-acknowledgement`}
+            label={acknowledgementLabel}
+            checked={acknowledgementChecked}
+            onChange={onAcknowledgementChange}
+            hasError={hasError}
+            errorMessage={errorMessage}
+          />
+        </div>
+      )}
+    </section>
+  )
+}
+
+const defaultPrivacyCardSections: PrivacyCardSection[] = [
+  {
+    id: 'privacy-collection-notice',
+    title: 'Privacy collection notice',
+    content: <p>Service NSW delivers this service on behalf of <span aria-label='agency name placeholder'>[Agency name]</span>. Replace this placeholder with the confirmed collection notice.</p>,
+  },
+  {
+    id: 'terms-and-conditions',
+    title: 'Terms and conditions',
+    content: <p>Terms, conditions and consent wording for <span aria-label='transaction name placeholder'>[Transaction name]</span> must be supplied by the service owner.</p>,
+  },
+  {
+    id: 'notifications',
+    title: 'Notifications',
+    content: <p>Notification channels, timing and content are placeholders in this preview and need owner confirmation.</p>,
+  },
+]
 
 // ---------------------------------------------------------------------------
 // TapaasSearchAction

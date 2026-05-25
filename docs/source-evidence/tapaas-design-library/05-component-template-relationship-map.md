@@ -25,7 +25,7 @@ This is **trial guidance only**. It does not claim production readiness, GEL com
 
 | Component or pattern | Source node | Appears in templates | Classification | Current code status | Kiro rule |
 |---|---|---|---|---|---|
-| Privacy card | `1:198` | Privacy step `3395:41359` | TaPaaS-specific composite | Page guidance only | Use for privacy-page structure. Privacy wording must be owner-confirmed. |
+| Privacy card | `1:198` | Privacy step `3395:41359` | TaPaaS-specific composite | `PrivacyCardPreview` | Use for privacy/start card structure only. Privacy, terms, notification and acknowledgement wording must be owner-confirmed. |
 | Search vehicle input | `22:16683` | Search input page `16274:18397` | TaPaaS-specific composite | `TapaasSearchAction` with `Input` and `Button` | Use mock search only. Do not add backend lookup, validation or result states. |
 | Form input pattern | Template `8410:37703` | Form input page | GEL-aligned composition | Built across skeletons | Use multiple focused form pages for 6+ step flows. |
 | Conditional declaration | `27:56000` | Declaration step `9894:3936`, Review step `8143:15161` | GEL variant | Composed from checkbox/radio patterns | Legal wording must be source-confirmed. |
@@ -39,8 +39,8 @@ This is **trial guidance only**. It does not claim production readiness, GEL com
 | Transaction summary card | `10:1861` | Confirmation step `5354:8224` | TaPaaS-specific composite | `TransactionSummaryCard` | Use for mock reference/summary/receipt rows. |
 | MPS confirmation frame | `0:33222` | MPS `6.A Confirmation screen`; maps to Confirmation step `5354:8224` | TaPaaS-specific transaction frame pattern | `MpsConfirmationFramePreview` | Use as a frame-aligned MPS confirmation layout only. Keep reference number, notification timing, feedback behaviour, related transactions and receipt outcomes unresolved. |
 | Next steps card | `10:1862` page; `11:4848` component set | Confirmation step `5354:8224` | TaPaaS-specific composite | `NextStepsCardPreview` | Use for confirmation/post-submit guidance with mock or owner-confirmed content only. Do not add notification timing, routing or service outcome logic. |
-| End of transaction CTA buttons | `9:791` | Confirmation step `5354:8224` | GEL/TaPaaS composition | `TransactionCtaGroup` | Use for Start again / exit actions. No real routing. |
-| Transaction CTA buttons | `27:34294` | Privacy, input, declaration, review templates | GEL/TaPaaS composition | `TransactionCtaGroup` | Use consistent Continue/Back/Exit placement. |
+| End of transaction CTA buttons | `9:791` | Confirmation step `5354:8224` | GEL/TaPaaS composition | `TransactionCtaGroup`; isolated `Transaction Action Areas` Storybook story | Use for Start again / exit actions. No real routing, session, save, logout or analytics behaviour. |
+| Transaction CTA buttons | `27:34294` | Privacy, input, declaration, review templates | GEL/TaPaaS composition | `TransactionCtaGroup`; isolated `Transaction Action Areas` Storybook story | Use consistent Continue/Back/Exit placement. Keep route destinations and exit behaviour owner-confirmed. |
 | Details card single | `2413:787` | Later input/support/review context pages | TaPaaS-specific composite | `DetailsCard` | Use as read-only context only. Do not use for decisions. |
 | Details card single interactive | `2958:2499` | Input/context pages, exact templates still pending | TaPaaS-specific composite | `InteractiveDetailsCard` | Action semantics, focus handling and keyboard behaviour still need review before broader use. |
 | More info panel | GEL source evidence; TaPaaS guidance page `50:2726` | Form/input pages where contextual help is optional | GEL variant in v0.3 | `MoreInfoDisclosure` alias `MoreInfoPanel` | Use inline disclosure only for non-critical help. Full GEL modal panel remains future work. |
