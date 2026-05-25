@@ -64,6 +64,21 @@ async function fillApplicantSearchStep(user: ReturnType<typeof userEvent.setup>)
   await user.type(screen.getByLabelText('Residential address *'), '1 Mock Street, Sydney NSW 2000')
 }
 
+async function reachMedicalEvidenceStep(user: ReturnType<typeof userEvent.setup>) {
+  await reachApplicantDetailsStep(user)
+  await fillApplicantSearchStep(user)
+  await continueFromCurrentStep(user)
+
+  await user.click(screen.getByRole('radio', { name: 'No' }))
+  await continueFromCurrentStep(user)
+
+  await user.click(screen.getByRole('radio', { name: 'No' }))
+  await user.click(screen.getAllByRole('radio', { name: 'Yes (mock)' })[0])
+  await user.click(screen.getAllByRole('radio', { name: 'Yes (mock)' })[1])
+  await user.click(screen.getAllByRole('radio', { name: 'No (mock)' })[2])
+  await continueFromCurrentStep(user)
+}
+
 async function completeSuccessfulPathToPayment(user: ReturnType<typeof userEvent.setup>) {
   await reachApplicantDetailsStep(user)
   await fillApplicantSearchStep(user)
@@ -150,6 +165,74 @@ describe('MobilityParkingPermitSkeleton', () => {
     const status = screen.getByRole('status', { name: 'Transaction completed' })
     expect(within(status).getByRole('heading', { name: 'Your application has been submitted' })).toBeInTheDocument()
     expect(screen.getByText('MPS-MOCK-000000')).toBeInTheDocument()
+  })
+
+  it('shows the source-backed certificate uploaded status without upload or remove controls', async () => {
+    const user = userEvent.setup()
+    render(<MobilityParkingPermitSkeleton />)
+
+    await reachMedicalEvidenceStep(user)
+
+    await user.click(screen.getByRole('radio', { name: 'Medical certificate (mock)' }))
+    await user.click(screen.getByRole('radio', { name: 'Mock uploaded now' }))
+
+    expect(screen.getByRole('heading', { name: 'Medical document' })).toBeInTheDocument()
+    expect(screen.getByText('medicalcertificate_april2020.png')).toBeInTheDocument()
+    expect(screen.getByText('Medical certificate')).toBeInTheDocument()
+    expect(screen.getByText('Supporting evidence status')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /select file/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /remove file/i })).not.toBeInTheDocument()
+  })
+
+  it('shows the source-backed report uploaded status without upload or remove controls', async () => {
+    const user = userEvent.setup()
+    render(<MobilityParkingPermitSkeleton />)
+
+    await reachMedicalEvidenceStep(user)
+
+    await user.click(screen.getByRole('radio', { name: 'Medical report (mock)' }))
+    await user.click(screen.getByRole('radio', { name: 'Mock uploaded now' }))
+
+    expect(screen.getByText('medicalreport_april2020.png')).toBeInTheDocument()
+    expect(screen.getByText('Medical report')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /select file/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /remove file/i })).not.toBeInTheDocument()
+  })
+
+  it('keeps provide-later as required status and routes to manual review', async () => {
+    const user = userEvent.setup()
+    render(<MobilityParkingPermitSkeleton />)
+
+    await reachMedicalEvidenceStep(user)
+
+    await user.click(screen.getByRole('radio', { name: 'Medical report (mock)' }))
+    await user.click(screen.getByRole('radio', { name: 'Provide after submission' }))
+
+    expect(screen.getByText('Required')).toBeInTheDocument()
+    expect(screen.queryByText('medicalcertificate_april2020.png')).not.toBeInTheDocument()
+    expect(screen.queryByText('medicalreport_april2020.png')).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /select file/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /remove file/i })).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
+    await continueFromCurrentStep(user)
+
+    await user.selectOptions(screen.getByLabelText('Concession card option'), 'none')
+    await continueFromCurrentStep(user)
+
+    await user.click(screen.getByRole('radio', { name: 'Post to residential address (mock)' }))
+    await continueFromCurrentStep(user)
+
+    await user.click(screen.getByRole('radio', { name: 'Mock payment succeeds and application submits' }))
+    await continueFromCurrentStep(user)
+
+    await user.click(screen.getByRole('checkbox', { name: 'I declare that the information provided is true and correct.' }))
+    await continueFromCurrentStep(user)
+
+    await user.click(screen.getByRole('button', { name: 'Submit mock application' }))
+
+    expect(screen.getByRole('status', { name: 'Transaction completed' })).toBeInTheDocument()
+    expect(screen.getByText('MPS-REVIEW-000000')).toBeInTheDocument()
   })
 
   it('shows the source-backed manual address frame state without address lookup or backend behaviour', async () => {

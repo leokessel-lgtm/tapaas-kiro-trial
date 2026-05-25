@@ -27,6 +27,7 @@ import {
   LegalInfoAccordion,
   MpsApplicantDetailsFramePreview,
   MpsConfirmationFramePreview,
+  MpsMedicalEvidenceStatusPreview,
   MpsReviewFramePreview,
   RadioButtonCards,
   RepeatableGroup,
@@ -684,6 +685,9 @@ function EligibilityStep({ form, attempted, update, onBack, onContinue, onExit }
 }
 
 function MedicalEvidenceStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
+  const medicalEvidenceType = form.medicalEvidenceType === 'report' ? 'report' : 'certificate'
+  const medicalEvidenceState = form.medicalEvidenceMethod === 'uploaded' ? 'provided' : 'required'
+
   return (
     <section aria-labelledby='medical-heading'>
       <Heading level={2} id='medical-heading'>Medical evidence</Heading>
@@ -708,11 +712,15 @@ function MedicalEvidenceStep({ form, attempted, update, onBack, onContinue, onEx
         hasError={attempted && !form.medicalEvidenceMethod}
         errorMessage='Select how medical evidence will be provided.'
       />
+      <MpsMedicalEvidenceStatusPreview
+        evidenceType={medicalEvidenceType}
+        state={medicalEvidenceState}
+        idPrefix='mps-skeleton-medical-status'
+      />
       <EvidenceChecklistCard
-        title='Medical evidence checklist'
+        title='Supporting evidence status'
         items={[
           { id: 'identity', label: 'Identity evidence', status: form.poiAcknowledged ? 'provided' : 'needs-review', description: 'Static mock proof-of-identity state only.' },
-          { id: 'medical', label: 'Medical evidence', status: form.medicalEvidenceMethod === 'uploaded' ? 'provided' : form.medicalEvidenceMethod === 'provide-later' ? 'needs-review' : 'required', description: 'No file is uploaded. The status is only a simulated value.' },
           { id: 'concession', label: 'Concession evidence', status: form.concessionCardType && form.concessionCardType !== 'none' ? 'needs-review' : 'not-required', description: 'Concession validation is simulated on the next page.' },
         ]}
       />
