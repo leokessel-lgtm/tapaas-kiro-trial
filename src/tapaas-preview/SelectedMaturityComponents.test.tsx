@@ -8,6 +8,7 @@ import {
   LegalInfoAccordion,
   MpsApplicantDetailsFramePreview,
   MpsConfirmationFramePreview,
+  MpsMedicalEvidenceStatusPreview,
   MpsReviewFramePreview,
   NextStepsCardPreview,
   RadioButtonCards,
@@ -282,6 +283,25 @@ describe('selected TaPaaS maturity components', () => {
     await user.click(screen.getByRole('button', { name: 'Yes' }))
     expect(screen.getByText('Mock feedback selected. Feedback capture is not implemented in this preview.')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Start again' })).toBeInTheDocument()
+  })
+
+  it('renders the MPS medical evidence status preview in required and provided states without upload actions', () => {
+    const { rerender } = render(<MpsMedicalEvidenceStatusPreview state='required' />)
+
+    expect(screen.getByRole('heading', { name: 'Medical document' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Medical evidence status' })).toBeInTheDocument()
+    expect(screen.getByText('Required')).toBeInTheDocument()
+    expect(screen.getByText(/Medical evidence is required in this preview/)).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /select file/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /remove file/i })).not.toBeInTheDocument()
+
+    rerender(<MpsMedicalEvidenceStatusPreview state='provided' />)
+
+    expect(screen.getByText('Mock provided')).toBeInTheDocument()
+    expect(screen.getByText('medicalcertificate_april2020.png')).toBeInTheDocument()
+    expect(screen.getByText(/No upload, remove-file, storage or validation behaviour is included/)).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /select file/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /remove file/i })).not.toBeInTheDocument()
   })
 
   it('renders the Next steps card as ordered and unordered preview guidance', () => {

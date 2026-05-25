@@ -404,6 +404,66 @@
       ]
     },
     {
+      "id": "mps-medical-evidence-status",
+      "name": "MPS medical evidence status",
+      "classification": "TaPaaS-specific evidence-status pattern",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "MpsMedicalEvidenceStatusPreview"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--mps-medical-evidence-status",
+            "mode": "isolated-review",
+            "expectedText": "medicalcertificate_april2020.png",
+            "mobileNoOverflow": true
+          },
+          {
+            "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
+            "mode": "transaction-assembly",
+            "expectedText": "Privacy information",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "review-gated",
+        "files": ["src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "evidence/medical"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx",
+        "src/MobilityParkingPermitSkeleton.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/mps-medical-evidence-status.md",
+          "docs/source-evidence/tapaas-design-library/components/mps-medical-evidence-status.md"
+        ],
+        "logKey": "Extract MPS medical evidence status into preview pattern",
+        "relationshipMapKey": "Evidence checklist",
+        "coverageMatrixKey": "evidence/medical"
+      },
+      "boundaries": [
+        "preview-only",
+        "static evidence status only",
+        "static mock file-name display only",
+        "source upload-state inconsistency remains review-gated",
+        "no real upload",
+        "no remove-file behaviour",
+        "no file storage",
+        "no file validation",
+        "no virus scanning",
+        "no backend integration",
+        "no medical assessment logic",
+        "no privacy or security approval claim",
+        "no production validation"
+      ]
+    },
+    {
       "id": "mps-review-frame",
       "name": "MPS review frame",
       "classification": "TaPaaS-specific transaction frame pattern",

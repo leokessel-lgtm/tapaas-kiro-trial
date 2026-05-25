@@ -25,6 +25,11 @@ export interface EvidenceChecklistItem {
   status: 'required' | 'provided' | 'not-required' | 'needs-review'
 }
 
+export interface MpsMedicalEvidenceStatusPreviewProps {
+  state?: 'required' | 'provided'
+  fileName?: string
+}
+
 export interface AssessmentSummaryItem {
   label: string
   value: React.ReactNode
@@ -1151,6 +1156,57 @@ export function EvidenceChecklistCard({
         ))}
       </ul>
       {children && <div className='tapaas-card-extra'>{children}</div>}
+    </section>
+  )
+}
+
+export function MpsMedicalEvidenceStatusPreview({
+  state = 'required',
+  fileName = 'medicalcertificate_april2020.png',
+}: MpsMedicalEvidenceStatusPreviewProps) {
+  const isProvided = state === 'provided'
+
+  return (
+    <section
+      className='tapaas-mps-medical-evidence-status'
+      aria-labelledby='mps-medical-evidence-status-heading'
+      data-tapaas-component='mps-medical-evidence-status-preview'
+    >
+      <Heading level={2} id='mps-medical-evidence-status-heading'>Medical document</Heading>
+      <p className='tapaas-mps-medical-evidence-status__hint'>
+        <span aria-hidden='true'>*</span> indicates a required field
+      </p>
+      <InPageAlert variant='info' title='Mobility Parking Scheme permit'>
+        <p>Please ensure that documents are completed in full and clearly legible. This is static source-guidance treatment only.</p>
+      </InPageAlert>
+      <EvidenceChecklistCard
+        title='Medical evidence status'
+        items={[
+          {
+            id: 'medical-certificate',
+            label: 'Medical certificate',
+            status: isProvided ? 'provided' : 'required',
+            description: isProvided
+              ? 'A static mock file name is shown from source frame 0:17327. No remove-file behaviour is implemented.'
+              : 'Medical evidence is required in this preview. Upload controls, file validation and file limits remain review-gated.',
+          },
+        ]}
+      >
+        {isProvided ? (
+          <div className='tapaas-mps-medical-evidence-status__file' aria-label='Static mock medical certificate file'>
+            <span>Static mock file</span>
+            <strong>{fileName}</strong>
+            <p>No upload, remove-file, storage or validation behaviour is included.</p>
+          </div>
+        ) : (
+          <p className='tapaas-help-text'>
+            Source frames show inconsistent file-size and upload-state evidence. This preview records the requirement only.
+          </p>
+        )}
+      </EvidenceChecklistCard>
+      <p className='tapaas-help-text'>
+        Preview-only evidence-status pattern. Medical assessment, backend handling, file upload and privacy/security approval remain out of scope.
+      </p>
     </section>
   )
 }

@@ -17,6 +17,7 @@ import {
   LegalInfoAccordion,
   MpsApplicantDetailsFramePreview,
   MpsConfirmationFramePreview,
+  MpsMedicalEvidenceStatusPreview,
   MpsReviewFramePreview,
   NextStepsCardPreview,
   RadioButtonCards,
@@ -448,6 +449,34 @@ export const MpsEvidenceAndAssessment: Story = {
           { label: 'Route after submission', value: 'Manual review', tone: 'warning' },
         ]}
       />
+    </div>
+  ),
+}
+
+export const MpsMedicalEvidenceStatus: Story = {
+  name: 'MPS Medical Evidence Status - Figma Evidence',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Static preview of the MPS medical evidence status pattern from frames 4.A and 4.Aa. Upload/remove behaviour and medical evidence rules remain review-gated.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>MPS Medical Evidence Status - Figma evidence</strong>
+        <p>Preview-only evidence-status pattern from MPS Final frames 4.A and 4.Aa.</p>
+        <ul>
+          <li>Source context nodes: 0:17316 and 0:17333.</li>
+          <li>Implementation boundary nodes: 0:17327 static file row, 0:17344 static requirement area and 0:17351 important document guidance.</li>
+          <li>Source inconsistency remains review-gated: frame names and visible upload states appear inverted, file limits differ and 4.Aa has a heading mismatch.</li>
+          <li>Boundary: preview-only status display with no upload, remove-file, storage, validation, virus scanning, backend integration or medical assessment logic.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.</li>
+        </ul>
+      </div>
+      <MpsMedicalEvidenceStatusPreview state='required' />
+      <MpsMedicalEvidenceStatusPreview state='provided' />
     </div>
   ),
 }

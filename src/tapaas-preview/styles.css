@@ -806,6 +806,39 @@
   padding-top: 0;
 }
 
+.tapaas-mps-medical-evidence-status {
+  max-width: 1164px;
+}
+
+.tapaas-mps-medical-evidence-status__hint {
+  margin: 0 0 1.5rem;
+  color: var(--gel-color-text-grey);
+}
+
+.tapaas-mps-medical-evidence-status__hint span {
+  color: var(--gel-color-error);
+  font-weight: 700;
+}
+
+.tapaas-mps-medical-evidence-status__file {
+  border: 1px solid var(--gel-color-border);
+  border-radius: 4px;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.tapaas-mps-medical-evidence-status__file span {
+  color: var(--gel-color-text-grey);
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.tapaas-mps-medical-evidence-status__file p {
+  margin: 0.5rem 0 0;
+}
+
 .tapaas-status-pill {
   display: inline-flex;
   align-items: center;
