@@ -13,8 +13,10 @@ import {
   NextStepsCardPreview,
   PrivacyCardPreview,
   RadioButtonCards,
+  ReviewInfoCard,
   TapaasSearchAction,
   TransactionCtaGroup,
+  TransactionSummaryCard,
   backendErrorExamples,
 } from './index'
 
@@ -171,6 +173,54 @@ describe('selected TaPaaS maturity components', () => {
 
     expect(screen.getByRole('checkbox', { name: 'I have read and understood the privacy information.' })).toHaveAccessibleDescription('Confirm that you have read the privacy information.')
     expect(screen.getByText('Confirm that you have read the privacy information.')).toBeInTheDocument()
+  })
+
+  it('renders review information rows with section-specific edit action', async () => {
+    const user = userEvent.setup()
+    const onEdit = vi.fn()
+
+    render(
+      <ReviewInfoCard
+        title='Licence details'
+        sections={[
+          {
+            title: 'Applicant information',
+            rows: [
+              { label: 'Full name', value: 'Alex Citizen' },
+              { label: 'Licence type', value: 'Individual licence' },
+            ],
+          },
+        ]}
+        onEdit={onEdit}
+      />,
+    )
+
+    const card = screen.getByRole('region', { name: 'Licence details' })
+    expect(within(card).getByRole('heading', { name: 'Applicant information' })).toBeInTheDocument()
+    expect(within(card).getByText('Full name')).toBeInTheDocument()
+    expect(within(card).getByText('Alex Citizen')).toBeInTheDocument()
+    await user.click(within(card).getByRole('button', { name: 'Edit Licence details' }))
+    expect(onEdit).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders transaction summary card rows and extra receipt content', () => {
+    render(
+      <TransactionSummaryCard
+        heading='Receipt details'
+        items={[
+          { label: 'Reference number', value: 'MOCK-123456', helpText: 'Mock reference only.' },
+          { label: 'Application', value: 'Sample transaction' },
+        ]}
+      >
+        <p>Final receipt details need owner confirmation.</p>
+      </TransactionSummaryCard>,
+    )
+
+    const card = screen.getByRole('region', { name: 'Receipt details' })
+    expect(within(card).getByText('Reference number')).toBeInTheDocument()
+    expect(within(card).getByText('MOCK-123456')).toBeInTheDocument()
+    expect(within(card).getByText('Mock reference only.')).toBeInTheDocument()
+    expect(within(card).getByText('Final receipt details need owner confirmation.')).toBeInTheDocument()
   })
 
   it('renders transaction action areas without routing behaviour', async () => {

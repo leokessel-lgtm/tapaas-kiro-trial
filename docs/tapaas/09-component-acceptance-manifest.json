@@ -336,6 +336,98 @@
       ]
     },
     {
+      "id": "review-info-card",
+      "name": "Review info card",
+      "classification": "TaPaaS-specific composite",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "ReviewInfoCard"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--review-info-card-pattern",
+            "mode": "isolated-review",
+            "expectedText": "Licence details",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "used",
+        "files": ["src/tapaas-preview/index.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "review"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/review-info-card.md",
+          "docs/source-evidence/tapaas-design-library/components/review-info-card.md"
+        ],
+        "logKey": "Promote Review info card and Transaction summary card into isolated acceptance coverage",
+        "relationshipMapKey": "Review info card",
+        "coverageMatrixKey": "review"
+      },
+      "boundaries": [
+        "preview-only review playback",
+        "stacked rows only",
+        "no real edit routing",
+        "no persistence",
+        "no validation engine",
+        "no backend, identity, eligibility, payment, legal, privacy or policy behaviour"
+      ]
+    },
+    {
+      "id": "transaction-summary-card",
+      "name": "Transaction summary card",
+      "classification": "TaPaaS-specific composite",
+      "maturity": "coded-preview",
+      "preview": {
+        "file": "src/tapaas-preview/index.tsx",
+        "export": "TransactionSummaryCard"
+      },
+      "storybook": {
+        "required": true,
+        "stories": [
+          {
+            "id": "tapaas-preview-composites--transaction-summary-card-pattern",
+            "mode": "isolated-review",
+            "expectedText": "Receipt details",
+            "mobileNoOverflow": true
+          }
+        ]
+      },
+      "transactionUsage": {
+        "decision": "used",
+        "files": ["src/tapaas-preview/index.tsx", "src/MobilityParkingPermitSkeleton.tsx"],
+        "matrixStage": "confirmation"
+      },
+      "tests": [
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx"
+      ],
+      "evidence": {
+        "notes": [
+          "docs/tapaas/components/transaction-summary-card.md",
+          "docs/source-evidence/tapaas-design-library/components/transaction-summary-card.md"
+        ],
+        "logKey": "Promote Review info card and Transaction summary card into isolated acceptance coverage",
+        "relationshipMapKey": "Transaction summary card",
+        "coverageMatrixKey": "confirmation"
+      },
+      "boundaries": [
+        "preview-only summary display",
+        "mock reference and receipt details only",
+        "no receipt issuing",
+        "no payment handling",
+        "no notification sending",
+        "no routing, backend or persistence"
+      ]
+    },
+    {
       "id": "declaration-review",
       "name": "Declaration review",
       "classification": "TaPaaS-specific composite",

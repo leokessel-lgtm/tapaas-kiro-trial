@@ -354,6 +354,80 @@ export const ReviewAndConfirmation: Story = {
   ),
 }
 
+export const ReviewInfoCardPattern: Story = {
+  name: 'Review Info Card',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Isolated review of the TaPaaS review information card from component node 18:4448. This is a preview-only data playback pattern with mock content and unresolved edit routing.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Review info card</strong>
+        <p>Preview-only review data playback. Keep row content factual and use edit actions only when a real route exists.</p>
+        <ul>
+          <li>Source: Components - TaPaaS Design Library Review info card node 18:4448.</li>
+          <li>Implementation boundary: stacked label/value review rows and optional section edit action only.</li>
+          <li>Unresolved: horizontal and emphasis variants, real edit routing, final labels/content and assistive-technology behaviour.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.</li>
+        </ul>
+      </div>
+      <ReviewInfoCard
+        title='Licence details'
+        sections={[
+          {
+            title: 'Applicant information',
+            rows: [
+              { label: 'Full name', value: 'Alex Citizen' },
+              { label: 'Licence type', value: 'Individual licence' },
+              { label: 'Contact email', value: 'alex.citizen@example.test', helpText: 'Mock review value only.' },
+            ],
+          },
+        ]}
+        onEdit={() => undefined}
+      />
+    </div>
+  ),
+}
+
+export const TransactionSummaryCardPattern: Story = {
+  name: 'Transaction Summary Card',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Isolated review of the TaPaaS transaction summary card from component node 10:1861. This is a confirmation-stage summary with mock reference and receipt details only.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-stack'>
+      <div className='storybook-note'>
+        <strong>Transaction summary card</strong>
+        <p>Preview-only confirmation summary. Reference, receipt and notification details are mock placeholders.</p>
+        <ul>
+          <li>Source: Components - TaPaaS Design Library Transaction summary card node 10:1861.</li>
+          <li>Implementation boundary: summary heading, label/value rows and optional receipt/details content only.</li>
+          <li>Unresolved: mandatory row model, receipt rules, payment-style rows, notification timing and assistive-technology behaviour.</li>
+          <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.</li>
+        </ul>
+      </div>
+      <TransactionSummaryCard
+        heading='Receipt details'
+        items={[
+          { label: 'Reference number', value: 'MOCK-123456', helpText: 'Mock reference only.' },
+          { label: 'Application', value: 'Sample transaction' },
+          { label: 'Submitted by', value: 'Alex Citizen' },
+        ]}
+      >
+        <p>Final receipt and notification content needs owner confirmation before service use.</p>
+      </TransactionSummaryCard>
+    </div>
+  ),
+}
+
 export const MpsEndToEndTransactionAssemblyV1: Story = {
   name: 'MPS End-to-End Transaction Assembly v1',
   parameters: {
