@@ -334,11 +334,33 @@ describe('selected TaPaaS maturity components', () => {
     expect(screen.queryByRole('button', { name: /remove file/i })).not.toBeInTheDocument()
   })
 
+  it('renders the MPS medical report status preview in required and provided states without upload actions', () => {
+    const { rerender } = render(<MpsMedicalEvidenceStatusPreview evidenceType='report' state='required' />)
+
+    expect(screen.getByRole('heading', { name: 'Medical document' })).toBeInTheDocument()
+    expect(screen.getByText('Medical report')).toBeInTheDocument()
+    expect(screen.getByText('Required')).toBeInTheDocument()
+    expect(screen.getByText(/A medical report is required in this preview/)).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /select file/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /remove file/i })).not.toBeInTheDocument()
+
+    rerender(<MpsMedicalEvidenceStatusPreview evidenceType='report' state='provided' />)
+
+    expect(screen.getByText('Mock provided')).toBeInTheDocument()
+    expect(screen.getByText('medicalreport_april2020.png')).toBeInTheDocument()
+    expect(screen.getByLabelText('Static mock medical report file')).toBeInTheDocument()
+    expect(screen.getByText(/No upload, remove-file, storage or validation behaviour is included/)).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /select file/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /remove file/i })).not.toBeInTheDocument()
+  })
+
   it('supports paired MPS medical evidence states without duplicate ids', () => {
     const { container } = render(
       <>
         <MpsMedicalEvidenceStatusPreview state='required' idPrefix='medical-required' />
         <MpsMedicalEvidenceStatusPreview state='provided' idPrefix='medical-provided' />
+        <MpsMedicalEvidenceStatusPreview evidenceType='report' state='required' idPrefix='medical-report-required' />
+        <MpsMedicalEvidenceStatusPreview evidenceType='report' state='provided' idPrefix='medical-report-provided' />
       </>,
     )
 

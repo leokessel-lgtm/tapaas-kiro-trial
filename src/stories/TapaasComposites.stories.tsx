@@ -460,7 +460,7 @@ export const MpsMedicalEvidenceStatus: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Static preview of the MPS medical evidence status pattern from frames 4.A and 4.Aa. Upload/remove behaviour and medical evidence rules remain review-gated.',
+        story: 'Static preview of the MPS medical evidence status pattern from frames 4.A/4.Aa and 4.B/4.Ba. Upload/remove behaviour and medical evidence rules remain review-gated.',
       },
     },
   },
@@ -468,17 +468,19 @@ export const MpsMedicalEvidenceStatus: Story = {
     <div className='storybook-stack'>
       <div className='storybook-note'>
         <strong>MPS Medical Evidence Status - Figma evidence</strong>
-        <p>Preview-only evidence-status pattern from MPS Final frames 4.A and 4.Aa.</p>
+        <p>Preview-only evidence-status pattern from MPS Final frames 4.A, 4.Aa, 4.B and 4.Ba.</p>
         <ul>
-          <li>Source context nodes: 0:17316 and 0:17333.</li>
-          <li>Implementation boundary nodes: 0:17327 static file row, 0:17344 static requirement area and 0:17351 important document guidance.</li>
-          <li>Source inconsistency remains review-gated: frame names and visible upload states appear inverted, file limits differ and 4.Aa has a heading mismatch.</li>
+          <li>Certificate source context nodes: 0:17316 and 0:17333. Report source context nodes: 0:17357 and 0:17370.</li>
+          <li>Implementation boundary nodes: certificate 0:17327, 0:17344 and 0:17351; report 0:17369, 0:17381, 0:17384, 0:17385 and 0:17386.</li>
+          <li>Source inconsistency remains review-gated: certificate frame names and visible upload states appear inverted, certificate file limits differ, 4.Aa has a heading mismatch, and report guidance differs between section A/B and sections 2/3.</li>
           <li>Boundary: preview-only status display with no upload, remove-file, storage, validation, virus scanning, backend integration or medical assessment logic.</li>
           <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.</li>
         </ul>
       </div>
       <MpsMedicalEvidenceStatusPreview state='required' idPrefix='mps-medical-required' />
       <MpsMedicalEvidenceStatusPreview state='provided' idPrefix='mps-medical-provided' />
+      <MpsMedicalEvidenceStatusPreview evidenceType='report' state='required' idPrefix='mps-medical-report-required' />
+      <MpsMedicalEvidenceStatusPreview evidenceType='report' state='provided' idPrefix='mps-medical-report-provided' />
     </div>
   ),
 }

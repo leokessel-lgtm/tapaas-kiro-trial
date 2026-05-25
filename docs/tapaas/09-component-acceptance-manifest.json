@@ -418,7 +418,7 @@
           {
             "id": "tapaas-preview-composites--mps-medical-evidence-status",
             "mode": "isolated-review",
-            "expectedText": "medicalcertificate_april2020.png",
+            "expectedText": "medicalreport_april2020.png",
             "mobileNoOverflow": true
           },
           {

@@ -26,6 +26,7 @@ export interface EvidenceChecklistItem {
 }
 
 export interface MpsMedicalEvidenceStatusPreviewProps {
+  evidenceType?: 'certificate' | 'report'
   state?: 'required' | 'provided'
   fileName?: string
   idPrefix?: string
@@ -1175,12 +1176,34 @@ export function EvidenceChecklistCard({
 }
 
 export function MpsMedicalEvidenceStatusPreview({
+  evidenceType = 'certificate',
   state = 'required',
-  fileName = 'medicalcertificate_april2020.png',
+  fileName,
   idPrefix,
 }: MpsMedicalEvidenceStatusPreviewProps) {
   const isProvided = state === 'provided'
   const headingId = scopedId('mps-medical-evidence-status-heading', idPrefix)
+  const evidenceConfig = {
+    certificate: {
+      itemId: 'medical-certificate',
+      label: 'Medical certificate',
+      defaultFileName: 'medicalcertificate_april2020.png',
+      fileLabel: 'Static mock medical certificate file',
+      requiredDescription: 'Medical evidence is required in this preview. Upload controls, file validation and file limits remain review-gated.',
+      providedDescription: 'A static mock file name is shown from source frame 0:17327. No remove-file behaviour is implemented.',
+      unresolvedNote: 'Source frames show inconsistent file-size and upload-state evidence. This preview records the requirement only.',
+    },
+    report: {
+      itemId: 'medical-report',
+      label: 'Medical report',
+      defaultFileName: 'medicalreport_april2020.png',
+      fileLabel: 'Static mock medical report file',
+      requiredDescription: 'A medical report is required in this preview. Upload controls, file validation and file limits remain review-gated.',
+      providedDescription: 'A static mock report file name is shown from source frame 0:17384. No remove-file behaviour is implemented.',
+      unresolvedNote: 'Source report frames use different section wording. This preview records the requirement only.',
+    },
+  }[evidenceType]
+  const displayFileName = fileName || evidenceConfig.defaultFileName
 
   return (
     <section
@@ -1200,24 +1223,24 @@ export function MpsMedicalEvidenceStatusPreview({
         idPrefix={idPrefix}
         items={[
           {
-            id: 'medical-certificate',
-            label: 'Medical certificate',
+            id: evidenceConfig.itemId,
+            label: evidenceConfig.label,
             status: isProvided ? 'provided' : 'required',
             description: isProvided
-              ? 'A static mock file name is shown from source frame 0:17327. No remove-file behaviour is implemented.'
-              : 'Medical evidence is required in this preview. Upload controls, file validation and file limits remain review-gated.',
+              ? evidenceConfig.providedDescription
+              : evidenceConfig.requiredDescription,
           },
         ]}
       >
         {isProvided ? (
-          <div className='tapaas-mps-medical-evidence-status__file' aria-label='Static mock medical certificate file'>
+          <div className='tapaas-mps-medical-evidence-status__file' aria-label={evidenceConfig.fileLabel}>
             <span>Static mock file</span>
-            <strong>{fileName}</strong>
+            <strong>{displayFileName}</strong>
             <p>No upload, remove-file, storage or validation behaviour is included.</p>
           </div>
         ) : (
           <p className='tapaas-help-text'>
-            Source frames show inconsistent file-size and upload-state evidence. This preview records the requirement only.
+            {evidenceConfig.unresolvedNote}
           </p>
         )}
       </EvidenceChecklistCard>
