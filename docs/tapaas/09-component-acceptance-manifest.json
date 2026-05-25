@@ -169,7 +169,7 @@
           {
             "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
             "mode": "transaction-assembly",
-            "expectedText": "Privacy information",
+            "expectedText": "MPS End-to-End Transaction Assembly v1",
             "mobileNoOverflow": true
           }
         ]
@@ -263,7 +263,7 @@
           {
             "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
             "mode": "transaction-assembly",
-            "expectedText": "Privacy information",
+            "expectedText": "MPS End-to-End Transaction Assembly v1",
             "mobileNoOverflow": true
           }
         ]
@@ -315,7 +315,7 @@
           {
             "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
             "mode": "transaction-assembly",
-            "expectedText": "Privacy information",
+            "expectedText": "MPS End-to-End Transaction Assembly v1",
             "mobileNoOverflow": true
           }
         ]
@@ -370,7 +370,7 @@
           {
             "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
             "mode": "transaction-assembly",
-            "expectedText": "Privacy information",
+            "expectedText": "MPS End-to-End Transaction Assembly v1",
             "mobileNoOverflow": true
           }
         ]
@@ -424,19 +424,18 @@
           {
             "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
             "mode": "transaction-assembly",
-            "expectedText": "Privacy information",
+            "expectedText": "MPS End-to-End Transaction Assembly v1",
             "mobileNoOverflow": true
           }
         ]
       },
       "transactionUsage": {
         "decision": "review-gated",
-        "files": ["src/MobilityParkingPermitSkeleton.tsx"],
+        "files": ["src/tapaas-preview/index.tsx", "src/stories/TapaasComposites.stories.tsx"],
         "matrixStage": "evidence/medical"
       },
       "tests": [
-        "src/tapaas-preview/SelectedMaturityComponents.test.tsx",
-        "src/MobilityParkingPermitSkeleton.test.tsx"
+        "src/tapaas-preview/SelectedMaturityComponents.test.tsx"
       ],
       "evidence": {
         "notes": [
@@ -451,6 +450,7 @@
         "preview-only",
         "static evidence status only",
         "static mock file-name display only",
+        "not yet integrated into the MPS transaction skeleton",
         "source upload-state inconsistency remains review-gated",
         "no real upload",
         "no remove-file behaviour",
@@ -484,7 +484,7 @@
           {
             "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
             "mode": "transaction-assembly",
-            "expectedText": "Privacy information",
+            "expectedText": "MPS End-to-End Transaction Assembly v1",
             "mobileNoOverflow": true
           }
         ]
@@ -537,7 +537,7 @@
           {
             "id": "tapaas-preview-composites--mps-end-to-end-transaction-assembly-v-1",
             "mode": "transaction-assembly",
-            "expectedText": "Privacy information",
+            "expectedText": "MPS End-to-End Transaction Assembly v1",
             "mobileNoOverflow": true
           }
         ]

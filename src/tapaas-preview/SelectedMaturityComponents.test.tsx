@@ -16,6 +16,11 @@ import {
   backendErrorExamples,
 } from './index'
 
+function duplicateIds(container: HTMLElement) {
+  const ids = Array.from(container.querySelectorAll<HTMLElement>('[id]')).map((element) => element.id)
+  return ids.filter((id, index) => ids.indexOf(id) !== index)
+}
+
 describe('selected TaPaaS maturity components', () => {
   it('renders declaration review in card and accordion variants', async () => {
     const sections = [
@@ -260,6 +265,31 @@ describe('selected TaPaaS maturity components', () => {
     expect(onAddressSearch).toHaveBeenCalledTimes(1)
   })
 
+  it('supports paired MPS applicant detail states without duplicate ids', () => {
+    const { container } = render(
+      <>
+        <MpsApplicantDetailsFramePreview
+          addressMode='search'
+          idPrefix='applicant-search'
+          value={{ firstName: 'Alex', lastName: 'Citizen' }}
+          onManualAddress={() => undefined}
+          onContinue={() => undefined}
+          onBack={() => undefined}
+        />
+        <MpsApplicantDetailsFramePreview
+          addressMode='manual'
+          idPrefix='applicant-manual'
+          value={{ firstName: 'Alex', lastName: 'Citizen' }}
+          onAddressSearch={() => undefined}
+          onContinue={() => undefined}
+          onBack={() => undefined}
+        />
+      </>,
+    )
+
+    expect(duplicateIds(container)).toEqual([])
+  })
+
   it('renders the MPS confirmation frame preview with next steps and feedback', async () => {
     const user = userEvent.setup()
 
@@ -302,6 +332,17 @@ describe('selected TaPaaS maturity components', () => {
     expect(screen.getByText(/No upload, remove-file, storage or validation behaviour is included/)).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /select file/i })).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /remove file/i })).not.toBeInTheDocument()
+  })
+
+  it('supports paired MPS medical evidence states without duplicate ids', () => {
+    const { container } = render(
+      <>
+        <MpsMedicalEvidenceStatusPreview state='required' idPrefix='medical-required' />
+        <MpsMedicalEvidenceStatusPreview state='provided' idPrefix='medical-provided' />
+      </>,
+    )
+
+    expect(duplicateIds(container)).toEqual([])
   })
 
   it('renders the Next steps card as ordered and unordered preview guidance', () => {

@@ -28,6 +28,7 @@ export interface EvidenceChecklistItem {
 export interface MpsMedicalEvidenceStatusPreviewProps {
   state?: 'required' | 'provided'
   fileName?: string
+  idPrefix?: string
 }
 
 export interface AssessmentSummaryItem {
@@ -111,6 +112,7 @@ export interface MpsApplicantDetailsFrameValue {
 
 export interface MpsApplicantDetailsFramePreviewProps {
   addressMode?: 'search' | 'manual'
+  idPrefix?: string
   value?: MpsApplicantDetailsFrameValue
   onChange?: (value: MpsApplicantDetailsFrameValue) => void
   onManualAddress?: () => void
@@ -259,6 +261,7 @@ export function ReviewFeesCard({
 // ---------------------------------------------------------------------------
 export function MpsApplicantDetailsFramePreview({
   addressMode = 'search',
+  idPrefix,
   value,
   onChange,
   onManualAddress,
@@ -268,6 +271,7 @@ export function MpsApplicantDetailsFramePreview({
   showErrors = false,
 }: MpsApplicantDetailsFramePreviewProps) {
   const formValue = value || {}
+  const headingId = scopedId('mps-applicant-frame-heading', idPrefix)
 
   function update(field: keyof MpsApplicantDetailsFrameValue, nextValue: string) {
     onChange?.({ ...formValue, [field]: nextValue })
@@ -278,12 +282,12 @@ export function MpsApplicantDetailsFramePreview({
   return (
     <section
       className='tapaas-mps-applicant-frame'
-      aria-labelledby='mps-applicant-frame-heading'
+      aria-labelledby={headingId}
       data-tapaas-component='mps-applicant-details-frame-preview'
       data-preview-boundary='preview implementation; mock form capture only; not production-approved'
     >
       <p className='tapaas-mps-applicant-frame__step'>Step 1 of 4</p>
-      <Heading level={2} id='mps-applicant-frame-heading'>Personal details</Heading>
+      <Heading level={2} id={headingId}>Personal details</Heading>
       <p className='tapaas-mps-applicant-frame__hint'>
         <span>*</span> indicates a required field
       </p>
@@ -295,32 +299,32 @@ export function MpsApplicantDetailsFramePreview({
         </InPageAlert>
       )}
       <div className='tapaas-mps-applicant-frame__section'>
-        <Field id='mps-applicant-first-name' label='First name *' hasError={showErrors && !formValue.firstName?.trim()} errorMessage='Enter a first name.'>
-          <Input id='mps-applicant-first-name' value={formValue.firstName || ''} onChange={(event) => update('firstName', event.target.value)} inputWidth='xl' autoComplete='given-name' />
+        <Field id={scopedId('mps-applicant-first-name', idPrefix)} label='First name *' hasError={showErrors && !formValue.firstName?.trim()} errorMessage='Enter a first name.'>
+          <Input id={scopedId('mps-applicant-first-name', idPrefix)} value={formValue.firstName || ''} onChange={(event) => update('firstName', event.target.value)} inputWidth='xl' autoComplete='given-name' />
         </Field>
-        <Field id='mps-applicant-last-name' label='Last name *' hasError={showErrors && !formValue.lastName?.trim()} errorMessage='Enter a last name.'>
-          <Input id='mps-applicant-last-name' value={formValue.lastName || ''} onChange={(event) => update('lastName', event.target.value)} inputWidth='xl' autoComplete='family-name' />
+        <Field id={scopedId('mps-applicant-last-name', idPrefix)} label='Last name *' hasError={showErrors && !formValue.lastName?.trim()} errorMessage='Enter a last name.'>
+          <Input id={scopedId('mps-applicant-last-name', idPrefix)} value={formValue.lastName || ''} onChange={(event) => update('lastName', event.target.value)} inputWidth='xl' autoComplete='family-name' />
         </Field>
-        <MpsDateInputGroup value={formValue} update={update} showErrors={showErrors} />
+        <MpsDateInputGroup value={formValue} update={update} showErrors={showErrors} idPrefix={idPrefix} />
       </div>
       <div className='tapaas-mps-applicant-frame__section'>
         <Heading level={3}>Contact details</Heading>
         {addressMode === 'manual' ? (
-          <MpsManualAddressGroup value={formValue} update={update} onAddressSearch={onAddressSearch} showErrors={showErrors} />
+          <MpsManualAddressGroup value={formValue} update={update} onAddressSearch={onAddressSearch} showErrors={showErrors} idPrefix={idPrefix} />
         ) : (
-          <MpsAddressSearchGroup value={formValue} update={update} onManualAddress={onManualAddress} showErrors={showErrors} />
+          <MpsAddressSearchGroup value={formValue} update={update} onManualAddress={onManualAddress} showErrors={showErrors} idPrefix={idPrefix} />
         )}
-        <Field id='mps-applicant-email' label='Email address *' hasError={showErrors && !formValue.email?.trim()} errorMessage='Enter an email address.'>
-          <Input id='mps-applicant-email' value={formValue.email || ''} onChange={(event) => update('email', event.target.value)} inputWidth='xl' autoComplete='email' />
+        <Field id={scopedId('mps-applicant-email', idPrefix)} label='Email address *' hasError={showErrors && !formValue.email?.trim()} errorMessage='Enter an email address.'>
+          <Input id={scopedId('mps-applicant-email', idPrefix)} value={formValue.email || ''} onChange={(event) => update('email', event.target.value)} inputWidth='xl' autoComplete='email' />
         </Field>
         <Field
-          id='mps-applicant-phone'
+          id={scopedId('mps-applicant-phone', idPrefix)}
           label='Phone number *'
           helpMessage='Enter your phone number using 10 digits with no spaces or symbols. Include the area code if you are entering a landline.'
           hasError={showErrors && !formValue.phone?.trim()}
           errorMessage='Enter a phone number.'
         >
-          <Input id='mps-applicant-phone' value={formValue.phone || ''} onChange={(event) => update('phone', event.target.value)} inputWidth='xl' autoComplete='tel' inputMode='tel' />
+          <Input id={scopedId('mps-applicant-phone', idPrefix)} value={formValue.phone || ''} onChange={(event) => update('phone', event.target.value)} inputWidth='xl' autoComplete='tel' inputMode='tel' />
         </Field>
       </div>
       <div className='tapaas-mps-applicant-frame__actions' role='group' aria-label='Applicant details actions'>
@@ -335,24 +339,26 @@ function MpsDateInputGroup({
   value,
   update,
   showErrors,
+  idPrefix,
 }: {
   value: MpsApplicantDetailsFrameValue
   update: (field: keyof MpsApplicantDetailsFrameValue, nextValue: string) => void
   showErrors: boolean
+  idPrefix?: string
 }) {
   const hasDateError = showErrors && (!value.dateOfBirthDay?.trim() || !value.dateOfBirthMonth?.trim() || !value.dateOfBirthYear?.trim())
-  const errorId = 'mps-applicant-date-of-birth-error'
+  const errorId = scopedId('mps-applicant-date-of-birth-error', idPrefix)
 
   return (
     <fieldset className='tapaas-mps-date-group' aria-describedby={hasDateError ? errorId : undefined} aria-invalid={hasDateError || undefined}>
       <legend>Date of birth *</legend>
       <div className='tapaas-mps-date-group__fields'>
-        <Field id='mps-applicant-dob-day' label='Day'>
-          <Input id='mps-applicant-dob-day' value={value.dateOfBirthDay || ''} onChange={(event) => update('dateOfBirthDay', event.target.value)} inputWidth='xxs' placeholder='DD' autoComplete='bday-day' inputMode='numeric' maxLength={2} />
+        <Field id={scopedId('mps-applicant-dob-day', idPrefix)} label='Day'>
+          <Input id={scopedId('mps-applicant-dob-day', idPrefix)} value={value.dateOfBirthDay || ''} onChange={(event) => update('dateOfBirthDay', event.target.value)} inputWidth='xxs' placeholder='DD' autoComplete='bday-day' inputMode='numeric' maxLength={2} />
         </Field>
-        <Field id='mps-applicant-dob-month' label='Month'>
+        <Field id={scopedId('mps-applicant-dob-month', idPrefix)} label='Month'>
           <Select
-            id='mps-applicant-dob-month'
+            id={scopedId('mps-applicant-dob-month', idPrefix)}
             value={value.dateOfBirthMonth || ''}
             onChange={(event) => update('dateOfBirthMonth', event.target.value)}
             inputWidth='xs'
@@ -374,8 +380,8 @@ function MpsDateInputGroup({
             autoComplete='bday-month'
           />
         </Field>
-        <Field id='mps-applicant-dob-year' label='Year'>
-          <Input id='mps-applicant-dob-year' value={value.dateOfBirthYear || ''} onChange={(event) => update('dateOfBirthYear', event.target.value)} inputWidth='xs' placeholder='YYYY' autoComplete='bday-year' inputMode='numeric' maxLength={4} />
+        <Field id={scopedId('mps-applicant-dob-year', idPrefix)} label='Year'>
+          <Input id={scopedId('mps-applicant-dob-year', idPrefix)} value={value.dateOfBirthYear || ''} onChange={(event) => update('dateOfBirthYear', event.target.value)} inputWidth='xs' placeholder='YYYY' autoComplete='bday-year' inputMode='numeric' maxLength={4} />
         </Field>
       </div>
       {hasDateError && (
@@ -392,23 +398,25 @@ function MpsAddressSearchGroup({
   update,
   onManualAddress,
   showErrors,
+  idPrefix,
 }: {
   value: MpsApplicantDetailsFrameValue
   update: (field: keyof MpsApplicantDetailsFrameValue, nextValue: string) => void
   onManualAddress?: () => void
   showErrors: boolean
+  idPrefix?: string
 }) {
   return (
     <div className='tapaas-mps-address-search'>
       <div className='tapaas-mps-address-search__heading'>
         <Field
-          id='mps-applicant-residential-address'
+          id={scopedId('mps-applicant-residential-address', idPrefix)}
           label='Residential address *'
           helpMessage='Start typing and select your address from the results that appear. If you are unable to locate your address please enter it manually.'
           hasError={showErrors && !value.residentialAddress?.trim()}
           errorMessage='Enter a residential address.'
         >
-          <Input id='mps-applicant-residential-address' value={value.residentialAddress || ''} onChange={(event) => update('residentialAddress', event.target.value)} inputWidth='xl' autoComplete='street-address' />
+          <Input id={scopedId('mps-applicant-residential-address', idPrefix)} value={value.residentialAddress || ''} onChange={(event) => update('residentialAddress', event.target.value)} inputWidth='xl' autoComplete='street-address' />
         </Field>
         {onManualAddress && (
           <button type='button' className='tapaas-mps-applicant-frame__text-action' onClick={onManualAddress}>
@@ -425,11 +433,13 @@ function MpsManualAddressGroup({
   update,
   onAddressSearch,
   showErrors,
+  idPrefix,
 }: {
   value: MpsApplicantDetailsFrameValue
   update: (field: keyof MpsApplicantDetailsFrameValue, nextValue: string) => void
   onAddressSearch?: () => void
   showErrors: boolean
+  idPrefix?: string
 }) {
   return (
     <fieldset className='tapaas-mps-manual-address'>
@@ -439,18 +449,18 @@ function MpsManualAddressGroup({
           Back to search
         </button>
       )}
-      <Field id='mps-applicant-unit-number' label='Unit number'>
-        <Input id='mps-applicant-unit-number' value={value.unitNumber || ''} onChange={(event) => update('unitNumber', event.target.value)} inputWidth='xl' autoComplete='address-line2' />
+      <Field id={scopedId('mps-applicant-unit-number', idPrefix)} label='Unit number'>
+        <Input id={scopedId('mps-applicant-unit-number', idPrefix)} value={value.unitNumber || ''} onChange={(event) => update('unitNumber', event.target.value)} inputWidth='xl' autoComplete='address-line2' />
       </Field>
-      <Field id='mps-applicant-street-number' label='Street number *' hasError={showErrors && !value.streetNumber?.trim()} errorMessage='Enter a street number.'>
-        <Input id='mps-applicant-street-number' value={value.streetNumber || ''} onChange={(event) => update('streetNumber', event.target.value)} inputWidth='xl' autoComplete='address-line1' />
+      <Field id={scopedId('mps-applicant-street-number', idPrefix)} label='Street number *' hasError={showErrors && !value.streetNumber?.trim()} errorMessage='Enter a street number.'>
+        <Input id={scopedId('mps-applicant-street-number', idPrefix)} value={value.streetNumber || ''} onChange={(event) => update('streetNumber', event.target.value)} inputWidth='xl' autoComplete='address-line1' />
       </Field>
-      <Field id='mps-applicant-street-name' label='Street name *' hasError={showErrors && !value.streetName?.trim()} errorMessage='Enter a street name.'>
-        <Input id='mps-applicant-street-name' value={value.streetName || ''} onChange={(event) => update('streetName', event.target.value)} inputWidth='xl' />
+      <Field id={scopedId('mps-applicant-street-name', idPrefix)} label='Street name *' hasError={showErrors && !value.streetName?.trim()} errorMessage='Enter a street name.'>
+        <Input id={scopedId('mps-applicant-street-name', idPrefix)} value={value.streetName || ''} onChange={(event) => update('streetName', event.target.value)} inputWidth='xl' />
       </Field>
-      <Field id='mps-applicant-street-type' label='Street type *' hasError={showErrors && !value.streetType} errorMessage='Select a street type.'>
+      <Field id={scopedId('mps-applicant-street-type', idPrefix)} label='Street type *' hasError={showErrors && !value.streetType} errorMessage='Select a street type.'>
         <Select
-          id='mps-applicant-street-type'
+          id={scopedId('mps-applicant-street-type', idPrefix)}
           value={value.streetType || ''}
           onChange={(event) => update('streetType', event.target.value)}
           inputWidth='xl'
@@ -462,12 +472,12 @@ function MpsManualAddressGroup({
           ]}
         />
       </Field>
-      <Field id='mps-applicant-suburb' label='Suburb *' hasError={showErrors && !value.suburb?.trim()} errorMessage='Enter a suburb.'>
-        <Input id='mps-applicant-suburb' value={value.suburb || ''} onChange={(event) => update('suburb', event.target.value)} inputWidth='xl' autoComplete='address-level2' />
+      <Field id={scopedId('mps-applicant-suburb', idPrefix)} label='Suburb *' hasError={showErrors && !value.suburb?.trim()} errorMessage='Enter a suburb.'>
+        <Input id={scopedId('mps-applicant-suburb', idPrefix)} value={value.suburb || ''} onChange={(event) => update('suburb', event.target.value)} inputWidth='xl' autoComplete='address-level2' />
       </Field>
-      <Field id='mps-applicant-state' label='State *' hasError={showErrors && !value.state} errorMessage='Select a state.'>
+      <Field id={scopedId('mps-applicant-state', idPrefix)} label='State *' hasError={showErrors && !value.state} errorMessage='Select a state.'>
         <Select
-          id='mps-applicant-state'
+          id={scopedId('mps-applicant-state', idPrefix)}
           value={value.state || ''}
           onChange={(event) => update('state', event.target.value)}
           inputWidth='xl'
@@ -484,8 +494,8 @@ function MpsManualAddressGroup({
           autoComplete='address-level1'
         />
       </Field>
-      <Field id='mps-applicant-postcode' label='Postcode *' hasError={showErrors && !value.postcode?.trim()} errorMessage='Enter a postcode.'>
-        <Input id='mps-applicant-postcode' value={value.postcode || ''} onChange={(event) => update('postcode', event.target.value)} inputWidth='xl' autoComplete='postal-code' inputMode='numeric' maxLength={4} />
+      <Field id={scopedId('mps-applicant-postcode', idPrefix)} label='Postcode *' hasError={showErrors && !value.postcode?.trim()} errorMessage='Enter a postcode.'>
+        <Input id={scopedId('mps-applicant-postcode', idPrefix)} value={value.postcode || ''} onChange={(event) => update('postcode', event.target.value)} inputWidth='xl' autoComplete='postal-code' inputMode='numeric' maxLength={4} />
       </Field>
     </fieldset>
   )
@@ -1132,16 +1142,20 @@ export function RepeatableGroup({
 
 export function EvidenceChecklistCard({
   title = 'Evidence checklist',
+  idPrefix,
   items,
   children,
 }: {
   title?: string
+  idPrefix?: string
   items: EvidenceChecklistItem[]
   children?: React.ReactNode
 }) {
+  const headingId = scopedId(`${slugify(title)}-heading`, idPrefix)
+
   return (
-    <section className='tapaas-card tapaas-evidence-card' aria-labelledby={`${slugify(title)}-heading`}>
-      <Heading level={3} id={`${slugify(title)}-heading`}>{title}</Heading>
+    <section className='tapaas-card tapaas-evidence-card' aria-labelledby={headingId}>
+      <Heading level={3} id={headingId}>{title}</Heading>
       <ul className='tapaas-evidence-list'>
         {items.map((item) => (
           <li className='tapaas-evidence-item' key={item.id}>
@@ -1163,16 +1177,18 @@ export function EvidenceChecklistCard({
 export function MpsMedicalEvidenceStatusPreview({
   state = 'required',
   fileName = 'medicalcertificate_april2020.png',
+  idPrefix,
 }: MpsMedicalEvidenceStatusPreviewProps) {
   const isProvided = state === 'provided'
+  const headingId = scopedId('mps-medical-evidence-status-heading', idPrefix)
 
   return (
     <section
       className='tapaas-mps-medical-evidence-status'
-      aria-labelledby='mps-medical-evidence-status-heading'
+      aria-labelledby={headingId}
       data-tapaas-component='mps-medical-evidence-status-preview'
     >
-      <Heading level={2} id='mps-medical-evidence-status-heading'>Medical document</Heading>
+      <Heading level={2} id={headingId}>Medical document</Heading>
       <p className='tapaas-mps-medical-evidence-status__hint'>
         <span aria-hidden='true'>*</span> indicates a required field
       </p>
@@ -1181,6 +1197,7 @@ export function MpsMedicalEvidenceStatusPreview({
       </InPageAlert>
       <EvidenceChecklistCard
         title='Medical evidence status'
+        idPrefix={idPrefix}
         items={[
           {
             id: 'medical-certificate',
@@ -1355,6 +1372,10 @@ function statusLabel(status: EvidenceChecklistItem['status']) {
   if (status === 'not-required') return 'Not required'
   if (status === 'needs-review') return 'Needs review'
   return 'Required'
+}
+
+function scopedId(id: string, idPrefix?: string) {
+  return idPrefix ? `${idPrefix}-${id}` : id
 }
 
 // ---------------------------------------------------------------------------

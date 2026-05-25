@@ -231,6 +231,7 @@ export const MpsApplicantDetailsFrameFigmaFidelity: Story = {
       </div>
       <MpsApplicantDetailsFramePreview
         addressMode='search'
+        idPrefix='mps-applicant-search'
         value={mpsApplicantDetailsValue}
         onManualAddress={() => undefined}
         onContinue={() => undefined}
@@ -238,6 +239,7 @@ export const MpsApplicantDetailsFrameFigmaFidelity: Story = {
       />
       <MpsApplicantDetailsFramePreview
         addressMode='manual'
+        idPrefix='mps-applicant-manual'
         value={mpsApplicantDetailsValue}
         onAddressSearch={() => undefined}
         onContinue={() => undefined}
@@ -475,8 +477,8 @@ export const MpsMedicalEvidenceStatus: Story = {
           <li>Not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.</li>
         </ul>
       </div>
-      <MpsMedicalEvidenceStatusPreview state='required' />
-      <MpsMedicalEvidenceStatusPreview state='provided' />
+      <MpsMedicalEvidenceStatusPreview state='required' idPrefix='mps-medical-required' />
+      <MpsMedicalEvidenceStatusPreview state='provided' idPrefix='mps-medical-provided' />
     </div>
   ),
 }
