@@ -173,13 +173,13 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--email-confirmation-modal-desktop",
+            "id": "tapaas-components-modals-overlays--email-confirmation-modal-desktop",
             "mode": "isolated-review",
             "expectedText": "samplemail@email.com",
             "mobileNoOverflow": true
           },
           {
-            "id": "tapaas-preview-composites--email-confirmation-modal-mobile",
+            "id": "tapaas-components-modals-overlays--email-confirmation-modal-mobile",
             "mode": "isolated-review",
             "expectedText": "samplemail@email.com",
             "mobileNoOverflow": true
@@ -574,7 +574,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--exit-modal-isolated",
+            "id": "tapaas-components-modals-overlays--exit-modal-isolated",
             "mode": "isolated-review",
             "expectedText": "TaPaaS Exit modal template",
             "mobileNoOverflow": true
