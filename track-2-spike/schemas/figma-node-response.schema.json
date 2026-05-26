@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://service.nsw.gov.au/tapaas/track-2-spike/figma-node-response.schema.json",
+  "title": "Figma node response",
+  "type": "object",
+  "required": ["name", "lastModified", "thumbnailUrl", "version", "nodes"],
+  "properties": {
+    "name": { "type": "string" },
+    "lastModified": { "type": "string" },
+    "thumbnailUrl": { "type": "string" },
+    "version": { "type": "string" },
+    "role": { "type": "string" },
+    "editorType": { "type": "string" },
+    "linkAccess": { "type": "string" },
+    "nodes": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["document"],
+        "properties": {
+          "document": { "type": "object" },
+          "components": { "type": "object" },
+          "componentSets": { "type": "object" },
+          "schemaVersion": { "type": "integer" },
+          "styles": { "type": "object" }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

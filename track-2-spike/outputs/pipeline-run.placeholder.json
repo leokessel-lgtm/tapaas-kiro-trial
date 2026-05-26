@@ -1,0 +1,21 @@
+{
+  "status": "placeholder",
+  "ranAt": "Not run",
+  "inputs": {
+    "fileKey": "pFDBhMVirBMo9JnJQbeI3I",
+    "nodeId": "490:23897",
+    "fetchRequested": false
+  },
+  "steps": [
+    {
+      "name": "setup",
+      "status": "placeholder",
+      "detail": "Scripts and schemas are present. Live fetch has not been run."
+    }
+  ],
+  "outputs": {
+    "raw": "track-2-spike/outputs/raw/figma-node-response.json",
+    "evidence": "track-2-spike/outputs/normalised/extracted-evidence.json",
+    "docs": "track-2-spike/outputs/docs"
+  }
+}

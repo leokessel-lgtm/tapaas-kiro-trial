@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://service.nsw.gov.au/tapaas/track-2-spike/extracted-evidence.schema.json",
+  "title": "Track 2 extracted evidence",
+  "type": "object",
+  "required": [
+    "source",
+    "summary",
+    "selectedNode",
+    "text",
+    "instances",
+    "unknowns",
+    "reviewGates"
+  ],
+  "properties": {
+    "source": {
+      "type": "object",
+      "required": ["fileKey", "nodeId", "extractedAt", "rawPath"],
+      "properties": {
+        "fileKey": { "type": "string" },
+        "nodeId": { "type": "string" },
+        "figmaUrl": { "type": "string" },
+        "extractedAt": { "type": "string" },
+        "rawPath": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "required": ["fileName", "nodeName", "nodeType", "descendantCount"],
+      "properties": {
+        "fileName": { "type": "string" },
+        "nodeName": { "type": "string" },
+        "nodeType": { "type": "string" },
+        "descendantCount": { "type": "integer" }
+      },
+      "additionalProperties": false
+    },
+    "selectedNode": { "type": "object" },
+    "text": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "characters"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "characters": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "instances": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "componentId": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "reviewGates": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

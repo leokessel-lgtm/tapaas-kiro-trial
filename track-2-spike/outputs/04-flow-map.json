@@ -1,0 +1,48 @@
+{
+  "productionReady": false,
+  "requiresTaPaaSEngineeringReview": true,
+  "schemaCompatibilityClaim": "none",
+  "source": "figma-rest-api-private-rd-spike",
+  "pageOrderSource": "Figma child order inside selected section",
+  "pages": [
+    {
+      "order": 1,
+      "sourceNodeId": "490:60286",
+      "sourceName": "0.1D_NOD",
+      "pageTitle": "Privacy",
+      "role": "privacy-page-state",
+      "mappingStatus": "verified",
+      "ctas": [
+        {
+          "label": "Continue",
+          "sourceNodeId": "I531:2614;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+          "likelyTargetPage": "2.4_NOD",
+          "navigationStatus": "inferred",
+          "evidence": "Raw Figma interactions show component variant hover/change-to behaviour only, not explicit page-to-page prototype navigation."
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "sourceNodeId": "751:10322",
+      "sourceName": "2.4_NOD",
+      "pageTitle": "Privacy",
+      "role": "supporting-frame",
+      "mappingStatus": "verified",
+      "ctas": [
+        {
+          "label": "Continue",
+          "sourceNodeId": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+          "likelyTargetPage": "same page after correcting acknowledgement",
+          "navigationStatus": "inferred",
+          "evidence": "Raw Figma interactions show component variant hover/change-to behaviour only, not explicit page-to-page prototype navigation."
+        }
+      ]
+    }
+  ],
+  "unknownTransitions": [
+    "No explicit page-to-page Figma prototype links were captured for Continue.",
+    "The target page after a valid Privacy acknowledgement is not known from this selected node alone.",
+    "The relationship between normal state and validation-error state is inferred from frame names and validation text."
+  ]
+}

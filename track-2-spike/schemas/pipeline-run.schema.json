@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://service.nsw.gov.au/tapaas/track-2-spike/pipeline-run.schema.json",
+  "title": "Track 2 pipeline run",
+  "type": "object",
+  "required": ["status", "ranAt", "steps", "outputs"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["placeholder", "success", "failed"]
+    },
+    "ranAt": { "type": "string" },
+    "inputs": {
+      "type": "object",
+      "properties": {
+        "fileKey": { "type": "string" },
+        "nodeId": { "type": "string" },
+        "fetchRequested": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "status"],
+        "properties": {
+          "name": { "type": "string" },
+          "status": { "type": "string" },
+          "detail": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "outputs": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

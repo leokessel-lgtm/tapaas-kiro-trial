@@ -1,0 +1,13 @@
+
+# Local/private Figma API outputs
+outputs/*raw*
+outputs/*.local.json
+outputs/*.raw.json
+outputs/*.raw.local.json
+
+# Local/private Figma API outputs
+outputs/raw/**
+outputs/*raw*
+outputs/*.local.json
+outputs/*.raw.json
+outputs/*.raw.local.json

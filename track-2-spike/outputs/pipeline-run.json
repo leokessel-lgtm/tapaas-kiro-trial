@@ -1,0 +1,53 @@
+{
+  "status": "success",
+  "ranAt": "2026-05-26T12:06:55.990Z",
+  "inputs": {
+    "fileKey": "Unknown",
+    "nodeId": "Unknown",
+    "fetchRequested": false
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "status": "skipped",
+      "detail": "Using existing raw Figma response"
+    },
+    {
+      "name": "validate raw",
+      "status": "success",
+      "detail": "track-2-spike/outputs/raw/figma-node-response.json"
+    },
+    {
+      "name": "normalise",
+      "status": "success",
+      "detail": "track-2-spike/outputs/normalised/extracted-evidence.json"
+    },
+    {
+      "name": "validate evidence",
+      "status": "success",
+      "detail": "track-2-spike/outputs/normalised/extracted-evidence.json"
+    },
+    {
+      "name": "build docs",
+      "status": "success",
+      "detail": "track-2-spike/outputs/docs"
+    },
+    {
+      "name": "build review pack",
+      "status": "success",
+      "detail": "track-2-spike/outputs/02-06 and track-2-spike/docs"
+    }
+  ],
+  "outputs": {
+    "raw": "track-2-spike/outputs/raw/figma-node-response.json",
+    "evidence": "track-2-spike/outputs/normalised/extracted-evidence.json",
+    "docs": "track-2-spike/outputs/docs",
+    "designIr": "track-2-spike/outputs/02-design-ir.json",
+    "componentMap": "track-2-spike/outputs/03-component-map.csv",
+    "flowMap": "track-2-spike/outputs/04-flow-map.json",
+    "pseudoSchema": "track-2-spike/outputs/05-schema-candidate.pseudo.json",
+    "gapReport": "track-2-spike/outputs/06-gap-report.md",
+    "engineeringQuestions": "track-2-spike/docs/engineering-review-questions.md",
+    "tomorrowSummary": "track-2-spike/docs/tomorrow-summary.md"
+  }
+}
