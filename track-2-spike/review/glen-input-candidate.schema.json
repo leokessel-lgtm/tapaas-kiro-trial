@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://service.nsw.gov.au/tapaas-track-2-glen-review-candidate.schema.json",
+  "title": "TaPaaS Track 2 Glen Review Candidate",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "artefactType",
+    "version",
+    "reviewPurpose",
+    "sourceSummary",
+    "pageStateMapSummary",
+    "candidateDesignIr",
+    "candidateComponentMappings",
+    "stateComparison",
+    "unknownsByCategory",
+    "asksForGlen",
+    "recommendedNextExperiment"
+  ],
+  "properties": {
+    "artefactType": {
+      "const": "tapaas-track-2-glen-review-candidate"
+    },
+    "version": {
+      "type": "string"
+    },
+    "reviewPurpose": {
+      "type": "string"
+    },
+    "sourceSummary": {
+      "type": "object",
+      "required": [
+        "extractionType",
+        "fullTransactionExtracted",
+        "sourceNodeCount",
+        "rawJsonIncluded",
+        "sourceNodes"
+      ],
+      "properties": {
+        "extractionType": {
+          "type": "string"
+        },
+        "fullTransactionExtracted": {
+          "const": false
+        },
+        "sourceNodeCount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "rawJsonIncluded": {
+          "const": false
+        },
+        "sourceNodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "nodeId",
+              "nodeName",
+              "nodeType",
+              "sourceOrder",
+              "safeLabel",
+              "confidence",
+              "needsGlenConfirmation"
+            ],
+            "properties": {
+              "nodeId": {
+                "type": "string"
+              },
+              "nodeName": {
+                "type": "string"
+              },
+              "nodeType": {
+                "type": "string"
+              },
+              "sourceOrder": {
+                "type": "integer"
+              },
+              "safeLabel": {
+                "type": "string"
+              },
+              "confidence": {
+                "enum": [
+                  "high",
+                  "medium",
+                  "low"
+                ]
+              },
+              "needsGlenConfirmation": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
+    "pageStateMapSummary": {
+      "type": "object"
+    },
+    "candidateDesignIr": {
+      "type": "object"
+    },
+    "candidateComponentMappings": {
+      "type": "array"
+    },
+    "stateComparison": {
+      "type": "object"
+    },
+    "unknownsByCategory": {
+      "type": "object"
+    },
+    "asksForGlen": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "recommendedNextExperiment": {
+      "type": "object"
+    }
+  }
+}

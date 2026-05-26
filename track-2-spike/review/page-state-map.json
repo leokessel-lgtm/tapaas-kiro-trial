@@ -1,0 +1,186 @@
+{
+  "artefactType": "track-2-page-state-map",
+  "version": "0.1",
+  "fullTransactionExtracted": false,
+  "selectedNodeExtraction": true,
+  "sourceNodeCount": 2,
+  "confirmedTransactionPageCount": "unknown",
+  "pageOrStateCandidateCount": 2,
+  "productionReady": false,
+  "schemaCompatibilityClaim": "none",
+  "requiresTaPaaSEngineeringReview": true,
+  "nodes": [
+    {
+      "nodeId": "490:60286",
+      "nodeName": "0.1D_NOD",
+      "nodeType": "FRAME",
+      "sourceOrder": 1,
+      "candidateRole": "privacy-acknowledgement-normal-state",
+      "candidateRoleConfidence": "medium",
+      "isConfirmedTransactionPage": false,
+      "isConfirmedStateVariant": false,
+      "likelyStepName": "Privacy",
+      "likelyStateName": "Normal or acknowledgement state",
+      "extractedHeadings": [
+        "Privacy",
+        "Privacy collection notice",
+        "Terms and conditions"
+      ],
+      "extractedPrimaryTexts": [
+        "Submit a notice of disposal for a vehicle",
+        "Service NSW delivers this service on behalf of Transport of NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal privacy statement and Terms and Conditions and call 13 77 88.",
+        "These are the Terms and Conditions.",
+        "I accept the terms and conditions for Notice of Disposal"
+      ],
+      "likelyFields": [
+        {
+          "label": "I accept the terms and conditions for Notice of Disposal",
+          "fieldTypeCandidate": "checkbox",
+          "required": "unknown",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        }
+      ],
+      "likelyCtas": [
+        {
+          "label": "Continue",
+          "target": "Unknown",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Exit",
+          "target": "Unknown",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        }
+      ],
+      "likelyValidationEvidence": [],
+      "likelyShellElements": [
+        "Header",
+        "NSW Government logo",
+        "Service NSW logo",
+        "Main navigation links",
+        "Search bar",
+        "Progress stepper",
+        "Footer links"
+      ],
+      "explicitPrototypeTargetsFound": [],
+      "inferredRelationships": [
+        {
+          "relatedNodeId": "751:10322",
+          "relationship": "likely normal-to-validation-error state pair",
+          "evidence": "Shared Privacy and terms content, with validation/error text only detected in 751:10322.",
+          "confidence": "medium"
+        }
+      ],
+      "unsafeAssumptionsToAvoid": [
+        "Do not treat this as a confirmed standalone transaction page.",
+        "Do not assume Continue target or transaction order.",
+        "Do not assume the acknowledgement is required by backend contract.",
+        "Do not assume content approval, privacy approval, legal approval, GEL approval or TaPaaS approval."
+      ],
+      "confirmationNeededFrom": [
+        "Glen: TaPaaS schema and block mapping",
+        "Maddy or Michael: designer intent and whether this is the normal state",
+        "TaPaaS engineering: validation and accessibility behaviour"
+      ]
+    },
+    {
+      "nodeId": "751:10322",
+      "nodeName": "2.4_NOD",
+      "nodeType": "FRAME",
+      "sourceOrder": 2,
+      "candidateRole": "privacy-acknowledgement-validation-error-state",
+      "candidateRoleConfidence": "medium",
+      "isConfirmedTransactionPage": false,
+      "isConfirmedStateVariant": false,
+      "likelyStepName": "Privacy",
+      "likelyStateName": "Validation error state",
+      "extractedHeadings": [
+        "Privacy",
+        "Privacy collection notice",
+        "Terms and conditions",
+        "Your form has an error"
+      ],
+      "extractedPrimaryTexts": [
+        "Submit a notice of disposal for a vehicle",
+        "For more information about how we collect, use and disclose your personal information, including who we may disclose it to, check our Privacy Collection notice.",
+        "These are the Terms and Conditions.",
+        "I accept the terms and conditions for Notice of Disposal.",
+        "Check the error:",
+        "Accept the Terms and conditions to continue."
+      ],
+      "likelyFields": [
+        {
+          "label": "I accept the terms and conditions for Notice of Disposal.",
+          "fieldTypeCandidate": "checkbox",
+          "required": "inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        }
+      ],
+      "likelyCtas": [
+        {
+          "label": "Continue",
+          "target": "Unknown",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Exit",
+          "target": "Unknown",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        }
+      ],
+      "likelyValidationEvidence": [
+        {
+          "message": "Your form has an error",
+          "evidenceType": "visible error summary title",
+          "confidence": "high"
+        },
+        {
+          "message": "Check the error:",
+          "evidenceType": "visible error summary copy",
+          "confidence": "high"
+        },
+        {
+          "message": "Accept the Terms and conditions to continue.",
+          "evidenceType": "visible validation message",
+          "confidence": "high"
+        }
+      ],
+      "likelyShellElements": [
+        "Header",
+        "NSW Government logo",
+        "Service NSW logo",
+        "Main navigation links",
+        "Search bar",
+        "Progress stepper",
+        "Footer links"
+      ],
+      "explicitPrototypeTargetsFound": [],
+      "inferredRelationships": [
+        {
+          "relatedNodeId": "490:60286",
+          "relationship": "likely validation-error variant of the same Privacy acknowledgement step",
+          "evidence": "Shared Privacy and terms content, with additional error summary and field validation text in this node.",
+          "confidence": "medium"
+        }
+      ],
+      "unsafeAssumptionsToAvoid": [
+        "Do not treat this as a confirmed standalone transaction page.",
+        "Do not assume this is the only error state.",
+        "Do not assume backend validation or request/response shape.",
+        "Do not assume content approval, privacy approval, legal approval, GEL approval or TaPaaS approval."
+      ],
+      "confirmationNeededFrom": [
+        "Glen: TaPaaS validation schema and block mapping",
+        "Maddy or Michael: designer intent and whether this is the validation-error state",
+        "TaPaaS engineering: error focus, checkbox association and accessibility behaviour"
+      ]
+    }
+  ]
+}
+

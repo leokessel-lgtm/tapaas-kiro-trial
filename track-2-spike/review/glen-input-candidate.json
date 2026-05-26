@@ -1,0 +1,166 @@
+{
+  "artefactType": "tapaas-track-2-glen-review-candidate",
+  "version": "0.1",
+  "reviewPurpose": "Ask Glen to review whether the current Track 2 selected-node extraction can be mapped to TaPaaS schema concepts without overclaiming page status, schema compatibility or backend behaviour.",
+  "sourceSummary": {
+    "extractionType": "selected-node extraction",
+    "fullTransactionExtracted": false,
+    "sourceFileName": "NOD Production",
+    "sourceNodeCount": 2,
+    "rawJsonIncluded": false,
+    "sourceNodes": [
+      {
+        "nodeId": "490:60286",
+        "nodeName": "0.1D_NOD",
+        "nodeType": "FRAME",
+        "sourceOrder": 1,
+        "safeLabel": "Selected Figma node: likely Privacy acknowledgement normal state candidate",
+        "confidence": "medium",
+        "needsGlenConfirmation": true
+      },
+      {
+        "nodeId": "751:10322",
+        "nodeName": "2.4_NOD",
+        "nodeType": "FRAME",
+        "sourceOrder": 2,
+        "safeLabel": "Selected Figma node: likely Privacy acknowledgement validation-error state candidate",
+        "confidence": "medium",
+        "needsGlenConfirmation": true
+      }
+    ]
+  },
+  "pageStateMapSummary": {
+    "languageToUse": "2 selected Figma nodes interpreted as likely Privacy acknowledgement normal/error states",
+    "languageToAvoid": "2 transaction pages",
+    "confirmedTransactionPageCount": "unknown",
+    "pageOrStateCandidateCount": 2,
+    "nodes": [
+      {
+        "nodeId": "490:60286",
+        "candidateRole": "privacy-acknowledgement-normal-state",
+        "confirmedTransactionPage": false,
+        "confirmedStateVariant": false,
+        "confidence": "medium"
+      },
+      {
+        "nodeId": "751:10322",
+        "candidateRole": "privacy-acknowledgement-validation-error-state",
+        "confirmedTransactionPage": false,
+        "confirmedStateVariant": false,
+        "confidence": "medium"
+      }
+    ]
+  },
+  "candidateDesignIr": {
+    "status": "candidate-only",
+    "schemaCompatibilityClaim": "none",
+    "productionReady": false,
+    "likelyStepName": "Privacy",
+    "contentDetected": [
+      "Privacy collection notice",
+      "Terms and conditions",
+      "Notice of Disposal terms acknowledgement",
+      "Continue CTA",
+      "Exit CTA",
+      "Validation error summary in 751:10322"
+    ],
+    "navigationTargets": "unknown",
+    "backendMapping": "unknown",
+    "contentApproval": "unknown"
+  },
+  "candidateComponentMappings": [
+    {
+      "candidate": "PrivacyNoticeCandidate",
+      "evidence": "Privacy collection notice and terms content detected in both selected nodes.",
+      "mappingStatus": "candidate/inferred",
+      "confidence": "medium",
+      "needsGlenConfirmation": true
+    },
+    {
+      "candidate": "CheckboxFieldCandidate",
+      "evidence": "Terms acknowledgement label detected; validation message detected in 751:10322.",
+      "mappingStatus": "candidate/inferred",
+      "confidence": "medium",
+      "needsGlenConfirmation": true
+    },
+    {
+      "candidate": "PageHeaderCandidate",
+      "evidence": "Page label/title content detected.",
+      "mappingStatus": "candidate/inferred",
+      "confidence": "low",
+      "needsGlenConfirmation": true
+    },
+    {
+      "candidate": "ProgressStepCandidate",
+      "evidence": "Progress stepper instances detected.",
+      "mappingStatus": "candidate/inferred",
+      "confidence": "low",
+      "needsGlenConfirmation": true
+    },
+    {
+      "candidate": "LayoutOrContentCandidate",
+      "evidence": "Header, navigation, logos, search, icons, footer and spacing instances detected.",
+      "mappingStatus": "candidate/inferred",
+      "confidence": "low",
+      "needsGlenConfirmation": true
+    }
+  ],
+  "stateComparison": {
+    "status": "inferred",
+    "confidence": "medium",
+    "normalCandidate": {
+      "nodeId": "490:60286",
+      "nodeName": "0.1D_NOD",
+      "validationEvidence": []
+    },
+    "errorCandidate": {
+      "nodeId": "751:10322",
+      "nodeName": "2.4_NOD",
+      "validationEvidence": [
+        "Your form has an error",
+        "Check the error:",
+        "Accept the Terms and conditions to continue."
+      ]
+    },
+    "relationship": "Likely normal/error state pair for a Privacy acknowledgement page/state candidate, subject to design owner confirmation."
+  },
+  "unknownsByCategory": {
+    "figmaIntent": [
+      "Whether the selected nodes are pages, component states or validation variants.",
+      "Whether frame order matches intended transaction order.",
+      "Whether Continue has an explicit target outside the selected evidence."
+    ],
+    "tapaasSchema": [
+      "Real page, section, block, field, validation and CTA property names.",
+      "Which candidate block types match existing TaPaaS schema concepts.",
+      "Whether shell elements should be excluded, inherited or represented."
+    ],
+    "backend": [
+      "Request fields for acknowledgement, consent or transaction progression.",
+      "Response fields for validation, next-page routing or error recovery.",
+      "Backend-owned error taxonomy and persistence/audit rules."
+    ],
+    "approval": [
+      "Content approval is unknown.",
+      "Privacy/legal approval is unknown.",
+      "Accessibility approval is unknown.",
+      "GEL and TaPaaS approval are unknown."
+    ]
+  },
+  "asksForGlen": [
+    "Confirm the minimal TaPaaS schema concepts for privacy notice, acknowledgement checkbox, validation error summary, field-level validation and CTA.",
+    "Confirm which detected shell elements should be ignored, inherited or represented in the schema.",
+    "Provide a minimal schema sample or block catalogue excerpt for this kind of acknowledgement step.",
+    "Confirm whether the generated pseudo-schema shape is useful as a review artefact, even though it is not a compatibility claim."
+  ],
+  "recommendedNextExperiment": {
+    "summary": "Compare these 2 selected nodes against Glen's minimal TaPaaS schema sample using a no-fetch run, then revise the Design IR and pseudo-schema candidate to separate page content, state differences, shell elements and validation rules.",
+    "successCriteria": [
+      "No raw Figma JSON is sent.",
+      "The review pack keeps page/state candidate language.",
+      "Every TaPaaS mapping remains candidate/inferred/unknown unless directly confirmed.",
+      "Glen can identify which candidate fields are useful or wrong."
+    ]
+  }
+}
+
