@@ -50,6 +50,7 @@ Phase 2A stopped before moving `SelectedMaturityComponents` because the story is
 | Phase | Scope | Story ID change | Acceptance impact |
 |---|---|---|---|
 | Phase 2B.1 | Move `SelectedMaturityComponents` out of `TaPaaS Preview/Composites` into `Visual QA & Evidence/Selected Maturity`. | `tapaas-preview-composites--selected-maturity-components` -> `visual-qa-evidence-selected-maturity--selected-maturity-components` | Same manifest entries, same expected text, same acceptance intent. |
+| Phase 2B.2 | Move `BusinessErrorPagePattern` and `SystemErrorPagePattern` out of `TaPaaS Preview/Composites` into `TaPaaS Components/Error Pages`. | `tapaas-preview-composites--business-error-page-pattern` -> `tapaas-components-error-pages--business-error-page-pattern`; `tapaas-preview-composites--system-error-page-pattern` -> `tapaas-components-error-pages--system-error-page-pattern` | Same manifest entries, same expected text, same acceptance intent. Business/recoverable error coverage and technical hard-stop/error-shell coverage remain separate. |
 
 The remaining manifest-backed split of `TaPaaS Preview/Composites` is deferred. Future clusters should continue to move one audience group at a time and update only the affected Storybook IDs in the manifest.
 

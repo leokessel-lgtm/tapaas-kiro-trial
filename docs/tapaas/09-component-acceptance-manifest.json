@@ -277,7 +277,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--business-error-page-pattern",
+            "id": "tapaas-components-error-pages--business-error-page-pattern",
             "mode": "isolated-review",
             "expectedText": "Business error page",
             "mobileNoOverflow": true
@@ -335,7 +335,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--system-error-page-pattern",
+            "id": "tapaas-components-error-pages--system-error-page-pattern",
             "mode": "isolated-review",
             "expectedText": "System error page",
             "mobileNoOverflow": true
