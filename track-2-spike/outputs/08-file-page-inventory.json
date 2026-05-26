@@ -1,0 +1,341 @@
+{
+  "artefactType": "track-2-file-page-inventory",
+  "version": "0.1",
+  "experiment": "03-known-page-export-preparation",
+  "generatedAt": "2026-05-26T21:56:39.779Z",
+  "rawAvailable": true,
+  "fullTransactionExtracted": false,
+  "selectedNodeExtraction": false,
+  "productionReady": false,
+  "schemaCompatibilityClaim": "none",
+  "requiresTaPaaSEngineeringReview": true,
+  "source": {
+    "rawPath": "track-2-spike/outputs/raw/figma-file-inventory.json",
+    "fileName": "NOD Production",
+    "lastModified": "2026-05-26T11:17:58Z"
+  },
+  "candidateCount": 10,
+  "candidates": [
+    {
+      "nodeId": "490:67254",
+      "nodeName": "Confirmation",
+      "nodeType": "SECTION",
+      "parentPath": "Document / 🖥️  Production screens",
+      "depth": 2,
+      "likelyPageConfidence": "high",
+      "reason": "Top-level or transaction-level frame with page/step naming or visible transaction text.",
+      "suggestedSafeLabel": "confirmation page candidate: Confirmation",
+      "warning": "",
+      "flags": [
+        "confirmation page"
+      ],
+      "group": "confirmation page"
+    },
+    {
+      "nodeId": "531:19556",
+      "nodeName": "Time out modals",
+      "nodeType": "SECTION",
+      "parentPath": "Document / 🖥️  Production screens",
+      "depth": 2,
+      "likelyPageConfidence": "low",
+      "reason": "Frame-like node appears more likely to be a state, shell element, component or variant than a page.",
+      "suggestedSafeLabel": "modal candidate: Time out modals",
+      "warning": "May be a state/variant rather than a distinct transaction page.",
+      "flags": [
+        "modal"
+      ],
+      "group": "modal"
+    },
+    {
+      "nodeId": "490:23897",
+      "nodeName": "Privacy",
+      "nodeType": "SECTION",
+      "parentPath": "Document / 🖥️  Production screens",
+      "depth": 2,
+      "likelyPageConfidence": "high",
+      "reason": "Top-level or transaction-level frame with page/step naming or visible transaction text.",
+      "suggestedSafeLabel": "privacy page candidate: Privacy",
+      "warning": "",
+      "flags": [
+        "privacy page"
+      ],
+      "group": "privacy page"
+    },
+    {
+      "nodeId": "490:67250",
+      "nodeName": "Review",
+      "nodeType": "SECTION",
+      "parentPath": "Document / 🖥️  Production screens",
+      "depth": 2,
+      "likelyPageConfidence": "high",
+      "reason": "Top-level or transaction-level frame with page/step naming or visible transaction text.",
+      "suggestedSafeLabel": "review page candidate: Review",
+      "warning": "",
+      "flags": [
+        "review page"
+      ],
+      "group": "review page"
+    },
+    {
+      "nodeId": "772:18265",
+      "nodeName": "Back end validation errors",
+      "nodeType": "SECTION",
+      "parentPath": "Document / 🖥️  Production screens",
+      "depth": 2,
+      "likelyPageConfidence": "low",
+      "reason": "Frame-like node appears more likely to be a state, shell element, component or variant than a page.",
+      "suggestedSafeLabel": "validation/error state candidate: Back end validation errors",
+      "warning": "May be a state/variant rather than a distinct transaction page.",
+      "flags": [
+        "validation/error state"
+      ],
+      "group": "validation/error state"
+    },
+    {
+      "nodeId": "773:19390",
+      "nodeName": "Back end validation errors",
+      "nodeType": "SECTION",
+      "parentPath": "Document / 🖥️  Production screens",
+      "depth": 2,
+      "likelyPageConfidence": "low",
+      "reason": "Frame-like node appears more likely to be a state, shell element, component or variant than a page.",
+      "suggestedSafeLabel": "validation/error state candidate: Back end validation errors",
+      "warning": "May be a state/variant rather than a distinct transaction page.",
+      "flags": [
+        "validation/error state"
+      ],
+      "group": "validation/error state"
+    },
+    {
+      "nodeId": "773:19836",
+      "nodeName": "Back end validation errors",
+      "nodeType": "SECTION",
+      "parentPath": "Document / 🖥️  Production screens",
+      "depth": 2,
+      "likelyPageConfidence": "low",
+      "reason": "Frame-like node appears more likely to be a state, shell element, component or variant than a page.",
+      "suggestedSafeLabel": "validation/error state candidate: Back end validation errors",
+      "warning": "May be a state/variant rather than a distinct transaction page.",
+      "flags": [
+        "validation/error state"
+      ],
+      "group": "validation/error state"
+    },
+    {
+      "nodeId": "490:60298",
+      "nodeName": "Disposal details",
+      "nodeType": "SECTION",
+      "parentPath": "Document / 🖥️  Production screens",
+      "depth": 2,
+      "likelyPageConfidence": "high",
+      "reason": "Top-level or transaction-level frame with page/step naming or visible transaction text.",
+      "suggestedSafeLabel": "vehicle/details page candidate: Disposal details",
+      "warning": "",
+      "flags": [
+        "vehicle/details page"
+      ],
+      "group": "vehicle/details page"
+    },
+    {
+      "nodeId": "531:11036",
+      "nodeName": "NOD Input: Sale and buyer details - default",
+      "nodeType": "FRAME",
+      "parentPath": "Document / 🖥️  Production screens",
+      "depth": 2,
+      "likelyPageConfidence": "medium",
+      "reason": "Frame-like node with page/step naming, but may include state, shell or component signals.",
+      "suggestedSafeLabel": "vehicle/details page candidate: NOD Input: Sale and buyer details - default",
+      "warning": "May be a component/variant rather than a transaction page.",
+      "flags": [
+        "vehicle/details page",
+        "component/variant, not page"
+      ],
+      "group": "vehicle/details page"
+    },
+    {
+      "nodeId": "490:23907",
+      "nodeName": "Vehicle details",
+      "nodeType": "SECTION",
+      "parentPath": "Document / 🖥️  Production screens",
+      "depth": 2,
+      "likelyPageConfidence": "high",
+      "reason": "Top-level or transaction-level frame with page/step naming or visible transaction text.",
+      "suggestedSafeLabel": "vehicle/details page candidate: Vehicle details",
+      "warning": "",
+      "flags": [
+        "vehicle/details page"
+      ],
+      "group": "vehicle/details page"
+    }
+  ],
+  "groupedCandidates": {
+    "confirmation page": [
+      {
+        "nodeId": "490:67254",
+        "nodeName": "Confirmation",
+        "nodeType": "SECTION",
+        "parentPath": "Document / 🖥️  Production screens",
+        "depth": 2,
+        "likelyPageConfidence": "high",
+        "reason": "Top-level or transaction-level frame with page/step naming or visible transaction text.",
+        "suggestedSafeLabel": "confirmation page candidate: Confirmation",
+        "warning": "",
+        "flags": [
+          "confirmation page"
+        ],
+        "group": "confirmation page"
+      }
+    ],
+    "modal": [
+      {
+        "nodeId": "531:19556",
+        "nodeName": "Time out modals",
+        "nodeType": "SECTION",
+        "parentPath": "Document / 🖥️  Production screens",
+        "depth": 2,
+        "likelyPageConfidence": "low",
+        "reason": "Frame-like node appears more likely to be a state, shell element, component or variant than a page.",
+        "suggestedSafeLabel": "modal candidate: Time out modals",
+        "warning": "May be a state/variant rather than a distinct transaction page.",
+        "flags": [
+          "modal"
+        ],
+        "group": "modal"
+      }
+    ],
+    "privacy page": [
+      {
+        "nodeId": "490:23897",
+        "nodeName": "Privacy",
+        "nodeType": "SECTION",
+        "parentPath": "Document / 🖥️  Production screens",
+        "depth": 2,
+        "likelyPageConfidence": "high",
+        "reason": "Top-level or transaction-level frame with page/step naming or visible transaction text.",
+        "suggestedSafeLabel": "privacy page candidate: Privacy",
+        "warning": "",
+        "flags": [
+          "privacy page"
+        ],
+        "group": "privacy page"
+      }
+    ],
+    "review page": [
+      {
+        "nodeId": "490:67250",
+        "nodeName": "Review",
+        "nodeType": "SECTION",
+        "parentPath": "Document / 🖥️  Production screens",
+        "depth": 2,
+        "likelyPageConfidence": "high",
+        "reason": "Top-level or transaction-level frame with page/step naming or visible transaction text.",
+        "suggestedSafeLabel": "review page candidate: Review",
+        "warning": "",
+        "flags": [
+          "review page"
+        ],
+        "group": "review page"
+      }
+    ],
+    "validation/error state": [
+      {
+        "nodeId": "772:18265",
+        "nodeName": "Back end validation errors",
+        "nodeType": "SECTION",
+        "parentPath": "Document / 🖥️  Production screens",
+        "depth": 2,
+        "likelyPageConfidence": "low",
+        "reason": "Frame-like node appears more likely to be a state, shell element, component or variant than a page.",
+        "suggestedSafeLabel": "validation/error state candidate: Back end validation errors",
+        "warning": "May be a state/variant rather than a distinct transaction page.",
+        "flags": [
+          "validation/error state"
+        ],
+        "group": "validation/error state"
+      },
+      {
+        "nodeId": "773:19390",
+        "nodeName": "Back end validation errors",
+        "nodeType": "SECTION",
+        "parentPath": "Document / 🖥️  Production screens",
+        "depth": 2,
+        "likelyPageConfidence": "low",
+        "reason": "Frame-like node appears more likely to be a state, shell element, component or variant than a page.",
+        "suggestedSafeLabel": "validation/error state candidate: Back end validation errors",
+        "warning": "May be a state/variant rather than a distinct transaction page.",
+        "flags": [
+          "validation/error state"
+        ],
+        "group": "validation/error state"
+      },
+      {
+        "nodeId": "773:19836",
+        "nodeName": "Back end validation errors",
+        "nodeType": "SECTION",
+        "parentPath": "Document / 🖥️  Production screens",
+        "depth": 2,
+        "likelyPageConfidence": "low",
+        "reason": "Frame-like node appears more likely to be a state, shell element, component or variant than a page.",
+        "suggestedSafeLabel": "validation/error state candidate: Back end validation errors",
+        "warning": "May be a state/variant rather than a distinct transaction page.",
+        "flags": [
+          "validation/error state"
+        ],
+        "group": "validation/error state"
+      }
+    ],
+    "vehicle/details page": [
+      {
+        "nodeId": "490:60298",
+        "nodeName": "Disposal details",
+        "nodeType": "SECTION",
+        "parentPath": "Document / 🖥️  Production screens",
+        "depth": 2,
+        "likelyPageConfidence": "high",
+        "reason": "Top-level or transaction-level frame with page/step naming or visible transaction text.",
+        "suggestedSafeLabel": "vehicle/details page candidate: Disposal details",
+        "warning": "",
+        "flags": [
+          "vehicle/details page"
+        ],
+        "group": "vehicle/details page"
+      },
+      {
+        "nodeId": "531:11036",
+        "nodeName": "NOD Input: Sale and buyer details - default",
+        "nodeType": "FRAME",
+        "parentPath": "Document / 🖥️  Production screens",
+        "depth": 2,
+        "likelyPageConfidence": "medium",
+        "reason": "Frame-like node with page/step naming, but may include state, shell or component signals.",
+        "suggestedSafeLabel": "vehicle/details page candidate: NOD Input: Sale and buyer details - default",
+        "warning": "May be a component/variant rather than a transaction page.",
+        "flags": [
+          "vehicle/details page",
+          "component/variant, not page"
+        ],
+        "group": "vehicle/details page"
+      },
+      {
+        "nodeId": "490:23907",
+        "nodeName": "Vehicle details",
+        "nodeType": "SECTION",
+        "parentPath": "Document / 🖥️  Production screens",
+        "depth": 2,
+        "likelyPageConfidence": "high",
+        "reason": "Top-level or transaction-level frame with page/step naming or visible transaction text.",
+        "suggestedSafeLabel": "vehicle/details page candidate: Vehicle details",
+        "warning": "",
+        "flags": [
+          "vehicle/details page"
+        ],
+        "group": "vehicle/details page"
+      }
+    ]
+  },
+  "unknowns": [
+    "Candidate rows are not confirmed transaction pages.",
+    "Designer intent, transaction order and page/state relationships need confirmation.",
+    "TaPaaS schema compatibility is not claimed."
+  ]
+}

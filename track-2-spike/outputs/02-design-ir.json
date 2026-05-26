@@ -4,16 +4,17 @@
   "schemaCompatibilityClaim": "none",
   "source": "figma-rest-api-private-rd-spike",
   "experiment": "02-controlled-multi-node",
-  "generatedAt": "2026-05-26T12:35:03.787Z",
+  "generatedAt": "2026-05-26T22:27:26.061Z",
   "sourceEvidence": {
-    "fileKey": "Unknown",
+    "fileKey": "pFDBhMVirBMo9JnJQbeI3I",
     "nodeIds": [
       "490:60286",
-      "751:10322"
+      "490:60291",
+      "531:23422"
     ],
     "rawPath": "track-2-spike/outputs/raw/figma-node-response.json",
     "normalisedPath": "track-2-spike/outputs/normalised/extracted-evidence.json",
-    "sourceNodeCount": 2
+    "sourceNodeCount": 3
   },
   "boundaries": {
     "visualEvidence": "Figma node hierarchy, text, instances and simple extraction hints.",
@@ -26,15 +27,23 @@
       "nodeName": "0.1D_NOD",
       "nodeType": "FRAME",
       "sourceOrder": 1,
-      "evidenceLink": null,
+      "evidenceLink": "https://www.figma.com/file/pFDBhMVirBMo9JnJQbeI3I?node-id=490%3A60286",
       "mappingStatus": "verified"
     },
     {
-      "nodeId": "751:10322",
-      "nodeName": "2.4_NOD",
+      "nodeId": "490:60291",
+      "nodeName": "1.1A_NOD",
       "nodeType": "FRAME",
       "sourceOrder": 2,
-      "evidenceLink": null,
+      "evidenceLink": "https://www.figma.com/file/pFDBhMVirBMo9JnJQbeI3I?node-id=490%3A60291",
+      "mappingStatus": "verified"
+    },
+    {
+      "nodeId": "531:23422",
+      "nodeName": "NOD review - Individual",
+      "nodeType": "INSTANCE",
+      "sourceOrder": 3,
+      "evidenceLink": "https://www.figma.com/file/pFDBhMVirBMo9JnJQbeI3I?node-id=531%3A23422",
       "mappingStatus": "verified"
     }
   ],
@@ -583,194 +592,169 @@
     },
     {
       "id": "source-2",
-      "sourceNodeId": "751:10322",
-      "sourceName": "2.4_NOD",
+      "sourceNodeId": "490:60291",
+      "sourceName": "1.1A_NOD",
       "sourceType": "FRAME",
       "sourceOrder": 2,
-      "role": "validation-error-state",
+      "role": "normal-or-acknowledgement-state",
       "mappingStatus": "verified",
       "visualEvidence": {
-        "nodeName": "2.4_NOD",
+        "nodeName": "1.1A_NOD",
         "nodeType": "FRAME",
-        "descendantCount": 361,
-        "textNodeCount": 87,
-        "instanceCount": 86
+        "descendantCount": 347,
+        "textNodeCount": 92,
+        "instanceCount": 65
       },
       "transactionIntent": {
         "status": "inferred",
         "name": "Submit a notice of disposal for a vehicle",
-        "pageTitle": "Privacy",
-        "purpose": "Candidate validation/error state for the selected transaction page."
+        "pageTitle": "Vehicle selection",
+        "purpose": "Candidate normal state for the selected transaction page."
       },
       "sections": [
         {
           "id": "source-2-section-main",
-          "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
-          "sourceName": "H2 heading",
-          "sourceType": "TEXT",
-          "mappingStatus": "verified",
+          "sourceNodeId": "490:60291",
+          "sourceName": "1.1A_NOD",
+          "sourceType": "FRAME",
+          "mappingStatus": "inferred",
           "intent": "candidate transaction content section",
           "blocks": [
             {
               "id": "source-2-block-content",
               "blockTypeCandidate": "PrivacyNoticeCandidate",
-              "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
-              "sourceName": "H2 heading",
-              "mappingStatus": "verified",
-              "visualEvidence": [
-                {
-                  "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
-                  "name": "Text",
-                  "characters": "Accept the Terms and conditions to continue."
-                },
-                {
-                  "id": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
-                  "name": "H2 heading",
-                  "characters": "Privacy collection notice"
-                },
-                {
-                  "id": "I751:10680;306:74518;5311:33122;8674:49237;5257:89021",
-                  "name": "Content",
-                  "characters": "For more information about how we collect, use and disclose your personal information, including who we may disclose it to, check our Privacy Collection notice.    "
-                },
-                {
-                  "id": "I751:10680;306:74518;5311:33122;8674:49239;1152:3699",
-                  "name": "H2 heading",
-                  "characters": "Terms and conditions"
-                },
-                {
-                  "id": "I751:10680;306:74518;5311:33122;8674:49241;1152:3864",
-                  "name": "Paragraph text",
-                  "characters": "These are the Terms and Conditions     ."
-                },
-                {
-                  "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12988",
-                  "name": "Label",
-                  "characters": "I accept the terms and conditions for Notice of Disposal."
-                },
-                {
-                  "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
-                  "name": "Validation",
-                  "characters": "Accept the Terms and conditions to continue."
-                }
-              ],
+              "sourceNodeId": "490:60291",
+              "sourceName": "Candidate content block",
+              "mappingStatus": "inferred",
+              "visualEvidence": [],
               "transactionIntent": "Display privacy and terms content. Candidate only until TaPaaS block catalogue confirms fit."
             },
             {
               "id": "source-2-block-fields",
               "blockTypeCandidate": "CheckboxFieldCandidate",
-              "sourceNodeId": "I751:10680;306:74518;10872:28125;1334:6080",
+              "sourceNodeId": "I531:6179;306:74514;10039:24328;1334:6080",
               "sourceName": "Page label or transaction name",
               "mappingStatus": "inferred",
               "fields": [
                 {
                   "id": "source-2-field-1",
-                  "sourceNodeId": "I751:10680;306:74518;10872:28125;1334:6080",
+                  "sourceNodeId": "I531:6179;306:74514;10039:24328;1334:6080",
                   "sourceName": "Page label or transaction name",
                   "label": "Submit a notice of disposal for a vehicle",
                   "inputTypeCandidate": "unknown",
-                  "required": "inferred",
+                  "required": "unknown",
                   "mappingStatus": "inferred"
                 },
                 {
                   "id": "source-2-field-2",
-                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
-                  "sourceName": "Text",
-                  "label": "Accept the Terms and conditions to continue.",
-                  "inputTypeCandidate": "checkbox",
-                  "required": "inferred",
+                  "sourceNodeId": "I531:6179;306:74514;13547:159643;13547:154058;13539:46802;13539:42435",
+                  "sourceName": "Label",
+                  "label": "Billing number:",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
                   "mappingStatus": "inferred"
                 },
                 {
                   "id": "source-2-field-3",
-                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49239;1152:3699",
-                  "sourceName": "H2 heading",
-                  "label": "Terms and conditions",
-                  "inputTypeCandidate": "checkbox",
-                  "required": "inferred",
+                  "sourceNodeId": "I531:6179;306:74514;13547:159643;13547:154058;13377:104328",
+                  "sourceName": "Label",
+                  "label": "Registration expiry:",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
                   "mappingStatus": "inferred"
                 },
                 {
                   "id": "source-2-field-4",
-                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49241;1152:3864",
-                  "sourceName": "Paragraph text",
-                  "label": "These are the Terms and Conditions     .",
-                  "inputTypeCandidate": "checkbox",
-                  "required": "inferred",
+                  "sourceNodeId": "I531:6179;306:74514;13547:159643;13547:154058;8293:7244;10111:15822",
+                  "sourceName": "Label",
+                  "label": "Select vehicle",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
                   "mappingStatus": "inferred"
                 },
                 {
                   "id": "source-2-field-5",
-                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12988",
+                  "sourceNodeId": "I531:6179;306:74514;13547:159643;13547:154059;13539:46802;13539:42435",
                   "sourceName": "Label",
-                  "label": "I accept the terms and conditions for Notice of Disposal.",
-                  "inputTypeCandidate": "checkbox",
-                  "required": "inferred",
+                  "label": "Billing number:",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
                   "mappingStatus": "inferred"
                 },
                 {
                   "id": "source-2-field-6",
-                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
-                  "sourceName": "Validation",
-                  "label": "Accept the Terms and conditions to continue.",
-                  "inputTypeCandidate": "checkbox",
-                  "required": "inferred",
+                  "sourceNodeId": "I531:6179;306:74514;13547:159643;13547:154059;13377:104328",
+                  "sourceName": "Label",
+                  "label": "Registration expiry:",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
                   "mappingStatus": "inferred"
                 },
                 {
                   "id": "source-2-field-7",
-                  "sourceNodeId": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+                  "sourceNodeId": "I531:6179;306:74514;13547:159643;13547:154059;8293:7244;10111:15822",
                   "sourceName": "Label",
-                  "label": "Continue",
+                  "label": "Select vehicle",
                   "inputTypeCandidate": "unknown",
-                  "required": "inferred",
+                  "required": "unknown",
                   "mappingStatus": "inferred"
                 },
                 {
                   "id": "source-2-field-8",
-                  "sourceNodeId": "I751:10680;306:74518;5311:33134;5003:1629;10111:15990",
-                  "sourceName": "Label",
-                  "label": "Exit",
+                  "sourceNodeId": "I531:6179;306:74514;10039:24333;8865:128977;6009:10552",
+                  "sourceName": "Input title",
+                  "label": "Enter a NSW plate number",
                   "inputTypeCandidate": "unknown",
-                  "required": "inferred",
+                  "required": "unknown",
                   "mappingStatus": "inferred"
                 },
                 {
                   "id": "source-2-field-9",
-                  "sourceNodeId": "I751:10680;634:65925;12292:6071",
+                  "sourceNodeId": "I531:6179;306:74514;10039:24333;8865:128979;6009:10552",
+                  "sourceName": "Input title",
+                  "label": "NSW plate number or billing number",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-2-field-10",
+                  "sourceNodeId": "I531:6179;306:74514;10039:24333;8865:128980;10111:16021",
+                  "sourceName": "Label",
+                  "label": "Find vehicle",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-2-field-11",
+                  "sourceNodeId": "I531:6179;306:74514;10039:24334;5401:53426;10111:16021",
+                  "sourceName": "Label",
+                  "label": "Back",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-2-field-12",
+                  "sourceNodeId": "I531:6179;306:74514;10039:24334;5401:53428;10111:15990",
+                  "sourceName": "Label",
+                  "label": "Exit",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-2-field-13",
+                  "sourceNodeId": "I531:6179;306:74515;12292:6071",
                   "sourceName": "Terms of use",
                   "label": "Terms of use",
                   "inputTypeCandidate": "checkbox",
-                  "required": "inferred",
+                  "required": "unknown",
                   "mappingStatus": "inferred"
                 }
               ],
-              "validation": [
-                {
-                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2380",
-                  "sourceName": "Title",
-                  "message": "Your form has an error",
-                  "mappingStatus": "verified"
-                },
-                {
-                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2381",
-                  "sourceName": "copy",
-                  "message": "Check the error:",
-                  "mappingStatus": "verified"
-                },
-                {
-                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
-                  "sourceName": "Text",
-                  "message": "Accept the Terms and conditions to continue.",
-                  "mappingStatus": "verified"
-                },
-                {
-                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
-                  "sourceName": "Validation",
-                  "message": "Accept the Terms and conditions to continue.",
-                  "mappingStatus": "verified"
-                }
-              ]
+              "validation": []
             }
           ]
         }
@@ -778,8 +762,8 @@
       "ctas": [
         {
           "id": "source-2-cta-1",
-          "label": "Continue",
-          "sourceNodeId": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+          "label": "Back",
+          "sourceNodeId": "I531:6179;306:74514;10039:24334;5401:53426;10111:16021",
           "sourceName": "Label",
           "mappingStatus": "verified",
           "navigationHint": {
@@ -791,437 +775,3038 @@
       ],
       "textContent": [
         {
-          "id": "I751:10680;306:74517;22719:1537;22710:1111",
+          "id": "I531:6179;2979:156104;22719:1537;22710:1111",
           "name": "Change language",
           "characters": "Change language"
         },
         {
-          "id": "I751:10680;306:74517;22719:1537;22710:1116",
+          "id": "I531:6179;2979:156104;22719:1537;22710:1116",
           "name": "MyServiceNSW Account",
           "characters": "Account"
         },
         {
-          "id": "I751:10680;306:74517;22719:1537;22710:1119",
+          "id": "I531:6179;2979:156104;22719:1537;22710:1119",
           "name": "Log out",
           "characters": "Log out"
         },
         {
-          "id": "I751:10680;306:74517;19249:3078;19249:2749",
+          "id": "I531:6179;2979:156104;19249:3078;19249:2749",
           "name": "Home",
           "characters": "Home"
         },
         {
-          "id": "I751:10680;306:74517;19249:3436;19249:2752",
+          "id": "I531:6179;2979:156104;19249:3436;19249:2752",
           "name": "Home",
           "characters": "Find services"
         },
         {
-          "id": "I751:10680;306:74517;19249:3450;19249:2752",
+          "id": "I531:6179;2979:156104;19249:3450;19249:2752",
           "name": "Home",
           "characters": "Business"
         },
         {
-          "id": "I751:10680;306:74517;19249:3468;19249:2752",
+          "id": "I531:6179;2979:156104;19249:3468;19249:2752",
           "name": "Home",
           "characters": "Find locations"
         },
         {
-          "id": "I751:10680;306:74517;22069:1227;11180:5055",
+          "id": "I531:6179;2979:156104;22069:1227;11180:5055",
           "name": "driver licence",
           "characters": "Search"
         },
         {
-          "id": "I751:10680;306:74518;10872:28125;1334:6080",
+          "id": "I531:6179;306:74514;10039:24328;1334:6080",
           "name": "Page label or transaction name",
           "characters": "Submit a notice of disposal for a vehicle"
         },
         {
-          "id": "I751:10680;306:74518;10872:28125;1334:6078",
+          "id": "I531:6179;306:74514;10039:24328;1334:6078",
           "name": "Page title",
-          "characters": "Privacy"
+          "characters": "Vehicle selection"
         },
         {
-          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:99;1352:1",
+          "id": "I531:6179;306:74514;10039:24328;1355:7731;1352:99;1352:1",
           "name": "Step number",
           "characters": "1"
         },
         {
-          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:99;1429:3940;1330:2164",
+          "id": "I531:6179;306:74514;10039:24328;1355:7731;1352:99;1429:3940;1330:2164",
           "name": "24 - m",
           "characters": "24 - m"
         },
         {
-          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:99;1352:14",
+          "id": "I531:6179;306:74514;10039:24328;1355:7731;1352:99;1352:14",
           "name": "Step name",
-          "characters": "Privacy"
+          "characters": "Step name"
         },
         {
-          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:130;1352:91",
+          "id": "I531:6179;306:74514;10039:24328;1355:7731;1352:130;1352:91",
           "name": "Step number",
           "characters": "2"
         },
         {
-          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:130;1429:4425;1330:2164",
+          "id": "I531:6179;306:74514;10039:24328;1355:7731;1352:130;1429:4425;1330:2164",
           "name": "24 - m",
           "characters": "24 - m"
         },
         {
-          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:130;1352:89",
+          "id": "I531:6179;306:74514;10039:24328;1355:7731;1352:130;1352:89",
           "name": "Step name",
           "characters": "Step name"
         },
         {
-          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:139;1352:91",
+          "id": "I531:6179;306:74514;10039:24328;1355:7731;1352:139;1352:91",
           "name": "Step number",
           "characters": "3"
         },
         {
-          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:139;1429:4425;1330:2164",
+          "id": "I531:6179;306:74514;10039:24328;1355:7731;1352:139;1429:4425;1330:2164",
           "name": "24 - m",
           "characters": "24 - m"
         },
         {
-          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:139;1352:89",
+          "id": "I531:6179;306:74514;10039:24328;1355:7731;1352:139;1352:89",
           "name": "Step name",
           "characters": "Step name"
         },
         {
-          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:148;1352:91",
+          "id": "I531:6179;306:74514;10039:24328;1355:7731;1352:148;1352:91",
           "name": "Step number",
           "characters": "4"
         },
         {
-          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:148;1429:4425;1330:2164",
+          "id": "I531:6179;306:74514;10039:24328;1355:7731;1352:148;1429:4425;1330:2164",
           "name": "24 - m",
           "characters": "24 - m"
         },
         {
-          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:148;1352:89",
+          "id": "I531:6179;306:74514;10039:24328;1355:7731;1352:148;1352:89",
           "name": "Step name",
           "characters": "Step name"
         },
         {
-          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2380",
-          "name": "Title",
-          "characters": "Your form has an error"
-        },
-        {
-          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2381",
-          "name": "copy",
-          "characters": "Check the error:"
-        },
-        {
-          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
-          "name": "Text",
-          "characters": "Accept the Terms and conditions to continue."
-        },
-        {
-          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3906;1332:3994",
-          "name": "Text",
-          "characters": "Type something"
-        },
-        {
-          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3928;1332:3994",
-          "name": "Text",
-          "characters": "Type something"
-        },
-        {
-          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3931;1332:4000",
-          "name": "Text",
-          "characters": "Type something"
-        },
-        {
-          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:4018;1332:3985",
-          "name": "Text",
-          "characters": "Type something"
-        },
-        {
-          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:4021;1332:3985",
-          "name": "Text",
-          "characters": "Type something"
-        },
-        {
-          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;11195:11327;1332:3985",
-          "name": "Text",
-          "characters": "Type something"
-        },
-        {
-          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;11195:11331;1332:3985",
-          "name": "Text",
-          "characters": "Type something"
-        },
-        {
-          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;11195:11341;1332:3985",
-          "name": "Text",
-          "characters": "Type something"
-        },
-        {
-          "id": "I751:10680;306:74518;5311:33122;8674:49236;20898:2398;20299:8719;39:3174",
+          "id": "I531:6179;306:74514;13547:159643;13547:154057;20898:2398;20299:8719;39:3174",
           "name": "56 - 4xl",
           "characters": "56 - 4xl"
         },
         {
-          "id": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
+          "id": "I531:6179;306:74514;13547:159643;13547:154057;1152:3699",
           "name": "H2 heading",
-          "characters": "Privacy collection notice"
+          "characters": "Select the vehicle you sold to continue"
         },
         {
-          "id": "I751:10680;306:74518;5311:33122;8674:49236;20898:2461;20299:8656;39:3202",
+          "id": "I531:6179;306:74514;13547:159643;13547:154057;20898:2461;20299:8656;39:3202",
           "name": "24 - lg",
           "characters": "24 - lg"
         },
         {
-          "id": "I751:10680;306:74518;5311:33122;8674:49237;5257:89021",
-          "name": "Content",
-          "characters": "For more information about how we collect, use and disclose your personal information, including who we may disclose it to, check our Privacy Collection notice.    "
+          "id": "I531:6179;306:74514;13547:159643;13547:154058;11266:79888",
+          "name": "Plate number",
+          "characters": "ADC74M"
         },
         {
-          "id": "I751:10680;306:74518;5311:33122;8674:49239;20898:2398;20299:8719;39:3174",
-          "name": "56 - 4xl",
-          "characters": "56 - 4xl"
+          "id": "I531:6179;306:74514;13547:159643;13547:154058;13384:54302",
+          "name": "Make and model",
+          "characters": "SUBARU OUTBACK WAGON – NAVY – 2005"
         },
         {
-          "id": "I751:10680;306:74518;5311:33122;8674:49239;1152:3699",
-          "name": "H2 heading",
-          "characters": "Terms and conditions"
+          "id": "I531:6179;306:74514;13547:159643;13547:154058;13539:46801;13539:38365",
+          "name": "VIN/Chassis:",
+          "characters": "VIN/Chassis:"
         },
         {
-          "id": "I751:10680;306:74518;5311:33122;8674:49239;20898:2461;20299:8656;39:3202",
-          "name": "24 - lg",
-          "characters": "24 - lg"
+          "id": "I531:6179;306:74514;13547:159643;13547:154058;13539:46801;13539:41634",
+          "name": "VIN A",
+          "characters": "4S4BP61C95712"
         },
         {
-          "id": "I751:10680;306:74518;5311:33122;8674:49241;20898:3095;20299:8656;39:3202",
-          "name": "24 - lg",
-          "characters": "24 - lg"
+          "id": "I531:6179;306:74514;13547:159643;13547:154058;13539:46801;13539:41988",
+          "name": "VIN B",
+          "characters": "6456"
         },
         {
-          "id": "I751:10680;306:74518;5311:33122;8674:49241;1152:3864",
-          "name": "Paragraph text",
-          "characters": "These are the Terms and Conditions     ."
+          "id": "I531:6179;306:74514;13547:159643;13547:154058;13539:46802;13539:42435",
+          "name": "Label",
+          "characters": "Billing number:"
         },
         {
-          "id": "I751:10680;306:74518;5311:33122;8674:49241;20898:3164;20299:8662;39:3195",
+          "id": "I531:6179;306:74514;13547:159643;13547:154058;13539:46802;13539:42437",
+          "name": "Billing A",
+          "characters": "1234567"
+        },
+        {
+          "id": "I531:6179;306:74514;13547:159643;13547:154058;13539:46802;13539:42439",
+          "name": "Billing B",
+          "characters": "890"
+        },
+        {
+          "id": "I531:6179;306:74514;13547:159643;13547:154058;13377:104328",
+          "name": "Label",
+          "characters": "Registration expiry:"
+        },
+        {
+          "id": "I531:6179;306:74514;13547:159643;13547:154058;13377:104329",
+          "name": "Registration expiry",
+          "characters": "07 November 2025"
+        },
+        {
+          "id": "I531:6179;306:74514;13547:159643;13547:154058;8293:7244;10111:15822",
+          "name": "Label",
+          "characters": "Select vehicle"
+        },
+        {
+          "id": "I531:6179;306:74514;13547:159643;13547:154059;11266:79888",
+          "name": "Plate number",
+          "characters": "RRF293"
+        },
+        {
+          "id": "I531:6179;306:74514;13547:159643;13547:154059;13384:54302",
+          "name": "Make and model",
+          "characters": "ASTRA SEDAN – WHITE – 2016"
+        },
+        {
+          "id": "I531:6179;306:74514;13547:159643;13547:154059;13539:46801;13539:38365",
+          "name": "VIN/Chassis:",
+          "characters": "VIN/Chassis:"
+        },
+        {
+          "id": "I531:6179;306:74514;13547:159643;13547:154059;13539:46801;13539:41634",
+          "name": "VIN A",
+          "characters": "W0L0AHG097G17"
+        },
+        {
+          "id": "I531:6179;306:74514;13547:159643;13547:154059;13539:46801;13539:41988",
+          "name": "VIN B",
+          "characters": "3456"
+        },
+        {
+          "id": "I531:6179;306:74514;13547:159643;13547:154059;13539:46802;13539:42435",
+          "name": "Label",
+          "characters": "Billing number:"
+        },
+        {
+          "id": "I531:6179;306:74514;13547:159643;13547:154059;13539:46802;13539:42437",
+          "name": "Billing A",
+          "characters": "83920"
+        },
+        {
+          "id": "I531:6179;306:74514;13547:159643;13547:154059;13539:46802;13539:42439",
+          "name": "Billing B",
+          "characters": "417"
+        },
+        {
+          "id": "I531:6179;306:74514;13547:159643;13547:154059;13377:104328",
+          "name": "Label",
+          "characters": "Registration expiry:"
+        },
+        {
+          "id": "I531:6179;306:74514;13547:159643;13547:154059;13377:104329",
+          "name": "Registration expiry",
+          "characters": "13 November 2025"
+        },
+        {
+          "id": "I531:6179;306:74514;13547:159643;13547:154059;8293:7244;10111:15822",
+          "name": "Label",
+          "characters": "Select vehicle"
+        },
+        {
+          "id": "I531:6179;306:74514;10039:24333;8865:128975;20898:2983;20299:8662;39:3195",
           "name": "32 - xl",
           "characters": "32 - xl"
         },
         {
-          "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12988",
+          "id": "I531:6179;306:74514;10039:24333;8865:128975;1152:3730",
+          "name": "H3 heading",
+          "characters": "Search for another vehicle"
+        },
+        {
+          "id": "I531:6179;306:74514;10039:24333;8865:128975;20898:2990;20299:8650;39:3209",
+          "name": "16 - md",
+          "characters": "16 - md"
+        },
+        {
+          "id": "I531:6179;306:74514;10039:24333;8865:128977;6009:10552",
+          "name": "Input title",
+          "characters": "Enter a NSW plate number"
+        },
+        {
+          "id": "I531:6179;306:74514;10039:24333;8865:128977;6009:10553",
+          "name": "Help text",
+          "characters": "For example ABC123. Do not include spaces or special characters."
+        },
+        {
+          "id": "I531:6179;306:74514;10039:24333;8865:128977;106:1269;1306:7837",
+          "name": "Text",
+          "characters": "Value"
+        },
+        {
+          "id": "I531:6179;306:74514;10039:24333;8865:128979;6009:10552",
+          "name": "Input title",
+          "characters": "NSW plate number or billing number"
+        },
+        {
+          "id": "I531:6179;306:74514;10039:24333;8865:128979;6009:10553",
+          "name": "Help text",
+          "characters": "Enter a plate number, for example ABC123, or 8 digit billing number on your renewal notice or Certificate of Registration."
+        },
+        {
+          "id": "I531:6179;306:74514;10039:24333;8865:128979;106:1269;1306:7837",
+          "name": "Text",
+          "characters": "Value"
+        },
+        {
+          "id": "I531:6179;306:74514;10039:24333;8865:128980;10111:16021",
           "name": "Label",
-          "characters": "I accept the terms and conditions for Notice of Disposal."
+          "characters": "Find vehicle"
         },
         {
-          "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12989",
-          "name": "Clarifying text",
-          "characters": "Type something"
-        },
-        {
-          "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
-          "name": "Validation",
-          "characters": "Accept the Terms and conditions to continue."
-        },
-        {
-          "id": "I751:10680;306:74518;5773:139532;5773:120599;20898:2398;20299:8719;39:3174",
-          "name": "56 - 4xl",
-          "characters": "56 - 4xl"
-        },
-        {
-          "id": "I751:10680;306:74518;5773:139532;5773:120599;1152:3699",
-          "name": "H2 heading",
-          "characters": "Notifications"
-        },
-        {
-          "id": "I751:10680;306:74518;5773:139532;5773:120599;20898:2461;20299:8656;39:3202",
-          "name": "24 - lg",
-          "characters": "24 - lg"
-        },
-        {
-          "id": "I751:10680;306:74518;5773:139532;5773:120600;20898:3095;20299:8656;39:3202",
-          "name": "24 - lg",
-          "characters": "24 - lg"
-        },
-        {
-          "id": "I751:10680;306:74518;5773:139532;5773:120600;1152:3864",
-          "name": "Paragraph text",
-          "characters": "We will send you an email with the details of your notice of disposal after you complete and submit this form online."
-        },
-        {
-          "id": "I751:10680;306:74518;5773:139532;5773:120600;20898:3164;20299:8662;39:3195",
-          "name": "32 - xl",
-          "characters": "32 - xl"
-        },
-        {
-          "id": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+          "id": "I531:6179;306:74514;10039:24334;5401:53426;10111:16021",
           "name": "Label",
-          "characters": "Continue"
+          "characters": "Back"
         },
         {
-          "id": "I751:10680;306:74518;5311:33134;5003:1629;10111:15990",
+          "id": "I531:6179;306:74514;10039:24334;5401:53428;10111:15990",
           "name": "Label",
           "characters": "Exit"
         },
         {
-          "id": "I751:10680;634:65925;12251:12038",
+          "id": "I531:6179;306:74515;12251:12038",
           "name": "ACKNOWLEDGEMENT OF COUNTRY",
           "characters": "ACKNOWLEDGEMENT OF COUNTRY"
         },
         {
-          "id": "I751:10680;634:65925;12251:12039",
+          "id": "I531:6179;306:74515;12251:12039",
           "name": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present.",
           "characters": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present. "
         },
         {
-          "id": "I751:10680;634:65925;12251:11196",
+          "id": "I531:6179;306:74515;12251:11196",
           "name": "Browse services",
           "characters": "FIND SERVICES"
         },
         {
-          "id": "I751:10680;634:65925;12251:11198",
+          "id": "I531:6179;306:74515;12251:11198",
           "name": "Births, relationship",
           "characters": "Births, relationships and deaths"
         },
         {
-          "id": "I751:10680;634:65925;12251:11199",
+          "id": "I531:6179;306:74515;12251:11199",
           "name": "Boating, fishing and",
           "characters": "Boating, fishing and outdoors"
         },
         {
-          "id": "I751:10680;634:65925;12251:11200",
+          "id": "I531:6179;306:74515;12251:11200",
           "name": "Business, industries",
           "characters": "Business, industries and employment"
         },
         {
-          "id": "I751:10680;634:65925;12251:11201",
+          "id": "I531:6179;306:74515;12251:11201",
           "name": "Concessions, rebates",
           "characters": "Concessions, rebates and assistance"
         },
         {
-          "id": "I751:10680;634:65925;12251:11202",
+          "id": "I531:6179;306:74515;12251:11202",
           "name": "Driving and transpor",
           "characters": "Driving and transport"
         },
         {
-          "id": "I751:10680;634:65925;12251:11203",
+          "id": "I531:6179;306:74515;12251:11203",
           "name": "Education",
           "characters": "Education"
         },
         {
-          "id": "I751:10680;634:65925;12251:11204",
+          "id": "I531:6179;306:74515;12251:11204",
           "name": "Health and care",
           "characters": "Emergencies and natural disasters"
         },
         {
-          "id": "I751:10680;634:65925;25394:686",
+          "id": "I531:6179;306:74515;25394:686",
           "name": "Health and care",
           "characters": "Environment, parks and wildlife"
         },
         {
-          "id": "I751:10680;634:65925;25394:545",
+          "id": "I531:6179;306:74515;25394:545",
           "name": "Health and care",
           "characters": "Health and care"
         },
         {
-          "id": "I751:10680;634:65925;12251:11205",
+          "id": "I531:6179;306:74515;12251:11205",
           "name": "Housing and property",
           "characters": "Housing and property"
         },
         {
-          "id": "I751:10680;634:65925;12251:11206",
+          "id": "I531:6179;306:74515;12251:11206",
           "name": "Legal and Police ser",
           "characters": "Legal and Police services"
         },
         {
-          "id": "I751:10680;634:65925;12251:11208",
+          "id": "I531:6179;306:74515;12251:11208",
           "name": "Service NSW",
           "characters": "SERVICE NSW"
         },
         {
-          "id": "I751:10680;634:65925;12251:11210",
+          "id": "I531:6179;306:74515;12251:11210",
           "name": "About us",
           "characters": "About us"
         },
         {
-          "id": "I751:10680;634:65925;12251:11211",
+          "id": "I531:6179;306:74515;12251:11211",
           "name": "Jobs at Service NSW",
           "characters": "Jobs at Service NSW"
         },
         {
-          "id": "I751:10680;634:65925;12251:11212",
+          "id": "I531:6179;306:74515;12251:11212",
           "name": "News",
           "characters": "News"
         },
         {
-          "id": "I751:10680;634:65925;25394:749",
+          "id": "I531:6179;306:74515;25394:749",
           "name": "News",
           "characters": "Service status"
         },
         {
-          "id": "I751:10680;634:65925;25394:762",
+          "id": "I531:6179;306:74515;25394:762",
           "name": "News",
           "characters": "Performance dashboard"
         },
         {
-          "id": "I751:10680;634:65925;12251:11213",
+          "id": "I531:6179;306:74515;12251:11213",
           "name": "Download the Service",
           "characters": "Download the Service NSW app"
         },
         {
-          "id": "I751:10680;634:65925;12251:11214",
+          "id": "I531:6179;306:74515;12251:11214",
           "name": "Help in your languag",
           "characters": "Help in your language"
         },
         {
-          "id": "I751:10680;634:65925;12251:11217",
+          "id": "I531:6179;306:74515;12251:11217",
           "name": "CONTACT",
           "characters": "CONTACT"
         },
         {
-          "id": "I751:10680;634:65925;12251:11219",
+          "id": "I531:6179;306:74515;12251:11219",
           "name": "Contact form",
           "characters": "Contact form"
         },
         {
-          "id": "I751:10680;634:65925;12251:11220",
+          "id": "I531:6179;306:74515;12251:11220",
           "name": "Phone 13 77 88",
           "characters": "Phone 13 77 88"
         },
         {
-          "id": "I751:10680;634:65925;12251:11221",
+          "id": "I531:6179;306:74515;12251:11221",
           "name": "Find a Service NSW l",
           "characters": "Find a Service NSW location"
         },
         {
-          "id": "I751:10680;634:65925;12251:11222",
+          "id": "I531:6179;306:74515;12251:11222",
           "name": "Find a NSW Governmen",
           "characters": "Find a NSW Government agency"
         },
         {
-          "id": "I751:10680;634:65925;12292:6069",
+          "id": "I531:6179;306:74515;12292:6069",
           "name": "Accessibility",
           "characters": "Accessibility"
         },
         {
-          "id": "I751:10680;634:65925;12292:6070",
+          "id": "I531:6179;306:74515;12292:6070",
           "name": "Privacy",
           "characters": "Privacy"
         },
         {
-          "id": "I751:10680;634:65925;12292:6071",
+          "id": "I531:6179;306:74515;12292:6071",
           "name": "Terms of use",
           "characters": "Terms of use"
         },
         {
-          "id": "I751:10680;634:65925;12292:6072",
+          "id": "I531:6179;306:74515;12292:6072",
           "name": "Copyright and discla",
           "characters": "Copyright and disclaimer"
         },
         {
-          "id": "I751:10680;634:65925;12292:6073",
+          "id": "I531:6179;306:74515;12292:6073",
           "name": "Accessing informatio",
           "characters": "Accessing information"
         },
         {
-          "id": "I751:10680;634:65925;12292:6075",
+          "id": "I531:6179;306:74515;12292:6075",
+          "name": "NSW Government",
+          "characters": "NSW Government"
+        }
+      ]
+    },
+    {
+      "id": "source-3",
+      "sourceNodeId": "531:23422",
+      "sourceName": "NOD review - Individual",
+      "sourceType": "INSTANCE",
+      "sourceOrder": 3,
+      "role": "normal-or-acknowledgement-state",
+      "mappingStatus": "verified",
+      "visualEvidence": {
+        "nodeName": "NOD review - Individual",
+        "nodeType": "INSTANCE",
+        "descendantCount": 802,
+        "textNodeCount": 322,
+        "instanceCount": 301
+      },
+      "transactionIntent": {
+        "status": "inferred",
+        "name": "Submit a notice of disposal for a vehicle",
+        "pageTitle": "Review",
+        "purpose": "Candidate normal state for the selected transaction page."
+      },
+      "sections": [
+        {
+          "id": "source-3-section-main",
+          "sourceNodeId": "I531:23422;3436:107675;14884:18148;27:18194;27:18554;1152:3864",
+          "sourceName": "Paragraph text",
+          "sourceType": "TEXT",
+          "mappingStatus": "verified",
+          "intent": "candidate transaction content section",
+          "blocks": [
+            {
+              "id": "source-3-block-content",
+              "blockTypeCandidate": "PrivacyNoticeCandidate",
+              "sourceNodeId": "I531:23422;3436:107675;14884:18148;27:18194;27:18554;1152:3864",
+              "sourceName": "Paragraph text",
+              "mappingStatus": "verified",
+              "visualEvidence": [
+                {
+                  "id": "I531:23422;3436:107675;14884:18148;27:18194;27:18554;1152:3864",
+                  "name": "Paragraph text",
+                  "characters": "Privacy Collection Notice"
+                },
+                {
+                  "id": "I531:23422;3436:107675;14884:18148;27:18194;27:18555;1152:3864",
+                  "name": "Paragraph text",
+                  "characters": "Service NSW delivers this service on behalf of Transport for NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal Privacy statement. "
+                },
+                {
+                  "id": "I531:23422;3436:107675;14884:18148;27:18196;1152:3864",
+                  "name": "Paragraph text",
+                  "characters": "Terms and Conditions"
+                },
+                {
+                  "id": "I531:23422;3436:107675;14884:18148;27:18197;1152:3864",
+                  "name": "Paragraph text",
+                  "characters": "You have agreed to the Terms and Conditions for Notice of Disposal    ."
+                }
+              ],
+              "transactionIntent": "Display privacy and terms content. Candidate only until TaPaaS block catalogue confirms fit."
+            },
+            {
+              "id": "source-3-block-fields",
+              "blockTypeCandidate": "CheckboxFieldCandidate",
+              "sourceNodeId": "I531:23422;3436:107675;14884:18137;1334:6080",
+              "sourceName": "Page label or transaction name",
+              "mappingStatus": "inferred",
+              "fields": [
+                {
+                  "id": "source-3-field-1",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18137;1334:6080",
+                  "sourceName": "Page label or transaction name",
+                  "label": "Submit a notice of disposal for a vehicle",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-2",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22034;27:22243;27:22172",
+                  "sourceName": "Label",
+                  "label": "Family name",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-3",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22180;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-4",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22181;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-5",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22182;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-6",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22183;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-7",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22184;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-8",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22185;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-9",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22186;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-10",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22187;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-11",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22188;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-12",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22189;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-13",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22180;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-14",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22181;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-15",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22182;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-16",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22183;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-17",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22184;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-18",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22185;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-19",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22186;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-20",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22187;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-21",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22188;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-22",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22189;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-23",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22180;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-24",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22181;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-25",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22182;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-26",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22183;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-27",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22184;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-28",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22185;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-29",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22186;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-30",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22187;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-31",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22188;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-32",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22189;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-33",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21982;27:22231;27:22172",
+                  "sourceName": "Label",
+                  "label": "Plate number",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-34",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21982;27:22232;27:22172",
+                  "sourceName": "Label",
+                  "label": "Vehicle information",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-35",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21982;27:22233;27:22172",
+                  "sourceName": "Label",
+                  "label": "VIN/Chassis",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-36",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21982;27:22234;27:22172",
+                  "sourceName": "Label",
+                  "label": "Registration expiry",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-37",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22180;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-38",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22181;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-39",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22182;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-40",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22183;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-41",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22184;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-42",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22185;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-43",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22186;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-44",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22187;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-45",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22188;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-46",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22189;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-47",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22180;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-48",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22181;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-49",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22182;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-50",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22183;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-51",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22184;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-52",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22185;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-53",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22186;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-54",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22187;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-55",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22188;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-56",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22189;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-57",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22180;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-58",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22181;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-59",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22182;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-60",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22183;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-61",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22184;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-62",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22185;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-63",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22186;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-64",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22187;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-65",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22188;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-66",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22189;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-67",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21982;27:22240;27:22172",
+                  "sourceName": "Label",
+                  "label": "Date of sale",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-68",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21982;27:22241;27:22172",
+                  "sourceName": "Label",
+                  "label": "Sale price or market value",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-69",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21984;27:22240;27:22172",
+                  "sourceName": "Label",
+                  "label": "NSW Driver Licence",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-70",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21984;27:22241;27:22172",
+                  "sourceName": "Label",
+                  "label": "Family name",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-71",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22180;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-72",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22181;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-73",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22182;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-74",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22183;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-75",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22184;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-76",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22185;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-77",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22186;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-78",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22187;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-79",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22188;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-80",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22189;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-81",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22180;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-82",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22181;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-83",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22182;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-84",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22183;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-85",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22184;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-86",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22185;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-87",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22186;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-88",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22187;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-89",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22188;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-90",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22189;27:22172",
+                  "sourceName": "Label",
+                  "label": "Label",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-91",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18148;27:18196;1152:3864",
+                  "sourceName": "Paragraph text",
+                  "label": "Terms and Conditions",
+                  "inputTypeCandidate": "checkbox",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-92",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18148;27:18197;1152:3864",
+                  "sourceName": "Paragraph text",
+                  "label": "You have agreed to the Terms and Conditions for Notice of Disposal    .",
+                  "inputTypeCandidate": "checkbox",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-93",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18149;27:34844;10111:16021",
+                  "sourceName": "Label",
+                  "label": "Back",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-94",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18149;27:34845;27:34871;10111:15822",
+                  "sourceName": "Label",
+                  "label": "Submit",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-95",
+                  "sourceNodeId": "I531:23422;3436:107675;14884:18149;27:34846;10111:15990",
+                  "sourceName": "Label",
+                  "label": "Exit",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-3-field-96",
+                  "sourceNodeId": "I531:23422;3436:107676;12292:6071",
+                  "sourceName": "Terms of use",
+                  "label": "Terms of use",
+                  "inputTypeCandidate": "checkbox",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                }
+              ],
+              "validation": []
+            }
+          ]
+        }
+      ],
+      "ctas": [
+        {
+          "id": "source-3-cta-1",
+          "label": "Back",
+          "sourceNodeId": "I531:23422;3436:107675;14884:18149;27:34844;10111:16021",
+          "sourceName": "Label",
+          "mappingStatus": "verified",
+          "navigationHint": {
+            "targetPage": "Unknown",
+            "status": "unknown",
+            "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."
+          }
+        },
+        {
+          "id": "source-3-cta-2",
+          "label": "Submit",
+          "sourceNodeId": "I531:23422;3436:107675;14884:18149;27:34845;27:34871;10111:15822",
+          "sourceName": "Label",
+          "mappingStatus": "verified",
+          "navigationHint": {
+            "targetPage": "Unknown",
+            "status": "unknown",
+            "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."
+          }
+        }
+      ],
+      "textContent": [
+        {
+          "id": "I531:23422;3436:107674;22719:1537;22710:1111",
+          "name": "Change language",
+          "characters": "Change language"
+        },
+        {
+          "id": "I531:23422;3436:107674;22719:1537;22710:1116",
+          "name": "MyServiceNSW Account",
+          "characters": "Account"
+        },
+        {
+          "id": "I531:23422;3436:107674;22719:1537;22710:1119",
+          "name": "Log out",
+          "characters": "Log out"
+        },
+        {
+          "id": "I531:23422;3436:107674;19249:3078;19249:2749",
+          "name": "Home",
+          "characters": "Home"
+        },
+        {
+          "id": "I531:23422;3436:107674;19249:3436;19249:2752",
+          "name": "Home",
+          "characters": "Find services"
+        },
+        {
+          "id": "I531:23422;3436:107674;19249:3450;19249:2752",
+          "name": "Home",
+          "characters": "Business"
+        },
+        {
+          "id": "I531:23422;3436:107674;19249:3468;19249:2752",
+          "name": "Home",
+          "characters": "Find locations"
+        },
+        {
+          "id": "I531:23422;3436:107674;22069:1227;11180:5055",
+          "name": "driver licence",
+          "characters": "Search"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18137;1334:6080",
+          "name": "Page label or transaction name",
+          "characters": "Submit a notice of disposal for a vehicle"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18137;1334:6078",
+          "name": "Page title",
+          "characters": "Review"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18137;1355:7731;1352:99;1352:1",
+          "name": "Step number",
+          "characters": "1"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18137;1355:7731;1352:99;1429:3940;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18137;1355:7731;1352:99;1352:14",
+          "name": "Step name",
+          "characters": "Step name"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18137;1355:7731;1352:130;1352:91",
+          "name": "Step number",
+          "characters": "2"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18137;1355:7731;1352:130;1429:4425;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18137;1355:7731;1352:130;1352:89",
+          "name": "Step name",
+          "characters": "Step name"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18137;1355:7731;1352:139;1352:91",
+          "name": "Step number",
+          "characters": "3"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18137;1355:7731;1352:139;1429:4425;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18137;1355:7731;1352:139;1352:89",
+          "name": "Step name",
+          "characters": "Step name"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18137;1355:7731;1352:148;1352:91",
+          "name": "Step number",
+          "characters": "4"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18137;1355:7731;1352:148;1429:4425;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18137;1355:7731;1352:148;1352:89",
+          "name": "Step name",
+          "characters": "Step name"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18140;14846:41622;3733:11447",
+          "name": "headline",
+          "characters": "Make sure all your details are correct"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18140;14846:41622;3733:11448",
+          "name": "copy",
+          "characters": "To make any changes you will have to visit a service centre."
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20958;20898:2398;20299:8719;39:3174",
+          "name": "56 - 4xl",
+          "characters": "56 - 4xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20958;1152:3699",
+          "name": "H2 heading",
+          "characters": "Your details"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20958;20898:2461;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22033;14278:18911;20898:2983;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22033;14278:18911;1152:3730",
+          "name": "H3 heading",
+          "characters": "First section"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22033;14278:18911;20898:2990;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22034;27:22243;27:22172",
+          "name": "Label",
+          "characters": "Family name"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22034;27:22243;27:22173",
+          "name": "Content",
+          "characters": "Ngo"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22035;14278:18899;20898:2983;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22035;14278:18899;1152:3730",
+          "name": "H3 heading",
+          "characters": "Following section"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22035;14278:18899;20898:2990;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22180;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22180;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22181;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22181;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22182;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22182;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22183;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22183;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22184;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22184;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22185;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22185;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22186;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22186;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22187;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22187;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22188;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22188;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22189;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22189;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22037;14278:18899;20898:2983;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22037;14278:18899;1152:3730",
+          "name": "H3 heading",
+          "characters": "Following section"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22037;14278:18899;20898:2990;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22180;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22180;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22181;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22181;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22182;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22182;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22183;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22183;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22184;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22184;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22185;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22185;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22186;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22186;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22187;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22187;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22188;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22188;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22189;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22189;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22039;14278:18899;20898:2983;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22039;14278:18899;1152:3730",
+          "name": "H3 heading",
+          "characters": "Following section"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22039;14278:18899;20898:2990;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22180;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22180;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22181;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22181;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22182;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22182;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22183;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22183;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22184;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22184;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22185;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22185;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22186;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22186;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22187;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22187;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22188;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22188;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22189;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22189;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22041;27:22152;6432:10008;1330:2169",
+          "name": "56 - xxxl",
+          "characters": "56 - xxxl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22041;27:22152;6432:10032;1330:2169",
+          "name": "56 - xxxl",
+          "characters": "56 - xxxl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22041;27:22154",
+          "name": "Total cost",
+          "characters": "Total cost"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22041;27:22155",
+          "name": "$0.00",
+          "characters": "$0.00"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22042;14328:128374",
+          "name": "*",
+          "characters": "*"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18141;14854:20959;27:22042;14328:128461",
+          "name": "Help text",
+          "characters": "Enter help text"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14846:41659;20898:2398;20299:8719;39:3174",
+          "name": "56 - 4xl",
+          "characters": "56 - 4xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14846:41659;1152:3699",
+          "name": "H2 heading",
+          "characters": "Vehicle details"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14846:41659;20898:2461;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21981;14278:18911;20898:2983;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21981;14278:18911;1152:3730",
+          "name": "H3 heading",
+          "characters": "First section"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21981;14278:18911;20898:2990;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21982;27:22231;27:22172",
+          "name": "Label",
+          "characters": "Plate number"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21982;27:22231;27:22173",
+          "name": "Content",
+          "characters": "ADC74M"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21982;27:22232;27:22172",
+          "name": "Label",
+          "characters": "Vehicle information"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21982;27:22232;27:22173",
+          "name": "Content",
+          "characters": "SUBARU OUTBACK WAGON – NAVY – 2005"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21982;27:22233;27:22172",
+          "name": "Label",
+          "characters": "VIN/Chassis"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21982;27:22233;27:22173",
+          "name": "Content",
+          "characters": "84912093956525278"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21982;27:22234;27:22172",
+          "name": "Label",
+          "characters": "Registration expiry"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21982;27:22234;27:22173",
+          "name": "Content",
+          "characters": "07 November 2025"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21983;14278:18899;20898:2983;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21983;14278:18899;1152:3730",
+          "name": "H3 heading",
+          "characters": "Following section"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21983;14278:18899;20898:2990;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22180;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22180;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22181;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22181;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22182;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22182;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22183;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22183;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22184;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22184;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22185;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22185;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22186;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22186;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22187;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22187;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22188;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22188;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22189;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22189;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21985;14278:18899;20898:2983;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21985;14278:18899;1152:3730",
+          "name": "H3 heading",
+          "characters": "Following section"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21985;14278:18899;20898:2990;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22180;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22180;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22181;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22181;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22182;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22182;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22183;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22183;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22184;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22184;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22185;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22185;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22186;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22186;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22187;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22187;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22188;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22188;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22189;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22189;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21987;14278:18899;20898:2983;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21987;14278:18899;1152:3730",
+          "name": "H3 heading",
+          "characters": "Following section"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21987;14278:18899;20898:2990;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22180;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22180;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22181;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22181;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22182;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22182;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22183;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22183;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22184;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22184;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22185;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22185;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22186;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22186;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22187;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22187;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22188;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22188;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22189;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22189;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21989;27:22152;6432:10008;1330:2169",
+          "name": "56 - xxxl",
+          "characters": "56 - xxxl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21989;27:22152;6432:10032;1330:2169",
+          "name": "56 - xxxl",
+          "characters": "56 - xxxl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21989;27:22154",
+          "name": "Total cost",
+          "characters": "Total cost"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21989;27:22155",
+          "name": "$0.00",
+          "characters": "$0.00"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21990;14328:128374",
+          "name": "*",
+          "characters": "*"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21990;14328:128461",
+          "name": "Help text",
+          "characters": "Enter help text"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18142;14854:12019;27:21991;5533:12518",
+          "name": "Type something",
+          "characters": "Edit"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14846:41659;20898:2398;20299:8719;39:3174",
+          "name": "56 - 4xl",
+          "characters": "56 - 4xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14846:41659;1152:3699",
+          "name": "H2 heading",
+          "characters": "Sale and buyer details"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14846:41659;20898:2461;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21981;14278:18911;20898:2983;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21981;14278:18911;1152:3730",
+          "name": "H3 heading",
+          "characters": "Sale details"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21981;14278:18911;20898:2990;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21982;27:22240;27:22172",
+          "name": "Label",
+          "characters": "Date of sale"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21982;27:22240;27:22173",
+          "name": "Content",
+          "characters": "12/01/2025"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21982;27:22241;27:22172",
+          "name": "Label",
+          "characters": "Sale price or market value"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21982;27:22241;27:22173",
+          "name": "Content",
+          "characters": "$20,000"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21983;14278:18899;20898:2983;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21983;14278:18899;1152:3730",
+          "name": "H3 heading",
+          "characters": "Buyer details"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21983;14278:18899;20898:2990;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21984;27:22240;27:22172",
+          "name": "Label",
+          "characters": "NSW Driver Licence"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21984;27:22240;27:22173",
+          "name": "Content",
+          "characters": "12345678"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21984;27:22241;27:22172",
+          "name": "Label",
+          "characters": "Family name"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21984;27:22241;27:22173",
+          "name": "Content",
+          "characters": "Ngo"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21985;14278:18899;20898:2983;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21985;14278:18899;1152:3730",
+          "name": "H3 heading",
+          "characters": "Following section"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21985;14278:18899;20898:2990;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22180;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22180;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22181;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22181;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22182;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22182;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22183;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22183;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22184;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22184;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22185;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22185;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22186;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22186;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22187;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22187;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22188;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22188;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22189;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22189;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21987;14278:18899;20898:2983;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21987;14278:18899;1152:3730",
+          "name": "H3 heading",
+          "characters": "Following section"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21987;14278:18899;20898:2990;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22180;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22180;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22181;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22181;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22182;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22182;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22183;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22183;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22184;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22184;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22185;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22185;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22186;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22186;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22187;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22187;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22188;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22188;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22189;27:22172",
+          "name": "Label",
+          "characters": "Label"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22189;27:22173",
+          "name": "Content",
+          "characters": "Content"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21989;27:22152;6432:10008;1330:2169",
+          "name": "56 - xxxl",
+          "characters": "56 - xxxl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21989;27:22152;6432:10032;1330:2169",
+          "name": "56 - xxxl",
+          "characters": "56 - xxxl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21989;27:22154",
+          "name": "Total cost",
+          "characters": "Total cost"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21989;27:22155",
+          "name": "$0.00",
+          "characters": "$0.00"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21990;14328:128374",
+          "name": "*",
+          "characters": "*"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21990;14328:128461",
+          "name": "Help text",
+          "characters": "Enter help text"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18143;14854:12019;27:21991;5533:12518",
+          "name": "Type something",
+          "characters": "Edit"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18192;1853:518",
+          "name": "Heading",
+          "characters": "Privacy"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18194;27:18554;20898:3095;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18194;27:18554;1152:3864",
+          "name": "Paragraph text",
+          "characters": "Privacy Collection Notice"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18194;27:18554;20898:3164;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18194;27:18555;20898:3095;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18194;27:18555;1152:3864",
+          "name": "Paragraph text",
+          "characters": "Service NSW delivers this service on behalf of Transport for NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal Privacy statement. "
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18194;27:18555;20898:3164;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18196;20898:3095;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18196;1152:3864",
+          "name": "Paragraph text",
+          "characters": "Terms and Conditions"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18196;20898:3164;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18197;20898:3095;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18197;1152:3864",
+          "name": "Paragraph text",
+          "characters": "You have agreed to the Terms and Conditions for Notice of Disposal    ."
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18197;20898:3164;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18198;27:18569;20898:3095;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18198;27:18569;1152:3864",
+          "name": "Paragraph text",
+          "characters": "Notifications"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18198;27:18569;20898:3164;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18198;27:18570;20898:3095;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18198;27:18570;1152:3864",
+          "name": "Paragraph text",
+          "characters": "We will send you an email with the details of your <notice of disposal> after you complete and submit this form online."
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18148;27:18198;27:18570;20898:3164;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18149;27:34844;10111:16021",
+          "name": "Label",
+          "characters": "Back"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18149;27:34845;27:34871;10111:15822",
+          "name": "Label",
+          "characters": "Submit"
+        },
+        {
+          "id": "I531:23422;3436:107675;14884:18149;27:34846;10111:15990",
+          "name": "Label",
+          "characters": "Exit"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:12038",
+          "name": "ACKNOWLEDGEMENT OF COUNTRY",
+          "characters": "ACKNOWLEDGEMENT OF COUNTRY"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:12039",
+          "name": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present.",
+          "characters": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present. "
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11196",
+          "name": "Browse services",
+          "characters": "FIND SERVICES"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11198",
+          "name": "Births, relationship",
+          "characters": "Births, relationships and deaths"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11199",
+          "name": "Boating, fishing and",
+          "characters": "Boating, fishing and outdoors"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11200",
+          "name": "Business, industries",
+          "characters": "Business, industries and employment"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11201",
+          "name": "Concessions, rebates",
+          "characters": "Concessions, rebates and assistance"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11202",
+          "name": "Driving and transpor",
+          "characters": "Driving and transport"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11203",
+          "name": "Education",
+          "characters": "Education"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11204",
+          "name": "Health and care",
+          "characters": "Emergencies and natural disasters"
+        },
+        {
+          "id": "I531:23422;3436:107676;25394:686",
+          "name": "Health and care",
+          "characters": "Environment, parks and wildlife"
+        },
+        {
+          "id": "I531:23422;3436:107676;25394:545",
+          "name": "Health and care",
+          "characters": "Health and care"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11205",
+          "name": "Housing and property",
+          "characters": "Housing and property"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11206",
+          "name": "Legal and Police ser",
+          "characters": "Legal and Police services"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11208",
+          "name": "Service NSW",
+          "characters": "SERVICE NSW"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11210",
+          "name": "About us",
+          "characters": "About us"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11211",
+          "name": "Jobs at Service NSW",
+          "characters": "Jobs at Service NSW"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11212",
+          "name": "News",
+          "characters": "News"
+        },
+        {
+          "id": "I531:23422;3436:107676;25394:749",
+          "name": "News",
+          "characters": "Service status"
+        },
+        {
+          "id": "I531:23422;3436:107676;25394:762",
+          "name": "News",
+          "characters": "Performance dashboard"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11213",
+          "name": "Download the Service",
+          "characters": "Download the Service NSW app"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11214",
+          "name": "Help in your languag",
+          "characters": "Help in your language"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11217",
+          "name": "CONTACT",
+          "characters": "CONTACT"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11219",
+          "name": "Contact form",
+          "characters": "Contact form"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11220",
+          "name": "Phone 13 77 88",
+          "characters": "Phone 13 77 88"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11221",
+          "name": "Find a Service NSW l",
+          "characters": "Find a Service NSW location"
+        },
+        {
+          "id": "I531:23422;3436:107676;12251:11222",
+          "name": "Find a NSW Governmen",
+          "characters": "Find a NSW Government agency"
+        },
+        {
+          "id": "I531:23422;3436:107676;12292:6069",
+          "name": "Accessibility",
+          "characters": "Accessibility"
+        },
+        {
+          "id": "I531:23422;3436:107676;12292:6070",
+          "name": "Privacy",
+          "characters": "Privacy"
+        },
+        {
+          "id": "I531:23422;3436:107676;12292:6071",
+          "name": "Terms of use",
+          "characters": "Terms of use"
+        },
+        {
+          "id": "I531:23422;3436:107676;12292:6072",
+          "name": "Copyright and discla",
+          "characters": "Copyright and disclaimer"
+        },
+        {
+          "id": "I531:23422;3436:107676;12292:6073",
+          "name": "Accessing informatio",
+          "characters": "Accessing information"
+        },
+        {
+          "id": "I531:23422;3436:107676;12292:6075",
           "name": "NSW Government",
           "characters": "NSW Government"
         }

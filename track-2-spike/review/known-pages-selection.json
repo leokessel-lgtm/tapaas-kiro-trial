@@ -1,0 +1,27 @@
+{
+  "selectionPurpose": "Select 3 coherent NOD page frames for Glen review",
+  "fullTransactionExtracted": false,
+  "selectedKnownPageFrames": [
+    {
+      "pageOrder": 1,
+      "nodeId": "490:23897",
+      "figmaName": "Privacy",
+      "safeLabel": "Privacy / terms acknowledgement page",
+      "whySelected": "High-confidence privacy page candidate from the NOD Production inventory."
+    },
+    {
+      "pageOrder": 2,
+      "nodeId": "490:23907",
+      "figmaName": "Vehicle details",
+      "safeLabel": "Vehicle details page",
+      "whySelected": "High-confidence vehicle/details page candidate from the NOD Production inventory."
+    },
+    {
+      "pageOrder": 3,
+      "nodeId": "490:67250",
+      "figmaName": "Review",
+      "safeLabel": "Review page",
+      "whySelected": "High-confidence review page candidate from the NOD Production inventory."
+    }
+  ]
+}

@@ -1,0 +1,1444 @@
+{
+  "artefactType": "tapaas-track-2-known-pages-glen-review-candidate",
+  "version": "0.1",
+  "reviewPurpose": "Review selected precise page/frame/instance candidates for engineering mapping, without claiming TaPaaS schema compatibility.",
+  "framing": "Selected precise page/frame/instance candidates for exploratory engineering review",
+  "fullTransactionExtracted": false,
+  "selectedKnownPageFrames": false,
+  "selectedPrecisePageOrInstanceCandidates": true,
+  "reviewInstanceRequiresConfirmation": true,
+  "productionReady": false,
+  "schemaCompatibilityClaim": "none",
+  "requiresTaPaaSEngineeringReview": true,
+  "sourceSummary": {
+    "selectionPurpose": "Select the best available precise NOD page or page-instance candidates for Glen review",
+    "selectionPath": "track-2-spike/review/known-page-frame-selection.json",
+    "selectedCandidateCount": 3,
+    "selectedKnownPageFrameCount": 0,
+    "selectedPrecisePageOrInstanceCandidateCount": 3,
+    "evidencePath": "track-2-spike/outputs/normalised/extracted-evidence.json",
+    "rawJsonIncluded": false
+  },
+  "selectedPages": [
+    {
+      "pageOrder": 1,
+      "nodeId": "490:60286",
+      "figmaName": "0.1D_NOD",
+      "safeLabel": "Privacy / terms acknowledgement page",
+      "whySelected": "Best available child FRAME inside the Privacy section. Avoids broad SECTION-level extraction.",
+      "sourceNodeType": "FRAME",
+      "confidence": "high",
+      "requiresConfirmation": false,
+      "nodeType": "FRAME",
+      "extractedHeadings": [
+        "Submit a notice of disposal for a vehicle",
+        "Privacy",
+        "Privacy collection notice",
+        "Service NSW delivers this service on behalf of Transport of NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal privacy statement and Terms and Conditions and call 13 77 88.",
+        "Terms and conditions",
+        "I accept the terms and conditions for Notice of Disposal",
+        "Notifications",
+        "We will send you an email with the details of your notice of disposal after you complete and submit this form online."
+      ],
+      "extractedTextSummary": [
+        "Change language",
+        "Account",
+        "Log out",
+        "Home",
+        "Find services",
+        "Business",
+        "Find locations",
+        "Search",
+        "Submit a notice of disposal for a vehicle",
+        "Privacy",
+        "1",
+        "24 - m",
+        "2",
+        "Step name",
+        "3",
+        "4"
+      ],
+      "likelyFields": [
+        {
+          "label": "Submit a notice of disposal for a vehicle",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Privacy",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Step name",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Service NSW delivers this service on behalf of Transport of NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal privacy statement and Terms and Conditions and call 13 77 88.",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Terms and conditions",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "These are the Terms and Conditions .",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "I accept the terms and conditions for Notice of Disposal",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "We will send you an email with the details of your notice of disposal after you complete and submit this form online.",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Continue",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Exit",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        }
+      ],
+      "likelyCtas": [
+        {
+          "label": "Continue",
+          "target": "Unknown",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Exit",
+          "target": "Unknown",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        }
+      ],
+      "likelyValidationEvidence": [],
+      "likelyShellElements": [
+        {
+          "label": "Header",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": ".Nav links",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "System icons / Globe",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "System icons/ChevronDown",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "System icons/Avatar",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "System icons/SignOut",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "NSW Gov + Service NSW (Coupled)",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "NSW Government logo",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Service NSW logo",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": ".Main Navigation Links",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Search bar",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "2. Form header",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "02. Components/Navigation/Header/Desktop/Default Copy",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Change language",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Account",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Log out",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Home",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Find services",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Business",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Find locations",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Search",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "ACKNOWLEDGEMENT OF COUNTRY",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present.",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "FIND SERVICES",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Births, relationships and deaths",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Boating, fishing and outdoors",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Business, industries and employment",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Concessions, rebates and assistance",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Driving and transport",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Education",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Emergencies and natural disasters",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Environment, parks and wildlife",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Health and care",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Housing and property",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Legal and Police services",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "SERVICE NSW",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "About us",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Jobs at Service NSW",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "News",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Service status",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Performance dashboard",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Download the Service NSW app",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Help in your language",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        }
+      ],
+      "candidateComponentBlockMappings": [
+        {
+          "candidate": "PrivacyNoticeCandidate",
+          "evidence": [
+            "NOD Privacy",
+            "Privacy page",
+            "3. Privacy and legal states",
+            "3.1Privacy collection notice"
+          ],
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "candidate": "CheckboxFieldCandidate",
+          "evidence": [
+            "Checkbox single",
+            ".Checkbox with clarifying text",
+            ".Checkbox"
+          ],
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "candidate": "PageHeaderCandidate",
+          "evidence": [
+            "2. Form header"
+          ],
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        },
+        {
+          "candidate": "ProgressStepCandidate",
+          "evidence": [
+            "2.1 Progress stepper",
+            ".Step 1",
+            ".Step 2",
+            ".Step 3",
+            ".Step 4"
+          ],
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        },
+        {
+          "candidate": "ActionAreaCandidate",
+          "evidence": [
+            "CTA Buttons",
+            "Continue button",
+            "Exit button"
+          ],
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        }
+      ],
+      "shellCandidateMappings": [
+        {
+          "candidate": "ShellOrGlobalChromeCandidate",
+          "evidence": [
+            "Header",
+            ".Nav links",
+            "System icons / Globe",
+            "System icons/ChevronDown",
+            "System icons/Avatar",
+            "System icons/SignOut",
+            "NSW Gov + Service NSW (Coupled)",
+            "NSW Government logo",
+            "Service NSW logo",
+            ".Main Navigation Links",
+            "Search bar",
+            "2. Form header",
+            "02. Components/Navigation/Header/Desktop/Default Copy"
+          ],
+          "mappingStatus": "shell/global candidate",
+          "confidence": "low",
+          "needsGlenConfirmation": true,
+          "schemaTreatment": "exclude-or-inherit; do not treat as transaction field evidence"
+        }
+      ],
+      "unknowns": [
+        "Not a confirmed TaPaaS schema page.",
+        "Shell/global content may be visible in Figma evidence but is separated from likely transaction fields.",
+        "CTA targets are unknown unless explicitly confirmed.",
+        "Backend request/response mapping is unknown.",
+        "Content approval, accessibility approval, privacy/legal approval, GEL approval and TaPaaS approval are unknown."
+      ],
+      "caveat": null
+    },
+    {
+      "pageOrder": 2,
+      "nodeId": "490:60291",
+      "figmaName": "1.1A_NOD",
+      "safeLabel": "Vehicle details page",
+      "whySelected": "Best available child FRAME inside the Vehicle details section. Needs confirmation but is more precise than SECTION-level extraction.",
+      "sourceNodeType": "FRAME",
+      "confidence": "medium",
+      "requiresConfirmation": true,
+      "nodeType": "FRAME",
+      "extractedHeadings": [
+        "Submit a notice of disposal for a vehicle",
+        "Vehicle selection",
+        "Select the vehicle you sold to continue",
+        "Search for another vehicle",
+        "Enter a plate number, for example ABC123, or 8 digit billing number on your renewal notice or Certificate of Registration.",
+        "Privacy"
+      ],
+      "extractedTextSummary": [
+        "Change language",
+        "Account",
+        "Log out",
+        "Home",
+        "Find services",
+        "Business",
+        "Find locations",
+        "Search",
+        "Submit a notice of disposal for a vehicle",
+        "Vehicle selection",
+        "1",
+        "24 - m",
+        "Step name",
+        "2",
+        "3",
+        "4"
+      ],
+      "likelyFields": [
+        {
+          "label": "Submit a notice of disposal for a vehicle",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Vehicle selection",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Step name",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Select the vehicle you sold to continue",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "ADC74M",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Billing number:",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Registration expiry:",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Select vehicle",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "RRF293",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Search for another vehicle",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Enter a NSW plate number",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "NSW plate number or billing number",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        }
+      ],
+      "likelyCtas": [
+        {
+          "label": "Back",
+          "target": "Unknown",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Exit",
+          "target": "Unknown",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        }
+      ],
+      "likelyValidationEvidence": [],
+      "likelyShellElements": [
+        {
+          "label": "Header",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": ".Nav links",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "System icons / Globe",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "System icons/ChevronDown",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "System icons/Avatar",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "System icons/SignOut",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "NSW Gov + Service NSW (Coupled)",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "NSW Government logo",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Service NSW logo",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": ".Main Navigation Links",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Search bar",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "2. Form header",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Footer",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Change language",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Account",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Log out",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Home",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Find services",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Business",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Find locations",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Search",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "ACKNOWLEDGEMENT OF COUNTRY",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present.",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "FIND SERVICES",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Births, relationships and deaths",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Boating, fishing and outdoors",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Business, industries and employment",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Concessions, rebates and assistance",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Driving and transport",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Education",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Emergencies and natural disasters",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Environment, parks and wildlife",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Health and care",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Housing and property",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Legal and Police services",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "SERVICE NSW",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "About us",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Jobs at Service NSW",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "News",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Service status",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Performance dashboard",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Download the Service NSW app",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Help in your language",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        }
+      ],
+      "candidateComponentBlockMappings": [
+        {
+          "candidate": "ValidationMessageCandidate",
+          "evidence": [
+            "3. Error banner"
+          ],
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "candidate": "PageHeaderCandidate",
+          "evidence": [
+            "2. Form header"
+          ],
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        },
+        {
+          "candidate": "ProgressStepCandidate",
+          "evidence": [
+            "Progress stepper",
+            ".Step 1",
+            ".Step 2",
+            ".Step 3",
+            ".Step 4"
+          ],
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        },
+        {
+          "candidate": "ActionAreaCandidate",
+          "evidence": [
+            "Button"
+          ],
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        }
+      ],
+      "shellCandidateMappings": [
+        {
+          "candidate": "ShellOrGlobalChromeCandidate",
+          "evidence": [
+            "Header",
+            ".Nav links",
+            "System icons / Globe",
+            "System icons/ChevronDown",
+            "System icons/Avatar",
+            "System icons/SignOut",
+            "NSW Gov + Service NSW (Coupled)",
+            "NSW Government logo",
+            "Service NSW logo",
+            ".Main Navigation Links",
+            "Search bar",
+            "2. Form header",
+            "Footer"
+          ],
+          "mappingStatus": "shell/global candidate",
+          "confidence": "low",
+          "needsGlenConfirmation": true,
+          "schemaTreatment": "exclude-or-inherit; do not treat as transaction field evidence"
+        }
+      ],
+      "unknowns": [
+        "Not a confirmed TaPaaS schema page.",
+        "Shell/global content may be visible in Figma evidence but is separated from likely transaction fields.",
+        "CTA targets are unknown unless explicitly confirmed.",
+        "Backend request/response mapping is unknown.",
+        "Content approval, accessibility approval, privacy/legal approval, GEL approval and TaPaaS approval are unknown."
+      ],
+      "caveat": null
+    },
+    {
+      "pageOrder": 3,
+      "nodeId": "531:23422",
+      "figmaName": "NOD review - Individual",
+      "safeLabel": "Review page candidate",
+      "whySelected": "Best available review-page candidate from local evidence. It is an INSTANCE, not a clean child FRAME, so it requires Glen/Michael confirmation.",
+      "sourceNodeType": "INSTANCE",
+      "confidence": "medium",
+      "requiresConfirmation": true,
+      "nodeType": "INSTANCE",
+      "extractedHeadings": [
+        "Submit a notice of disposal for a vehicle",
+        "Review",
+        "Make sure all your details are correct",
+        "Your details",
+        "First section",
+        "Following section",
+        "Vehicle details",
+        "Sale and buyer details"
+      ],
+      "extractedTextSummary": [
+        "Change language",
+        "Account",
+        "Log out",
+        "Home",
+        "Find services",
+        "Business",
+        "Find locations",
+        "Search",
+        "Submit a notice of disposal for a vehicle",
+        "Review",
+        "1",
+        "24 - m",
+        "Step name",
+        "2",
+        "3",
+        "4"
+      ],
+      "likelyFields": [
+        {
+          "label": "Submit a notice of disposal for a vehicle",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Step name",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Family name",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Label",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Vehicle details",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Plate number",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Vehicle information",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "VIN/Chassis",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Registration expiry",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Date of sale",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Sale price or market value",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "NSW Driver Licence",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        }
+      ],
+      "likelyCtas": [
+        {
+          "label": "Back",
+          "target": "Unknown",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Submit",
+          "target": "Unknown",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "label": "Exit",
+          "target": "Unknown",
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        }
+      ],
+      "likelyValidationEvidence": [],
+      "likelyShellElements": [
+        {
+          "label": "02. Components/Navigation/Header/Desktop/Default",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": ".Nav links",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "System icons / Globe",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "System icons/ChevronDown",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "System icons/Avatar",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "System icons/SignOut",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "NSW Gov + Service NSW (Coupled)",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "NSW Government logo",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Service NSW logo",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": ".Main Navigation Links",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Search bar",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "2. Form header",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": ".Accordion Header",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "02. Components/Navigation/Header/Desktop/Default Copy",
+          "evidenceType": "shell/global instance",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Change language",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Account",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Log out",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Home",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Find services",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Business",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Find locations",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Search",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "ACKNOWLEDGEMENT OF COUNTRY",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present.",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "FIND SERVICES",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Births, relationships and deaths",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Boating, fishing and outdoors",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Business, industries and employment",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Concessions, rebates and assistance",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Driving and transport",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Education",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Emergencies and natural disasters",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Environment, parks and wildlife",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Health and care",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Housing and property",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Legal and Police services",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "SERVICE NSW",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "About us",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Jobs at Service NSW",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "News",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Service status",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Performance dashboard",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Download the Service NSW app",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        },
+        {
+          "label": "Help in your language",
+          "evidenceType": "visible shell/global text",
+          "mappingStatus": "shell/global candidate",
+          "schemaTreatment": "exclude-or-inherit; needs Glen confirmation"
+        }
+      ],
+      "candidateComponentBlockMappings": [
+        {
+          "candidate": "ValidationMessageCandidate",
+          "evidence": [
+            "3. Error"
+          ],
+          "mappingStatus": "candidate/inferred",
+          "confidence": "medium",
+          "needsGlenConfirmation": true
+        },
+        {
+          "candidate": "PageHeaderCandidate",
+          "evidence": [
+            "2. Form header"
+          ],
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        },
+        {
+          "candidate": "ProgressStepCandidate",
+          "evidence": [
+            "Progress stepper",
+            ".Step 1",
+            ".Step 2",
+            ".Step 3",
+            ".Step 4"
+          ],
+          "mappingStatus": "candidate/inferred",
+          "confidence": "low",
+          "needsGlenConfirmation": true
+        }
+      ],
+      "shellCandidateMappings": [
+        {
+          "candidate": "ShellOrGlobalChromeCandidate",
+          "evidence": [
+            "02. Components/Navigation/Header/Desktop/Default",
+            ".Nav links",
+            "System icons / Globe",
+            "System icons/ChevronDown",
+            "System icons/Avatar",
+            "System icons/SignOut",
+            "NSW Gov + Service NSW (Coupled)",
+            "NSW Government logo",
+            "Service NSW logo",
+            ".Main Navigation Links",
+            "Search bar",
+            "2. Form header"
+          ],
+          "mappingStatus": "shell/global candidate",
+          "confidence": "low",
+          "needsGlenConfirmation": true,
+          "schemaTreatment": "exclude-or-inherit; do not treat as transaction field evidence"
+        }
+      ],
+      "unknowns": [
+        "Not a confirmed TaPaaS schema page.",
+        "Shell/global content may be visible in Figma evidence but is separated from likely transaction fields.",
+        "CTA targets are unknown unless explicitly confirmed.",
+        "Backend request/response mapping is unknown.",
+        "Content approval, accessibility approval, privacy/legal approval, GEL approval and TaPaaS approval are unknown."
+      ],
+      "caveat": "INSTANCE candidate; requires Glen/Michael confirmation because it is not a clean child FRAME."
+    }
+  ],
+  "unknowns": [
+    "The selected nodes are precise page/frame/instance candidates, not confirmed TaPaaS schema pages.",
+    "The Review node is an INSTANCE candidate and needs Glen/Michael confirmation.",
+    "Shell/global content may be visible in Figma evidence but is separated from likely transaction fields.",
+    "Transaction order needs design owner confirmation unless the selected config documents it.",
+    "CTA targets, backend mapping and validation contracts remain unknown.",
+    "Approval status for content, accessibility, privacy/legal, GEL and TaPaaS is unknown."
+  ],
+  "asksForGlen": [
+    "Confirm which TaPaaS schema concepts match each selected page frame.",
+    "Confirm which detected fields, CTAs and validation evidence should be represented in schema.",
+    "Confirm which shell/global elements should be excluded, inherited or represented.",
+    "Provide a minimal schema sample or block catalogue excerpt for the selected page types.",
+    "Identify any candidate mappings that are misleading or should be removed."
+  ],
+  "doNotOverclaim": [
+    "Do not call these confirmed TaPaaS schema pages.",
+    "Do not treat the Review INSTANCE candidate as confirmed page-frame evidence.",
+    "Do not claim production readiness.",
+    "Do not claim backend integration.",
+    "Do not claim TaPaaS schema compatibility.",
+    "Do not claim accessibility, privacy/legal, GEL or TaPaaS approval."
+  ]
+}

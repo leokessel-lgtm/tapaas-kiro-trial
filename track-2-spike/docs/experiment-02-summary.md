@@ -31,5 +31,5 @@ Private R&D only. No production readiness, backend integration, real schema comp
 
 ## Current Evidence
 
-- Source node count: 2
-- Generated pages/states: 2
+- Source node count: 3
+- Generated pages/states: 3

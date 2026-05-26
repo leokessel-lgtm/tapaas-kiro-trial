@@ -191,57 +191,237 @@
         "_confidence": "medium-low",
         "_needsTaPaaSEngineeringReview": true,
         "id": "source-2",
-        "title": "Privacy",
-        "sourceNodeId": "751:10322",
+        "title": "Vehicle selection",
+        "sourceNodeId": "490:60291",
+        "sections": [
+          {
+            "_status": "inferred",
+            "_confidence": "medium-low",
+            "_needsTaPaaSEngineeringReview": true,
+            "id": "source-2-section-main",
+            "sourceNodeId": "490:60291",
+            "blocks": [
+              {
+                "_status": "inferred",
+                "_confidence": "medium-low",
+                "_needsTaPaaSEngineeringReview": true,
+                "blockType": "PrivacyNoticeCandidate",
+                "sourceNodeId": "490:60291",
+                "content": [],
+                "fields": [],
+                "validation": [],
+                "requestMapping": {
+                  "_status": "unknown",
+                  "_confidence": "low",
+                  "_needsTaPaaSEngineeringReview": true,
+                  "placeholder": "Requires OpenAPI/Swagger or TaPaaS backend contract."
+                },
+                "responseMapping": {
+                  "_status": "unknown",
+                  "_confidence": "low",
+                  "_needsTaPaaSEngineeringReview": true,
+                  "placeholder": "Requires OpenAPI/Swagger or TaPaaS backend contract."
+                }
+              },
+              {
+                "_status": "inferred",
+                "_confidence": "medium-low",
+                "_needsTaPaaSEngineeringReview": true,
+                "blockType": "CheckboxFieldCandidate",
+                "sourceNodeId": "I531:6179;306:74514;10039:24328;1334:6080",
+                "content": [],
+                "fields": [
+                  {
+                    "id": "source-2-field-1",
+                    "sourceNodeId": "I531:6179;306:74514;10039:24328;1334:6080",
+                    "sourceName": "Page label or transaction name",
+                    "label": "Submit a notice of disposal for a vehicle",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-2",
+                    "sourceNodeId": "I531:6179;306:74514;13547:159643;13547:154058;13539:46802;13539:42435",
+                    "sourceName": "Label",
+                    "label": "Billing number:",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-3",
+                    "sourceNodeId": "I531:6179;306:74514;13547:159643;13547:154058;13377:104328",
+                    "sourceName": "Label",
+                    "label": "Registration expiry:",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-4",
+                    "sourceNodeId": "I531:6179;306:74514;13547:159643;13547:154058;8293:7244;10111:15822",
+                    "sourceName": "Label",
+                    "label": "Select vehicle",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-5",
+                    "sourceNodeId": "I531:6179;306:74514;13547:159643;13547:154059;13539:46802;13539:42435",
+                    "sourceName": "Label",
+                    "label": "Billing number:",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-6",
+                    "sourceNodeId": "I531:6179;306:74514;13547:159643;13547:154059;13377:104328",
+                    "sourceName": "Label",
+                    "label": "Registration expiry:",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-7",
+                    "sourceNodeId": "I531:6179;306:74514;13547:159643;13547:154059;8293:7244;10111:15822",
+                    "sourceName": "Label",
+                    "label": "Select vehicle",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-8",
+                    "sourceNodeId": "I531:6179;306:74514;10039:24333;8865:128977;6009:10552",
+                    "sourceName": "Input title",
+                    "label": "Enter a NSW plate number",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-9",
+                    "sourceNodeId": "I531:6179;306:74514;10039:24333;8865:128979;6009:10552",
+                    "sourceName": "Input title",
+                    "label": "NSW plate number or billing number",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-10",
+                    "sourceNodeId": "I531:6179;306:74514;10039:24333;8865:128980;10111:16021",
+                    "sourceName": "Label",
+                    "label": "Find vehicle",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-11",
+                    "sourceNodeId": "I531:6179;306:74514;10039:24334;5401:53426;10111:16021",
+                    "sourceName": "Label",
+                    "label": "Back",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-12",
+                    "sourceNodeId": "I531:6179;306:74514;10039:24334;5401:53428;10111:15990",
+                    "sourceName": "Label",
+                    "label": "Exit",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-13",
+                    "sourceNodeId": "I531:6179;306:74515;12292:6071",
+                    "sourceName": "Terms of use",
+                    "label": "Terms of use",
+                    "inputTypeCandidate": "checkbox",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  }
+                ],
+                "validation": [],
+                "requestMapping": {
+                  "_status": "unknown",
+                  "_confidence": "low",
+                  "_needsTaPaaSEngineeringReview": true,
+                  "placeholder": "Requires OpenAPI/Swagger or TaPaaS backend contract."
+                },
+                "responseMapping": {
+                  "_status": "unknown",
+                  "_confidence": "low",
+                  "_needsTaPaaSEngineeringReview": true,
+                  "placeholder": "Requires OpenAPI/Swagger or TaPaaS backend contract."
+                }
+              }
+            ],
+            "ctas": [
+              {
+                "_status": "verified",
+                "_confidence": "medium",
+                "_needsTaPaaSEngineeringReview": true,
+                "label": "Back",
+                "sourceNodeId": "I531:6179;306:74514;10039:24334;5401:53426;10111:16021",
+                "navigation": {
+                  "targetPage": "Unknown",
+                  "status": "unknown",
+                  "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "_status": "inferred",
+        "_confidence": "medium-low",
+        "_needsTaPaaSEngineeringReview": true,
+        "id": "source-3",
+        "title": "Review",
+        "sourceNodeId": "531:23422",
         "sections": [
           {
             "_status": "verified",
             "_confidence": "medium-low",
             "_needsTaPaaSEngineeringReview": true,
-            "id": "source-2-section-main",
-            "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
+            "id": "source-3-section-main",
+            "sourceNodeId": "I531:23422;3436:107675;14884:18148;27:18194;27:18554;1152:3864",
             "blocks": [
               {
                 "_status": "verified",
                 "_confidence": "medium-low",
                 "_needsTaPaaSEngineeringReview": true,
                 "blockType": "PrivacyNoticeCandidate",
-                "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
+                "sourceNodeId": "I531:23422;3436:107675;14884:18148;27:18194;27:18554;1152:3864",
                 "content": [
                   {
-                    "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
-                    "name": "Text",
-                    "characters": "Accept the Terms and conditions to continue."
-                  },
-                  {
-                    "id": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
-                    "name": "H2 heading",
-                    "characters": "Privacy collection notice"
-                  },
-                  {
-                    "id": "I751:10680;306:74518;5311:33122;8674:49237;5257:89021",
-                    "name": "Content",
-                    "characters": "For more information about how we collect, use and disclose your personal information, including who we may disclose it to, check our Privacy Collection notice.    "
-                  },
-                  {
-                    "id": "I751:10680;306:74518;5311:33122;8674:49239;1152:3699",
-                    "name": "H2 heading",
-                    "characters": "Terms and conditions"
-                  },
-                  {
-                    "id": "I751:10680;306:74518;5311:33122;8674:49241;1152:3864",
+                    "id": "I531:23422;3436:107675;14884:18148;27:18194;27:18554;1152:3864",
                     "name": "Paragraph text",
-                    "characters": "These are the Terms and Conditions     ."
+                    "characters": "Privacy Collection Notice"
                   },
                   {
-                    "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12988",
-                    "name": "Label",
-                    "characters": "I accept the terms and conditions for Notice of Disposal."
+                    "id": "I531:23422;3436:107675;14884:18148;27:18194;27:18555;1152:3864",
+                    "name": "Paragraph text",
+                    "characters": "Service NSW delivers this service on behalf of Transport for NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal Privacy statement. "
                   },
                   {
-                    "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
-                    "name": "Validation",
-                    "characters": "Accept the Terms and conditions to continue."
+                    "id": "I531:23422;3436:107675;14884:18148;27:18196;1152:3864",
+                    "name": "Paragraph text",
+                    "characters": "Terms and Conditions"
+                  },
+                  {
+                    "id": "I531:23422;3436:107675;14884:18148;27:18197;1152:3864",
+                    "name": "Paragraph text",
+                    "characters": "You have agreed to the Terms and Conditions for Notice of Disposal    ."
                   }
                 ],
                 "fields": [],
@@ -264,117 +444,875 @@
                 "_confidence": "medium-low",
                 "_needsTaPaaSEngineeringReview": true,
                 "blockType": "CheckboxFieldCandidate",
-                "sourceNodeId": "I751:10680;306:74518;10872:28125;1334:6080",
+                "sourceNodeId": "I531:23422;3436:107675;14884:18137;1334:6080",
                 "content": [],
                 "fields": [
                   {
-                    "id": "source-2-field-1",
-                    "sourceNodeId": "I751:10680;306:74518;10872:28125;1334:6080",
+                    "id": "source-3-field-1",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18137;1334:6080",
                     "sourceName": "Page label or transaction name",
                     "label": "Submit a notice of disposal for a vehicle",
                     "inputTypeCandidate": "unknown",
-                    "required": "inferred",
+                    "required": "unknown",
                     "mappingStatus": "inferred"
                   },
                   {
-                    "id": "source-2-field-2",
-                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
-                    "sourceName": "Text",
-                    "label": "Accept the Terms and conditions to continue.",
-                    "inputTypeCandidate": "checkbox",
-                    "required": "inferred",
-                    "mappingStatus": "inferred"
-                  },
-                  {
-                    "id": "source-2-field-3",
-                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49239;1152:3699",
-                    "sourceName": "H2 heading",
-                    "label": "Terms and conditions",
-                    "inputTypeCandidate": "checkbox",
-                    "required": "inferred",
-                    "mappingStatus": "inferred"
-                  },
-                  {
-                    "id": "source-2-field-4",
-                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49241;1152:3864",
-                    "sourceName": "Paragraph text",
-                    "label": "These are the Terms and Conditions     .",
-                    "inputTypeCandidate": "checkbox",
-                    "required": "inferred",
-                    "mappingStatus": "inferred"
-                  },
-                  {
-                    "id": "source-2-field-5",
-                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12988",
+                    "id": "source-3-field-2",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22034;27:22243;27:22172",
                     "sourceName": "Label",
-                    "label": "I accept the terms and conditions for Notice of Disposal.",
-                    "inputTypeCandidate": "checkbox",
-                    "required": "inferred",
-                    "mappingStatus": "inferred"
-                  },
-                  {
-                    "id": "source-2-field-6",
-                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
-                    "sourceName": "Validation",
-                    "label": "Accept the Terms and conditions to continue.",
-                    "inputTypeCandidate": "checkbox",
-                    "required": "inferred",
-                    "mappingStatus": "inferred"
-                  },
-                  {
-                    "id": "source-2-field-7",
-                    "sourceNodeId": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
-                    "sourceName": "Label",
-                    "label": "Continue",
+                    "label": "Family name",
                     "inputTypeCandidate": "unknown",
-                    "required": "inferred",
+                    "required": "unknown",
                     "mappingStatus": "inferred"
                   },
                   {
-                    "id": "source-2-field-8",
-                    "sourceNodeId": "I751:10680;306:74518;5311:33134;5003:1629;10111:15990",
+                    "id": "source-3-field-3",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22180;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-4",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22181;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-5",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22182;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-6",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22183;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-7",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22184;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-8",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22185;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-9",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22186;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-10",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22187;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-11",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22188;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-12",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22036;27:22189;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-13",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22180;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-14",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22181;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-15",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22182;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-16",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22183;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-17",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22184;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-18",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22185;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-19",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22186;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-20",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22187;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-21",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22188;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-22",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22038;27:22189;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-23",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22180;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-24",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22181;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-25",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22182;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-26",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22183;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-27",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22184;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-28",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22185;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-29",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22186;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-30",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22187;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-31",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22188;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-32",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18141;14854:20959;27:22040;27:22189;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-33",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21982;27:22231;27:22172",
+                    "sourceName": "Label",
+                    "label": "Plate number",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-34",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21982;27:22232;27:22172",
+                    "sourceName": "Label",
+                    "label": "Vehicle information",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-35",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21982;27:22233;27:22172",
+                    "sourceName": "Label",
+                    "label": "VIN/Chassis",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-36",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21982;27:22234;27:22172",
+                    "sourceName": "Label",
+                    "label": "Registration expiry",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-37",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22180;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-38",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22181;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-39",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22182;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-40",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22183;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-41",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22184;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-42",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22185;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-43",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22186;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-44",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22187;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-45",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22188;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-46",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21984;27:22189;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-47",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22180;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-48",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22181;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-49",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22182;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-50",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22183;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-51",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22184;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-52",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22185;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-53",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22186;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-54",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22187;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-55",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22188;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-56",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21986;27:22189;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-57",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22180;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-58",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22181;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-59",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22182;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-60",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22183;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-61",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22184;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-62",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22185;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-63",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22186;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-64",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22187;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-65",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22188;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-66",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18142;14854:12019;27:21988;27:22189;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-67",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21982;27:22240;27:22172",
+                    "sourceName": "Label",
+                    "label": "Date of sale",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-68",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21982;27:22241;27:22172",
+                    "sourceName": "Label",
+                    "label": "Sale price or market value",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-69",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21984;27:22240;27:22172",
+                    "sourceName": "Label",
+                    "label": "NSW Driver Licence",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-70",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21984;27:22241;27:22172",
+                    "sourceName": "Label",
+                    "label": "Family name",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-71",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22180;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-72",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22181;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-73",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22182;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-74",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22183;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-75",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22184;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-76",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22185;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-77",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22186;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-78",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22187;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-79",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22188;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-80",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21986;27:22189;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-81",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22180;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-82",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22181;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-83",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22182;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-84",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22183;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-85",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22184;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-86",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22185;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-87",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22186;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-88",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22187;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-89",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22188;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-90",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18143;14854:12019;27:21988;27:22189;27:22172",
+                    "sourceName": "Label",
+                    "label": "Label",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-91",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18148;27:18196;1152:3864",
+                    "sourceName": "Paragraph text",
+                    "label": "Terms and Conditions",
+                    "inputTypeCandidate": "checkbox",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-92",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18148;27:18197;1152:3864",
+                    "sourceName": "Paragraph text",
+                    "label": "You have agreed to the Terms and Conditions for Notice of Disposal    .",
+                    "inputTypeCandidate": "checkbox",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-93",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18149;27:34844;10111:16021",
+                    "sourceName": "Label",
+                    "label": "Back",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-94",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18149;27:34845;27:34871;10111:15822",
+                    "sourceName": "Label",
+                    "label": "Submit",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-3-field-95",
+                    "sourceNodeId": "I531:23422;3436:107675;14884:18149;27:34846;10111:15990",
                     "sourceName": "Label",
                     "label": "Exit",
                     "inputTypeCandidate": "unknown",
-                    "required": "inferred",
+                    "required": "unknown",
                     "mappingStatus": "inferred"
                   },
                   {
-                    "id": "source-2-field-9",
-                    "sourceNodeId": "I751:10680;634:65925;12292:6071",
+                    "id": "source-3-field-96",
+                    "sourceNodeId": "I531:23422;3436:107676;12292:6071",
                     "sourceName": "Terms of use",
                     "label": "Terms of use",
                     "inputTypeCandidate": "checkbox",
-                    "required": "inferred",
+                    "required": "unknown",
                     "mappingStatus": "inferred"
                   }
                 ],
-                "validation": [
-                  {
-                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2380",
-                    "sourceName": "Title",
-                    "message": "Your form has an error",
-                    "mappingStatus": "verified"
-                  },
-                  {
-                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2381",
-                    "sourceName": "copy",
-                    "message": "Check the error:",
-                    "mappingStatus": "verified"
-                  },
-                  {
-                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
-                    "sourceName": "Text",
-                    "message": "Accept the Terms and conditions to continue.",
-                    "mappingStatus": "verified"
-                  },
-                  {
-                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
-                    "sourceName": "Validation",
-                    "message": "Accept the Terms and conditions to continue.",
-                    "mappingStatus": "verified"
-                  }
-                ],
+                "validation": [],
                 "requestMapping": {
                   "_status": "unknown",
                   "_confidence": "low",
@@ -394,8 +1332,20 @@
                 "_status": "verified",
                 "_confidence": "medium",
                 "_needsTaPaaSEngineeringReview": true,
-                "label": "Continue",
-                "sourceNodeId": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+                "label": "Back",
+                "sourceNodeId": "I531:23422;3436:107675;14884:18149;27:34844;10111:16021",
+                "navigation": {
+                  "targetPage": "Unknown",
+                  "status": "unknown",
+                  "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."
+                }
+              },
+              {
+                "_status": "verified",
+                "_confidence": "medium",
+                "_needsTaPaaSEngineeringReview": true,
+                "label": "Submit",
+                "sourceNodeId": "I531:23422;3436:107675;14884:18149;27:34845;27:34871;10111:15822",
                 "navigation": {
                   "targetPage": "Unknown",
                   "status": "unknown",

@@ -33,7 +33,7 @@ This remains a private R&D spike. It is not production schema, not backend-conne
 
 ## Current Evidence
 
-- Source node count: 2
-- Generated pages/states: 2
+- Source node count: 3
+- Generated pages/states: 3
 - Production ready: false
 - Schema compatibility claim: none

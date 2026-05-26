@@ -25,15 +25,39 @@
     },
     {
       "order": 2,
-      "sourceNodeId": "751:10322",
-      "sourceName": "2.4_NOD",
-      "pageTitle": "Privacy",
-      "role": "validation-error-state",
+      "sourceNodeId": "490:60291",
+      "sourceName": "1.1A_NOD",
+      "pageTitle": "Vehicle selection",
+      "role": "normal-or-acknowledgement-state",
       "mappingStatus": "verified",
       "ctas": [
         {
-          "label": "Continue",
-          "sourceNodeId": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+          "label": "Back",
+          "sourceNodeId": "I531:6179;306:74514;10039:24334;5401:53426;10111:16021",
+          "likelyTargetPage": "Unknown",
+          "navigationStatus": "unknown",
+          "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "sourceNodeId": "531:23422",
+      "sourceName": "NOD review - Individual",
+      "pageTitle": "Review",
+      "role": "normal-or-acknowledgement-state",
+      "mappingStatus": "verified",
+      "ctas": [
+        {
+          "label": "Back",
+          "sourceNodeId": "I531:23422;3436:107675;14884:18149;27:34844;10111:16021",
+          "likelyTargetPage": "Unknown",
+          "navigationStatus": "unknown",
+          "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."
+        },
+        {
+          "label": "Submit",
+          "sourceNodeId": "I531:23422;3436:107675;14884:18149;27:34845;27:34871;10111:15822",
           "likelyTargetPage": "Unknown",
           "navigationStatus": "unknown",
           "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."

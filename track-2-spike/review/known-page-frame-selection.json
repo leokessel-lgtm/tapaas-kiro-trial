@@ -1,0 +1,48 @@
+{
+  "selectionPurpose": "Select the best available precise NOD page or page-instance candidates for Glen review",
+  "fullTransactionExtracted": false,
+  "selectedKnownPageFrames": false,
+  "selectedPrecisePageOrInstanceCandidates": true,
+  "reviewInstanceRequiresConfirmation": true,
+  "productionReady": false,
+  "schemaCompatibilityClaim": "none",
+  "selectedNodes": [
+    {
+      "pageOrder": 1,
+      "nodeId": "490:60286",
+      "figmaName": "0.1D_NOD",
+      "sourceNodeType": "FRAME",
+      "safeLabel": "Privacy / terms acknowledgement page",
+      "confidence": "high",
+      "whySelected": "Best available child FRAME inside the Privacy section. Avoids broad SECTION-level extraction.",
+      "requiresConfirmation": false
+    },
+    {
+      "pageOrder": 2,
+      "nodeId": "490:60291",
+      "figmaName": "1.1A_NOD",
+      "sourceNodeType": "FRAME",
+      "safeLabel": "Vehicle details page",
+      "confidence": "medium",
+      "whySelected": "Best available child FRAME inside the Vehicle details section. Needs confirmation but is more precise than SECTION-level extraction.",
+      "requiresConfirmation": true
+    },
+    {
+      "pageOrder": 3,
+      "nodeId": "531:23422",
+      "figmaName": "NOD review - Individual",
+      "sourceNodeType": "INSTANCE",
+      "safeLabel": "Review page candidate",
+      "confidence": "medium",
+      "whySelected": "Best available review-page candidate from local evidence. It is an INSTANCE, not a clean child FRAME, so it requires Glen/Michael confirmation.",
+      "requiresConfirmation": true
+    }
+  ],
+  "warnings": [
+    "Privacy and Vehicle details are selected as precise FRAME nodes.",
+    "Review is selected as an INSTANCE candidate because no clean child FRAME was available in the local export.",
+    "This is acceptable for exploratory Glen review only, not as confirmed page-frame evidence.",
+    "Do not claim these are confirmed TaPaaS schema pages.",
+    "Do not claim production readiness, backend integration, schema compatibility or approval readiness."
+  ]
+}

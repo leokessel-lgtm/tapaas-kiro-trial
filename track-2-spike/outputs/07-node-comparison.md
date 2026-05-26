@@ -2,14 +2,15 @@
 
 ## Summary
 
-This report compares 2 locally available Figma nodes from the current raw payload. It highlights likely normal/acknowledgement and validation-error state differences for review.
+This report compares 3 locally available Figma nodes from the current raw payload. It highlights likely normal/acknowledgement and validation-error state differences for review.
 
 ## CTA And Validation Comparison
 
 | Order | Node ID | Node name | Likely CTAs | Likely validation/error evidence | Likely relationship |
 |---|---|---|---|---|---|
 | 1 | `490:60286` | 0.1D_NOD | Continue | None detected | normal-or-acknowledgement-state |
-| 2 | `751:10322` | 2.4_NOD | Continue | Your form has an error<br>Check the error:<br>Accept the Terms and conditions to continue. | validation-error-state |
+| 2 | `490:60291` | 1.1A_NOD | Back | None detected | normal-or-acknowledgement-state |
+| 3 | `531:23422` | NOD review - Individual | Back<br>Submit | None detected | normal-or-acknowledgement-state |
 
 ## Per-Node Differences
 
@@ -20,12 +21,19 @@ This report compares 2 locally available Figma nodes from the current raw payloa
 - Only in this node: None detected
 - Missing from this node compared with first node: None detected
 
-### 2. 2.4_NOD
+### 2. 1.1A_NOD
 
-- Source node: `751:10322`
-- Shared labels/content with first node: 58
-- Only in this node: Accept the Terms and conditions to continue.; Check the error:; For more information about how we collect, use and disclose your personal information, including who we may disclose it to, check our Privacy Collection notice.; I accept the terms and conditions for Notice of Disposal.; These are the Terms and Conditions     .; Your form has an error
-- Missing from this node compared with first node: I accept the terms and conditions for Notice of Disposal; Service NSW delivers this service on behalf of Transport of NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal privacy statement     and Terms and Conditions and call 13 77 88.; These are the Terms and Conditions    .
+- Source node: `490:60291`
+- Shared labels/content with first node: 52
+- Only in this node: 07 November 2025; 1234567; 13 November 2025; 16 - md; 3456; 417; 4S4BP61C95712; 6456; 83920; 890; ADC74M; ASTRA SEDAN – WHITE – 2016
+- Missing from this node compared with first node: Continue; I accept the terms and conditions for Notice of Disposal; Notifications; Privacy collection notice; Service NSW delivers this service on behalf of Transport of NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal privacy statement     and Terms and Conditions and call 13 77 88.; Terms and conditions; These are the Terms and Conditions    .; Type something; We will send you an email with the details of your notice of disposal after you complete and submit this form online.
+
+### 3. NOD review - Individual
+
+- Source node: `531:23422`
+- Shared labels/content with first node: 53
+- Only in this node: $0.00; $20,000; *; 07 November 2025; 12/01/2025; 12345678; 56 - xxxl; 84912093956525278; ADC74M; Back; Buyer details; Content
+- Missing from this node compared with first node: Continue; I accept the terms and conditions for Notice of Disposal; Privacy collection notice; Service NSW delivers this service on behalf of Transport of NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal privacy statement     and Terms and Conditions and call 13 77 88.; Terms and conditions; These are the Terms and Conditions    .; Type something; We will send you an email with the details of your notice of disposal after you complete and submit this form online.
 
 ## Unknowns Requiring Confirmation
 

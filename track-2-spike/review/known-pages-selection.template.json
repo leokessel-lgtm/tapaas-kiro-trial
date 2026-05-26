@@ -1,0 +1,27 @@
+{
+  "selectionPurpose": "Select 3 coherent NOD page frames for Glen review",
+  "fullTransactionExtracted": false,
+  "selectedKnownPageFrames": [
+    {
+      "pageOrder": 1,
+      "nodeId": "REPLACE_WITH_NODE_ID",
+      "figmaName": "REPLACE_WITH_FIGMA_FRAME_NAME",
+      "safeLabel": "Privacy / terms acknowledgement page",
+      "whySelected": "Known transaction page frame selected deliberately from Figma"
+    },
+    {
+      "pageOrder": 2,
+      "nodeId": "REPLACE_WITH_NODE_ID",
+      "figmaName": "REPLACE_WITH_FIGMA_FRAME_NAME",
+      "safeLabel": "Vehicle / details page",
+      "whySelected": "Known transaction page frame selected deliberately from Figma"
+    },
+    {
+      "pageOrder": 3,
+      "nodeId": "REPLACE_WITH_NODE_ID",
+      "figmaName": "REPLACE_WITH_FIGMA_FRAME_NAME",
+      "safeLabel": "Review / confirmation page",
+      "whySelected": "Known transaction page frame selected deliberately from Figma"
+    }
+  ]
+}
