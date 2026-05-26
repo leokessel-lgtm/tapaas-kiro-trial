@@ -1124,13 +1124,13 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--evidence-checklist-card-pattern",
+            "id": "tapaas-components-evidence-assessment--evidence-checklist-card-pattern",
             "mode": "isolated-review",
             "expectedText": "Evidence checklist card",
             "mobileNoOverflow": true
           },
           {
-            "id": "tapaas-preview-composites--mps-evidence-and-assessment",
+            "id": "tapaas-components-evidence-assessment--mps-evidence-and-assessment",
             "mode": "catalogue-review",
             "expectedText": "Evidence checklist",
             "mobileNoOverflow": true
@@ -1184,13 +1184,13 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--assessment-summary-panel-pattern",
+            "id": "tapaas-components-evidence-assessment--assessment-summary-panel-pattern",
             "mode": "isolated-review",
             "expectedText": "Assessment summary panel",
             "mobileNoOverflow": true
           },
           {
-            "id": "tapaas-preview-composites--mps-evidence-and-assessment",
+            "id": "tapaas-components-evidence-assessment--mps-evidence-and-assessment",
             "mode": "catalogue-review",
             "expectedText": "Mock assessment summary",
             "mobileNoOverflow": true
