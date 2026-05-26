@@ -55,6 +55,14 @@ Batch 2 adds story-only TaPaaS GEL patterns. These stories compose existing GEL 
 | Required / optional field pattern | Consistent required marker, optional label and help-text treatment | `Field`, `Input` | `RequiredAndOptionalFields` | Story-only, review-gated | Content and validation wording must stay transaction-specific. |
 | Progress stepper usage pattern | Short transaction orientation for bounded flows | `ProgressStepper` | `ProgressStepperUsage` | Story-only, review-gated | Use as guidance for short flows only; longer flows need separate review. |
 
+## Batch 2b pattern inventory
+
+Batch 2b adds a story-only Date/DOB pattern using existing GEL primitives. It does not introduce `DateInput`, `DateMultiInput`, a local date preview component, a TaPaaS wrapper or validation behaviour.
+
+| Pattern | TaPaaS use case | GEL primitives used | Story target | Acceptance level | Notes |
+|---|---|---|---|---|---|
+| Date / DOB pattern | Repeatable DOB/date grouping for transaction forms | `ErrorSummary`, `Field`, `Input`, `Select` | `DateOfBirthPattern` | Story-only, review-gated | Visual/content/structure guidance only. No DOB validation, age eligibility, identity checks, backend validation or customer-record behaviour. |
+
 ## Wrapper policy
 
 Use GEL directly when:
@@ -128,3 +136,13 @@ Review-gated status:
 - Do not touch Date/DOB, Manual Address or Accordion/Disclosure patterns in Batch 2.
 - Use `src/gel.ts` as the only GEL component import boundary.
 - Keep pattern wording explicit: source-informed local pattern preview, Storybook guidance only, not a production GEL export, and not an accessibility, WCAG, legal, privacy, policy, production, GEL or TaPaaS approval claim.
+
+## Batch 2b guardrails
+
+- Do not refactor transaction skeletons or assemblies.
+- Do not add `DateInput`, `DateMultiInput`, local date preview components or TaPaaS date wrappers.
+- Do not add eligibility, age calculation, backend validation, identity, customer-record, policy, privacy or legal logic.
+- Do not add dependencies or registry configuration.
+- Do not expand the acceptance manifest with the Date/DOB pattern story.
+- Use `src/gel.ts` as the only GEL component import boundary.
+- Keep Date/DOB wording explicit: source-informed local pattern preview, Storybook guidance only, no real DOB validation, and no approval or compliance claims.

@@ -133,12 +133,113 @@ function RequiredAndOptionalFieldsExample() {
   )
 }
 
+function DateOfBirthPatternExample() {
+  const [day, setDay] = useState('')
+  const [month, setMonth] = useState('')
+  const [year, setYear] = useState('')
+  const showErrors = true
+  const hasDateError = showErrors && (!day.trim() || !month || !year.trim())
+  const errorId = 'tapaas-pattern-dob-error'
+
+  return (
+    <div className='storybook-stack'>
+      <PatternBoundaryNote />
+      <Heading level={2}>Date of birth pattern</Heading>
+      <p>This story shows visual, content and structure guidance for a DOB/date input pattern using existing GEL primitives only.</p>
+      <div className='storybook-note'>
+        <strong>Boundary</strong>
+        <p>This does not include real DOB validation, age eligibility, identity checks, backend validation or customer-record behaviour.</p>
+      </div>
+      <ErrorSummary
+        id='tapaas-pattern-dob-error-summary'
+        errors={[
+          { id: 'tapaas-pattern-dob-day', text: 'Enter a date of birth' },
+        ]}
+      />
+      <fieldset
+        aria-describedby={hasDateError ? errorId : undefined}
+        aria-invalid={hasDateError || undefined}
+        style={{
+          border: 0,
+          margin: 0,
+          padding: 0,
+        }}
+      >
+        <legend style={{ fontWeight: 700, marginBottom: '0.5rem' }}>Date of birth *</legend>
+        <p style={{ marginTop: 0 }}>For example, 31 Jan 1980.</p>
+        <div className='storybook-row'>
+          <Field id='tapaas-pattern-dob-day' label='Day'>
+            <Input
+              id='tapaas-pattern-dob-day'
+              value={day}
+              onChange={(event) => setDay(event.target.value)}
+              hasError={hasDateError}
+              inputWidth='xxs'
+              placeholder='DD'
+              autoComplete='bday-day'
+              inputMode='numeric'
+              maxLength={2}
+            />
+          </Field>
+          <Field id='tapaas-pattern-dob-month' label='Month'>
+            <Select
+              id='tapaas-pattern-dob-month'
+              value={month}
+              onChange={(event) => setMonth(event.target.value)}
+              hasError={hasDateError}
+              inputWidth='xs'
+              placeholder='MMM'
+              options={[
+                { value: 'jan', text: 'Jan' },
+                { value: 'feb', text: 'Feb' },
+                { value: 'mar', text: 'Mar' },
+                { value: 'apr', text: 'Apr' },
+                { value: 'may', text: 'May' },
+                { value: 'jun', text: 'Jun' },
+                { value: 'jul', text: 'Jul' },
+                { value: 'aug', text: 'Aug' },
+                { value: 'sep', text: 'Sep' },
+                { value: 'oct', text: 'Oct' },
+                { value: 'nov', text: 'Nov' },
+                { value: 'dec', text: 'Dec' },
+              ]}
+              autoComplete='bday-month'
+            />
+          </Field>
+          <Field id='tapaas-pattern-dob-year' label='Year'>
+            <Input
+              id='tapaas-pattern-dob-year'
+              value={year}
+              onChange={(event) => setYear(event.target.value)}
+              hasError={hasDateError}
+              inputWidth='xs'
+              placeholder='YYYY'
+              autoComplete='bday-year'
+              inputMode='numeric'
+              maxLength={4}
+            />
+          </Field>
+        </div>
+        {hasDateError && (
+          <div id={errorId} style={{ fontWeight: 700, marginTop: '-0.5rem' }}>
+            Enter a date of birth.
+          </div>
+        )}
+      </fieldset>
+    </div>
+  )
+}
+
 export const ErrorSummaryAndFieldErrors: Story = {
   render: () => <ErrorSummaryAndFieldErrorsExample />,
 }
 
 export const RequiredAndOptionalFields: Story = {
   render: () => <RequiredAndOptionalFieldsExample />,
+}
+
+export const DateOfBirthPattern: Story = {
+  render: () => <DateOfBirthPatternExample />,
 }
 
 export const ProgressStepperUsage: Story = {

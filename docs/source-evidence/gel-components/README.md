@@ -47,7 +47,13 @@ Batch 2 Storybook pattern coverage composes existing GEL primitives through `src
 | Required / optional fields | `field`, `input` | Rendered pattern guidance |
 | Progress stepper usage | `docs/source-evidence/gel-progress-stepper` | Rendered pattern guidance |
 
-Date/DOB, manual address and accordion/disclosure patterns remain out of Batch 2 scope. They need a separate review pass because they touch more validation, address-data, content-visibility or accessibility-sensitive decisions.
+## Batch 2b Date/DOB pattern note
+
+Batch 2b adds rendered Date/DOB pattern guidance using existing primitives from `src/gel.ts`: `ErrorSummary`, `Field`, `Input` and `Select`.
+
+This does not introduce `DateInput`, `DateMultiInput`, a local date preview component, a TaPaaS wrapper, real DOB validation, age eligibility, identity checks, backend validation, customer-record behaviour, or any accessibility, WCAG, GEL, TaPaaS, legal, privacy, policy, production or design approval claim.
+
+Manual address and accordion/disclosure patterns remain out of Batch 2b scope. They need a separate review pass because they touch address-data, content-visibility or accessibility-sensitive decisions.
 
 ## Maturity guidance
 
