@@ -133,7 +133,8 @@ Review-gated status:
 - Do not add TaPaaS wrappers.
 - Do not add dependencies or registry configuration.
 - Do not expand the acceptance manifest with story-only pattern guidance.
-- Do not touch Date/DOB, Manual Address or Accordion/Disclosure patterns in Batch 2.
+- Date/DOB was deferred from Batch 2 and later handled in Batch 2b as story-only pattern guidance.
+- Do not touch Manual Address or Accordion/Disclosure patterns in Batch 2.
 - Use `src/gel.ts` as the only GEL component import boundary.
 - Keep pattern wording explicit: source-informed local pattern preview, Storybook guidance only, not a production GEL export, and not an accessibility, WCAG, legal, privacy, policy, production, GEL or TaPaaS approval claim.
 
