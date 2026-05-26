@@ -43,6 +43,16 @@ Use this target structure for future Storybook navigation:
 | Transaction Assemblies | Stakeholders and product reviewers | Thin mocked transaction journeys and showcase-safe preview surfaces. | Mock-only unless later backend evidence exists. |
 | Visual QA & Evidence | Designers, source owners and Codex/Kiro maintenance | Intake boards, maturity backlog, screenshot-backed review and review-gate guidance. | Evidence-only unless separately manifest-backed. |
 
+## Phase 2 split status
+
+Phase 2A stopped before moving `SelectedMaturityComponents` because the story is manifest-backed. Phase 2B.1 moves that story into `Visual QA & Evidence/Selected Maturity` with a manifest-safe Storybook ID remap only.
+
+| Phase | Scope | Story ID change | Acceptance impact |
+|---|---|---|---|
+| Phase 2B.1 | Move `SelectedMaturityComponents` out of `TaPaaS Preview/Composites` into `Visual QA & Evidence/Selected Maturity`. | `tapaas-preview-composites--selected-maturity-components` -> `visual-qa-evidence-selected-maturity--selected-maturity-components` | Same manifest entries, same expected text, same acceptance intent. |
+
+The remaining manifest-backed split of `TaPaaS Preview/Composites` is deferred. Future clusters should continue to move one audience group at a time and update only the affected Storybook IDs in the manifest.
+
 ## Batch 1 reference inventory
 
 | GEL package/component | TaPaaS use case | Story target | Recommended action | Acceptance level | Notes |

@@ -125,7 +125,7 @@
             "mobileNoOverflow": true
           },
           {
-            "id": "tapaas-preview-composites--selected-maturity-components",
+            "id": "visual-qa-evidence-selected-maturity--selected-maturity-components",
             "mode": "catalogue-review",
             "expectedText": "Selected maturity backlog components",
             "mobileNoOverflow": true
@@ -223,7 +223,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--selected-maturity-components",
+            "id": "visual-qa-evidence-selected-maturity--selected-maturity-components",
             "mode": "catalogue-review",
             "expectedText": "Mock backend code:",
             "mobileNoOverflow": true
@@ -283,7 +283,7 @@
             "mobileNoOverflow": true
           },
           {
-            "id": "tapaas-preview-composites--selected-maturity-components",
+            "id": "visual-qa-evidence-selected-maturity--selected-maturity-components",
             "mode": "catalogue-review",
             "expectedText": "Mock backend code:",
             "mobileNoOverflow": true
@@ -727,7 +727,7 @@
             "mobileNoOverflow": true
           },
           {
-            "id": "tapaas-preview-composites--selected-maturity-components",
+            "id": "visual-qa-evidence-selected-maturity--selected-maturity-components",
             "mode": "catalogue-review",
             "expectedText": "Key information",
             "mobileNoOverflow": true
@@ -837,7 +837,7 @@
             "mobileNoOverflow": true
           },
           {
-            "id": "tapaas-preview-composites--selected-maturity-components",
+            "id": "visual-qa-evidence-selected-maturity--selected-maturity-components",
             "mode": "catalogue-review",
             "expectedText": "Declaration review",
             "mobileNoOverflow": true
@@ -897,7 +897,7 @@
             "mobileNoOverflow": true
           },
           {
-            "id": "tapaas-preview-composites--selected-maturity-components",
+            "id": "visual-qa-evidence-selected-maturity--selected-maturity-components",
             "mode": "catalogue-review",
             "expectedText": "Privacy Collection Notice",
             "mobileNoOverflow": true

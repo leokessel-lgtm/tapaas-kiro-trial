@@ -39,7 +39,7 @@ Anti-claims:
 | MPS Review Frame bounded source story | Storybook story for `MPS Review Frame - Bounded Source Review` | Review source-backed review-page content-frame layout and mock playback. |
 | MPS Confirmation Frame bounded source story | Storybook story for `MPS Confirmation Frame - Bounded Source Review` | Review source-backed confirmation content-frame layout and next-step content. |
 | Radio card support story | Storybook story: `tapaas-preview-composites--radio-button-card-states` | Review application-type branching control treatment. |
-| Backend/business error support story | Storybook story: `tapaas-preview-composites--selected-maturity-components` | Review mock backend/business error examples only. |
+| Backend/business error support story | Storybook story: `visual-qa-evidence-selected-maturity--selected-maturity-components` | Review mock backend/business error examples only. |
 | Coverage matrix | `docs/tapaas/08-transaction-coverage-matrix.md` | Stage-by-stage preview, story, skeleton, test and evidence status. |
 | Evidence log | `docs/tapaas/04-evidence-log.md` | Chronological evidence for extraction, preview, alignment and validation work. |
 | Unknowns register | `docs/tapaas/07-remaining-unknowns-resolution.md` | Review-gated issues and unresolved decisions. |
