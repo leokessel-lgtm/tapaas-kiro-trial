@@ -427,7 +427,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--privacy-card-pattern",
+            "id": "tapaas-components-cards-panels--privacy-card-pattern",
             "mode": "isolated-review",
             "expectedText": "Privacy collection notice",
             "mobileNoOverflow": true
@@ -721,7 +721,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--interactive-details-card-pattern",
+            "id": "tapaas-components-cards-panels--interactive-details-card-pattern",
             "mode": "isolated-review",
             "expectedText": "Interactive details card",
             "mobileNoOverflow": true
@@ -777,13 +777,13 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--details-card-pattern",
+            "id": "tapaas-components-cards-panels--details-card-pattern",
             "mode": "isolated-review",
             "expectedText": "Details card",
             "mobileNoOverflow": true
           },
           {
-            "id": "tapaas-preview-composites--details-card-context",
+            "id": "tapaas-components-cards-panels--details-card-context",
             "mode": "catalogue-review",
             "expectedText": "Mock account context",
             "mobileNoOverflow": true
