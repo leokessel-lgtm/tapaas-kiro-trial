@@ -373,7 +373,7 @@ export function Checkbox({ id, label, checked = false, onChange, hasError, error
 // InPageAlert
 // ---------------------------------------------------------------------------
 export interface InPageAlertProps {
-  variant: 'error' | 'warning' | 'success' | 'info'
+  variant: 'error' | 'warning' | 'success' | 'info' | 'callout'
   title: string
   children?: React.ReactNode
   compact?: boolean
@@ -385,29 +385,45 @@ const alertColors = {
   warning: { border: '#c95000', bg: '#fbeee5', icon: '⚠' },
   success: { border: '#008a07', bg: '#e5f6e6', icon: '✓' },
   info: { border: '#2e5299', bg: '#eaedf4', icon: 'ℹ' },
+  callout: { border: '#2e5299', bg: '#eaedf4', icon: '' },
 }
 
 export function InPageAlert({ variant, title, children, compact, style }: InPageAlertProps) {
   const colors = alertColors[variant]
+  const hasIcon = Boolean(colors.icon)
   return (
     <div
       role={variant === 'error' ? 'alert' : 'note'}
       style={{
         borderLeft: `4px solid ${colors.border}`, backgroundColor: colors.bg,
         padding: compact ? '0.625rem 1rem' : '1rem 1.25rem',
-        paddingLeft: compact ? '1rem' : '3.25rem',
+        paddingLeft: compact || !hasIcon ? '1rem' : '3.25rem',
         marginBottom: compact ? '0' : '1.5rem', position: 'relative',
         fontSize: compact ? '0.9375rem' : '1rem', lineHeight: 1.5, ...style,
       }}
       data-gelweb-component={`in-page-alert-${variant}`}
     >
-      <span aria-hidden='true' style={{ position: 'absolute', left: compact ? undefined : '1rem', top: compact ? '50%' : '1rem', transform: compact ? 'translateY(-50%)' : undefined, fontSize: '1.25rem', color: colors.border, fontWeight: 700, display: compact ? 'none' : 'block' }}>
-        {colors.icon}
-      </span>
+      {hasIcon && (
+        <span aria-hidden='true' style={{ position: 'absolute', left: compact ? undefined : '1rem', top: compact ? '50%' : '1rem', transform: compact ? 'translateY(-50%)' : undefined, fontSize: '1.25rem', color: colors.border, fontWeight: 700, display: compact ? 'none' : 'block' }}>
+          {colors.icon}
+        </span>
+      )}
       <strong style={{ display: 'block', fontWeight: 700 }}>{title}</strong>
       {children}
     </div>
   )
+}
+
+// ---------------------------------------------------------------------------
+// Callout
+// Source-backed local preview over InPageAlert.
+// Evidence: docs/source-evidence/gel-components/callout/src/Callout.tsx
+// GEL Callout wraps InPageAlert with variant='callout'.
+// ---------------------------------------------------------------------------
+export interface CalloutProps extends Omit<InPageAlertProps, 'variant'> {}
+
+export function Callout(props: CalloutProps) {
+  return <InPageAlert {...props} variant='callout' />
 }
 
 // ---------------------------------------------------------------------------
