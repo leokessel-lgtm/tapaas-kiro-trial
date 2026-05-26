@@ -37,6 +37,18 @@ Batch 1 Storybook reference coverage uses source-informed local previews through
 
 Callout source evidence shows `@snsw-gel/callout` wraps `@snsw-gel/in-page-alert` with `variant='callout'`. The local preview follows that source-backed relationship only; it does not claim canonical GEL rendering.
 
+## Batch 2 TaPaaS GEL Pattern inventory
+
+Batch 2 Storybook pattern coverage composes existing GEL primitives through `src/gel.ts`. These stories are source-informed local pattern previews and Storybook guidance only. They are not production GEL exports or accessibility, WCAG, legal, privacy, policy, production, GEL or TaPaaS approval claims.
+
+| Pattern | Source evidence folders | Batch 2 status |
+|---|---|---|
+| Error summary + field errors | `error-summary`, `field`, `input`, `select`, `text-area` | Rendered pattern guidance |
+| Required / optional fields | `field`, `input` | Rendered pattern guidance |
+| Progress stepper usage | `docs/source-evidence/gel-progress-stepper` | Rendered pattern guidance |
+
+Date/DOB, manual address and accordion/disclosure patterns remain out of Batch 2 scope. They need a separate review pass because they touch more validation, address-data, content-visibility or accessibility-sensitive decisions.
+
 ## Maturity guidance
 
 | Evidence state | Suggested maturity |

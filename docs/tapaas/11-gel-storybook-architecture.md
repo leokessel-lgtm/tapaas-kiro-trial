@@ -23,7 +23,7 @@ Required wording for rendered GEL reference stories:
 | Section | Purpose | Example stories | Acceptance level |
 |---|---|---|---|
 | GEL Reference | Show GEL components as source-informed local previews through `src/gel.ts`. | `GEL Reference/Batch 1` | Story-only by default |
-| TaPaaS GEL Patterns | Show composed transaction patterns that use GEL primitives with TaPaaS guidance. | Future validation group, review group or declaration group patterns | Review-gated before manifest entry |
+| TaPaaS GEL Patterns | Show composed transaction patterns that use GEL primitives with TaPaaS guidance. | `TaPaaS GEL Patterns/Batch 2` | Story-only and review-gated before manifest entry |
 | TaPaaS Exported/Adapted Components | Show coded TaPaaS components with a stable exported contract. | Existing TaPaaS preview composites | Manifest-backed only when accepted |
 | Transaction Assemblies | Show thin transaction slices and frame previews. | MPS transaction preview stories | Manifest-backed only where transaction-critical |
 
@@ -44,6 +44,16 @@ Required wording for rendered GEL reference stories:
 | InPageAlert | Inline status and warning content | `FeedbackAndErrors` | import-as-is through `src/gel.ts` | Story-only | Use preview-only state examples. |
 | Callout | Highlighted informational content | `FeedbackAndErrors` | import-as-is through `src/gel.ts` local preview boundary | Story-only | Source shows Callout wraps InPageAlert with `variant='callout'`. |
 | ProgressStepper | Short transaction progress display | `ProgressStepperReference` | import-as-is through `src/gel.ts` | Story-only | Use bounded 4-step reference only. |
+
+## Batch 2 pattern inventory
+
+Batch 2 adds story-only TaPaaS GEL patterns. These stories compose existing GEL primitives and do not create TaPaaS wrappers, transaction refactors or manifest entries.
+
+| Pattern | TaPaaS use case | GEL primitives used | Story target | Acceptance level | Notes |
+|---|---|---|---|---|---|
+| Error summary + field error pattern | Repeatable form validation display across transaction steps | `ErrorSummary`, `Field`, `Input`, `Select`, `Textarea` | `ErrorSummaryAndFieldErrors` | Story-only, review-gated | Validation and accessibility behaviour remains review-sensitive. |
+| Required / optional field pattern | Consistent required marker, optional label and help-text treatment | `Field`, `Input` | `RequiredAndOptionalFields` | Story-only, review-gated | Content and validation wording must stay transaction-specific. |
+| Progress stepper usage pattern | Short transaction orientation for bounded flows | `ProgressStepper` | `ProgressStepperUsage` | Story-only, review-gated | Use as guidance for short flows only; longer flows need separate review. |
 
 ## Wrapper policy
 
@@ -84,6 +94,7 @@ TaPaaS pattern story:
 
 - use when GEL primitives are composed into a repeatable transaction pattern
 - keep review-gated until source parity and transaction relevance are clear
+- keep Batch 2 patterns story-only unless a later transaction-critical use case needs manifest-backed acceptance
 
 Manifest-backed acceptance:
 
@@ -107,3 +118,13 @@ Review-gated status:
 - Do not expand the acceptance manifest with primitive GEL stories.
 - Do not touch upload, autosuggest, modal-heavy or backend-like components.
 - If implementation requires a file outside the approved Batch 1 file list, stop and report the file, reason and risk before changing it.
+
+## Batch 2 guardrails
+
+- Do not refactor transaction skeletons or assemblies.
+- Do not add TaPaaS wrappers.
+- Do not add dependencies or registry configuration.
+- Do not expand the acceptance manifest with story-only pattern guidance.
+- Do not touch Date/DOB, Manual Address or Accordion/Disclosure patterns in Batch 2.
+- Use `src/gel.ts` as the only GEL component import boundary.
+- Keep pattern wording explicit: source-informed local pattern preview, Storybook guidance only, not a production GEL export, and not an accessibility, WCAG, legal, privacy, policy, production, GEL or TaPaaS approval claim.
