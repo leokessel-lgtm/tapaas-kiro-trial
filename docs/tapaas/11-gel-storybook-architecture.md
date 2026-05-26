@@ -2,7 +2,9 @@
 
 ## Status
 
-Batch 1 adds a GEL Reference Storybook layer for source-informed local previews only.
+Batch 1 added a GEL Reference Storybook layer for source-informed local previews only.
+
+Storybook audience-facing titles should describe the review surface, not the implementation batch. Batch labels stay in this document and supporting evidence notes so the project history remains traceable without making the Storybook sidebar implementation-history-focused.
 
 Current dependency boundary:
 
@@ -22,10 +24,24 @@ Required wording for rendered GEL reference stories:
 
 | Section | Purpose | Example stories | Acceptance level |
 |---|---|---|---|
-| GEL Reference | Show GEL components as source-informed local previews through `src/gel.ts`. | `GEL Reference/Batch 1` | Story-only by default |
-| TaPaaS GEL Patterns | Show composed transaction patterns that use GEL primitives with TaPaaS guidance. | `TaPaaS GEL Patterns/Batch 2` | Story-only and review-gated before manifest entry |
+| GEL Reference | Show GEL components as source-informed local previews through `src/gel.ts`. | `GEL Reference/Core Primitives` | Story-only by default |
+| TaPaaS GEL Patterns | Show composed transaction patterns that use GEL primitives with TaPaaS guidance. | `TaPaaS GEL Patterns/Form Patterns` | Story-only and review-gated before manifest entry |
 | TaPaaS Exported/Adapted Components | Show coded TaPaaS components with a stable exported contract. | Existing TaPaaS preview composites | Manifest-backed only when accepted |
 | Transaction Assemblies | Show thin transaction slices and frame previews. | MPS transaction preview stories | Manifest-backed only where transaction-critical |
+| Visual QA & Evidence | Show source intake, maturity, promotion and review-gate material for designers, owners and maintenance. | `Visual QA & Evidence/Component Intake Board` | Evidence and guidance only unless separately manifest-backed |
+
+## Target Storybook IA
+
+Use this target structure for future Storybook navigation:
+
+| Target section | Audience | Purpose | Notes |
+|---|---|---|---|
+| GEL Reference | Engineers and designers | Local source-informed reference previews for GEL primitives. | Story-only by default; no primitive-only manifest entries. |
+| TaPaaS GEL Patterns | Engineers and transaction designers | Repeatable transaction patterns composed from GEL primitives. | Story-only until a later transaction-critical pattern is explicitly accepted. |
+| TaPaaS Components | Engineers and reviewers | Manifest-backed or candidate TaPaaS exported/adapted components. | Keep acceptance IDs stable when moving stories. |
+| Transaction Frames | Designers and source owners | Bounded source-review frames for MPS and future transaction screens. | Screenshot evidence supports review only, not full parity or approval. |
+| Transaction Assemblies | Stakeholders and product reviewers | Thin mocked transaction journeys and showcase-safe preview surfaces. | Mock-only unless later backend evidence exists. |
+| Visual QA & Evidence | Designers, source owners and Codex/Kiro maintenance | Intake boards, maturity backlog, screenshot-backed review and review-gate guidance. | Evidence-only unless separately manifest-backed. |
 
 ## Batch 1 reference inventory
 
@@ -43,7 +59,7 @@ Required wording for rendered GEL reference stories:
 | ErrorSummary | Form-level error navigation | `FeedbackAndErrors` | import-as-is through `src/gel.ts` | Story-only | No compliance claim from Storybook rendering. |
 | InPageAlert | Inline status and warning content | `FeedbackAndErrors` | import-as-is through `src/gel.ts` | Story-only | Use preview-only state examples. |
 | Callout | Highlighted informational content | `FeedbackAndErrors` | import-as-is through `src/gel.ts` local preview boundary | Story-only | Source shows Callout wraps InPageAlert with `variant='callout'`. |
-| ProgressStepper | Short transaction progress display | `ProgressStepperReference` | import-as-is through `src/gel.ts` | Story-only | Use bounded 4-step reference only. |
+| ProgressStepper | Short transaction progress display | `ProgressStepperReference` export, displayed as `Progress stepper` | import-as-is through `src/gel.ts` | Story-only | Use bounded 4-step reference only. |
 
 ## Batch 2 pattern inventory
 

@@ -18,7 +18,7 @@ import {
 import './storybook.css'
 
 const meta: Meta = {
-  title: 'GEL Reference/Batch 1',
+  title: 'GEL Reference/Core Primitives',
   parameters: {
     docs: {
       description: {
@@ -164,6 +164,7 @@ export const FeedbackAndErrors: Story = {
 }
 
 export const ProgressStepperReference: Story = {
+  name: 'Progress stepper',
   render: () => (
     <div className='storybook-stack'>
       <ReferenceBoundaryNote />

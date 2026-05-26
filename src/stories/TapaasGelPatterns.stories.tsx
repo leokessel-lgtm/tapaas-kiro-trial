@@ -12,7 +12,7 @@ import {
 import './storybook.css'
 
 const meta: Meta = {
-  title: 'TaPaaS GEL Patterns/Batch 2',
+  title: 'TaPaaS GEL Patterns/Form Patterns',
   parameters: {
     docs: {
       description: {

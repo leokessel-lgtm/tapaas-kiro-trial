@@ -328,7 +328,7 @@ function candidateCount(status: CandidateStatus) {
 }
 
 const meta: Meta = {
-  title: 'TaPaaS Evidence/Component Intake Board',
+  title: 'Visual QA & Evidence/Component Intake Board',
   parameters: {
     docs: {
       description: {
