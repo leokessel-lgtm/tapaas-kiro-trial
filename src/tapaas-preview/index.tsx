@@ -661,6 +661,7 @@ function MpsReviewDeclarationPreview({ reviewNotes }: { reviewNotes: React.React
 export function MpsConfirmationFramePreview({
   title = 'Your application has been submitted',
   transactionName = 'Mobility Parking Scheme',
+  supportText = 'We have sent a confirmation email to [confirmed email address].',
   referenceNumber,
   applicationDetails,
   nextSteps,
@@ -670,6 +671,7 @@ export function MpsConfirmationFramePreview({
 }: {
   title?: string
   transactionName?: string
+  supportText?: string
   referenceNumber: string
   applicationDetails: SummaryItem[]
   nextSteps: MpsConfirmationNextStep[]
@@ -687,6 +689,7 @@ export function MpsConfirmationFramePreview({
       data-preview-boundary='preview implementation; not production-approved'
     >
       <ConfirmationHeader title={title} transactionName={transactionName} />
+      <p className='tapaas-mps-confirmation-frame__support'>{supportText}</p>
       <p className='tapaas-mps-confirmation-frame__reference'>
         Reference number: <strong>{referenceNumber}</strong>
       </p>

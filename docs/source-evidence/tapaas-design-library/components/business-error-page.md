@@ -53,3 +53,5 @@ This promotion does not add real backend routing, retry/recovery behaviour, anal
 ## Review notes
 
 Use the isolated Storybook story `Business Error Page` for catalogue review. This preview is not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.
+
+Do not visually differentiate this page further from `SystemErrorPage` until paired source and coded screenshots are captured for source node `8931:31271` and system-error node `17628:2069`.

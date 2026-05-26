@@ -8,7 +8,7 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Development-only smoke stories. Use TaPaaS Preview/Composites / MPS Review Frame - Figma Fidelity for designer-facing Figma comparison.',
+        component: 'Development-only smoke stories. Use TaPaaS Preview/Composites / MPS Review Frame - Bounded Source Review for designer-facing source-structure comparison.',
       },
     },
   },

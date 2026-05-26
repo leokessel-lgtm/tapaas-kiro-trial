@@ -165,22 +165,25 @@ const mpsApplicantDetailsValue = {
 
 const mpsApplicationDetails = [
   { label: 'Applicant', value: 'Jane Citizen' },
+  { label: 'Application', value: 'Apply for a Mobility Parking Permit' },
   { label: 'Application type', value: 'Renewal' },
+  { label: 'Lodgement date', value: '[confirmed lodgement date]' },
   { label: 'Outcome route', value: 'Submitted', helpText: 'Mock outcome only.' },
 ]
 
 const mpsNextSteps = [
   { id: 'assessment', content: 'Your mock application will be assessed within [confirmed timeframe].' },
-  { id: 'updates', content: 'You will receive updates by [confirmed contact channel].' },
+  { id: 'updates', content: 'We will contact you if we require further information or need to verify details before the real service can process the application.' },
   { id: 'issue', content: 'If approved by the real service, the permit would be issued using confirmed delivery rules.' },
+  { id: 'return', content: 'Return, receipt and related transaction instructions need service-owner confirmation.' },
 ]
 
 export const MpsReviewFrameFigmaFidelity: Story = {
-  name: 'MPS Review Frame - Figma Fidelity',
+  name: 'MPS Review Frame - Bounded Source Review',
   parameters: {
     docs: {
       description: {
-        story: 'Isolated review of the MPS `6.A - Review` frame preview. Use this story for Figma fidelity QA only; content remains mock and owner-confirmation required.',
+        story: 'Isolated bounded review of the MPS `6.A - Review` content frame. Use this story for source-structure QA only; full-frame, mobile, content and behaviour parity remain review-gated.',
       },
     },
   },
@@ -195,12 +198,12 @@ export const MpsReviewFrameFigmaFidelity: Story = {
         onExit={() => undefined}
       />
       <div className='storybook-note'>
-        <strong>MPS Review Frame - Figma fidelity</strong>
-        <p>Isolated preview of source frame 0:33185. Use this story to compare layout, callout treatment, section order, edit links, declaration placement and CTA relationship.</p>
+        <strong>MPS Review Frame - bounded source review</strong>
+        <p>Isolated preview of source frame 0:33185. Use this story to compare section order, callout treatment, edit links, declaration placement and CTA relationship only.</p>
         <ul>
           <li>Source: Mobility_Parking_Scheme.sketch 1 (Copy), page MPS Final, frame 6.A - Review, node 0:33185.</li>
-          <li>Boundary: preview-only frame pattern with mock content and unresolved edit routes.</li>
-          <li>Unresolved: 6.B review variant, final declaration wording, checkbox validation semantics and assistive-technology behaviour.</li>
+          <li>Boundary: bounded content-frame preview with mock content and unresolved edit routes; not full-page chrome, footer or mobile parity.</li>
+          <li>Unresolved: 6.B review variant, final declaration wording, checkbox state semantics, mobile source parity and assistive-technology behaviour.</li>
           <li>Review: compare edit button treatment, declaration checkboxes, required markers, CTA placement and section order.</li>
           <li>Not production-ready, WCAG-compliant, GEL-approved or TaPaaS-approved.</li>
         </ul>
@@ -252,11 +255,11 @@ export const MpsApplicantDetailsFrameFigmaFidelity: Story = {
 }
 
 export const MpsConfirmationFrameFigmaFidelity: Story = {
-  name: 'MPS Confirmation Frame - Figma Fidelity',
+  name: 'MPS Confirmation Frame - Bounded Source Review',
   parameters: {
     docs: {
       description: {
-        story: 'Isolated review of the MPS `6.A Confirmation screen` frame preview. Use this story for Figma fidelity QA only; reference, timeframe and notification content remain mock.',
+        story: 'Isolated bounded review of the MPS `6.A Confirmation screen` content frame. Use this story for source-structure QA only; mobile, tile variant, receipt and production behaviour remain review-gated.',
       },
     },
   },
@@ -266,16 +269,17 @@ export const MpsConfirmationFrameFigmaFidelity: Story = {
         referenceNumber='MPS-MOCK-000000'
         applicationDetails={mpsApplicationDetails}
         nextSteps={mpsNextSteps}
-        relatedContent={<p>Related transactions and notification wording need owner confirmation.</p>}
+        supportText='We have sent a confirmation email to jane.citizen@example.test.'
+        relatedContent={<p>Related transaction, receipt and notification wording need owner confirmation.</p>}
         onStartAgain={() => undefined}
       />
       <div className='storybook-note'>
-        <strong>MPS Confirmation Frame - Figma fidelity</strong>
-        <p>Isolated preview of source frame 0:33222. Use this story to compare confirmation heading, reference/application details, next-step content, feedback prompt and action/footer relationship.</p>
+        <strong>MPS Confirmation Frame - bounded source review</strong>
+        <p>Isolated preview of source frame 0:33222. Use this story to compare confirmation heading, reference/application details, next-step content, feedback prompt and action relationship only.</p>
         <ul>
           <li>Source: Mobility_Parking_Scheme.sketch 1 (Copy), page MPS Final, frame 6.A Confirmation screen, node 0:33222.</li>
-          <li>Boundary: preview-only frame pattern with mock reference, timeframe, notification and feedback behaviour.</li>
-          <li>Unresolved: 6.B tile variant, real reference format, final next-step wording, feedback capture and assistive-technology behaviour.</li>
+          <li>Boundary: bounded content-frame preview with mock reference, timeframe, notification and feedback behaviour; not full-page chrome, footer or mobile parity.</li>
+          <li>Unresolved: 6.B tile variant, real reference format, final next-step wording, feedback capture, mobile source parity and assistive-technology behaviour.</li>
           <li>Review: compare status heading, details layout, next-step content, feedback prompt and footer/action relationship.</li>
           <li>Not production-ready, WCAG-compliant, GEL-approved or TaPaaS-approved.</li>
         </ul>
@@ -289,7 +293,7 @@ export const ReviewAndConfirmation: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Composite transaction assembly story showing how review, fee, confirmation, summary and next-step patterns can sit together. Use the isolated MPS stories for Figma fidelity QA.',
+        story: 'Composite transaction assembly story showing how review, fee, confirmation, summary and next-step patterns can sit together. Use the isolated MPS stories for bounded source-structure QA.',
       },
     },
   },
@@ -297,7 +301,7 @@ export const ReviewAndConfirmation: Story = {
     <div className='storybook-stack'>
       <div className='storybook-note'>
         <strong>Review and Confirmation - transaction assembly</strong>
-        <p>Composite review surface for pattern relationships. For frame-by-frame Figma fidelity, use the isolated MPS Review Frame and MPS Confirmation Frame stories.</p>
+        <p>Composite review surface for pattern relationships. For bounded source-structure review, use the isolated MPS Review Frame and MPS Confirmation Frame stories.</p>
       </div>
       <MpsReviewFramePreview
         sections={mpsReviewSections}
@@ -505,7 +509,7 @@ export const MpsEndToEndTransactionAssemblyV1: Story = {
     <div className='storybook-stack'>
       <div className='storybook-note'>
         <strong>MPS End-to-End Transaction Assembly v1</strong>
-        <p>Interactive transaction skeleton for preview/story/transaction alignment review. Use isolated frame stories for strict Figma fidelity checks.</p>
+        <p>Interactive transaction skeleton for preview/story/transaction alignment review. Use isolated frame stories for bounded source-structure checks.</p>
         <ul>
           <li>Source-backed preview artefacts currently composed: applicant details/manual address frame, radio-card application type, MPS review frame, MPS confirmation frame, evidence/status summaries and mock backend error examples.</li>
           <li>Review-gated areas: privacy/start content, representative/contact frame parity, medical upload states, concession validation, declaration wording, backend recovery, identity, payment and assistive-technology behaviour.</li>

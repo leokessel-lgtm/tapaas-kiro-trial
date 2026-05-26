@@ -15,8 +15,8 @@
 | classification | `TaPaaS-specific transaction frame pattern` |
 | maturity | `coded-preview` |
 | validation_status | `build-tested` |
-| implementation_boundary | Preview-only review layout. Declaration checkbox and edit-action visual fidelity improved against node `0:33185`. The declaration evidence helper is screen-reader-only and not shown as frame content. No identity, eligibility, medical, concession, payment, legal, privacy, policy or backend logic. No legal/policy wording is confirmed. |
-| unknowns | Exact source text, final legal/privacy text, checkbox validation semantics, edit route destinations, whether all sections are mandatory, detailed `6.B` variant rules, owner-approved legal/privacy content, final accessibility behaviour with assistive technology. |
+| implementation_boundary | Preview-only bounded review content-frame layout. Declaration checkbox and edit-action visual fidelity improved against node `0:33185`, but this is not full-frame chrome/footer or mobile parity. The declaration evidence helper is screen-reader-only and not shown as frame content. No identity, eligibility, medical, concession, payment, legal, privacy, policy or backend logic. No legal/policy wording is confirmed. |
+| unknowns | Exact source text, final legal/privacy text, checkbox state and validation semantics, edit route destinations, whether all sections are mandatory, detailed `6.B` variant rules, mobile source parity, full-frame chrome/footer parity, owner-approved legal/privacy content, final accessibility behaviour with assistive technology. |
 | review_reason | `engineer`, `accessibility`, `owner`, `policy`, `privacy` |
 
 ## Suitability gate
@@ -35,3 +35,4 @@
 - Edit controls do not route. Visible text follows the Figma `Edit` button treatment, visual width/height/colour is closer to the source frame, and accessible names remain unique per review section.
 - The evidence/helper note under the declaration is kept out of the visible fidelity story and remains in evidence documentation/screen-reader description only.
 - Content is mock/placeholder only until service owners confirm wording and rules.
+- Treat the current story as bounded source review, not a full-frame parity claim.

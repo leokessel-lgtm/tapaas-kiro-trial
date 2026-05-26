@@ -48,3 +48,5 @@ The bounded implementation is the existing `TransactionSummaryCard` in `src/tapa
 ## Review notes
 
 Use the isolated Storybook story `Transaction Summary Card` for catalogue review. This preview is not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.
+
+Receipt, payment-style and notification variants are deferred. Revisit them only when a reviewed confirmation surface needs those variants and source/owner evidence confirms the required summary model.

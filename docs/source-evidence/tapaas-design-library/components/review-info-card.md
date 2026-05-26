@@ -50,3 +50,5 @@ The bounded implementation is the existing `ReviewInfoCard` in `src/tapaas-previ
 ## Review notes
 
 Use the isolated Storybook story `Review Info Card` for catalogue review. This preview is not production-ready, WCAG-compliant, GEL-approved, TaPaaS-approved, legal-approved, privacy-approved or policy-approved.
+
+Missing horizontal and emphasis variants are deferred. Revisit them only when a reviewed transaction surface needs those variants and source/owner evidence confirms the required row model.

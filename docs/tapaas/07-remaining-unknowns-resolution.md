@@ -9,6 +9,8 @@ It does not claim production readiness, WCAG compliance, GEL approval, TaPaaS ap
 | Unknown | Current resolution | Evidence now available | Still needs |
 |---|---|---|---|
 | Exact pixel parity across all desktop/mobile Figma variants | Partially resolved as Storybook smoke coverage, not exact pixel parity. | Built Storybook smoke checks have confirmed target stories render at 390px without horizontal overflow. | Live Figma screenshots for each selected node and a formal pixel comparison threshold per component. |
+| MPS confirmation `6.A` visual gaps | Patched as a bounded desktop content-frame tightening, not full-frame parity. | The preview now includes source-like confirmation support copy, flatter application details, denser next-step copy and feedback strip treatment for review against source node `0:33222`. | Designer review of the updated Storybook target, plus owner confirmation for real reference format, notification timing, receipt content, feedback behaviour and related transaction wording. |
+| MPS review full-frame parity wording | Resolved as claim reframing only. | The review story and evidence wording now describe bounded content-frame source review instead of full-frame parity. | Reviewer decision on whether global chrome, footer, progress context, declaration state semantics or mobile source parity matter for the next trial decision. |
 | Final pictogram asset parity | Resolved as explicit placeholder mapping only. | Pictograms are decorative SVG placeholders in preview code and are marked as non-essential. | Approved TaPaaS/GEL pictogram source, asset names and usage rules. |
 | Radio selected/hover/focus parity | Improved in preview and covered by targeted tests. | `RadioButtonCards` now has selected/hover/focus treatment, visible native-radio proxy control, error state, mobile stack and keyboard arrow/Home/End fallback. | Designer/accessibility review against source node `31:63988`, which remains `CONCEPT`. |
 | Final legal/privacy/declaration wording | Resolved as owner-gated placeholder content. | Legal accordion and declaration review use source-like structure with explicit placeholders. | Confirmed legal/privacy/policy copy and decision on whether required material can sit inside collapsed accordions. |
@@ -16,6 +18,10 @@ It does not claim production readiness, WCAG compliance, GEL approval, TaPaaS ap
 | Email modal fine-grain source parity | Improved for review. | Desktop and mobile Storybook stories now open the modal by default, making the dialog directly inspectable. Unit tests cover modal role, `aria-modal`, email copy, action callbacks, Escape and tab wrap. | Live Figma re-resolution of source node `9290:50392` / frame `9241:18447` and desktop/mobile screenshot comparison. |
 | MPS representative/contact details source gap | Resolved as skeleton-only until stronger evidence exists. | No standalone representative/contact details frame was found in `MPS Final`. Applicant contact details in `2.A - Personal details` `0:17387` and `2.B - Personal details - Manual address` `0:17405` can be used only as structural reference. | Dedicated representative/contact frame evidence or owner-supplied representative, nominee, authority, relationship, consent, identity and privacy rules. |
 | MPS medical evidence source inconsistency | Resolved as preview-only evidence-status pattern, not upload behaviour. | `MpsMedicalEvidenceStatusPreview` uses certificate frames `4.A - Medical certificate` `0:17316`, `4.Aa - Medical certificate uploaded` `0:17333`; report frames `4.B - Medical report` `0:17357`, `4.Ba - Medical report uploaded` `0:17370`; static file display/requirement/guidance nodes `0:17327`, `0:17344`, `0:17351`, `0:17369`, `0:17381`, `0:17384`, `0:17385`, `0:17386`. `MedicalEvidenceStep` composes this preview through a thin adapter for certificate/report and uploaded/provide-later mock states. | Owner/designer confirmation of true uploaded/not-uploaded state mapping, heading text, report section wording, file limits, file format rules, upload/remove behaviour, medical evidence wording and privacy/security handling. |
+| Business error versus system error visual differentiation | Classified as source-needed before visual patching. | Separate source nodes and coded review stories exist for business error `8931:31271` and system error `17628:2069`, but the current screenshot pack does not include paired source/coded error-page visual comparisons. | Targeted source and coded screenshots for both error templates before changing visual differentiation. |
+| Review info card missing variants | Deferred. | The current `ReviewInfoCard` preview covers stacked review playback and optional edit action. | Only revisit horizontal or emphasis variants when a reviewed transaction surface needs them. |
+| Transaction summary card missing variants | Deferred. | The current `TransactionSummaryCard` preview covers static mock summary rows and optional extra content. | Only revisit receipt, payment-style or notification variants with owner/source evidence. |
+| MPS mobile parity gaps | Classified as source-needed. | Current mobile evidence is no-overflow smoke coverage only; it is not Figma mobile parity. | Matching mobile source frames for review, confirmation, applicant details and medical evidence if mobile fidelity becomes a decision gate. |
 | Assistive technology behaviour | Partially resolved as automated semantic/focus smoke coverage. | Tests cover native radio selection, radio keyboard fallback, modal focus wrap, Escape close, dialog labelling and key frame semantics. | Manual VoiceOver/NVDA review. Automated checks must not be treated as WCAG compliance. |
 
 ## Review sequence
@@ -23,12 +29,14 @@ It does not claim production readiness, WCAG compliance, GEL approval, TaPaaS ap
 1. Radio button cards: designer/accessibility review for selected, hover, focus, error and mobile states.
 2. Email confirmation modal: compare open desktop/mobile Storybook stories with re-resolved Figma source.
 3. Pictograms: map every placeholder to an approved TaPaaS/GEL asset or keep it decorative.
-4. Pixel parity: run per-story screenshot comparison only for components intended for designer-facing fidelity review.
+4. Pixel parity: run per-story screenshot comparison only for components intended for designer-facing source review.
 5. Legal/privacy/declaration content: gather owner-approved wording and collapse/visibility decisions.
 6. Backend error routing: gather source-confirmed routing and recovery rules before adding behaviour.
 7. Representative/contact details: do not extract or align further unless a dedicated frame is found or owner evidence is supplied.
 8. Medical evidence: review `4.A`/`4.Aa` state naming, heading, file constraints and real evidence rules before any upload or validation work.
 9. Assistive technology: run manual screen-reader checks after the above visual/content decisions stabilise.
+10. Error-page differentiation: capture paired source/coded screenshots before styling `BusinessErrorPage` and `SystemErrorPage` apart.
+11. Mobile parity: gather matching mobile source frames before making mobile pixel-parity changes.
 
 ## Backend routing decision matrix
 
@@ -75,4 +83,5 @@ It does not claim production readiness, WCAG compliance, GEL approval, TaPaaS ap
 - Preview-only code and documentation.
 - No backend lookup, routing, validation, persistence, identity, eligibility, address lookup, email delivery, payment, legal, privacy or policy behaviour added.
 - MPS representative/contact details remains skeleton-only. Future extraction should proceed only if a dedicated representative/contact frame is found or owner evidence is supplied.
+- Do not continue broad extraction until the top visual risks are either patched, reframed, review-gated, source-backed, deferred or stopped.
 - Live Figma MCP re-resolution failed for some historical component nodes in the 2026-05-24 follow-up pass, so exact pixel parity and email modal fine-grain parity remain review-gated.

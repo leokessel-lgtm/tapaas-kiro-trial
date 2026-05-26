@@ -43,3 +43,5 @@ This preview is static and callback-only. It does not implement retry, recovery 
 - acceptance manifest entry: `system-error-page`
 
 No production readiness, WCAG compliance, GEL approval, TaPaaS approval, legal approval, privacy approval or policy approval is claimed.
+
+Do not visually differentiate this page further from `BusinessErrorPage` until paired source and coded screenshots are captured for source node `17628:2069` and business-error node `8931:31271`.
