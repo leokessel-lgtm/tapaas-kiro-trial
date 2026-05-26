@@ -11,18 +11,27 @@ function requireEnv(name) {
   return value;
 }
 
-export function figmaNodeUrl(fileKey, nodeId) {
-  const params = new URLSearchParams({ ids: nodeId });
-  return `https://api.figma.com/v1/files/${fileKey}/nodes?${params.toString()}`;
+export function parseFigmaNodeIds(env = process.env) {
+  const multiNodeIds = env.FIGMA_NODE_IDS?.split(",").map((item) => item.trim()).filter(Boolean) ?? [];
+  if (multiNodeIds.length > 0) {
+    return multiNodeIds;
+  }
+  return [requireEnv("FIGMA_NODE_ID")];
+}
+
+export function figmaNodeUrl(fileKey, nodeIds) {
+  const ids = Array.isArray(nodeIds) ? nodeIds : [nodeIds];
+  const encodedIds = ids.map((id) => encodeURIComponent(id)).join(",");
+  return `https://api.figma.com/v1/files/${fileKey}/nodes?ids=${encodedIds}`;
 }
 
 export async function fetchFigmaNode({
   fileKey = requireEnv("FIGMA_FILE_KEY"),
-  nodeId = requireEnv("FIGMA_NODE_ID"),
+  nodeIds = parseFigmaNodeIds(),
   token = requireEnv("FIGMA_TOKEN"),
   outputPath = DEFAULT_OUTPUT
 } = {}) {
-  const response = await fetch(figmaNodeUrl(fileKey, nodeId), {
+  const response = await fetch(figmaNodeUrl(fileKey, nodeIds), {
     headers: {
       "X-Figma-Token": token
     }
@@ -38,7 +47,7 @@ export async function fetchFigmaNode({
 
   return {
     fileKey,
-    nodeId,
+    nodeIds,
     outputPath
   };
 }
@@ -46,7 +55,7 @@ export async function fetchFigmaNode({
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   fetchFigmaNode()
     .then((result) => {
-      console.log(`Fetched Figma node ${result.nodeId} to ${result.outputPath}`);
+      console.log(`Fetched Figma node(s) ${result.nodeIds.join(", ")} to ${result.outputPath}`);
     })
     .catch((error) => {
       console.error(error.message);

@@ -77,8 +77,6 @@
 | I531:2614;634:65925;12292:6072 | Copyright and discla | Copyright and disclaimer |
 | I531:2614;634:65925;12292:6073 | Accessing informatio | Accessing information |
 | I531:2614;634:65925;12292:6075 | NSW Government | NSW Government |
-| 490:23904 | Privacy screen | Privacy screen |
-| 751:10321 | Other | Other |
 | I751:10680;306:74517;22719:1537;22710:1111 | Change language | Change language |
 | I751:10680;306:74517;22719:1537;22710:1116 | MyServiceNSW Account | Account |
 | I751:10680;306:74517;22719:1537;22710:1119 | Log out | Log out |

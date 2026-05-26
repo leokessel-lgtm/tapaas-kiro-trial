@@ -1,9 +1,10 @@
 {
   "status": "success",
-  "ranAt": "2026-05-26T12:06:55.990Z",
+  "ranAt": "2026-05-26T12:35:03.765Z",
   "inputs": {
     "fileKey": "Unknown",
     "nodeId": "Unknown",
+    "nodeIds": "Unknown",
     "fetchRequested": false
   },
   "steps": [
@@ -35,7 +36,7 @@
     {
       "name": "build review pack",
       "status": "success",
-      "detail": "track-2-spike/outputs/02-06 and track-2-spike/docs"
+      "detail": "track-2-spike/outputs/02-07 and track-2-spike/docs"
     }
   ],
   "outputs": {
@@ -47,7 +48,9 @@
     "flowMap": "track-2-spike/outputs/04-flow-map.json",
     "pseudoSchema": "track-2-spike/outputs/05-schema-candidate.pseudo.json",
     "gapReport": "track-2-spike/outputs/06-gap-report.md",
+    "nodeComparison": "track-2-spike/outputs/07-node-comparison.md",
     "engineeringQuestions": "track-2-spike/docs/engineering-review-questions.md",
+    "experimentSummary": "track-2-spike/docs/experiment-02-summary.md",
     "tomorrowSummary": "track-2-spike/docs/tomorrow-summary.md"
   }
 }

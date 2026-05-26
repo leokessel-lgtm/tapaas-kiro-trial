@@ -2,40 +2,38 @@
 
 ## Plain English Summary
 
-Track 2 now proves that we can take one selected Figma node through a local evidence pipeline:
+Experiment 2 extends Track 2 from one selected Figma node to a controlled multi-node path:
 
-Figma REST API -> local raw JSON -> normalised evidence -> Design IR -> pseudo schema/gap report
+Figma REST API -> local raw JSON -> per-node normalised evidence -> Design IR -> pseudo schema, gap report and node comparison
 
-The output is useful as a review pack for discussing how Figma evidence might become TaPaaS schema input. It is still a private R&D spike, not a production schema, not backend-connected and not approved.
+This remains a private R&D spike. It is not production schema, not backend-connected, not approved and not a TaPaaS compatibility claim.
 
-## What Was Proven
+## What Is Now Supported
 
-- The Figma REST API can fetch the selected Privacy node into local raw JSON.
-- The pipeline can reuse the local raw payload without another live fetch.
-- The normalised evidence can be converted into a Design IR with pages, sections, blocks, fields, CTAs, text and navigation hints.
-- The spike can produce a pseudo schema and gap report for engineering review.
-- The artefacts preserve node IDs, names and mapping status rather than pretending everything is certain.
+- `FIGMA_NODE_IDS` can be used for comma-separated multi-node fetches.
+- `FIGMA_NODE_ID` still works for the original single-node path.
+- Normalisation preserves per-source-node evidence: IDs, names, type, order, text, instances, likely fields, CTAs and validation evidence.
+- The review pack now includes `07-node-comparison.md`.
 
-## What Was Not Proven
+## What Still Is Not Proven
 
-- No actual TaPaaS schema compatibility has been proven.
-- No backend request or response mapping has been proven.
-- No production readiness, accessibility compliance, GEL approval or TaPaaS approval has been proven.
-- The Continue target is inferred, not confirmed by explicit prototype navigation.
-- Privacy and terms wording still need owner confirmation.
+- Actual TaPaaS schema compatibility.
+- Backend request/response mapping.
+- Production readiness or approval.
+- Accessibility, legal, privacy, security, GEL or TaPaaS approval.
+- Designer-confirmed state/page relationships.
 
 ## Specific Asks
 
 | Person | Ask |
 |---|---|
-| Glen | Share a minimal real TaPaaS schema sample and block catalogue entries for privacy notice, checkbox, validation and CTAs. |
-| Maddy | Confirm whether the selected Privacy frames and normal/error naming are the right source pattern for this spike. |
-| Michael | Confirm whether this is the right pattern to test next and who should approve the privacy/terms content before reuse. |
+| Glen | Provide a minimal schema sample and confirm how normal/error states, validation and CTAs are represented. |
+| Maddy | Provide the exact normal and error Figma node IDs to use for the controlled multi-node fetch. |
+| Michael | Confirm whether this comparison is useful enough to take into a schema-mapping conversation. |
 
 ## Current Evidence
 
-- Selected node: Privacy
-- Node type: SECTION
-- Generated Design IR pages: 2
+- Source node count: 2
+- Generated pages/states: 2
 - Production ready: false
 - Schema compatibility claim: none

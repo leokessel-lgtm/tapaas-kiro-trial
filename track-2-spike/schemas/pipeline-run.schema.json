@@ -15,6 +15,7 @@
       "properties": {
         "fileKey": { "type": "string" },
         "nodeId": { "type": "string" },
+        "nodeIds": { "type": "string" },
         "fetchRequested": { "type": "boolean" }
       },
       "additionalProperties": false

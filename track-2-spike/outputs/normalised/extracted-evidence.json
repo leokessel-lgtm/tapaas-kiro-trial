@@ -1,39 +1,1866 @@
 {
   "source": {
     "fileKey": "Unknown",
-    "nodeId": "Unknown",
-    "figmaUrl": "https://www.figma.com/file/Unknown?node-id=Unknown",
-    "extractedAt": "2026-05-26T12:06:56.006Z",
+    "nodeId": "490:60286",
+    "nodeIds": [
+      "490:60286",
+      "751:10322"
+    ],
+    "figmaUrl": "https://www.figma.com/file/Unknown?node-id=490%3A60286",
+    "extractedAt": "2026-05-26T12:35:03.783Z",
     "rawPath": "track-2-spike/outputs/raw/figma-node-response.json"
   },
   "summary": {
     "fileName": "NOD Production",
-    "nodeName": "Privacy",
-    "nodeType": "SECTION",
-    "descendantCount": 670
+    "nodeName": "0.1D_NOD",
+    "nodeType": "FRAME",
+    "descendantCount": 305
   },
+  "sourceNodes": [
+    {
+      "nodeId": "490:60286",
+      "nodeName": "0.1D_NOD",
+      "nodeType": "FRAME",
+      "sourceOrder": 1,
+      "descendantCount": 305,
+      "selectedNode": {
+        "id": "490:60286",
+        "name": "0.1D_NOD",
+        "type": "FRAME",
+        "visible": true,
+        "absoluteBoundingBox": {
+          "x": -38170,
+          "y": 16598,
+          "width": 1366,
+          "height": 1752
+        },
+        "childCount": 1,
+        "nodeTypeCounts": {
+          "BOOLEAN_OPERATION": 4,
+          "ELLIPSE": 4,
+          "FRAME": 41,
+          "GROUP": 20,
+          "INSTANCE": 73,
+          "RECTANGLE": 20,
+          "TEXT": 75,
+          "VECTOR": 68
+        }
+      },
+      "text": [
+        {
+          "id": "I531:2614;306:74517;22719:1537;22710:1111",
+          "name": "Change language",
+          "characters": "Change language"
+        },
+        {
+          "id": "I531:2614;306:74517;22719:1537;22710:1116",
+          "name": "MyServiceNSW Account",
+          "characters": "Account"
+        },
+        {
+          "id": "I531:2614;306:74517;22719:1537;22710:1119",
+          "name": "Log out",
+          "characters": "Log out"
+        },
+        {
+          "id": "I531:2614;306:74517;19249:3078;19249:2749",
+          "name": "Home",
+          "characters": "Home"
+        },
+        {
+          "id": "I531:2614;306:74517;19249:3436;19249:2752",
+          "name": "Home",
+          "characters": "Find services"
+        },
+        {
+          "id": "I531:2614;306:74517;19249:3450;19249:2752",
+          "name": "Home",
+          "characters": "Business"
+        },
+        {
+          "id": "I531:2614;306:74517;19249:3468;19249:2752",
+          "name": "Home",
+          "characters": "Find locations"
+        },
+        {
+          "id": "I531:2614;306:74517;22069:1227;11180:5055",
+          "name": "driver licence",
+          "characters": "Search"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1334:6080",
+          "name": "Page label or transaction name",
+          "characters": "Submit a notice of disposal for a vehicle"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1334:6078",
+          "name": "Page title",
+          "characters": "Privacy"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:99;1352:1",
+          "name": "Step number",
+          "characters": "1"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:99;1429:3940;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:99;1352:14",
+          "name": "Step name",
+          "characters": "Privacy"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:130;1352:91",
+          "name": "Step number",
+          "characters": "2"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:130;1429:4425;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:130;1352:89",
+          "name": "Step name",
+          "characters": "Step name"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:139;1352:91",
+          "name": "Step number",
+          "characters": "3"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:139;1429:4425;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:139;1352:89",
+          "name": "Step name",
+          "characters": "Step name"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:148;1352:91",
+          "name": "Step number",
+          "characters": "4"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:148;1429:4425;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:148;1352:89",
+          "name": "Step name",
+          "characters": "Step name"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136361;20898:2398;20299:8719;39:3174",
+          "name": "56 - 4xl",
+          "characters": "56 - 4xl"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136361;1152:3699",
+          "name": "H2 heading",
+          "characters": "Privacy collection notice"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136361;20898:2461;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136362;5257:88994",
+          "name": "Content",
+          "characters": "Service NSW delivers this service on behalf of Transport of NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal privacy statement     and Terms and Conditions and call 13 77 88."
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136364;20898:2398;20299:8719;39:3174",
+          "name": "56 - 4xl",
+          "characters": "56 - 4xl"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136364;1152:3699",
+          "name": "H2 heading",
+          "characters": "Terms and conditions"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136364;20898:2461;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136365;20898:3095;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136365;1152:3864",
+          "name": "Paragraph text",
+          "characters": "These are the Terms and Conditions    ."
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136365;20898:3164;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136367;1306:3752;6009:16024",
+          "name": "Label",
+          "characters": "I accept the terms and conditions for Notice of Disposal"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136367;1306:3752;6009:16025",
+          "name": "Clarifying text",
+          "characters": "Type something"
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532;5773:120599;20898:2398;20299:8719;39:3174",
+          "name": "56 - 4xl",
+          "characters": "56 - 4xl"
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532;5773:120599;1152:3699",
+          "name": "H2 heading",
+          "characters": "Notifications"
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532;5773:120599;20898:2461;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532;5773:120600;20898:3095;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532;5773:120600;1152:3864",
+          "name": "Paragraph text",
+          "characters": "We will send you an email with the details of your notice of disposal after you complete and submit this form online."
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532;5773:120600;20898:3164;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+          "name": "Label",
+          "characters": "Continue"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33134;5003:1629;10111:15990",
+          "name": "Label",
+          "characters": "Exit"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:12038",
+          "name": "ACKNOWLEDGEMENT OF COUNTRY",
+          "characters": "ACKNOWLEDGEMENT OF COUNTRY"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:12039",
+          "name": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present.",
+          "characters": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present. "
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11196",
+          "name": "Browse services",
+          "characters": "FIND SERVICES"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11198",
+          "name": "Births, relationship",
+          "characters": "Births, relationships and deaths"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11199",
+          "name": "Boating, fishing and",
+          "characters": "Boating, fishing and outdoors"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11200",
+          "name": "Business, industries",
+          "characters": "Business, industries and employment"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11201",
+          "name": "Concessions, rebates",
+          "characters": "Concessions, rebates and assistance"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11202",
+          "name": "Driving and transpor",
+          "characters": "Driving and transport"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11203",
+          "name": "Education",
+          "characters": "Education"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11204",
+          "name": "Health and care",
+          "characters": "Emergencies and natural disasters"
+        },
+        {
+          "id": "I531:2614;634:65925;25394:686",
+          "name": "Health and care",
+          "characters": "Environment, parks and wildlife"
+        },
+        {
+          "id": "I531:2614;634:65925;25394:545",
+          "name": "Health and care",
+          "characters": "Health and care"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11205",
+          "name": "Housing and property",
+          "characters": "Housing and property"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11206",
+          "name": "Legal and Police ser",
+          "characters": "Legal and Police services"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11208",
+          "name": "Service NSW",
+          "characters": "SERVICE NSW"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11210",
+          "name": "About us",
+          "characters": "About us"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11211",
+          "name": "Jobs at Service NSW",
+          "characters": "Jobs at Service NSW"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11212",
+          "name": "News",
+          "characters": "News"
+        },
+        {
+          "id": "I531:2614;634:65925;25394:749",
+          "name": "News",
+          "characters": "Service status"
+        },
+        {
+          "id": "I531:2614;634:65925;25394:762",
+          "name": "News",
+          "characters": "Performance dashboard"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11213",
+          "name": "Download the Service",
+          "characters": "Download the Service NSW app"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11214",
+          "name": "Help in your languag",
+          "characters": "Help in your language"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11217",
+          "name": "CONTACT",
+          "characters": "CONTACT"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11219",
+          "name": "Contact form",
+          "characters": "Contact form"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11220",
+          "name": "Phone 13 77 88",
+          "characters": "Phone 13 77 88"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11221",
+          "name": "Find a Service NSW l",
+          "characters": "Find a Service NSW location"
+        },
+        {
+          "id": "I531:2614;634:65925;12251:11222",
+          "name": "Find a NSW Governmen",
+          "characters": "Find a NSW Government agency"
+        },
+        {
+          "id": "I531:2614;634:65925;12292:6069",
+          "name": "Accessibility",
+          "characters": "Accessibility"
+        },
+        {
+          "id": "I531:2614;634:65925;12292:6070",
+          "name": "Privacy",
+          "characters": "Privacy"
+        },
+        {
+          "id": "I531:2614;634:65925;12292:6071",
+          "name": "Terms of use",
+          "characters": "Terms of use"
+        },
+        {
+          "id": "I531:2614;634:65925;12292:6072",
+          "name": "Copyright and discla",
+          "characters": "Copyright and disclaimer"
+        },
+        {
+          "id": "I531:2614;634:65925;12292:6073",
+          "name": "Accessing informatio",
+          "characters": "Accessing information"
+        },
+        {
+          "id": "I531:2614;634:65925;12292:6075",
+          "name": "NSW Government",
+          "characters": "NSW Government"
+        }
+      ],
+      "instances": [
+        {
+          "id": "531:2614",
+          "name": "NOD Privacy",
+          "componentId": "531:1976"
+        },
+        {
+          "id": "I531:2614;306:74517",
+          "name": "Header",
+          "componentId": "531:1008"
+        },
+        {
+          "id": "I531:2614;306:74517;22719:1537",
+          "name": ".Nav links",
+          "componentId": "531:643"
+        },
+        {
+          "id": "I531:2614;306:74517;22719:1537;22710:1110",
+          "name": "System icons / Globe",
+          "componentId": "531:632"
+        },
+        {
+          "id": "I531:2614;306:74517;22719:1537;22710:1112",
+          "name": "System icons/ChevronDown",
+          "componentId": "531:636"
+        },
+        {
+          "id": "I531:2614;306:74517;22719:1537;22710:1115",
+          "name": "System icons/Avatar",
+          "componentId": "531:638"
+        },
+        {
+          "id": "I531:2614;306:74517;22719:1537;22710:1118",
+          "name": "System icons/SignOut",
+          "componentId": "531:640"
+        },
+        {
+          "id": "I531:2614;306:74517;33524:2106",
+          "name": "NSW Gov + Service NSW (Coupled)",
+          "componentId": "531:943"
+        },
+        {
+          "id": "I531:2614;306:74517;33524:2106;1156:1866",
+          "name": "NSW Government logo",
+          "componentId": "531:671"
+        },
+        {
+          "id": "I531:2614;306:74517;33524:2106;1156:2195",
+          "name": "Service NSW logo",
+          "componentId": "531:876"
+        },
+        {
+          "id": "I531:2614;306:74517;19249:3078",
+          "name": ".Main Navigation Links",
+          "componentId": "531:961"
+        },
+        {
+          "id": "I531:2614;306:74517;19249:3436",
+          "name": ".Main Navigation Links",
+          "componentId": "531:959"
+        },
+        {
+          "id": "I531:2614;306:74517;19249:3450",
+          "name": ".Main Navigation Links",
+          "componentId": "531:959"
+        },
+        {
+          "id": "I531:2614;306:74517;19249:3468",
+          "name": ".Main Navigation Links",
+          "componentId": "531:959"
+        },
+        {
+          "id": "I531:2614;306:74517;22069:1227",
+          "name": "Search bar",
+          "componentId": "531:994"
+        },
+        {
+          "id": "I531:2614;306:74517;22069:1227;11180:5054",
+          "name": "System icons/ Search",
+          "componentId": "531:970"
+        },
+        {
+          "id": "I531:2614;306:74518",
+          "name": "Privacy page",
+          "componentId": "531:1828"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125",
+          "name": "2. Form header",
+          "componentId": "531:1349"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731",
+          "name": "2.1 Progress stepper",
+          "componentId": "531:1106"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:99",
+          "name": ".Step 1",
+          "componentId": "531:1056"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:99;1429:3940",
+          "name": "24 - m space",
+          "componentId": "531:1043"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:99;1429:3940;1340:4011",
+          "name": "Incorrect size indicator",
+          "componentId": "531:1041"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:130",
+          "name": ".Step 2",
+          "componentId": "531:1096"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:130;1429:4425",
+          "name": "24 - m space",
+          "componentId": "531:1043"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:130;1429:4425;1340:4011",
+          "name": "Incorrect size indicator",
+          "componentId": "531:1041"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:139",
+          "name": ".Step 3",
+          "componentId": "531:1096"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:139;1429:4425",
+          "name": "24 - m space",
+          "componentId": "531:1043"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:139;1429:4425;1340:4011",
+          "name": "Incorrect size indicator",
+          "componentId": "531:1041"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:148",
+          "name": ".Step 4",
+          "componentId": "531:1096"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:148;1429:4425",
+          "name": "24 - m space",
+          "componentId": "531:1043"
+        },
+        {
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:148;1429:4425;1340:4011",
+          "name": "Incorrect size indicator",
+          "componentId": "531:1041"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122",
+          "name": "3. Privacy and legal states",
+          "componentId": "531:584"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136361",
+          "name": "H2 heading",
+          "componentId": "531:281"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136361;20898:2398",
+          "name": "56 - 4xl space",
+          "componentId": "531:257"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136361;20898:2398;20299:8719",
+          "name": "56 - 4xl space",
+          "componentId": "531:255"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136361;20898:2461",
+          "name": "24 - lg space",
+          "componentId": "531:267"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136361;20898:2461;20299:8656",
+          "name": "24 - lg space",
+          "componentId": "531:265"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136362",
+          "name": "3.1Privacy collection notice",
+          "componentId": "531:236"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136362;5257:88993",
+          "name": "Pictograms/Secure",
+          "componentId": "531:214"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136362;9911:8795",
+          "name": "System icons/ExternalLink",
+          "componentId": "531:228"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136364",
+          "name": "H2 heading",
+          "componentId": "531:281"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136364;20898:2398",
+          "name": "56 - 4xl space",
+          "componentId": "531:257"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136364;20898:2398;20299:8719",
+          "name": "56 - 4xl space",
+          "componentId": "531:255"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136364;20898:2461",
+          "name": "24 - lg space",
+          "componentId": "531:267"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136364;20898:2461;20299:8656",
+          "name": "24 - lg space",
+          "componentId": "531:265"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136365",
+          "name": "Body",
+          "componentId": "531:290"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136365;20898:3095",
+          "name": "24 - lg space",
+          "componentId": "531:267"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136365;20898:3095;20299:8656",
+          "name": "24 - lg space",
+          "componentId": "531:265"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136365;20898:3164",
+          "name": "32 - xl space",
+          "componentId": "531:271"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136365;20898:3164;20299:8662",
+          "name": "32 - xl space",
+          "componentId": "531:269"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;9926:14091",
+          "name": "System icons/ExternalLink",
+          "componentId": "531:228"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136367",
+          "name": "Checkbox single",
+          "componentId": "531:415"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136367;1306:3752",
+          "name": ".Checkbox with clarifying text",
+          "componentId": "531:185"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136367;1306:3752;6009:16022",
+          "name": ".Checkbox",
+          "componentId": "531:144"
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532",
+          "name": "4. Notifications",
+          "componentId": "531:1785"
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532;5773:120599",
+          "name": "H2 heading",
+          "componentId": "531:281"
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532;5773:120599;20898:2398",
+          "name": "56 - 4xl space",
+          "componentId": "531:257"
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532;5773:120599;20898:2398;20299:8719",
+          "name": "56 - 4xl space",
+          "componentId": "531:255"
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532;5773:120599;20898:2461",
+          "name": "24 - lg space",
+          "componentId": "531:267"
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532;5773:120599;20898:2461;20299:8656",
+          "name": "24 - lg space",
+          "componentId": "531:265"
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532;5773:120600",
+          "name": "Body",
+          "componentId": "531:290"
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532;5773:120600;20898:3095",
+          "name": "24 - lg space",
+          "componentId": "531:267"
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532;5773:120600;20898:3095;20299:8656",
+          "name": "24 - lg space",
+          "componentId": "531:265"
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532;5773:120600;20898:3164",
+          "name": "32 - xl space",
+          "componentId": "531:271"
+        },
+        {
+          "id": "I531:2614;306:74518;5773:139532;5773:120600;20898:3164;20299:8662",
+          "name": "32 - xl space",
+          "componentId": "531:269"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33134",
+          "name": "CTA Buttons",
+          "componentId": "531:1726"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33134;6519:42670",
+          "name": "Primary CTA",
+          "componentId": "531:1710"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33134;6519:42670;6519:38830",
+          "name": "Continue button",
+          "componentId": "531:1529"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33134;5003:1629",
+          "name": "Exit button",
+          "componentId": "531:1609"
+        },
+        {
+          "id": "I531:2614;634:65925",
+          "name": "02. Components/Navigation/Header/Desktop/Default Copy",
+          "componentId": "531:1870"
+        },
+        {
+          "id": "I531:2614;634:65925;12292:6076",
+          "name": "System icons/ExternalLink",
+          "componentId": "531:228"
+        },
+        {
+          "id": "531:2615",
+          "name": "System icons/ExternalLink",
+          "componentId": "531:1986"
+        },
+        {
+          "id": "531:2616",
+          "name": "System icons/ExternalLink",
+          "componentId": "531:1986"
+        }
+      ],
+      "likelyFields": [
+        {
+          "id": "I531:2614;306:74518;10872:28125;1334:6080",
+          "name": "Page label or transaction name",
+          "characters": "Submit a notice of disposal for a vehicle",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136362;5257:88994",
+          "name": "Content",
+          "characters": "Service NSW delivers this service on behalf of Transport of NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal privacy statement     and Terms and Conditions and call 13 77 88.",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136364;1152:3699",
+          "name": "H2 heading",
+          "characters": "Terms and conditions",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136365;1152:3864",
+          "name": "Paragraph text",
+          "characters": "These are the Terms and Conditions    .",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33122;5773:136367;1306:3752;6009:16024",
+          "name": "Label",
+          "characters": "I accept the terms and conditions for Notice of Disposal",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+          "name": "Label",
+          "characters": "Continue",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I531:2614;306:74518;5311:33134;5003:1629;10111:15990",
+          "name": "Label",
+          "characters": "Exit",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I531:2614;634:65925;12292:6071",
+          "name": "Terms of use",
+          "characters": "Terms of use",
+          "mappingStatus": "inferred"
+        }
+      ],
+      "likelyCtas": [
+        {
+          "id": "I531:2614;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+          "name": "Label",
+          "characters": "Continue",
+          "mappingStatus": "inferred"
+        }
+      ],
+      "likelyValidationEvidence": []
+    },
+    {
+      "nodeId": "751:10322",
+      "nodeName": "2.4_NOD",
+      "nodeType": "FRAME",
+      "sourceOrder": 2,
+      "descendantCount": 361,
+      "selectedNode": {
+        "id": "751:10322",
+        "name": "2.4_NOD",
+        "type": "FRAME",
+        "visible": true,
+        "absoluteBoundingBox": {
+          "x": -38168,
+          "y": 26214.673828125,
+          "width": 1366,
+          "height": 2044
+        },
+        "childCount": 3,
+        "nodeTypeCounts": {
+          "BOOLEAN_OPERATION": 6,
+          "ELLIPSE": 12,
+          "FRAME": 55,
+          "GROUP": 22,
+          "INSTANCE": 86,
+          "RECTANGLE": 26,
+          "TEXT": 87,
+          "VECTOR": 67
+        }
+      },
+      "text": [
+        {
+          "id": "I751:10680;306:74517;22719:1537;22710:1111",
+          "name": "Change language",
+          "characters": "Change language"
+        },
+        {
+          "id": "I751:10680;306:74517;22719:1537;22710:1116",
+          "name": "MyServiceNSW Account",
+          "characters": "Account"
+        },
+        {
+          "id": "I751:10680;306:74517;22719:1537;22710:1119",
+          "name": "Log out",
+          "characters": "Log out"
+        },
+        {
+          "id": "I751:10680;306:74517;19249:3078;19249:2749",
+          "name": "Home",
+          "characters": "Home"
+        },
+        {
+          "id": "I751:10680;306:74517;19249:3436;19249:2752",
+          "name": "Home",
+          "characters": "Find services"
+        },
+        {
+          "id": "I751:10680;306:74517;19249:3450;19249:2752",
+          "name": "Home",
+          "characters": "Business"
+        },
+        {
+          "id": "I751:10680;306:74517;19249:3468;19249:2752",
+          "name": "Home",
+          "characters": "Find locations"
+        },
+        {
+          "id": "I751:10680;306:74517;22069:1227;11180:5055",
+          "name": "driver licence",
+          "characters": "Search"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1334:6080",
+          "name": "Page label or transaction name",
+          "characters": "Submit a notice of disposal for a vehicle"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1334:6078",
+          "name": "Page title",
+          "characters": "Privacy"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:99;1352:1",
+          "name": "Step number",
+          "characters": "1"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:99;1429:3940;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:99;1352:14",
+          "name": "Step name",
+          "characters": "Privacy"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:130;1352:91",
+          "name": "Step number",
+          "characters": "2"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:130;1429:4425;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:130;1352:89",
+          "name": "Step name",
+          "characters": "Step name"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:139;1352:91",
+          "name": "Step number",
+          "characters": "3"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:139;1429:4425;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:139;1352:89",
+          "name": "Step name",
+          "characters": "Step name"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:148;1352:91",
+          "name": "Step number",
+          "characters": "4"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:148;1429:4425;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:148;1352:89",
+          "name": "Step name",
+          "characters": "Step name"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2380",
+          "name": "Title",
+          "characters": "Your form has an error"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2381",
+          "name": "copy",
+          "characters": "Check the error:"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
+          "name": "Text",
+          "characters": "Accept the Terms and conditions to continue."
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3906;1332:3994",
+          "name": "Text",
+          "characters": "Type something"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3928;1332:3994",
+          "name": "Text",
+          "characters": "Type something"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3931;1332:4000",
+          "name": "Text",
+          "characters": "Type something"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:4018;1332:3985",
+          "name": "Text",
+          "characters": "Type something"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:4021;1332:3985",
+          "name": "Text",
+          "characters": "Type something"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;11195:11327;1332:3985",
+          "name": "Text",
+          "characters": "Type something"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;11195:11331;1332:3985",
+          "name": "Text",
+          "characters": "Type something"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;11195:11341;1332:3985",
+          "name": "Text",
+          "characters": "Type something"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49236;20898:2398;20299:8719;39:3174",
+          "name": "56 - 4xl",
+          "characters": "56 - 4xl"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
+          "name": "H2 heading",
+          "characters": "Privacy collection notice"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49236;20898:2461;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49237;5257:89021",
+          "name": "Content",
+          "characters": "For more information about how we collect, use and disclose your personal information, including who we may disclose it to, check our Privacy Collection notice.    "
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49239;20898:2398;20299:8719;39:3174",
+          "name": "56 - 4xl",
+          "characters": "56 - 4xl"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49239;1152:3699",
+          "name": "H2 heading",
+          "characters": "Terms and conditions"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49239;20898:2461;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49241;20898:3095;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49241;1152:3864",
+          "name": "Paragraph text",
+          "characters": "These are the Terms and Conditions     ."
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49241;20898:3164;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12988",
+          "name": "Label",
+          "characters": "I accept the terms and conditions for Notice of Disposal."
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12989",
+          "name": "Clarifying text",
+          "characters": "Type something"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
+          "name": "Validation",
+          "characters": "Accept the Terms and conditions to continue."
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532;5773:120599;20898:2398;20299:8719;39:3174",
+          "name": "56 - 4xl",
+          "characters": "56 - 4xl"
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532;5773:120599;1152:3699",
+          "name": "H2 heading",
+          "characters": "Notifications"
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532;5773:120599;20898:2461;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532;5773:120600;20898:3095;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532;5773:120600;1152:3864",
+          "name": "Paragraph text",
+          "characters": "We will send you an email with the details of your notice of disposal after you complete and submit this form online."
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532;5773:120600;20898:3164;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+          "name": "Label",
+          "characters": "Continue"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33134;5003:1629;10111:15990",
+          "name": "Label",
+          "characters": "Exit"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:12038",
+          "name": "ACKNOWLEDGEMENT OF COUNTRY",
+          "characters": "ACKNOWLEDGEMENT OF COUNTRY"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:12039",
+          "name": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present.",
+          "characters": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present. "
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11196",
+          "name": "Browse services",
+          "characters": "FIND SERVICES"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11198",
+          "name": "Births, relationship",
+          "characters": "Births, relationships and deaths"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11199",
+          "name": "Boating, fishing and",
+          "characters": "Boating, fishing and outdoors"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11200",
+          "name": "Business, industries",
+          "characters": "Business, industries and employment"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11201",
+          "name": "Concessions, rebates",
+          "characters": "Concessions, rebates and assistance"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11202",
+          "name": "Driving and transpor",
+          "characters": "Driving and transport"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11203",
+          "name": "Education",
+          "characters": "Education"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11204",
+          "name": "Health and care",
+          "characters": "Emergencies and natural disasters"
+        },
+        {
+          "id": "I751:10680;634:65925;25394:686",
+          "name": "Health and care",
+          "characters": "Environment, parks and wildlife"
+        },
+        {
+          "id": "I751:10680;634:65925;25394:545",
+          "name": "Health and care",
+          "characters": "Health and care"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11205",
+          "name": "Housing and property",
+          "characters": "Housing and property"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11206",
+          "name": "Legal and Police ser",
+          "characters": "Legal and Police services"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11208",
+          "name": "Service NSW",
+          "characters": "SERVICE NSW"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11210",
+          "name": "About us",
+          "characters": "About us"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11211",
+          "name": "Jobs at Service NSW",
+          "characters": "Jobs at Service NSW"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11212",
+          "name": "News",
+          "characters": "News"
+        },
+        {
+          "id": "I751:10680;634:65925;25394:749",
+          "name": "News",
+          "characters": "Service status"
+        },
+        {
+          "id": "I751:10680;634:65925;25394:762",
+          "name": "News",
+          "characters": "Performance dashboard"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11213",
+          "name": "Download the Service",
+          "characters": "Download the Service NSW app"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11214",
+          "name": "Help in your languag",
+          "characters": "Help in your language"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11217",
+          "name": "CONTACT",
+          "characters": "CONTACT"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11219",
+          "name": "Contact form",
+          "characters": "Contact form"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11220",
+          "name": "Phone 13 77 88",
+          "characters": "Phone 13 77 88"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11221",
+          "name": "Find a Service NSW l",
+          "characters": "Find a Service NSW location"
+        },
+        {
+          "id": "I751:10680;634:65925;12251:11222",
+          "name": "Find a NSW Governmen",
+          "characters": "Find a NSW Government agency"
+        },
+        {
+          "id": "I751:10680;634:65925;12292:6069",
+          "name": "Accessibility",
+          "characters": "Accessibility"
+        },
+        {
+          "id": "I751:10680;634:65925;12292:6070",
+          "name": "Privacy",
+          "characters": "Privacy"
+        },
+        {
+          "id": "I751:10680;634:65925;12292:6071",
+          "name": "Terms of use",
+          "characters": "Terms of use"
+        },
+        {
+          "id": "I751:10680;634:65925;12292:6072",
+          "name": "Copyright and discla",
+          "characters": "Copyright and disclaimer"
+        },
+        {
+          "id": "I751:10680;634:65925;12292:6073",
+          "name": "Accessing informatio",
+          "characters": "Accessing information"
+        },
+        {
+          "id": "I751:10680;634:65925;12292:6075",
+          "name": "NSW Government",
+          "characters": "NSW Government"
+        }
+      ],
+      "instances": [
+        {
+          "id": "751:10680",
+          "name": "NOD Privacy",
+          "componentId": "531:1976"
+        },
+        {
+          "id": "I751:10680;306:74517",
+          "name": "Header",
+          "componentId": "531:1008"
+        },
+        {
+          "id": "I751:10680;306:74517;22719:1537",
+          "name": ".Nav links",
+          "componentId": "531:643"
+        },
+        {
+          "id": "I751:10680;306:74517;22719:1537;22710:1110",
+          "name": "System icons / Globe",
+          "componentId": "531:632"
+        },
+        {
+          "id": "I751:10680;306:74517;22719:1537;22710:1112",
+          "name": "System icons/ChevronDown",
+          "componentId": "531:636"
+        },
+        {
+          "id": "I751:10680;306:74517;22719:1537;22710:1115",
+          "name": "System icons/Avatar",
+          "componentId": "531:638"
+        },
+        {
+          "id": "I751:10680;306:74517;22719:1537;22710:1118",
+          "name": "System icons/SignOut",
+          "componentId": "531:640"
+        },
+        {
+          "id": "I751:10680;306:74517;33524:2106",
+          "name": "NSW Gov + Service NSW (Coupled)",
+          "componentId": "531:943"
+        },
+        {
+          "id": "I751:10680;306:74517;33524:2106;1156:1866",
+          "name": "NSW Government logo",
+          "componentId": "531:671"
+        },
+        {
+          "id": "I751:10680;306:74517;33524:2106;1156:2195",
+          "name": "Service NSW logo",
+          "componentId": "531:876"
+        },
+        {
+          "id": "I751:10680;306:74517;19249:3078",
+          "name": ".Main Navigation Links",
+          "componentId": "531:961"
+        },
+        {
+          "id": "I751:10680;306:74517;19249:3436",
+          "name": ".Main Navigation Links",
+          "componentId": "531:959"
+        },
+        {
+          "id": "I751:10680;306:74517;19249:3450",
+          "name": ".Main Navigation Links",
+          "componentId": "531:959"
+        },
+        {
+          "id": "I751:10680;306:74517;19249:3468",
+          "name": ".Main Navigation Links",
+          "componentId": "531:959"
+        },
+        {
+          "id": "I751:10680;306:74517;22069:1227",
+          "name": "Search bar",
+          "componentId": "531:994"
+        },
+        {
+          "id": "I751:10680;306:74517;22069:1227;11180:5054",
+          "name": "System icons/ Search",
+          "componentId": "531:970"
+        },
+        {
+          "id": "I751:10680;306:74518",
+          "name": "Privacy page",
+          "componentId": "531:1828"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125",
+          "name": "2. Form header",
+          "componentId": "531:1349"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731",
+          "name": "2.1 Progress stepper",
+          "componentId": "531:1106"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:99",
+          "name": ".Step 1",
+          "componentId": "531:1056"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:99;1429:3940",
+          "name": "24 - m space",
+          "componentId": "531:1043"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:99;1429:3940;1340:4011",
+          "name": "Incorrect size indicator",
+          "componentId": "531:1041"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:130",
+          "name": ".Step 2",
+          "componentId": "531:1096"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:130;1429:4425",
+          "name": "24 - m space",
+          "componentId": "531:1043"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:130;1429:4425;1340:4011",
+          "name": "Incorrect size indicator",
+          "componentId": "531:1041"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:139",
+          "name": ".Step 3",
+          "componentId": "531:1096"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:139;1429:4425",
+          "name": "24 - m space",
+          "componentId": "531:1043"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:139;1429:4425;1340:4011",
+          "name": "Incorrect size indicator",
+          "componentId": "531:1041"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:148",
+          "name": ".Step 4",
+          "componentId": "531:1096"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:148;1429:4425",
+          "name": "24 - m space",
+          "componentId": "531:1043"
+        },
+        {
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:148;1429:4425;1340:4011",
+          "name": "Incorrect size indicator",
+          "componentId": "531:1041"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122",
+          "name": "3. Privacy and legal states",
+          "componentId": "531:1390"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278",
+          "name": "Error summary",
+          "componentId": "531:579"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634",
+          "name": "Validation summary",
+          "componentId": "531:524"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2378",
+          "name": "System icons/NotificationError",
+          "componentId": "531:382"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201",
+          "name": "List",
+          "componentId": "531:443"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898",
+          "name": "List individual",
+          "componentId": "531:424"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3906",
+          "name": "List individual",
+          "componentId": "531:431"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3928",
+          "name": "List individual",
+          "componentId": "531:431"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3931",
+          "name": "List individual",
+          "componentId": "531:438"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:4018",
+          "name": "List individual",
+          "componentId": "531:424"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:4021",
+          "name": "List individual",
+          "componentId": "531:424"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;11195:11327",
+          "name": "List individual",
+          "componentId": "531:424"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;11195:11331",
+          "name": "List individual",
+          "componentId": "531:424"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;11195:11341",
+          "name": "List individual",
+          "componentId": "531:424"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49236",
+          "name": "H2 heading",
+          "componentId": "531:281"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49236;20898:2398",
+          "name": "56 - 4xl space",
+          "componentId": "531:257"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49236;20898:2398;20299:8719",
+          "name": "56 - 4xl space",
+          "componentId": "531:255"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49236;20898:2461",
+          "name": "24 - lg space",
+          "componentId": "531:267"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49236;20898:2461;20299:8656",
+          "name": "24 - lg space",
+          "componentId": "531:265"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49237",
+          "name": ".Privacy card",
+          "componentId": "531:1372"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49237;5257:89020",
+          "name": "Pictograms/Secure",
+          "componentId": "531:1360"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49237;9911:18029",
+          "name": "System icons/ExternalLink",
+          "componentId": "531:228"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49239",
+          "name": "H2 heading",
+          "componentId": "531:281"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49239;20898:2398",
+          "name": "56 - 4xl space",
+          "componentId": "531:257"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49239;20898:2398;20299:8719",
+          "name": "56 - 4xl space",
+          "componentId": "531:255"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49239;20898:2461",
+          "name": "24 - lg space",
+          "componentId": "531:267"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49239;20898:2461;20299:8656",
+          "name": "24 - lg space",
+          "componentId": "531:265"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49241",
+          "name": "Body",
+          "componentId": "531:290"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49241;20898:3095",
+          "name": "24 - lg space",
+          "componentId": "531:267"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49241;20898:3095;20299:8656",
+          "name": "24 - lg space",
+          "componentId": "531:265"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49241;20898:3164",
+          "name": "32 - xl space",
+          "componentId": "531:271"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49241;20898:3164;20299:8662",
+          "name": "32 - xl space",
+          "componentId": "531:269"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49242",
+          "name": "Checkbox single",
+          "componentId": "531:417"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250",
+          "name": "Checkbox with clarifying text",
+          "componentId": "531:363"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12986",
+          "name": ".Checkbox",
+          "componentId": "531:328"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242",
+          "name": "Validation or error message",
+          "componentId": "531:404"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;2096:7032",
+          "name": "System icons/NotificationError",
+          "componentId": "531:382"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;9926:15413",
+          "name": "System icons/ExternalLink",
+          "componentId": "531:228"
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532",
+          "name": "4. Notifications",
+          "componentId": "531:1785"
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532;5773:120599",
+          "name": "H2 heading",
+          "componentId": "531:281"
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532;5773:120599;20898:2398",
+          "name": "56 - 4xl space",
+          "componentId": "531:257"
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532;5773:120599;20898:2398;20299:8719",
+          "name": "56 - 4xl space",
+          "componentId": "531:255"
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532;5773:120599;20898:2461",
+          "name": "24 - lg space",
+          "componentId": "531:267"
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532;5773:120599;20898:2461;20299:8656",
+          "name": "24 - lg space",
+          "componentId": "531:265"
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532;5773:120600",
+          "name": "Body",
+          "componentId": "531:290"
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532;5773:120600;20898:3095",
+          "name": "24 - lg space",
+          "componentId": "531:267"
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532;5773:120600;20898:3095;20299:8656",
+          "name": "24 - lg space",
+          "componentId": "531:265"
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532;5773:120600;20898:3164",
+          "name": "32 - xl space",
+          "componentId": "531:271"
+        },
+        {
+          "id": "I751:10680;306:74518;5773:139532;5773:120600;20898:3164;20299:8662",
+          "name": "32 - xl space",
+          "componentId": "531:269"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33134",
+          "name": "CTA Buttons",
+          "componentId": "531:1726"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33134;6519:42670",
+          "name": "Primary CTA",
+          "componentId": "531:1710"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830",
+          "name": "Continue button",
+          "componentId": "531:1529"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33134;5003:1629",
+          "name": "Exit button",
+          "componentId": "531:1609"
+        },
+        {
+          "id": "I751:10680;634:65925",
+          "name": "02. Components/Navigation/Header/Desktop/Default Copy",
+          "componentId": "531:1870"
+        },
+        {
+          "id": "I751:10680;634:65925;12292:6076",
+          "name": "System icons/ExternalLink",
+          "componentId": "531:228"
+        }
+      ],
+      "likelyFields": [
+        {
+          "id": "I751:10680;306:74518;10872:28125;1334:6080",
+          "name": "Page label or transaction name",
+          "characters": "Submit a notice of disposal for a vehicle",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
+          "name": "Text",
+          "characters": "Accept the Terms and conditions to continue.",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49239;1152:3699",
+          "name": "H2 heading",
+          "characters": "Terms and conditions",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49241;1152:3864",
+          "name": "Paragraph text",
+          "characters": "These are the Terms and Conditions     .",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12988",
+          "name": "Label",
+          "characters": "I accept the terms and conditions for Notice of Disposal.",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
+          "name": "Validation",
+          "characters": "Accept the Terms and conditions to continue.",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+          "name": "Label",
+          "characters": "Continue",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33134;5003:1629;10111:15990",
+          "name": "Label",
+          "characters": "Exit",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I751:10680;634:65925;12292:6071",
+          "name": "Terms of use",
+          "characters": "Terms of use",
+          "mappingStatus": "inferred"
+        }
+      ],
+      "likelyCtas": [
+        {
+          "id": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+          "name": "Label",
+          "characters": "Continue",
+          "mappingStatus": "inferred"
+        }
+      ],
+      "likelyValidationEvidence": [
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2380",
+          "name": "Title",
+          "characters": "Your form has an error",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2381",
+          "name": "copy",
+          "characters": "Check the error:",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
+          "name": "Text",
+          "characters": "Accept the Terms and conditions to continue.",
+          "mappingStatus": "inferred"
+        },
+        {
+          "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
+          "name": "Validation",
+          "characters": "Accept the Terms and conditions to continue.",
+          "mappingStatus": "inferred"
+        }
+      ]
+    }
+  ],
   "selectedNode": {
-    "id": "490:23897",
-    "name": "Privacy",
-    "type": "SECTION",
+    "id": "490:60286",
+    "name": "0.1D_NOD",
+    "type": "FRAME",
     "visible": true,
     "absoluteBoundingBox": {
-      "x": -38270,
-      "y": 16424,
-      "width": 1578,
-      "height": 14680
+      "x": -38170,
+      "y": 16598,
+      "width": 1366,
+      "height": 1752
     },
-    "childCount": 3,
+    "childCount": 1,
     "nodeTypeCounts": {
-      "BOOLEAN_OPERATION": 10,
-      "ELLIPSE": 16,
-      "FRAME": 96,
-      "GROUP": 42,
-      "INSTANCE": 159,
-      "RECTANGLE": 46,
-      "SECTION": 2,
-      "TEXT": 164,
-      "VECTOR": 135
+      "BOOLEAN_OPERATION": 4,
+      "ELLIPSE": 4,
+      "FRAME": 41,
+      "GROUP": 20,
+      "INSTANCE": 73,
+      "RECTANGLE": 20,
+      "TEXT": 75,
+      "VECTOR": 68
     }
   },
   "text": [
@@ -411,16 +2238,6 @@
       "id": "I531:2614;634:65925;12292:6075",
       "name": "NSW Government",
       "characters": "NSW Government"
-    },
-    {
-      "id": "490:23904",
-      "name": "Privacy screen",
-      "characters": "Privacy screen"
-    },
-    {
-      "id": "751:10321",
-      "name": "Other",
-      "characters": "Other"
     },
     {
       "id": "I751:10680;306:74517;22719:1537;22710:1111",

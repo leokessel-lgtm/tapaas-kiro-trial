@@ -19,11 +19,36 @@
       "properties": {
         "fileKey": { "type": "string" },
         "nodeId": { "type": "string" },
+        "nodeIds": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
         "figmaUrl": { "type": "string" },
         "extractedAt": { "type": "string" },
         "rawPath": { "type": "string" }
       },
       "additionalProperties": false
+    },
+    "sourceNodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["nodeId", "nodeName", "nodeType", "sourceOrder", "text", "instances"],
+        "properties": {
+          "nodeId": { "type": "string" },
+          "nodeName": { "type": "string" },
+          "nodeType": { "type": "string" },
+          "sourceOrder": { "type": "integer" },
+          "descendantCount": { "type": "integer" },
+          "selectedNode": { "type": "object" },
+          "text": { "type": "array" },
+          "instances": { "type": "array" },
+          "likelyFields": { "type": "array" },
+          "likelyCtas": { "type": "array" },
+          "likelyValidationEvidence": { "type": "array" }
+        },
+        "additionalProperties": true
+      }
     },
     "summary": {
       "type": "object",

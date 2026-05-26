@@ -43,7 +43,7 @@ export async function runPipeline({ fetchRequested = false } = {}) {
     steps.push(step("build docs", "success", "track-2-spike/outputs/docs"));
 
     await buildReviewPack({ evidencePath: paths.evidence, rawPath: paths.raw });
-    steps.push(step("build review pack", "success", "track-2-spike/outputs/02-06 and track-2-spike/docs"));
+    steps.push(step("build review pack", "success", "track-2-spike/outputs/02-07 and track-2-spike/docs"));
 
     const run = {
       status: "success",
@@ -51,6 +51,7 @@ export async function runPipeline({ fetchRequested = false } = {}) {
       inputs: {
         fileKey: process.env.FIGMA_FILE_KEY ?? "Unknown",
         nodeId: process.env.FIGMA_NODE_ID ?? "Unknown",
+        nodeIds: process.env.FIGMA_NODE_IDS ?? process.env.FIGMA_NODE_ID ?? "Unknown",
         fetchRequested
       },
       steps,
@@ -63,7 +64,9 @@ export async function runPipeline({ fetchRequested = false } = {}) {
         flowMap: "track-2-spike/outputs/04-flow-map.json",
         pseudoSchema: "track-2-spike/outputs/05-schema-candidate.pseudo.json",
         gapReport: "track-2-spike/outputs/06-gap-report.md",
+        nodeComparison: "track-2-spike/outputs/07-node-comparison.md",
         engineeringQuestions: "track-2-spike/docs/engineering-review-questions.md",
+        experimentSummary: "track-2-spike/docs/experiment-02-summary.md",
         tomorrowSummary: "track-2-spike/docs/tomorrow-summary.md"
       }
     };
@@ -77,6 +80,7 @@ export async function runPipeline({ fetchRequested = false } = {}) {
       inputs: {
         fileKey: process.env.FIGMA_FILE_KEY ?? "Unknown",
         nodeId: process.env.FIGMA_NODE_ID ?? "Unknown",
+        nodeIds: process.env.FIGMA_NODE_IDS ?? process.env.FIGMA_NODE_ID ?? "Unknown",
         fetchRequested
       },
       steps: [...steps, step("pipeline", "failed", error.message)],
@@ -89,7 +93,9 @@ export async function runPipeline({ fetchRequested = false } = {}) {
         flowMap: "track-2-spike/outputs/04-flow-map.json",
         pseudoSchema: "track-2-spike/outputs/05-schema-candidate.pseudo.json",
         gapReport: "track-2-spike/outputs/06-gap-report.md",
+        nodeComparison: "track-2-spike/outputs/07-node-comparison.md",
         engineeringQuestions: "track-2-spike/docs/engineering-review-questions.md",
+        experimentSummary: "track-2-spike/docs/experiment-02-summary.md",
         tomorrowSummary: "track-2-spike/docs/tomorrow-summary.md"
       }
     };

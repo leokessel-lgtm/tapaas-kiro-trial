@@ -3,719 +3,771 @@
   "requiresTaPaaSEngineeringReview": true,
   "schemaCompatibilityClaim": "none",
   "source": "figma-rest-api-private-rd-spike",
-  "generatedAt": "2026-05-26T12:06:56.017Z",
-  "audience": [
-    "Glen",
-    "Maddy",
-    "Michael"
-  ],
+  "experiment": "02-controlled-multi-node",
+  "generatedAt": "2026-05-26T12:35:03.787Z",
   "sourceEvidence": {
     "fileKey": "Unknown",
-    "nodeId": "490:23897",
-    "sourceLink": null,
+    "nodeIds": [
+      "490:60286",
+      "751:10322"
+    ],
     "rawPath": "track-2-spike/outputs/raw/figma-node-response.json",
     "normalisedPath": "track-2-spike/outputs/normalised/extracted-evidence.json",
-    "selectedNodeName": "Privacy",
-    "selectedNodeType": "SECTION",
-    "descendantCount": 670
+    "sourceNodeCount": 2
   },
   "boundaries": {
-    "visualEvidence": "Figma node hierarchy, text nodes, instances and captured component interactions.",
-    "transactionIntent": "Inferred only where page/frame names, visible labels or validation text support a transaction interpretation.",
+    "visualEvidence": "Figma node hierarchy, text, instances and simple extraction hints.",
+    "transactionIntent": "Inferred only from labels, frame names and visible validation/error text.",
     "blockTypes": "All TaPaaS block types are candidates until confirmed against Glen's schema sample and the TaPaaS block catalogue."
   },
+  "sourceNodes": [
+    {
+      "nodeId": "490:60286",
+      "nodeName": "0.1D_NOD",
+      "nodeType": "FRAME",
+      "sourceOrder": 1,
+      "evidenceLink": null,
+      "mappingStatus": "verified"
+    },
+    {
+      "nodeId": "751:10322",
+      "nodeName": "2.4_NOD",
+      "nodeType": "FRAME",
+      "sourceOrder": 2,
+      "evidenceLink": null,
+      "mappingStatus": "verified"
+    }
+  ],
   "pages": [
     {
-      "id": "page-1",
+      "id": "source-1",
       "sourceNodeId": "490:60286",
       "sourceName": "0.1D_NOD",
       "sourceType": "FRAME",
-      "order": 1,
-      "role": "privacy-page-state",
+      "sourceOrder": 1,
+      "role": "normal-or-acknowledgement-state",
       "mappingStatus": "verified",
       "visualEvidence": {
-        "frameName": "0.1D_NOD",
+        "nodeName": "0.1D_NOD",
         "nodeType": "FRAME",
-        "childCount": 1,
+        "descendantCount": 305,
         "textNodeCount": 75,
-        "instanceCount": 73,
-        "interactions": [
-          {
-            "sourceNodeId": "I531:2614;306:74518;5311:33122;5773:136367;1306:3752;6009:16022",
-            "sourceName": ".Checkbox",
-            "sourceType": "INSTANCE",
-            "trigger": "ON_CLICK",
-            "actions": [
-              {
-                "type": "NODE",
-                "destinationId": "531:133",
-                "navigation": "CHANGE_TO"
-              }
-            ]
-          },
-          {
-            "sourceNodeId": "I531:2614;306:74518;5311:33134;6519:42670;6519:38830",
-            "sourceName": "Continue button",
-            "sourceType": "INSTANCE",
-            "trigger": "ON_HOVER",
-            "actions": [
-              {
-                "type": "NODE",
-                "destinationId": "531:1560",
-                "navigation": "CHANGE_TO"
-              }
-            ]
-          }
-        ]
+        "instanceCount": 73
       },
       "transactionIntent": {
         "status": "inferred",
         "name": "Submit a notice of disposal for a vehicle",
         "pageTitle": "Privacy",
-        "stepName": "Privacy",
-        "purpose": "Collect acknowledgement of privacy and terms information before continuing."
+        "purpose": "Candidate normal state for the selected transaction page."
       },
       "sections": [
         {
-          "id": "page-1-section-main",
+          "id": "source-1-section-main",
           "sourceNodeId": "I531:2614;306:74518;5311:33122;5773:136361;1152:3699",
           "sourceName": "H2 heading",
           "sourceType": "TEXT",
           "mappingStatus": "verified",
-          "intent": "privacy notice content",
+          "intent": "candidate transaction content section",
           "blocks": [
             {
-              "id": "page-1-block-privacy-notice",
+              "id": "source-1-block-content",
               "blockTypeCandidate": "PrivacyNoticeCandidate",
               "sourceNodeId": "I531:2614;306:74518;5311:33122;5773:136361;1152:3699",
               "sourceName": "H2 heading",
               "mappingStatus": "verified",
               "visualEvidence": [
                 {
-                  "nodeId": "I531:2614;306:74518;5311:33122;5773:136361;1152:3699",
-                  "nodeName": "H2 heading",
-                  "value": "Privacy collection notice",
-                  "mappingStatus": "verified"
+                  "id": "I531:2614;306:74518;5311:33122;5773:136361;1152:3699",
+                  "name": "H2 heading",
+                  "characters": "Privacy collection notice"
                 },
                 {
-                  "nodeId": "I531:2614;306:74518;5311:33122;5773:136362;5257:88994",
-                  "nodeName": "Content",
-                  "value": "Service NSW delivers this service on behalf of Transport of NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal privacy statement     and Terms and Conditions and call 13 77 88.",
-                  "mappingStatus": "verified"
+                  "id": "I531:2614;306:74518;5311:33122;5773:136362;5257:88994",
+                  "name": "Content",
+                  "characters": "Service NSW delivers this service on behalf of Transport of NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal privacy statement     and Terms and Conditions and call 13 77 88."
+                },
+                {
+                  "id": "I531:2614;306:74518;5311:33122;5773:136364;1152:3699",
+                  "name": "H2 heading",
+                  "characters": "Terms and conditions"
+                },
+                {
+                  "id": "I531:2614;306:74518;5311:33122;5773:136365;1152:3864",
+                  "name": "Paragraph text",
+                  "characters": "These are the Terms and Conditions    ."
+                },
+                {
+                  "id": "I531:2614;306:74518;5311:33122;5773:136367;1306:3752;6009:16024",
+                  "name": "Label",
+                  "characters": "I accept the terms and conditions for Notice of Disposal"
                 }
               ],
-              "transactionIntent": "Display privacy collection notice and related content before form continuation."
+              "transactionIntent": "Display privacy and terms content. Candidate only until TaPaaS block catalogue confirms fit."
             },
             {
-              "id": "page-1-block-consent-checkbox",
+              "id": "source-1-block-fields",
               "blockTypeCandidate": "CheckboxFieldCandidate",
-              "sourceNodeId": "I531:2614;306:74518;5311:33122;5773:136367;1306:3752;6009:16024",
-              "sourceName": "Label",
-              "mappingStatus": "verified",
+              "sourceNodeId": "I531:2614;306:74518;10872:28125;1334:6080",
+              "sourceName": "Page label or transaction name",
+              "mappingStatus": "inferred",
               "fields": [
                 {
-                  "id": "page-1-field-terms-acknowledgement",
+                  "id": "source-1-field-1",
+                  "sourceNodeId": "I531:2614;306:74518;10872:28125;1334:6080",
+                  "sourceName": "Page label or transaction name",
+                  "label": "Submit a notice of disposal for a vehicle",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-1-field-2",
+                  "sourceNodeId": "I531:2614;306:74518;5311:33122;5773:136362;5257:88994",
+                  "sourceName": "Content",
+                  "label": "Service NSW delivers this service on behalf of Transport of NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal privacy statement     and Terms and Conditions and call 13 77 88.",
+                  "inputTypeCandidate": "checkbox",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-1-field-3",
+                  "sourceNodeId": "I531:2614;306:74518;5311:33122;5773:136364;1152:3699",
+                  "sourceName": "H2 heading",
+                  "label": "Terms and conditions",
+                  "inputTypeCandidate": "checkbox",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-1-field-4",
+                  "sourceNodeId": "I531:2614;306:74518;5311:33122;5773:136365;1152:3864",
+                  "sourceName": "Paragraph text",
+                  "label": "These are the Terms and Conditions    .",
+                  "inputTypeCandidate": "checkbox",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-1-field-5",
                   "sourceNodeId": "I531:2614;306:74518;5311:33122;5773:136367;1306:3752;6009:16024",
                   "sourceName": "Label",
                   "label": "I accept the terms and conditions for Notice of Disposal",
                   "inputTypeCandidate": "checkbox",
-                  "required": "inferred",
-                  "validation": {
-                    "message": "Unknown",
-                    "sourceNodeId": null,
-                    "mappingStatus": "unknown"
-                  },
-                  "mappingStatus": "verified"
-                }
-              ]
-            },
-            {
-              "id": "page-1-block-notification-text",
-              "blockTypeCandidate": "ContentTextCandidate",
-              "sourceNodeId": "I531:2614;306:74518;5773:139532;5773:120600;1152:3864",
-              "sourceName": "Paragraph text",
-              "mappingStatus": "verified",
-              "textContent": [
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
                 {
-                  "nodeId": "I531:2614;306:74518;5773:139532;5773:120600;1152:3864",
-                  "nodeName": "Paragraph text",
-                  "value": "We will send you an email with the details of your notice of disposal after you complete and submit this form online.",
-                  "mappingStatus": "verified"
+                  "id": "source-1-field-6",
+                  "sourceNodeId": "I531:2614;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+                  "sourceName": "Label",
+                  "label": "Continue",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-1-field-7",
+                  "sourceNodeId": "I531:2614;306:74518;5311:33134;5003:1629;10111:15990",
+                  "sourceName": "Label",
+                  "label": "Exit",
+                  "inputTypeCandidate": "unknown",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-1-field-8",
+                  "sourceNodeId": "I531:2614;634:65925;12292:6071",
+                  "sourceName": "Terms of use",
+                  "label": "Terms of use",
+                  "inputTypeCandidate": "checkbox",
+                  "required": "unknown",
+                  "mappingStatus": "inferred"
                 }
-              ]
+              ],
+              "validation": []
             }
           ]
         }
       ],
       "ctas": [
         {
-          "id": "page-1-cta-continue",
+          "id": "source-1-cta-1",
           "label": "Continue",
           "sourceNodeId": "I531:2614;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
           "sourceName": "Label",
           "mappingStatus": "verified",
           "navigationHint": {
-            "targetPage": "next transaction step",
-            "status": "inferred",
-            "evidence": "Raw Figma interactions show component variant hover/change-to behaviour only, not explicit page-to-page prototype navigation."
+            "targetPage": "Unknown",
+            "status": "unknown",
+            "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."
           }
         }
       ],
       "textContent": [
         {
-          "nodeId": "I531:2614;306:74517;22719:1537;22710:1111",
-          "nodeName": "Change language",
-          "value": "Change language",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74517;22719:1537;22710:1111",
+          "name": "Change language",
+          "characters": "Change language"
         },
         {
-          "nodeId": "I531:2614;306:74517;22719:1537;22710:1116",
-          "nodeName": "MyServiceNSW Account",
-          "value": "Account",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74517;22719:1537;22710:1116",
+          "name": "MyServiceNSW Account",
+          "characters": "Account"
         },
         {
-          "nodeId": "I531:2614;306:74517;22719:1537;22710:1119",
-          "nodeName": "Log out",
-          "value": "Log out",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74517;22719:1537;22710:1119",
+          "name": "Log out",
+          "characters": "Log out"
         },
         {
-          "nodeId": "I531:2614;306:74517;19249:3078;19249:2749",
-          "nodeName": "Home",
-          "value": "Home",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74517;19249:3078;19249:2749",
+          "name": "Home",
+          "characters": "Home"
         },
         {
-          "nodeId": "I531:2614;306:74517;19249:3436;19249:2752",
-          "nodeName": "Home",
-          "value": "Find services",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74517;19249:3436;19249:2752",
+          "name": "Home",
+          "characters": "Find services"
         },
         {
-          "nodeId": "I531:2614;306:74517;19249:3450;19249:2752",
-          "nodeName": "Home",
-          "value": "Business",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74517;19249:3450;19249:2752",
+          "name": "Home",
+          "characters": "Business"
         },
         {
-          "nodeId": "I531:2614;306:74517;19249:3468;19249:2752",
-          "nodeName": "Home",
-          "value": "Find locations",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74517;19249:3468;19249:2752",
+          "name": "Home",
+          "characters": "Find locations"
         },
         {
-          "nodeId": "I531:2614;306:74517;22069:1227;11180:5055",
-          "nodeName": "driver licence",
-          "value": "Search",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74517;22069:1227;11180:5055",
+          "name": "driver licence",
+          "characters": "Search"
         },
         {
-          "nodeId": "I531:2614;306:74518;10872:28125;1334:6080",
-          "nodeName": "Page label or transaction name",
-          "value": "Submit a notice of disposal for a vehicle",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;10872:28125;1334:6080",
+          "name": "Page label or transaction name",
+          "characters": "Submit a notice of disposal for a vehicle"
         },
         {
-          "nodeId": "I531:2614;306:74518;10872:28125;1334:6078",
-          "nodeName": "Page title",
-          "value": "Privacy",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;10872:28125;1334:6078",
+          "name": "Page title",
+          "characters": "Privacy"
         },
         {
-          "nodeId": "I531:2614;306:74518;10872:28125;1355:7731;1352:99;1352:1",
-          "nodeName": "Step number",
-          "value": "1",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:99;1352:1",
+          "name": "Step number",
+          "characters": "1"
         },
         {
-          "nodeId": "I531:2614;306:74518;10872:28125;1355:7731;1352:99;1429:3940;1330:2164",
-          "nodeName": "24 - m",
-          "value": "24 - m",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:99;1429:3940;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
         },
         {
-          "nodeId": "I531:2614;306:74518;10872:28125;1355:7731;1352:99;1352:14",
-          "nodeName": "Step name",
-          "value": "Privacy",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:99;1352:14",
+          "name": "Step name",
+          "characters": "Privacy"
         },
         {
-          "nodeId": "I531:2614;306:74518;10872:28125;1355:7731;1352:130;1352:91",
-          "nodeName": "Step number",
-          "value": "2",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:130;1352:91",
+          "name": "Step number",
+          "characters": "2"
         },
         {
-          "nodeId": "I531:2614;306:74518;10872:28125;1355:7731;1352:130;1429:4425;1330:2164",
-          "nodeName": "24 - m",
-          "value": "24 - m",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:130;1429:4425;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
         },
         {
-          "nodeId": "I531:2614;306:74518;10872:28125;1355:7731;1352:130;1352:89",
-          "nodeName": "Step name",
-          "value": "Step name",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:130;1352:89",
+          "name": "Step name",
+          "characters": "Step name"
         },
         {
-          "nodeId": "I531:2614;306:74518;10872:28125;1355:7731;1352:139;1352:91",
-          "nodeName": "Step number",
-          "value": "3",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:139;1352:91",
+          "name": "Step number",
+          "characters": "3"
         },
         {
-          "nodeId": "I531:2614;306:74518;10872:28125;1355:7731;1352:139;1429:4425;1330:2164",
-          "nodeName": "24 - m",
-          "value": "24 - m",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:139;1429:4425;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
         },
         {
-          "nodeId": "I531:2614;306:74518;10872:28125;1355:7731;1352:139;1352:89",
-          "nodeName": "Step name",
-          "value": "Step name",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:139;1352:89",
+          "name": "Step name",
+          "characters": "Step name"
         },
         {
-          "nodeId": "I531:2614;306:74518;10872:28125;1355:7731;1352:148;1352:91",
-          "nodeName": "Step number",
-          "value": "4",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:148;1352:91",
+          "name": "Step number",
+          "characters": "4"
         },
         {
-          "nodeId": "I531:2614;306:74518;10872:28125;1355:7731;1352:148;1429:4425;1330:2164",
-          "nodeName": "24 - m",
-          "value": "24 - m",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:148;1429:4425;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
         },
         {
-          "nodeId": "I531:2614;306:74518;10872:28125;1355:7731;1352:148;1352:89",
-          "nodeName": "Step name",
-          "value": "Step name",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;10872:28125;1355:7731;1352:148;1352:89",
+          "name": "Step name",
+          "characters": "Step name"
         },
         {
-          "nodeId": "I531:2614;306:74518;5311:33122;5773:136361;20898:2398;20299:8719;39:3174",
-          "nodeName": "56 - 4xl",
-          "value": "56 - 4xl",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5311:33122;5773:136361;20898:2398;20299:8719;39:3174",
+          "name": "56 - 4xl",
+          "characters": "56 - 4xl"
         },
         {
-          "nodeId": "I531:2614;306:74518;5311:33122;5773:136361;1152:3699",
-          "nodeName": "H2 heading",
-          "value": "Privacy collection notice",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5311:33122;5773:136361;1152:3699",
+          "name": "H2 heading",
+          "characters": "Privacy collection notice"
         },
         {
-          "nodeId": "I531:2614;306:74518;5311:33122;5773:136361;20898:2461;20299:8656;39:3202",
-          "nodeName": "24 - lg",
-          "value": "24 - lg",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5311:33122;5773:136361;20898:2461;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
         },
         {
-          "nodeId": "I531:2614;306:74518;5311:33122;5773:136362;5257:88994",
-          "nodeName": "Content",
-          "value": "Service NSW delivers this service on behalf of Transport of NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal privacy statement     and Terms and Conditions and call 13 77 88.",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5311:33122;5773:136362;5257:88994",
+          "name": "Content",
+          "characters": "Service NSW delivers this service on behalf of Transport of NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal privacy statement     and Terms and Conditions and call 13 77 88."
         },
         {
-          "nodeId": "I531:2614;306:74518;5311:33122;5773:136364;20898:2398;20299:8719;39:3174",
-          "nodeName": "56 - 4xl",
-          "value": "56 - 4xl",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5311:33122;5773:136364;20898:2398;20299:8719;39:3174",
+          "name": "56 - 4xl",
+          "characters": "56 - 4xl"
         },
         {
-          "nodeId": "I531:2614;306:74518;5311:33122;5773:136364;1152:3699",
-          "nodeName": "H2 heading",
-          "value": "Terms and conditions",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5311:33122;5773:136364;1152:3699",
+          "name": "H2 heading",
+          "characters": "Terms and conditions"
         },
         {
-          "nodeId": "I531:2614;306:74518;5311:33122;5773:136364;20898:2461;20299:8656;39:3202",
-          "nodeName": "24 - lg",
-          "value": "24 - lg",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5311:33122;5773:136364;20898:2461;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
         },
         {
-          "nodeId": "I531:2614;306:74518;5311:33122;5773:136365;20898:3095;20299:8656;39:3202",
-          "nodeName": "24 - lg",
-          "value": "24 - lg",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5311:33122;5773:136365;20898:3095;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
         },
         {
-          "nodeId": "I531:2614;306:74518;5311:33122;5773:136365;1152:3864",
-          "nodeName": "Paragraph text",
-          "value": "These are the Terms and Conditions    .",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5311:33122;5773:136365;1152:3864",
+          "name": "Paragraph text",
+          "characters": "These are the Terms and Conditions    ."
         },
         {
-          "nodeId": "I531:2614;306:74518;5311:33122;5773:136365;20898:3164;20299:8662;39:3195",
-          "nodeName": "32 - xl",
-          "value": "32 - xl",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5311:33122;5773:136365;20898:3164;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
         },
         {
-          "nodeId": "I531:2614;306:74518;5311:33122;5773:136367;1306:3752;6009:16024",
-          "nodeName": "Label",
-          "value": "I accept the terms and conditions for Notice of Disposal",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5311:33122;5773:136367;1306:3752;6009:16024",
+          "name": "Label",
+          "characters": "I accept the terms and conditions for Notice of Disposal"
         },
         {
-          "nodeId": "I531:2614;306:74518;5311:33122;5773:136367;1306:3752;6009:16025",
-          "nodeName": "Clarifying text",
-          "value": "Type something",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5311:33122;5773:136367;1306:3752;6009:16025",
+          "name": "Clarifying text",
+          "characters": "Type something"
         },
         {
-          "nodeId": "I531:2614;306:74518;5773:139532;5773:120599;20898:2398;20299:8719;39:3174",
-          "nodeName": "56 - 4xl",
-          "value": "56 - 4xl",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5773:139532;5773:120599;20898:2398;20299:8719;39:3174",
+          "name": "56 - 4xl",
+          "characters": "56 - 4xl"
         },
         {
-          "nodeId": "I531:2614;306:74518;5773:139532;5773:120599;1152:3699",
-          "nodeName": "H2 heading",
-          "value": "Notifications",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5773:139532;5773:120599;1152:3699",
+          "name": "H2 heading",
+          "characters": "Notifications"
         },
         {
-          "nodeId": "I531:2614;306:74518;5773:139532;5773:120599;20898:2461;20299:8656;39:3202",
-          "nodeName": "24 - lg",
-          "value": "24 - lg",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5773:139532;5773:120599;20898:2461;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
         },
         {
-          "nodeId": "I531:2614;306:74518;5773:139532;5773:120600;20898:3095;20299:8656;39:3202",
-          "nodeName": "24 - lg",
-          "value": "24 - lg",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5773:139532;5773:120600;20898:3095;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
         },
         {
-          "nodeId": "I531:2614;306:74518;5773:139532;5773:120600;1152:3864",
-          "nodeName": "Paragraph text",
-          "value": "We will send you an email with the details of your notice of disposal after you complete and submit this form online.",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5773:139532;5773:120600;1152:3864",
+          "name": "Paragraph text",
+          "characters": "We will send you an email with the details of your notice of disposal after you complete and submit this form online."
         },
         {
-          "nodeId": "I531:2614;306:74518;5773:139532;5773:120600;20898:3164;20299:8662;39:3195",
-          "nodeName": "32 - xl",
-          "value": "32 - xl",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5773:139532;5773:120600;20898:3164;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
         },
         {
-          "nodeId": "I531:2614;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
-          "nodeName": "Label",
-          "value": "Continue",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+          "name": "Label",
+          "characters": "Continue"
         },
         {
-          "nodeId": "I531:2614;306:74518;5311:33134;5003:1629;10111:15990",
-          "nodeName": "Label",
-          "value": "Exit",
-          "mappingStatus": "verified"
+          "id": "I531:2614;306:74518;5311:33134;5003:1629;10111:15990",
+          "name": "Label",
+          "characters": "Exit"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:12038",
-          "nodeName": "ACKNOWLEDGEMENT OF COUNTRY",
-          "value": "ACKNOWLEDGEMENT OF COUNTRY",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:12038",
+          "name": "ACKNOWLEDGEMENT OF COUNTRY",
+          "characters": "ACKNOWLEDGEMENT OF COUNTRY"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:12039",
-          "nodeName": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present.",
-          "value": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present.",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:12039",
+          "name": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present.",
+          "characters": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present. "
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11196",
-          "nodeName": "Browse services",
-          "value": "FIND SERVICES",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11196",
+          "name": "Browse services",
+          "characters": "FIND SERVICES"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11198",
-          "nodeName": "Births, relationship",
-          "value": "Births, relationships and deaths",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11198",
+          "name": "Births, relationship",
+          "characters": "Births, relationships and deaths"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11199",
-          "nodeName": "Boating, fishing and",
-          "value": "Boating, fishing and outdoors",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11199",
+          "name": "Boating, fishing and",
+          "characters": "Boating, fishing and outdoors"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11200",
-          "nodeName": "Business, industries",
-          "value": "Business, industries and employment",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11200",
+          "name": "Business, industries",
+          "characters": "Business, industries and employment"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11201",
-          "nodeName": "Concessions, rebates",
-          "value": "Concessions, rebates and assistance",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11201",
+          "name": "Concessions, rebates",
+          "characters": "Concessions, rebates and assistance"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11202",
-          "nodeName": "Driving and transpor",
-          "value": "Driving and transport",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11202",
+          "name": "Driving and transpor",
+          "characters": "Driving and transport"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11203",
-          "nodeName": "Education",
-          "value": "Education",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11203",
+          "name": "Education",
+          "characters": "Education"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11204",
-          "nodeName": "Health and care",
-          "value": "Emergencies and natural disasters",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11204",
+          "name": "Health and care",
+          "characters": "Emergencies and natural disasters"
         },
         {
-          "nodeId": "I531:2614;634:65925;25394:686",
-          "nodeName": "Health and care",
-          "value": "Environment, parks and wildlife",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;25394:686",
+          "name": "Health and care",
+          "characters": "Environment, parks and wildlife"
         },
         {
-          "nodeId": "I531:2614;634:65925;25394:545",
-          "nodeName": "Health and care",
-          "value": "Health and care",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;25394:545",
+          "name": "Health and care",
+          "characters": "Health and care"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11205",
-          "nodeName": "Housing and property",
-          "value": "Housing and property",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11205",
+          "name": "Housing and property",
+          "characters": "Housing and property"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11206",
-          "nodeName": "Legal and Police ser",
-          "value": "Legal and Police services",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11206",
+          "name": "Legal and Police ser",
+          "characters": "Legal and Police services"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11208",
-          "nodeName": "Service NSW",
-          "value": "SERVICE NSW",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11208",
+          "name": "Service NSW",
+          "characters": "SERVICE NSW"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11210",
-          "nodeName": "About us",
-          "value": "About us",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11210",
+          "name": "About us",
+          "characters": "About us"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11211",
-          "nodeName": "Jobs at Service NSW",
-          "value": "Jobs at Service NSW",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11211",
+          "name": "Jobs at Service NSW",
+          "characters": "Jobs at Service NSW"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11212",
-          "nodeName": "News",
-          "value": "News",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11212",
+          "name": "News",
+          "characters": "News"
         },
         {
-          "nodeId": "I531:2614;634:65925;25394:749",
-          "nodeName": "News",
-          "value": "Service status",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;25394:749",
+          "name": "News",
+          "characters": "Service status"
         },
         {
-          "nodeId": "I531:2614;634:65925;25394:762",
-          "nodeName": "News",
-          "value": "Performance dashboard",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;25394:762",
+          "name": "News",
+          "characters": "Performance dashboard"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11213",
-          "nodeName": "Download the Service",
-          "value": "Download the Service NSW app",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11213",
+          "name": "Download the Service",
+          "characters": "Download the Service NSW app"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11214",
-          "nodeName": "Help in your languag",
-          "value": "Help in your language",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11214",
+          "name": "Help in your languag",
+          "characters": "Help in your language"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11217",
-          "nodeName": "CONTACT",
-          "value": "CONTACT",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11217",
+          "name": "CONTACT",
+          "characters": "CONTACT"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11219",
-          "nodeName": "Contact form",
-          "value": "Contact form",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11219",
+          "name": "Contact form",
+          "characters": "Contact form"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11220",
-          "nodeName": "Phone 13 77 88",
-          "value": "Phone 13 77 88",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11220",
+          "name": "Phone 13 77 88",
+          "characters": "Phone 13 77 88"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11221",
-          "nodeName": "Find a Service NSW l",
-          "value": "Find a Service NSW location",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11221",
+          "name": "Find a Service NSW l",
+          "characters": "Find a Service NSW location"
         },
         {
-          "nodeId": "I531:2614;634:65925;12251:11222",
-          "nodeName": "Find a NSW Governmen",
-          "value": "Find a NSW Government agency",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12251:11222",
+          "name": "Find a NSW Governmen",
+          "characters": "Find a NSW Government agency"
         },
         {
-          "nodeId": "I531:2614;634:65925;12292:6069",
-          "nodeName": "Accessibility",
-          "value": "Accessibility",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12292:6069",
+          "name": "Accessibility",
+          "characters": "Accessibility"
         },
         {
-          "nodeId": "I531:2614;634:65925;12292:6070",
-          "nodeName": "Privacy",
-          "value": "Privacy",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12292:6070",
+          "name": "Privacy",
+          "characters": "Privacy"
         },
         {
-          "nodeId": "I531:2614;634:65925;12292:6071",
-          "nodeName": "Terms of use",
-          "value": "Terms of use",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12292:6071",
+          "name": "Terms of use",
+          "characters": "Terms of use"
         },
         {
-          "nodeId": "I531:2614;634:65925;12292:6072",
-          "nodeName": "Copyright and discla",
-          "value": "Copyright and disclaimer",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12292:6072",
+          "name": "Copyright and discla",
+          "characters": "Copyright and disclaimer"
         },
         {
-          "nodeId": "I531:2614;634:65925;12292:6073",
-          "nodeName": "Accessing informatio",
-          "value": "Accessing information",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12292:6073",
+          "name": "Accessing informatio",
+          "characters": "Accessing information"
         },
         {
-          "nodeId": "I531:2614;634:65925;12292:6075",
-          "nodeName": "NSW Government",
-          "value": "NSW Government",
-          "mappingStatus": "verified"
+          "id": "I531:2614;634:65925;12292:6075",
+          "name": "NSW Government",
+          "characters": "NSW Government"
         }
       ]
     },
     {
-      "id": "page-2",
+      "id": "source-2",
       "sourceNodeId": "751:10322",
       "sourceName": "2.4_NOD",
       "sourceType": "FRAME",
-      "order": 2,
-      "role": "supporting-frame",
+      "sourceOrder": 2,
+      "role": "validation-error-state",
       "mappingStatus": "verified",
       "visualEvidence": {
-        "frameName": "2.4_NOD",
+        "nodeName": "2.4_NOD",
         "nodeType": "FRAME",
-        "childCount": 3,
+        "descendantCount": 361,
         "textNodeCount": 87,
-        "instanceCount": 86,
-        "interactions": [
-          {
-            "sourceNodeId": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830",
-            "sourceName": "Continue button",
-            "sourceType": "INSTANCE",
-            "trigger": "ON_HOVER",
-            "actions": [
-              {
-                "type": "NODE",
-                "destinationId": "531:1560",
-                "navigation": "CHANGE_TO"
-              }
-            ]
-          }
-        ]
+        "instanceCount": 86
       },
       "transactionIntent": {
         "status": "inferred",
         "name": "Submit a notice of disposal for a vehicle",
         "pageTitle": "Privacy",
-        "stepName": "Privacy",
-        "purpose": "Show the privacy step after mandatory terms acknowledgement validation fails."
+        "purpose": "Candidate validation/error state for the selected transaction page."
       },
       "sections": [
         {
-          "id": "page-2-section-main",
+          "id": "source-2-section-main",
           "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
           "sourceName": "H2 heading",
           "sourceType": "TEXT",
           "mappingStatus": "verified",
-          "intent": "privacy notice content",
+          "intent": "candidate transaction content section",
           "blocks": [
             {
-              "id": "page-2-block-privacy-notice",
+              "id": "source-2-block-content",
               "blockTypeCandidate": "PrivacyNoticeCandidate",
               "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
               "sourceName": "H2 heading",
               "mappingStatus": "verified",
               "visualEvidence": [
                 {
-                  "nodeId": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
-                  "nodeName": "H2 heading",
-                  "value": "Privacy collection notice",
-                  "mappingStatus": "verified"
+                  "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
+                  "name": "Text",
+                  "characters": "Accept the Terms and conditions to continue."
                 },
                 {
-                  "nodeId": "I751:10680;306:74518;5311:33122;8674:49237;5257:89021",
-                  "nodeName": "Content",
-                  "value": "For more information about how we collect, use and disclose your personal information, including who we may disclose it to, check our Privacy Collection notice.",
-                  "mappingStatus": "verified"
+                  "id": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
+                  "name": "H2 heading",
+                  "characters": "Privacy collection notice"
+                },
+                {
+                  "id": "I751:10680;306:74518;5311:33122;8674:49237;5257:89021",
+                  "name": "Content",
+                  "characters": "For more information about how we collect, use and disclose your personal information, including who we may disclose it to, check our Privacy Collection notice.    "
+                },
+                {
+                  "id": "I751:10680;306:74518;5311:33122;8674:49239;1152:3699",
+                  "name": "H2 heading",
+                  "characters": "Terms and conditions"
+                },
+                {
+                  "id": "I751:10680;306:74518;5311:33122;8674:49241;1152:3864",
+                  "name": "Paragraph text",
+                  "characters": "These are the Terms and Conditions     ."
+                },
+                {
+                  "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12988",
+                  "name": "Label",
+                  "characters": "I accept the terms and conditions for Notice of Disposal."
+                },
+                {
+                  "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
+                  "name": "Validation",
+                  "characters": "Accept the Terms and conditions to continue."
                 }
               ],
-              "transactionIntent": "Display privacy collection notice and related content before form continuation."
+              "transactionIntent": "Display privacy and terms content. Candidate only until TaPaaS block catalogue confirms fit."
             },
             {
-              "id": "page-2-block-consent-checkbox",
+              "id": "source-2-block-fields",
               "blockTypeCandidate": "CheckboxFieldCandidate",
-              "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12988",
-              "sourceName": "Label",
-              "mappingStatus": "verified",
+              "sourceNodeId": "I751:10680;306:74518;10872:28125;1334:6080",
+              "sourceName": "Page label or transaction name",
+              "mappingStatus": "inferred",
               "fields": [
                 {
-                  "id": "page-2-field-terms-acknowledgement",
+                  "id": "source-2-field-1",
+                  "sourceNodeId": "I751:10680;306:74518;10872:28125;1334:6080",
+                  "sourceName": "Page label or transaction name",
+                  "label": "Submit a notice of disposal for a vehicle",
+                  "inputTypeCandidate": "unknown",
+                  "required": "inferred",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-2-field-2",
+                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
+                  "sourceName": "Text",
+                  "label": "Accept the Terms and conditions to continue.",
+                  "inputTypeCandidate": "checkbox",
+                  "required": "inferred",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-2-field-3",
+                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49239;1152:3699",
+                  "sourceName": "H2 heading",
+                  "label": "Terms and conditions",
+                  "inputTypeCandidate": "checkbox",
+                  "required": "inferred",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-2-field-4",
+                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49241;1152:3864",
+                  "sourceName": "Paragraph text",
+                  "label": "These are the Terms and Conditions     .",
+                  "inputTypeCandidate": "checkbox",
+                  "required": "inferred",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-2-field-5",
                   "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12988",
                   "sourceName": "Label",
                   "label": "I accept the terms and conditions for Notice of Disposal.",
                   "inputTypeCandidate": "checkbox",
                   "required": "inferred",
-                  "validation": {
-                    "message": "Accept the Terms and conditions to continue.",
-                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
-                    "mappingStatus": "verified"
-                  },
-                  "mappingStatus": "verified"
-                }
-              ]
-            },
-            {
-              "id": "page-2-block-notification-text",
-              "blockTypeCandidate": "ContentTextCandidate",
-              "sourceNodeId": "I751:10680;306:74518;5773:139532;5773:120600;1152:3864",
-              "sourceName": "Paragraph text",
-              "mappingStatus": "verified",
-              "textContent": [
+                  "mappingStatus": "inferred"
+                },
                 {
-                  "nodeId": "I751:10680;306:74518;5773:139532;5773:120600;1152:3864",
-                  "nodeName": "Paragraph text",
-                  "value": "We will send you an email with the details of your notice of disposal after you complete and submit this form online.",
+                  "id": "source-2-field-6",
+                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
+                  "sourceName": "Validation",
+                  "label": "Accept the Terms and conditions to continue.",
+                  "inputTypeCandidate": "checkbox",
+                  "required": "inferred",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-2-field-7",
+                  "sourceNodeId": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+                  "sourceName": "Label",
+                  "label": "Continue",
+                  "inputTypeCandidate": "unknown",
+                  "required": "inferred",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-2-field-8",
+                  "sourceNodeId": "I751:10680;306:74518;5311:33134;5003:1629;10111:15990",
+                  "sourceName": "Label",
+                  "label": "Exit",
+                  "inputTypeCandidate": "unknown",
+                  "required": "inferred",
+                  "mappingStatus": "inferred"
+                },
+                {
+                  "id": "source-2-field-9",
+                  "sourceNodeId": "I751:10680;634:65925;12292:6071",
+                  "sourceName": "Terms of use",
+                  "label": "Terms of use",
+                  "inputTypeCandidate": "checkbox",
+                  "required": "inferred",
+                  "mappingStatus": "inferred"
+                }
+              ],
+              "validation": [
+                {
+                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2380",
+                  "sourceName": "Title",
+                  "message": "Your form has an error",
+                  "mappingStatus": "verified"
+                },
+                {
+                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2381",
+                  "sourceName": "copy",
+                  "message": "Check the error:",
+                  "mappingStatus": "verified"
+                },
+                {
+                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
+                  "sourceName": "Text",
+                  "message": "Accept the Terms and conditions to continue.",
+                  "mappingStatus": "verified"
+                },
+                {
+                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
+                  "sourceName": "Validation",
+                  "message": "Accept the Terms and conditions to continue.",
                   "mappingStatus": "verified"
                 }
               ]
@@ -725,549 +777,461 @@
       ],
       "ctas": [
         {
-          "id": "page-2-cta-continue",
+          "id": "source-2-cta-1",
           "label": "Continue",
           "sourceNodeId": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
           "sourceName": "Label",
           "mappingStatus": "verified",
           "navigationHint": {
-            "targetPage": "same page after correcting acknowledgement",
-            "status": "inferred",
-            "evidence": "Raw Figma interactions show component variant hover/change-to behaviour only, not explicit page-to-page prototype navigation."
+            "targetPage": "Unknown",
+            "status": "unknown",
+            "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."
           }
         }
       ],
       "textContent": [
         {
-          "nodeId": "I751:10680;306:74517;22719:1537;22710:1111",
-          "nodeName": "Change language",
-          "value": "Change language",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74517;22719:1537;22710:1111",
+          "name": "Change language",
+          "characters": "Change language"
         },
         {
-          "nodeId": "I751:10680;306:74517;22719:1537;22710:1116",
-          "nodeName": "MyServiceNSW Account",
-          "value": "Account",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74517;22719:1537;22710:1116",
+          "name": "MyServiceNSW Account",
+          "characters": "Account"
         },
         {
-          "nodeId": "I751:10680;306:74517;22719:1537;22710:1119",
-          "nodeName": "Log out",
-          "value": "Log out",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74517;22719:1537;22710:1119",
+          "name": "Log out",
+          "characters": "Log out"
         },
         {
-          "nodeId": "I751:10680;306:74517;19249:3078;19249:2749",
-          "nodeName": "Home",
-          "value": "Home",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74517;19249:3078;19249:2749",
+          "name": "Home",
+          "characters": "Home"
         },
         {
-          "nodeId": "I751:10680;306:74517;19249:3436;19249:2752",
-          "nodeName": "Home",
-          "value": "Find services",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74517;19249:3436;19249:2752",
+          "name": "Home",
+          "characters": "Find services"
         },
         {
-          "nodeId": "I751:10680;306:74517;19249:3450;19249:2752",
-          "nodeName": "Home",
-          "value": "Business",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74517;19249:3450;19249:2752",
+          "name": "Home",
+          "characters": "Business"
         },
         {
-          "nodeId": "I751:10680;306:74517;19249:3468;19249:2752",
-          "nodeName": "Home",
-          "value": "Find locations",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74517;19249:3468;19249:2752",
+          "name": "Home",
+          "characters": "Find locations"
         },
         {
-          "nodeId": "I751:10680;306:74517;22069:1227;11180:5055",
-          "nodeName": "driver licence",
-          "value": "Search",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74517;22069:1227;11180:5055",
+          "name": "driver licence",
+          "characters": "Search"
         },
         {
-          "nodeId": "I751:10680;306:74518;10872:28125;1334:6080",
-          "nodeName": "Page label or transaction name",
-          "value": "Submit a notice of disposal for a vehicle",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;10872:28125;1334:6080",
+          "name": "Page label or transaction name",
+          "characters": "Submit a notice of disposal for a vehicle"
         },
         {
-          "nodeId": "I751:10680;306:74518;10872:28125;1334:6078",
-          "nodeName": "Page title",
-          "value": "Privacy",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;10872:28125;1334:6078",
+          "name": "Page title",
+          "characters": "Privacy"
         },
         {
-          "nodeId": "I751:10680;306:74518;10872:28125;1355:7731;1352:99;1352:1",
-          "nodeName": "Step number",
-          "value": "1",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:99;1352:1",
+          "name": "Step number",
+          "characters": "1"
         },
         {
-          "nodeId": "I751:10680;306:74518;10872:28125;1355:7731;1352:99;1429:3940;1330:2164",
-          "nodeName": "24 - m",
-          "value": "24 - m",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:99;1429:3940;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
         },
         {
-          "nodeId": "I751:10680;306:74518;10872:28125;1355:7731;1352:99;1352:14",
-          "nodeName": "Step name",
-          "value": "Privacy",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:99;1352:14",
+          "name": "Step name",
+          "characters": "Privacy"
         },
         {
-          "nodeId": "I751:10680;306:74518;10872:28125;1355:7731;1352:130;1352:91",
-          "nodeName": "Step number",
-          "value": "2",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:130;1352:91",
+          "name": "Step number",
+          "characters": "2"
         },
         {
-          "nodeId": "I751:10680;306:74518;10872:28125;1355:7731;1352:130;1429:4425;1330:2164",
-          "nodeName": "24 - m",
-          "value": "24 - m",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:130;1429:4425;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
         },
         {
-          "nodeId": "I751:10680;306:74518;10872:28125;1355:7731;1352:130;1352:89",
-          "nodeName": "Step name",
-          "value": "Step name",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:130;1352:89",
+          "name": "Step name",
+          "characters": "Step name"
         },
         {
-          "nodeId": "I751:10680;306:74518;10872:28125;1355:7731;1352:139;1352:91",
-          "nodeName": "Step number",
-          "value": "3",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:139;1352:91",
+          "name": "Step number",
+          "characters": "3"
         },
         {
-          "nodeId": "I751:10680;306:74518;10872:28125;1355:7731;1352:139;1429:4425;1330:2164",
-          "nodeName": "24 - m",
-          "value": "24 - m",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:139;1429:4425;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
         },
         {
-          "nodeId": "I751:10680;306:74518;10872:28125;1355:7731;1352:139;1352:89",
-          "nodeName": "Step name",
-          "value": "Step name",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:139;1352:89",
+          "name": "Step name",
+          "characters": "Step name"
         },
         {
-          "nodeId": "I751:10680;306:74518;10872:28125;1355:7731;1352:148;1352:91",
-          "nodeName": "Step number",
-          "value": "4",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:148;1352:91",
+          "name": "Step number",
+          "characters": "4"
         },
         {
-          "nodeId": "I751:10680;306:74518;10872:28125;1355:7731;1352:148;1429:4425;1330:2164",
-          "nodeName": "24 - m",
-          "value": "24 - m",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:148;1429:4425;1330:2164",
+          "name": "24 - m",
+          "characters": "24 - m"
         },
         {
-          "nodeId": "I751:10680;306:74518;10872:28125;1355:7731;1352:148;1352:89",
-          "nodeName": "Step name",
-          "value": "Step name",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;10872:28125;1355:7731;1352:148;1352:89",
+          "name": "Step name",
+          "characters": "Step name"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2380",
-          "nodeName": "Title",
-          "value": "Your form has an error",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2380",
+          "name": "Title",
+          "characters": "Your form has an error"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2381",
-          "nodeName": "copy",
-          "value": "Check the error:",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2381",
+          "name": "copy",
+          "characters": "Check the error:"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
-          "nodeName": "Text",
-          "value": "Accept the Terms and conditions to continue.",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
+          "name": "Text",
+          "characters": "Accept the Terms and conditions to continue."
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3906;1332:3994",
-          "nodeName": "Text",
-          "value": "Type something",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3906;1332:3994",
+          "name": "Text",
+          "characters": "Type something"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3928;1332:3994",
-          "nodeName": "Text",
-          "value": "Type something",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3928;1332:3994",
+          "name": "Text",
+          "characters": "Type something"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3931;1332:4000",
-          "nodeName": "Text",
-          "value": "Type something",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3931;1332:4000",
+          "name": "Text",
+          "characters": "Type something"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:4018;1332:3985",
-          "nodeName": "Text",
-          "value": "Type something",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:4018;1332:3985",
+          "name": "Text",
+          "characters": "Type something"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:4021;1332:3985",
-          "nodeName": "Text",
-          "value": "Type something",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:4021;1332:3985",
+          "name": "Text",
+          "characters": "Type something"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;11195:11327;1332:3985",
-          "nodeName": "Text",
-          "value": "Type something",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;11195:11327;1332:3985",
+          "name": "Text",
+          "characters": "Type something"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;11195:11331;1332:3985",
-          "nodeName": "Text",
-          "value": "Type something",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;11195:11331;1332:3985",
+          "name": "Text",
+          "characters": "Type something"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;11195:11341;1332:3985",
-          "nodeName": "Text",
-          "value": "Type something",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;11195:11341;1332:3985",
+          "name": "Text",
+          "characters": "Type something"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49236;20898:2398;20299:8719;39:3174",
-          "nodeName": "56 - 4xl",
-          "value": "56 - 4xl",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49236;20898:2398;20299:8719;39:3174",
+          "name": "56 - 4xl",
+          "characters": "56 - 4xl"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
-          "nodeName": "H2 heading",
-          "value": "Privacy collection notice",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
+          "name": "H2 heading",
+          "characters": "Privacy collection notice"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49236;20898:2461;20299:8656;39:3202",
-          "nodeName": "24 - lg",
-          "value": "24 - lg",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49236;20898:2461;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49237;5257:89021",
-          "nodeName": "Content",
-          "value": "For more information about how we collect, use and disclose your personal information, including who we may disclose it to, check our Privacy Collection notice.",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49237;5257:89021",
+          "name": "Content",
+          "characters": "For more information about how we collect, use and disclose your personal information, including who we may disclose it to, check our Privacy Collection notice.    "
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49239;20898:2398;20299:8719;39:3174",
-          "nodeName": "56 - 4xl",
-          "value": "56 - 4xl",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49239;20898:2398;20299:8719;39:3174",
+          "name": "56 - 4xl",
+          "characters": "56 - 4xl"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49239;1152:3699",
-          "nodeName": "H2 heading",
-          "value": "Terms and conditions",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49239;1152:3699",
+          "name": "H2 heading",
+          "characters": "Terms and conditions"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49239;20898:2461;20299:8656;39:3202",
-          "nodeName": "24 - lg",
-          "value": "24 - lg",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49239;20898:2461;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49241;20898:3095;20299:8656;39:3202",
-          "nodeName": "24 - lg",
-          "value": "24 - lg",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49241;20898:3095;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49241;1152:3864",
-          "nodeName": "Paragraph text",
-          "value": "These are the Terms and Conditions     .",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49241;1152:3864",
+          "name": "Paragraph text",
+          "characters": "These are the Terms and Conditions     ."
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49241;20898:3164;20299:8662;39:3195",
-          "nodeName": "32 - xl",
-          "value": "32 - xl",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49241;20898:3164;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12988",
-          "nodeName": "Label",
-          "value": "I accept the terms and conditions for Notice of Disposal.",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12988",
+          "name": "Label",
+          "characters": "I accept the terms and conditions for Notice of Disposal."
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12989",
-          "nodeName": "Clarifying text",
-          "value": "Type something",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12989",
+          "name": "Clarifying text",
+          "characters": "Type something"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
-          "nodeName": "Validation",
-          "value": "Accept the Terms and conditions to continue.",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
+          "name": "Validation",
+          "characters": "Accept the Terms and conditions to continue."
         },
         {
-          "nodeId": "I751:10680;306:74518;5773:139532;5773:120599;20898:2398;20299:8719;39:3174",
-          "nodeName": "56 - 4xl",
-          "value": "56 - 4xl",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5773:139532;5773:120599;20898:2398;20299:8719;39:3174",
+          "name": "56 - 4xl",
+          "characters": "56 - 4xl"
         },
         {
-          "nodeId": "I751:10680;306:74518;5773:139532;5773:120599;1152:3699",
-          "nodeName": "H2 heading",
-          "value": "Notifications",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5773:139532;5773:120599;1152:3699",
+          "name": "H2 heading",
+          "characters": "Notifications"
         },
         {
-          "nodeId": "I751:10680;306:74518;5773:139532;5773:120599;20898:2461;20299:8656;39:3202",
-          "nodeName": "24 - lg",
-          "value": "24 - lg",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5773:139532;5773:120599;20898:2461;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
         },
         {
-          "nodeId": "I751:10680;306:74518;5773:139532;5773:120600;20898:3095;20299:8656;39:3202",
-          "nodeName": "24 - lg",
-          "value": "24 - lg",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5773:139532;5773:120600;20898:3095;20299:8656;39:3202",
+          "name": "24 - lg",
+          "characters": "24 - lg"
         },
         {
-          "nodeId": "I751:10680;306:74518;5773:139532;5773:120600;1152:3864",
-          "nodeName": "Paragraph text",
-          "value": "We will send you an email with the details of your notice of disposal after you complete and submit this form online.",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5773:139532;5773:120600;1152:3864",
+          "name": "Paragraph text",
+          "characters": "We will send you an email with the details of your notice of disposal after you complete and submit this form online."
         },
         {
-          "nodeId": "I751:10680;306:74518;5773:139532;5773:120600;20898:3164;20299:8662;39:3195",
-          "nodeName": "32 - xl",
-          "value": "32 - xl",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5773:139532;5773:120600;20898:3164;20299:8662;39:3195",
+          "name": "32 - xl",
+          "characters": "32 - xl"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
-          "nodeName": "Label",
-          "value": "Continue",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+          "name": "Label",
+          "characters": "Continue"
         },
         {
-          "nodeId": "I751:10680;306:74518;5311:33134;5003:1629;10111:15990",
-          "nodeName": "Label",
-          "value": "Exit",
-          "mappingStatus": "verified"
+          "id": "I751:10680;306:74518;5311:33134;5003:1629;10111:15990",
+          "name": "Label",
+          "characters": "Exit"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:12038",
-          "nodeName": "ACKNOWLEDGEMENT OF COUNTRY",
-          "value": "ACKNOWLEDGEMENT OF COUNTRY",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:12038",
+          "name": "ACKNOWLEDGEMENT OF COUNTRY",
+          "characters": "ACKNOWLEDGEMENT OF COUNTRY"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:12039",
-          "nodeName": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present.",
-          "value": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present.",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:12039",
+          "name": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present.",
+          "characters": "We acknowledge the Traditional Custodians of NSW, and their continued connection to land, water and culture. We pay our respects to Elders past and present. "
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11196",
-          "nodeName": "Browse services",
-          "value": "FIND SERVICES",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11196",
+          "name": "Browse services",
+          "characters": "FIND SERVICES"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11198",
-          "nodeName": "Births, relationship",
-          "value": "Births, relationships and deaths",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11198",
+          "name": "Births, relationship",
+          "characters": "Births, relationships and deaths"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11199",
-          "nodeName": "Boating, fishing and",
-          "value": "Boating, fishing and outdoors",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11199",
+          "name": "Boating, fishing and",
+          "characters": "Boating, fishing and outdoors"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11200",
-          "nodeName": "Business, industries",
-          "value": "Business, industries and employment",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11200",
+          "name": "Business, industries",
+          "characters": "Business, industries and employment"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11201",
-          "nodeName": "Concessions, rebates",
-          "value": "Concessions, rebates and assistance",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11201",
+          "name": "Concessions, rebates",
+          "characters": "Concessions, rebates and assistance"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11202",
-          "nodeName": "Driving and transpor",
-          "value": "Driving and transport",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11202",
+          "name": "Driving and transpor",
+          "characters": "Driving and transport"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11203",
-          "nodeName": "Education",
-          "value": "Education",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11203",
+          "name": "Education",
+          "characters": "Education"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11204",
-          "nodeName": "Health and care",
-          "value": "Emergencies and natural disasters",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11204",
+          "name": "Health and care",
+          "characters": "Emergencies and natural disasters"
         },
         {
-          "nodeId": "I751:10680;634:65925;25394:686",
-          "nodeName": "Health and care",
-          "value": "Environment, parks and wildlife",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;25394:686",
+          "name": "Health and care",
+          "characters": "Environment, parks and wildlife"
         },
         {
-          "nodeId": "I751:10680;634:65925;25394:545",
-          "nodeName": "Health and care",
-          "value": "Health and care",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;25394:545",
+          "name": "Health and care",
+          "characters": "Health and care"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11205",
-          "nodeName": "Housing and property",
-          "value": "Housing and property",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11205",
+          "name": "Housing and property",
+          "characters": "Housing and property"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11206",
-          "nodeName": "Legal and Police ser",
-          "value": "Legal and Police services",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11206",
+          "name": "Legal and Police ser",
+          "characters": "Legal and Police services"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11208",
-          "nodeName": "Service NSW",
-          "value": "SERVICE NSW",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11208",
+          "name": "Service NSW",
+          "characters": "SERVICE NSW"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11210",
-          "nodeName": "About us",
-          "value": "About us",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11210",
+          "name": "About us",
+          "characters": "About us"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11211",
-          "nodeName": "Jobs at Service NSW",
-          "value": "Jobs at Service NSW",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11211",
+          "name": "Jobs at Service NSW",
+          "characters": "Jobs at Service NSW"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11212",
-          "nodeName": "News",
-          "value": "News",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11212",
+          "name": "News",
+          "characters": "News"
         },
         {
-          "nodeId": "I751:10680;634:65925;25394:749",
-          "nodeName": "News",
-          "value": "Service status",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;25394:749",
+          "name": "News",
+          "characters": "Service status"
         },
         {
-          "nodeId": "I751:10680;634:65925;25394:762",
-          "nodeName": "News",
-          "value": "Performance dashboard",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;25394:762",
+          "name": "News",
+          "characters": "Performance dashboard"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11213",
-          "nodeName": "Download the Service",
-          "value": "Download the Service NSW app",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11213",
+          "name": "Download the Service",
+          "characters": "Download the Service NSW app"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11214",
-          "nodeName": "Help in your languag",
-          "value": "Help in your language",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11214",
+          "name": "Help in your languag",
+          "characters": "Help in your language"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11217",
-          "nodeName": "CONTACT",
-          "value": "CONTACT",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11217",
+          "name": "CONTACT",
+          "characters": "CONTACT"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11219",
-          "nodeName": "Contact form",
-          "value": "Contact form",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11219",
+          "name": "Contact form",
+          "characters": "Contact form"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11220",
-          "nodeName": "Phone 13 77 88",
-          "value": "Phone 13 77 88",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11220",
+          "name": "Phone 13 77 88",
+          "characters": "Phone 13 77 88"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11221",
-          "nodeName": "Find a Service NSW l",
-          "value": "Find a Service NSW location",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11221",
+          "name": "Find a Service NSW l",
+          "characters": "Find a Service NSW location"
         },
         {
-          "nodeId": "I751:10680;634:65925;12251:11222",
-          "nodeName": "Find a NSW Governmen",
-          "value": "Find a NSW Government agency",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12251:11222",
+          "name": "Find a NSW Governmen",
+          "characters": "Find a NSW Government agency"
         },
         {
-          "nodeId": "I751:10680;634:65925;12292:6069",
-          "nodeName": "Accessibility",
-          "value": "Accessibility",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12292:6069",
+          "name": "Accessibility",
+          "characters": "Accessibility"
         },
         {
-          "nodeId": "I751:10680;634:65925;12292:6070",
-          "nodeName": "Privacy",
-          "value": "Privacy",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12292:6070",
+          "name": "Privacy",
+          "characters": "Privacy"
         },
         {
-          "nodeId": "I751:10680;634:65925;12292:6071",
-          "nodeName": "Terms of use",
-          "value": "Terms of use",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12292:6071",
+          "name": "Terms of use",
+          "characters": "Terms of use"
         },
         {
-          "nodeId": "I751:10680;634:65925;12292:6072",
-          "nodeName": "Copyright and discla",
-          "value": "Copyright and disclaimer",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12292:6072",
+          "name": "Copyright and discla",
+          "characters": "Copyright and disclaimer"
         },
         {
-          "nodeId": "I751:10680;634:65925;12292:6073",
-          "nodeName": "Accessing informatio",
-          "value": "Accessing information",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12292:6073",
+          "name": "Accessing informatio",
+          "characters": "Accessing information"
         },
         {
-          "nodeId": "I751:10680;634:65925;12292:6075",
-          "nodeName": "NSW Government",
-          "value": "NSW Government",
-          "mappingStatus": "verified"
+          "id": "I751:10680;634:65925;12292:6075",
+          "name": "NSW Government",
+          "characters": "NSW Government"
         }
       ]
     }
   ],
   "unknowns": [
-    "Actual TaPaaS page, section and block schema names are Unknown.",
-    "Actual backend request/response fields are Unknown.",
-    "Actual Continue target after a valid privacy acknowledgement is Unknown.",
-    "Whether the Privacy card maps to an existing TaPaaS block or a composition is Unknown.",
-    "Content ownership and approved privacy/legal wording are Unknown."
+    "The real TaPaaS schema shape is Unknown until a schema sample is supplied.",
+    "OpenAPI/Swagger request and response fields are Unknown.",
+    "Content, legal and privacy approval status is Unknown.",
+    "Designer intent for node-to-node state relationships needs confirmation."
   ]
 }

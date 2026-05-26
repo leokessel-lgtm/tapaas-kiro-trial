@@ -3,25 +3,24 @@
 | Field | Value |
 |---|---|
 | File key | `Unknown` |
-| Node ID | `Unknown` |
+| Node ID | `490:60286` |
 | File name | NOD Production |
-| Node name | Privacy |
-| Node type | SECTION |
-| Descendants | 670 |
-| Extracted at | 2026-05-26T12:06:56.006Z |
+| Node name | 0.1D_NOD |
+| Node type | FRAME |
+| Descendants | 305 |
+| Extracted at | 2026-05-26T12:35:03.783Z |
 | Raw response | `track-2-spike/outputs/raw/figma-node-response.json` |
 
 ## Node Type Counts
 
-- BOOLEAN_OPERATION: 10
-- ELLIPSE: 16
-- FRAME: 96
-- GROUP: 42
-- INSTANCE: 159
-- RECTANGLE: 46
-- SECTION: 2
-- TEXT: 164
-- VECTOR: 135
+- BOOLEAN_OPERATION: 4
+- ELLIPSE: 4
+- FRAME: 41
+- GROUP: 20
+- INSTANCE: 73
+- RECTANGLE: 20
+- TEXT: 75
+- VECTOR: 68
 
 ## Review Boundary
 

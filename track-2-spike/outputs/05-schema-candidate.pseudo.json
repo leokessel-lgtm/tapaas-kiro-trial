@@ -1,68 +1,65 @@
 {
   "_artefact": "engineering-review-pseudo-schema",
+  "_experiment": "02-controlled-multi-node",
   "_status": "draft",
   "_confidence": "medium-low",
   "_needsTaPaaSEngineeringReview": true,
   "_schemaCompatibilityClaim": "none",
-  "_notes": "This mirrors a conceptual TaPaaS page/section/block shape only. It does not claim actual TaPaaS schema compatibility.",
   "transaction": {
     "_status": "inferred",
-    "_confidence": "medium",
+    "_confidence": "low",
     "_needsTaPaaSEngineeringReview": true,
-    "name": "Submit a notice of disposal for a vehicle",
-    "source": {
-      "fileKey": "Unknown",
-      "nodeId": "490:23897",
-      "sourceLink": null,
-      "rawPath": "track-2-spike/outputs/raw/figma-node-response.json",
-      "normalisedPath": "track-2-spike/outputs/normalised/extracted-evidence.json",
-      "selectedNodeName": "Privacy",
-      "selectedNodeType": "SECTION",
-      "descendantCount": 670
-    },
     "pages": [
       {
         "_status": "inferred",
-        "_confidence": "medium",
+        "_confidence": "medium-low",
         "_needsTaPaaSEngineeringReview": true,
-        "id": "page-1",
+        "id": "source-1",
         "title": "Privacy",
         "sourceNodeId": "490:60286",
         "sections": [
           {
             "_status": "verified",
-            "_confidence": "medium",
+            "_confidence": "medium-low",
             "_needsTaPaaSEngineeringReview": true,
-            "id": "page-1-section-main",
+            "id": "source-1-section-main",
             "sourceNodeId": "I531:2614;306:74518;5311:33122;5773:136361;1152:3699",
             "blocks": [
               {
                 "_status": "verified",
-                "_confidence": "medium",
+                "_confidence": "medium-low",
                 "_needsTaPaaSEngineeringReview": true,
-                "id": "page-1-block-privacy-notice",
                 "blockType": "PrivacyNoticeCandidate",
                 "sourceNodeId": "I531:2614;306:74518;5311:33122;5773:136361;1152:3699",
                 "content": [
                   {
-                    "nodeId": "I531:2614;306:74518;5311:33122;5773:136361;1152:3699",
-                    "nodeName": "H2 heading",
-                    "value": "Privacy collection notice",
-                    "mappingStatus": "verified"
+                    "id": "I531:2614;306:74518;5311:33122;5773:136361;1152:3699",
+                    "name": "H2 heading",
+                    "characters": "Privacy collection notice"
                   },
                   {
-                    "nodeId": "I531:2614;306:74518;5311:33122;5773:136362;5257:88994",
-                    "nodeName": "Content",
-                    "value": "Service NSW delivers this service on behalf of Transport of NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal privacy statement     and Terms and Conditions and call 13 77 88.",
-                    "mappingStatus": "verified"
+                    "id": "I531:2614;306:74518;5311:33122;5773:136362;5257:88994",
+                    "name": "Content",
+                    "characters": "Service NSW delivers this service on behalf of Transport of NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal privacy statement     and Terms and Conditions and call 13 77 88."
+                  },
+                  {
+                    "id": "I531:2614;306:74518;5311:33122;5773:136364;1152:3699",
+                    "name": "H2 heading",
+                    "characters": "Terms and conditions"
+                  },
+                  {
+                    "id": "I531:2614;306:74518;5311:33122;5773:136365;1152:3864",
+                    "name": "Paragraph text",
+                    "characters": "These are the Terms and Conditions    ."
+                  },
+                  {
+                    "id": "I531:2614;306:74518;5311:33122;5773:136367;1306:3752;6009:16024",
+                    "name": "Label",
+                    "characters": "I accept the terms and conditions for Notice of Disposal"
                   }
                 ],
-                "validation": {
-                  "_status": "unknown",
-                  "_confidence": "low",
-                  "_needsTaPaaSEngineeringReview": true
-                },
                 "fields": [],
+                "validation": [],
                 "requestMapping": {
                   "_status": "unknown",
                   "_confidence": "low",
@@ -77,68 +74,87 @@
                 }
               },
               {
-                "_status": "verified",
-                "_confidence": "medium",
+                "_status": "inferred",
+                "_confidence": "medium-low",
                 "_needsTaPaaSEngineeringReview": true,
-                "id": "page-1-block-consent-checkbox",
                 "blockType": "CheckboxFieldCandidate",
-                "sourceNodeId": "I531:2614;306:74518;5311:33122;5773:136367;1306:3752;6009:16024",
+                "sourceNodeId": "I531:2614;306:74518;10872:28125;1334:6080",
                 "content": [],
-                "validation": {
-                  "message": "Unknown",
-                  "sourceNodeId": null,
-                  "mappingStatus": "unknown"
-                },
                 "fields": [
                   {
-                    "id": "page-1-field-terms-acknowledgement",
+                    "id": "source-1-field-1",
+                    "sourceNodeId": "I531:2614;306:74518;10872:28125;1334:6080",
+                    "sourceName": "Page label or transaction name",
+                    "label": "Submit a notice of disposal for a vehicle",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-1-field-2",
+                    "sourceNodeId": "I531:2614;306:74518;5311:33122;5773:136362;5257:88994",
+                    "sourceName": "Content",
+                    "label": "Service NSW delivers this service on behalf of Transport of NSW and some personal information will be shared with them. To learn how your personal information is handled, visit the Notice of Disposal privacy statement     and Terms and Conditions and call 13 77 88.",
+                    "inputTypeCandidate": "checkbox",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-1-field-3",
+                    "sourceNodeId": "I531:2614;306:74518;5311:33122;5773:136364;1152:3699",
+                    "sourceName": "H2 heading",
+                    "label": "Terms and conditions",
+                    "inputTypeCandidate": "checkbox",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-1-field-4",
+                    "sourceNodeId": "I531:2614;306:74518;5311:33122;5773:136365;1152:3864",
+                    "sourceName": "Paragraph text",
+                    "label": "These are the Terms and Conditions    .",
+                    "inputTypeCandidate": "checkbox",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-1-field-5",
                     "sourceNodeId": "I531:2614;306:74518;5311:33122;5773:136367;1306:3752;6009:16024",
                     "sourceName": "Label",
                     "label": "I accept the terms and conditions for Notice of Disposal",
                     "inputTypeCandidate": "checkbox",
-                    "required": "inferred",
-                    "validation": {
-                      "message": "Unknown",
-                      "sourceNodeId": null,
-                      "mappingStatus": "unknown"
-                    },
-                    "mappingStatus": "verified"
-                  }
-                ],
-                "requestMapping": {
-                  "_status": "unknown",
-                  "_confidence": "low",
-                  "_needsTaPaaSEngineeringReview": true,
-                  "placeholder": "Requires OpenAPI/Swagger or TaPaaS backend contract."
-                },
-                "responseMapping": {
-                  "_status": "unknown",
-                  "_confidence": "low",
-                  "_needsTaPaaSEngineeringReview": true,
-                  "placeholder": "Requires OpenAPI/Swagger or TaPaaS backend contract."
-                }
-              },
-              {
-                "_status": "verified",
-                "_confidence": "medium",
-                "_needsTaPaaSEngineeringReview": true,
-                "id": "page-1-block-notification-text",
-                "blockType": "ContentTextCandidate",
-                "sourceNodeId": "I531:2614;306:74518;5773:139532;5773:120600;1152:3864",
-                "content": [
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
                   {
-                    "nodeId": "I531:2614;306:74518;5773:139532;5773:120600;1152:3864",
-                    "nodeName": "Paragraph text",
-                    "value": "We will send you an email with the details of your notice of disposal after you complete and submit this form online.",
-                    "mappingStatus": "verified"
+                    "id": "source-1-field-6",
+                    "sourceNodeId": "I531:2614;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+                    "sourceName": "Label",
+                    "label": "Continue",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-1-field-7",
+                    "sourceNodeId": "I531:2614;306:74518;5311:33134;5003:1629;10111:15990",
+                    "sourceName": "Label",
+                    "label": "Exit",
+                    "inputTypeCandidate": "unknown",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-1-field-8",
+                    "sourceNodeId": "I531:2614;634:65925;12292:6071",
+                    "sourceName": "Terms of use",
+                    "label": "Terms of use",
+                    "inputTypeCandidate": "checkbox",
+                    "required": "unknown",
+                    "mappingStatus": "inferred"
                   }
                 ],
-                "validation": {
-                  "_status": "unknown",
-                  "_confidence": "low",
-                  "_needsTaPaaSEngineeringReview": true
-                },
-                "fields": [],
+                "validation": [],
                 "requestMapping": {
                   "_status": "unknown",
                   "_confidence": "low",
@@ -161,9 +177,9 @@
                 "label": "Continue",
                 "sourceNodeId": "I531:2614;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
                 "navigation": {
-                  "targetPage": "next transaction step",
-                  "status": "inferred",
-                  "evidence": "Raw Figma interactions show component variant hover/change-to behaviour only, not explicit page-to-page prototype navigation."
+                  "targetPage": "Unknown",
+                  "status": "unknown",
+                  "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."
                 }
               }
             ]
@@ -172,46 +188,64 @@
       },
       {
         "_status": "inferred",
-        "_confidence": "medium",
+        "_confidence": "medium-low",
         "_needsTaPaaSEngineeringReview": true,
-        "id": "page-2",
+        "id": "source-2",
         "title": "Privacy",
         "sourceNodeId": "751:10322",
         "sections": [
           {
             "_status": "verified",
-            "_confidence": "medium",
+            "_confidence": "medium-low",
             "_needsTaPaaSEngineeringReview": true,
-            "id": "page-2-section-main",
+            "id": "source-2-section-main",
             "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
             "blocks": [
               {
                 "_status": "verified",
-                "_confidence": "medium",
+                "_confidence": "medium-low",
                 "_needsTaPaaSEngineeringReview": true,
-                "id": "page-2-block-privacy-notice",
                 "blockType": "PrivacyNoticeCandidate",
                 "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
                 "content": [
                   {
-                    "nodeId": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
-                    "nodeName": "H2 heading",
-                    "value": "Privacy collection notice",
-                    "mappingStatus": "verified"
+                    "id": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
+                    "name": "Text",
+                    "characters": "Accept the Terms and conditions to continue."
                   },
                   {
-                    "nodeId": "I751:10680;306:74518;5311:33122;8674:49237;5257:89021",
-                    "nodeName": "Content",
-                    "value": "For more information about how we collect, use and disclose your personal information, including who we may disclose it to, check our Privacy Collection notice.",
-                    "mappingStatus": "verified"
+                    "id": "I751:10680;306:74518;5311:33122;8674:49236;1152:3699",
+                    "name": "H2 heading",
+                    "characters": "Privacy collection notice"
+                  },
+                  {
+                    "id": "I751:10680;306:74518;5311:33122;8674:49237;5257:89021",
+                    "name": "Content",
+                    "characters": "For more information about how we collect, use and disclose your personal information, including who we may disclose it to, check our Privacy Collection notice.    "
+                  },
+                  {
+                    "id": "I751:10680;306:74518;5311:33122;8674:49239;1152:3699",
+                    "name": "H2 heading",
+                    "characters": "Terms and conditions"
+                  },
+                  {
+                    "id": "I751:10680;306:74518;5311:33122;8674:49241;1152:3864",
+                    "name": "Paragraph text",
+                    "characters": "These are the Terms and Conditions     ."
+                  },
+                  {
+                    "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12988",
+                    "name": "Label",
+                    "characters": "I accept the terms and conditions for Notice of Disposal."
+                  },
+                  {
+                    "id": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
+                    "name": "Validation",
+                    "characters": "Accept the Terms and conditions to continue."
                   }
                 ],
-                "validation": {
-                  "_status": "unknown",
-                  "_confidence": "low",
-                  "_needsTaPaaSEngineeringReview": true
-                },
                 "fields": [],
+                "validation": [],
                 "requestMapping": {
                   "_status": "unknown",
                   "_confidence": "low",
@@ -226,68 +260,121 @@
                 }
               },
               {
-                "_status": "verified",
-                "_confidence": "medium",
+                "_status": "inferred",
+                "_confidence": "medium-low",
                 "_needsTaPaaSEngineeringReview": true,
-                "id": "page-2-block-consent-checkbox",
                 "blockType": "CheckboxFieldCandidate",
-                "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12988",
+                "sourceNodeId": "I751:10680;306:74518;10872:28125;1334:6080",
                 "content": [],
-                "validation": {
-                  "message": "Accept the Terms and conditions to continue.",
-                  "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
-                  "mappingStatus": "verified"
-                },
                 "fields": [
                   {
-                    "id": "page-2-field-terms-acknowledgement",
+                    "id": "source-2-field-1",
+                    "sourceNodeId": "I751:10680;306:74518;10872:28125;1334:6080",
+                    "sourceName": "Page label or transaction name",
+                    "label": "Submit a notice of disposal for a vehicle",
+                    "inputTypeCandidate": "unknown",
+                    "required": "inferred",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-2",
+                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
+                    "sourceName": "Text",
+                    "label": "Accept the Terms and conditions to continue.",
+                    "inputTypeCandidate": "checkbox",
+                    "required": "inferred",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-3",
+                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49239;1152:3699",
+                    "sourceName": "H2 heading",
+                    "label": "Terms and conditions",
+                    "inputTypeCandidate": "checkbox",
+                    "required": "inferred",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-4",
+                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49241;1152:3864",
+                    "sourceName": "Paragraph text",
+                    "label": "These are the Terms and Conditions     .",
+                    "inputTypeCandidate": "checkbox",
+                    "required": "inferred",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-5",
                     "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4250;14822:12988",
                     "sourceName": "Label",
                     "label": "I accept the terms and conditions for Notice of Disposal.",
                     "inputTypeCandidate": "checkbox",
                     "required": "inferred",
-                    "validation": {
-                      "message": "Accept the Terms and conditions to continue.",
-                      "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
-                      "mappingStatus": "verified"
-                    },
-                    "mappingStatus": "verified"
-                  }
-                ],
-                "requestMapping": {
-                  "_status": "unknown",
-                  "_confidence": "low",
-                  "_needsTaPaaSEngineeringReview": true,
-                  "placeholder": "Requires OpenAPI/Swagger or TaPaaS backend contract."
-                },
-                "responseMapping": {
-                  "_status": "unknown",
-                  "_confidence": "low",
-                  "_needsTaPaaSEngineeringReview": true,
-                  "placeholder": "Requires OpenAPI/Swagger or TaPaaS backend contract."
-                }
-              },
-              {
-                "_status": "verified",
-                "_confidence": "medium",
-                "_needsTaPaaSEngineeringReview": true,
-                "id": "page-2-block-notification-text",
-                "blockType": "ContentTextCandidate",
-                "sourceNodeId": "I751:10680;306:74518;5773:139532;5773:120600;1152:3864",
-                "content": [
+                    "mappingStatus": "inferred"
+                  },
                   {
-                    "nodeId": "I751:10680;306:74518;5773:139532;5773:120600;1152:3864",
-                    "nodeName": "Paragraph text",
-                    "value": "We will send you an email with the details of your notice of disposal after you complete and submit this form online.",
+                    "id": "source-2-field-6",
+                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
+                    "sourceName": "Validation",
+                    "label": "Accept the Terms and conditions to continue.",
+                    "inputTypeCandidate": "checkbox",
+                    "required": "inferred",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-7",
+                    "sourceNodeId": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
+                    "sourceName": "Label",
+                    "label": "Continue",
+                    "inputTypeCandidate": "unknown",
+                    "required": "inferred",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-8",
+                    "sourceNodeId": "I751:10680;306:74518;5311:33134;5003:1629;10111:15990",
+                    "sourceName": "Label",
+                    "label": "Exit",
+                    "inputTypeCandidate": "unknown",
+                    "required": "inferred",
+                    "mappingStatus": "inferred"
+                  },
+                  {
+                    "id": "source-2-field-9",
+                    "sourceNodeId": "I751:10680;634:65925;12292:6071",
+                    "sourceName": "Terms of use",
+                    "label": "Terms of use",
+                    "inputTypeCandidate": "checkbox",
+                    "required": "inferred",
+                    "mappingStatus": "inferred"
+                  }
+                ],
+                "validation": [
+                  {
+                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2380",
+                    "sourceName": "Title",
+                    "message": "Your form has an error",
+                    "mappingStatus": "verified"
+                  },
+                  {
+                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;1271:2381",
+                    "sourceName": "copy",
+                    "message": "Check the error:",
+                    "mappingStatus": "verified"
+                  },
+                  {
+                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49278;8992:9634;17872:201;1332:3898;1332:3985",
+                    "sourceName": "Text",
+                    "message": "Accept the Terms and conditions to continue.",
+                    "mappingStatus": "verified"
+                  },
+                  {
+                    "sourceNodeId": "I751:10680;306:74518;5311:33122;8674:49242;1321:4242;105:2366",
+                    "sourceName": "Validation",
+                    "message": "Accept the Terms and conditions to continue.",
                     "mappingStatus": "verified"
                   }
                 ],
-                "validation": {
-                  "_status": "unknown",
-                  "_confidence": "low",
-                  "_needsTaPaaSEngineeringReview": true
-                },
-                "fields": [],
                 "requestMapping": {
                   "_status": "unknown",
                   "_confidence": "low",
@@ -310,9 +397,9 @@
                 "label": "Continue",
                 "sourceNodeId": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
                 "navigation": {
-                  "targetPage": "same page after correcting acknowledgement",
-                  "status": "inferred",
-                  "evidence": "Raw Figma interactions show component variant hover/change-to behaviour only, not explicit page-to-page prototype navigation."
+                  "targetPage": "Unknown",
+                  "status": "unknown",
+                  "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."
                 }
               }
             ]

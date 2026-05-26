@@ -25,7 +25,7 @@ Set these in your normal terminal before running the live pipeline:
 ```zsh
 export FIGMA_FILE_KEY="pFDBhMVirBMo9JnJQbeI3I"
 export FIGMA_NODE_ID="490:23897"
-export FIGMA_TOKEN="your-figma-token"
+export FIGMA_TOKEN="$(pbpaste | tr -d '\n\r')"
 ```
 
 ## Run The Full Fetch And Pipeline

@@ -3,22 +3,23 @@
   "requiresTaPaaSEngineeringReview": true,
   "schemaCompatibilityClaim": "none",
   "source": "figma-rest-api-private-rd-spike",
-  "pageOrderSource": "Figma child order inside selected section",
+  "experiment": "02-controlled-multi-node",
+  "pageOrderSource": "Order of FIGMA_NODE_IDS when supplied, otherwise order returned by the local raw payload.",
   "pages": [
     {
       "order": 1,
       "sourceNodeId": "490:60286",
       "sourceName": "0.1D_NOD",
       "pageTitle": "Privacy",
-      "role": "privacy-page-state",
+      "role": "normal-or-acknowledgement-state",
       "mappingStatus": "verified",
       "ctas": [
         {
           "label": "Continue",
           "sourceNodeId": "I531:2614;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
-          "likelyTargetPage": "2.4_NOD",
-          "navigationStatus": "inferred",
-          "evidence": "Raw Figma interactions show component variant hover/change-to behaviour only, not explicit page-to-page prototype navigation."
+          "likelyTargetPage": "Unknown",
+          "navigationStatus": "unknown",
+          "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."
         }
       ]
     },
@@ -27,22 +28,22 @@
       "sourceNodeId": "751:10322",
       "sourceName": "2.4_NOD",
       "pageTitle": "Privacy",
-      "role": "supporting-frame",
+      "role": "validation-error-state",
       "mappingStatus": "verified",
       "ctas": [
         {
           "label": "Continue",
           "sourceNodeId": "I751:10680;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
-          "likelyTargetPage": "same page after correcting acknowledgement",
-          "navigationStatus": "inferred",
-          "evidence": "Raw Figma interactions show component variant hover/change-to behaviour only, not explicit page-to-page prototype navigation."
+          "likelyTargetPage": "Unknown",
+          "navigationStatus": "unknown",
+          "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."
         }
       ]
     }
   ],
   "unknownTransitions": [
-    "No explicit page-to-page Figma prototype links were captured for Continue.",
-    "The target page after a valid Privacy acknowledgement is not known from this selected node alone.",
-    "The relationship between normal state and validation-error state is inferred from frame names and validation text."
+    "Cross-page navigation is Unknown unless explicit Figma prototype links are extracted and reviewed.",
+    "Normal-to-error state relationships are inferred from validation text and frame naming only.",
+    "Page order needs designer confirmation when selected nodes are not supplied in intended transaction order."
   ]
 }
