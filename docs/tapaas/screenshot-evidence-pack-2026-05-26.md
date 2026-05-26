@@ -39,8 +39,8 @@ Screenshots have not been committed to the repo. This file is an index only.
 | MPS Confirmation Frame | `tapaas-preview-composites--mps-confirmation-frame-figma-fidelity` | `/tmp/tapaas-screenshot-evidence-pack-2026-05-26/mps-confirmation-frame-desktop.png` |
 | MPS Medical Evidence | `tapaas-preview-composites--mps-medical-evidence-status` | `/tmp/tapaas-screenshot-evidence-pack-2026-05-26/mps-medical-evidence-desktop.png` |
 | Email Confirmation Modal mobile | `tapaas-components-modals-overlays--email-confirmation-modal-mobile` | `/tmp/tapaas-screenshot-evidence-pack-2026-05-26/email-confirmation-modal-mobile.png` |
-| Radio Button Card States | `tapaas-preview-composites--radio-button-card-states` desktop | `/tmp/tapaas-screenshot-evidence-pack-2026-05-26/radio-button-card-states-desktop.png` |
-| Radio Button Card States | `tapaas-preview-composites--radio-button-card-states` mobile | `/tmp/tapaas-screenshot-evidence-pack-2026-05-26/radio-button-card-states-mobile.png` |
+| Radio Button Card States | `tapaas-components-choices-inputs--radio-button-card-states` desktop | `/tmp/tapaas-screenshot-evidence-pack-2026-05-26/radio-button-card-states-desktop.png` |
+| Radio Button Card States | `tapaas-components-choices-inputs--radio-button-card-states` mobile | `/tmp/tapaas-screenshot-evidence-pack-2026-05-26/radio-button-card-states-mobile.png` |
 
 ## Evidence grades and safe claims
 

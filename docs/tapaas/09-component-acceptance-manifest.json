@@ -119,7 +119,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--radio-button-card-states",
+            "id": "tapaas-components-choices-inputs--radio-button-card-states",
             "mode": "isolated-review",
             "expectedText": "Radio button cards",
             "mobileNoOverflow": true
@@ -383,7 +383,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--search-vehicle-input",
+            "id": "tapaas-components-choices-inputs--search-vehicle-input",
             "mode": "isolated-review",
             "expectedText": "Enter a NSW plate number",
             "mobileNoOverflow": true
@@ -525,7 +525,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--conditional-question-panel-pattern",
+            "id": "tapaas-components-choices-inputs--conditional-question-panel-pattern",
             "mode": "isolated-review",
             "expectedText": "Conditional question panel",
             "mobileNoOverflow": true
@@ -946,7 +946,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--radio-button-card-states",
+            "id": "tapaas-components-choices-inputs--radio-button-card-states",
             "mode": "isolated-review",
             "expectedText": "Radio button cards",
             "mobileNoOverflow": true
