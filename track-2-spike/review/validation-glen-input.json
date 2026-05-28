@@ -1,0 +1,307 @@
+{
+  "artefactType": "tapaas-track-2-validation-glen-review-candidate",
+  "version": "0.1",
+  "purpose": "validation-focused config-generation test",
+  "fullTransactionExtracted": false,
+  "productionReady": false,
+  "schemaCompatibilityClaim": "none",
+  "backendConnected": false,
+  "requiresTaPaaSEngineeringReview": true,
+  "sourceOutputs": [
+    "track-2-spike/review/validation-page-selection.json",
+    "track-2-spike/review/validation-page-candidate-ranking.md",
+    "track-2-spike/outputs/normalised/extracted-evidence.json",
+    "track-2-spike/outputs/07-node-comparison.md",
+    "track-2-spike/outputs/docs/extracted-text.md",
+    "track-2-spike/outputs/docs/figma-node-summary.md"
+  ],
+  "selectedNodes": [
+    {
+      "sourceOrder": 1,
+      "nodeId": "490:60291",
+      "nodeName": "1.1A_NOD",
+      "nodeType": "FRAME",
+      "likelyRole": "Vehicle details normal input page candidate",
+      "stateClassification": "normal input page",
+      "mappingStatus": "candidate/inferred"
+    },
+    {
+      "sourceOrder": 2,
+      "nodeId": "0:9900",
+      "nodeName": "2.4_NOD",
+      "nodeType": "FRAME",
+      "likelyRole": "Vehicle details required-field validation state candidate",
+      "stateClassification": "validation-error state",
+      "mappingStatus": "candidate/inferred"
+    },
+    {
+      "sourceOrder": 3,
+      "nodeId": "751:10333",
+      "nodeName": "2.4_NOD",
+      "nodeType": "FRAME",
+      "likelyRole": "Vehicle details max-length validation state candidate",
+      "stateClassification": "validation-error state",
+      "mappingStatus": "candidate/inferred"
+    },
+    {
+      "sourceOrder": 4,
+      "nodeId": "751:15260",
+      "nodeName": "2.4_NOD",
+      "nodeType": "FRAME",
+      "likelyRole": "Vehicle details allowed-characters validation state candidate",
+      "stateClassification": "validation-error state",
+      "mappingStatus": "candidate/inferred"
+    }
+  ],
+  "normalInputPageCandidate": {
+    "nodeId": "490:60291",
+    "nodeName": "1.1A_NOD",
+    "nodeType": "FRAME",
+    "pageTitle": "Vehicle selection",
+    "candidateRole": "Vehicle details normal input page candidate",
+    "confidence": "high for normal input page; medium for page confirmation",
+    "mappingStatus": "candidate/inferred",
+    "visibleValidationMessages": []
+  },
+  "validationStateCandidates": [
+    {
+      "nodeId": "0:9900",
+      "nodeName": "2.4_NOD",
+      "nodeType": "FRAME",
+      "candidateRole": "Vehicle details required-field validation state candidate",
+      "confidence": "medium",
+      "mappingStatus": "candidate/inferred",
+      "visibleValidationMessages": [
+        "Your form has an error",
+        "Check the error:",
+        "Enter a NSW plate number."
+      ]
+    },
+    {
+      "nodeId": "751:10333",
+      "nodeName": "2.4_NOD",
+      "nodeType": "FRAME",
+      "candidateRole": "Vehicle details max-length validation state candidate",
+      "confidence": "medium",
+      "mappingStatus": "candidate/inferred",
+      "visibleValidationMessages": [
+        "Your form has an error",
+        "Check the error:",
+        "The plate number entered contains more than 6 characters, enter 6 characters or less."
+      ]
+    },
+    {
+      "nodeId": "751:15260",
+      "nodeName": "2.4_NOD",
+      "nodeType": "FRAME",
+      "candidateRole": "Vehicle details allowed-characters validation state candidate",
+      "confidence": "medium",
+      "mappingStatus": "candidate/inferred",
+      "visibleValidationMessages": [
+        "Your form has an error",
+        "Check the error:",
+        "Enter only numbers and letters."
+      ]
+    }
+  ],
+  "contentClassification": {
+    "headings": [
+      "Vehicle selection",
+      "Select the vehicle you sold to continue",
+      "Search for another vehicle"
+    ],
+    "helperText": [
+      "For example ABC123. Do not include spaces or special characters.",
+      "Enter a plate number, for example ABC123, or 8 digit billing number on your renewal notice or Certificate of Registration."
+    ],
+    "fieldLabels": [
+      "Enter a NSW plate number",
+      "NSW plate number or billing number"
+    ],
+    "vehicleCardLabels": [
+      "Plate number",
+      "VIN/Chassis:",
+      "Billing number:",
+      "Registration expiry:",
+      "Select vehicle"
+    ],
+    "ctaLabels": [
+      "Find vehicle",
+      "Back",
+      "Exit"
+    ],
+    "validationMessages": [
+      "Your form has an error",
+      "Check the error:",
+      "Enter a NSW plate number.",
+      "The plate number entered contains more than 6 characters, enter 6 characters or less.",
+      "Enter only numbers and letters."
+    ]
+  },
+  "extractedFields": [
+    {
+      "fieldId": "vehiclePlateNumber",
+      "label": "Enter a NSW plate number",
+      "fieldTypeCandidate": "text input",
+      "mappingStatus": "candidate/inferred",
+      "helperText": "For example ABC123. Do not include spaces or special characters.",
+      "sourceNodeIds": [
+        "490:60291",
+        "0:9900",
+        "751:10333",
+        "751:15260"
+      ]
+    },
+    {
+      "fieldId": "plateNumberOrBillingNumber",
+      "label": "NSW plate number or billing number",
+      "fieldTypeCandidate": "text input",
+      "mappingStatus": "candidate/inferred",
+      "helperText": "Enter a plate number, for example ABC123, or 8 digit billing number on your renewal notice or Certificate of Registration.",
+      "sourceNodeIds": [
+        "490:60291",
+        "0:9900",
+        "751:10333",
+        "751:15260"
+      ]
+    }
+  ],
+  "validationRules": [
+    {
+      "fieldId": "plateNumberOrBillingNumber",
+      "fieldLabel": "NSW plate number or billing number",
+      "sourceNodeId": "0:9900",
+      "message": "Enter a NSW plate number.",
+      "likelyRuleIntent": "required",
+      "ruleIntentStatus": "inferred",
+      "notes": "Message is shown as field-level validation evidence for the plate/billing input."
+    },
+    {
+      "fieldId": "plateNumberOrBillingNumber",
+      "fieldLabel": "NSW plate number or billing number",
+      "sourceNodeId": "751:10333",
+      "message": "The plate number entered contains more than 6 characters, enter 6 characters or less.",
+      "likelyRuleIntent": "maxLength",
+      "ruleIntentStatus": "inferred",
+      "notes": "Message directly references more than 6 characters and 6 characters or less."
+    },
+    {
+      "fieldId": "plateNumberOrBillingNumber",
+      "fieldLabel": "NSW plate number or billing number",
+      "sourceNodeId": "751:15260",
+      "message": "Enter only numbers and letters.",
+      "likelyRuleIntent": "allowedCharacters",
+      "ruleIntentStatus": "inferred",
+      "notes": "Message indicates alphanumeric-only allowed characters."
+    },
+    {
+      "fieldId": "plateNumberOrBillingNumber",
+      "fieldLabel": "NSW plate number or billing number",
+      "sourceNodeId": "490:60291",
+      "message": "For example ABC123. Do not include spaces or special characters.",
+      "likelyRuleIntent": "pattern",
+      "ruleIntentStatus": "inferred-from-helper-text",
+      "notes": "This is helper text, not a visible validation message. Do not treat it as an error unless Glen's schema supports helper-derived validation guidance."
+    },
+    {
+      "fieldId": "unknown",
+      "fieldLabel": "Unknown",
+      "sourceNodeId": "unknown",
+      "message": "Unknown validation concepts should remain Unknown.",
+      "likelyRuleIntent": "unknown",
+      "ruleIntentStatus": "explicit review rule",
+      "notes": "Use Unknown where Glen's schema does not support a visible validation concept or mapping is unclear."
+    }
+  ],
+  "unmappedValidationMessages": [
+    {
+      "sourceNodeIds": [
+        "0:9900",
+        "751:10333",
+        "751:15260"
+      ],
+      "message": "Your form has an error",
+      "messageRole": "error summary title",
+      "mappingStatus": "candidate/inferred",
+      "reasonUnmapped": "This is page-level error summary evidence, not a specific field validation message."
+    },
+    {
+      "sourceNodeIds": [
+        "0:9900",
+        "751:10333",
+        "751:15260"
+      ],
+      "message": "Check the error:",
+      "messageRole": "error summary copy",
+      "mappingStatus": "candidate/inferred",
+      "reasonUnmapped": "This is page-level error summary evidence, not a specific field validation message."
+    }
+  ],
+  "likelyCtas": [
+    {
+      "label": "Find vehicle",
+      "mappingStatus": "candidate/inferred",
+      "notes": "Primary action near the vehicle search input."
+    },
+    {
+      "label": "Back",
+      "mappingStatus": "candidate/inferred",
+      "notes": "Navigation CTA detected across the normal and validation states."
+    },
+    {
+      "label": "Exit",
+      "mappingStatus": "candidate/inferred",
+      "notes": "Exit CTA detected across the normal and validation states."
+    }
+  ],
+  "likelyShellElements": [
+    "Change language",
+    "Account",
+    "Log out",
+    "Home",
+    "Find services",
+    "Business",
+    "Find locations",
+    "Search",
+    "ACKNOWLEDGEMENT OF COUNTRY",
+    "FIND SERVICES",
+    "SERVICE NSW",
+    "CONTACT",
+    "Accessibility",
+    "Privacy",
+    "Terms of use",
+    "Copyright and disclaimer",
+    "Accessing information",
+    "NSW Government"
+  ],
+  "unknownsAndReviewGates": [
+    "Whether selected nodes are confirmed pages, component states or validation variants.",
+    "Whether the three 2.4_NOD frames are the intended validation states for the normal 1.1A_NOD frame.",
+    "Exact TaPaaS page, section, block, field, validation and CTA property names.",
+    "Whether Glen's schema represents error summaries separately from field-level validation.",
+    "Whether helper text should inform validation constraints or stay as helper text only.",
+    "Whether CTA targets are page transitions or component-state interactions.",
+    "Whether shell/global content should be excluded or represented as inherited app chrome.",
+    "Backend/API validation behaviour is Unknown.",
+    "Accessibility behaviour and error focus handling require TaPaaS engineering/accessibility review."
+  ],
+  "asksForGlen": [
+    "Confirm the TaPaaS schema concept for field-level validation rules.",
+    "Confirm whether error summary title and copy should be represented separately from field validation.",
+    "Confirm how required, maxLength, allowedCharacters and pattern-like constraints should be represented.",
+    "Confirm whether helper text can inform validation constraints or should remain content only.",
+    "Confirm which shell/global elements should be excluded or marked inherited.",
+    "Identify any candidate mappings that are misleading or should be removed."
+  ],
+  "doNotOverclaim": [
+    "Do not claim these are confirmed TaPaaS pages.",
+    "Do not claim backend/API validation behaviour.",
+    "Do not claim production readiness.",
+    "Do not claim TaPaaS schema compatibility.",
+    "Do not claim accessibility approval.",
+    "Do not claim privacy/legal approval.",
+    "Do not claim GEL approval.",
+    "Do not claim TaPaaS approval."
+  ]
+}
+

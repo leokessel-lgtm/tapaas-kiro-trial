@@ -1,0 +1,154 @@
+{
+  "artefactType": "tapaas-track-2-validation-page-selection",
+  "version": "0.1",
+  "experiment": "05-validation-focused-glen-test-preparation",
+  "selectionPurpose": "Select the best NOD user-input page and related validation/error states for Glen to test how validation rules are added into a TaPaaS config file.",
+  "fullTransactionExtracted": false,
+  "productionReady": false,
+  "schemaCompatibilityClaim": "none",
+  "requiresTaPaaSEngineeringReview": true,
+  "usedMcp": false,
+  "usedLiveFigmaFetch": false,
+  "rawFigmaJsonCommitted": false,
+  "recommendedExportNodeIds": [
+    "490:60291",
+    "0:9900",
+    "751:10333",
+    "751:15260"
+  ],
+  "recommendedNormalCandidate": {
+    "nodeId": "490:60291",
+    "nodeName": "1.1A_NOD",
+    "nodeType": "FRAME",
+    "parentSectionNodeId": "490:23907",
+    "parentSectionName": "Vehicle details",
+    "candidateRole": "Vehicle details normal input page candidate",
+    "confidence": "high for normal input page; medium for page confirmation",
+    "stateClassification": "normal input page",
+    "visibleFields": [
+      "Enter a NSW plate number",
+      "NSW plate number or billing number",
+      "Billing number:",
+      "Select vehicle",
+      "Find vehicle",
+      "Back",
+      "Exit"
+    ],
+    "visibleValidationMessages": [],
+    "whyUsefulForGlen": "Provides the normal input state for a plate number or billing number field that can be compared with related validation/error states.",
+    "warningFlags": [
+      "Candidate/inferred only.",
+      "Full page chrome included.",
+      "Exact default-vs-list state needs design confirmation.",
+      "Not a confirmed TaPaaS page."
+    ]
+  },
+  "recommendedValidationCandidates": [
+    {
+      "nodeId": "0:9900",
+      "nodeName": "2.4_NOD",
+      "nodeType": "FRAME",
+      "parentSectionNodeId": "751:10331",
+      "parentSectionName": "Front end validation errors",
+      "candidateRole": "Vehicle details required-field validation/error state candidate",
+      "confidence": "medium",
+      "stateClassification": "validation-error state",
+      "visibleFields": [
+        "Plate number or billing number input inferred from Vehicle details validation group"
+      ],
+      "visibleValidationMessages": [
+        "Your form has an error",
+        "Check the error:",
+        "Enter a NSW plate number."
+      ],
+      "warningFlags": [
+        "Candidate/inferred only.",
+        "Needs fresh selected-node export to confirm exact visible text.",
+        "Not a confirmed TaPaaS page or runtime state."
+      ]
+    },
+    {
+      "nodeId": "751:10333",
+      "nodeName": "2.4_NOD",
+      "nodeType": "FRAME",
+      "parentSectionNodeId": "751:10331",
+      "parentSectionName": "Front end validation errors",
+      "candidateRole": "Vehicle details length validation/error state candidate",
+      "confidence": "medium",
+      "stateClassification": "validation-error state",
+      "visibleFields": [
+        "Plate number or billing number input inferred from Vehicle details validation group"
+      ],
+      "visibleValidationMessages": [
+        "Your form has an error",
+        "Check the error:",
+        "Length validation copy"
+      ],
+      "warningFlags": [
+        "Candidate/inferred only.",
+        "Needs fresh selected-node export to confirm exact visible text.",
+        "Not a confirmed TaPaaS page or runtime state."
+      ]
+    },
+    {
+      "nodeId": "751:15260",
+      "nodeName": "2.4_NOD",
+      "nodeType": "FRAME",
+      "parentSectionNodeId": "751:10331",
+      "parentSectionName": "Front end validation errors",
+      "candidateRole": "Vehicle details character-format validation/error state candidate",
+      "confidence": "medium",
+      "stateClassification": "validation-error state",
+      "visibleFields": [
+        "Plate number or billing number input inferred from Vehicle details validation group"
+      ],
+      "visibleValidationMessages": [
+        "Your form has an error",
+        "Check the error:",
+        "Character validation copy"
+      ],
+      "warningFlags": [
+        "Candidate/inferred only.",
+        "Needs fresh selected-node export to confirm exact visible text.",
+        "Not a confirmed TaPaaS page or runtime state."
+      ]
+    }
+  ],
+  "secondaryCandidate": {
+    "nodeId": "531:11036",
+    "nodeName": "NOD Input: Sale and buyer details - default",
+    "nodeType": "FRAME",
+    "parentPath": "Document / Production screens; likely Disposal details / Sale and buyer details path",
+    "candidateRole": "Sale and buyer details normal input/details candidate",
+    "confidence": "medium",
+    "stateClassification": "normal input/details page or component variant",
+    "visibleFields": [
+      "Date of sale",
+      "Sale price or market value",
+      "NSW Driver Licence",
+      "Family name",
+      "Buyer details"
+    ],
+    "visibleValidationMessages": [],
+    "whyNotPrimary": "Strong domain fit, but current local evidence does not expose a related validation/error state for this node.",
+    "warningFlags": [
+      "May be a component/variant rather than a page.",
+      "Needs fresh selected-node export before Glen config generation.",
+      "Do not pair with unrelated Vehicle details validation states unless clearly labelled as a cross-page comparison."
+    ]
+  },
+  "liveFigmaFetchNeededNext": true,
+  "liveFigmaFetchReason": "The current raw node response does not include the related Vehicle details validation/error state nodes or the Sale and buyer details candidate as expanded selected-node payloads.",
+  "doNotOverclaim": [
+    "Do not claim these are confirmed TaPaaS pages.",
+    "Do not claim the error states are confirmed runtime states.",
+    "Do not claim backend validation contract, routing, persistence or API behaviour.",
+    "Do not claim production readiness.",
+    "Do not claim TaPaaS schema compatibility.",
+    "Do not claim accessibility approval.",
+    "Do not claim privacy/legal approval.",
+    "Do not claim GEL approval.",
+    "Do not claim TaPaaS approval."
+  ]
+}
+

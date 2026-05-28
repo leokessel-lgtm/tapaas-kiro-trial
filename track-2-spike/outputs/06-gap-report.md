@@ -51,7 +51,7 @@ Run a two-node fetch for the normal Privacy state and its validation-error state
 
 ## Evidence Snapshot
 
-- Source node count: 3
-- Generated pages/states: 3
+- Source node count: 4
+- Generated pages/states: 4
 - Production ready: false
 - Schema compatibility claim: none

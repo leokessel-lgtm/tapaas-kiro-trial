@@ -8,23 +8,6 @@
   "pages": [
     {
       "order": 1,
-      "sourceNodeId": "490:60286",
-      "sourceName": "0.1D_NOD",
-      "pageTitle": "Privacy",
-      "role": "normal-or-acknowledgement-state",
-      "mappingStatus": "verified",
-      "ctas": [
-        {
-          "label": "Continue",
-          "sourceNodeId": "I531:2614;306:74518;5311:33134;6519:42670;6519:38830;10111:15822",
-          "likelyTargetPage": "Unknown",
-          "navigationStatus": "unknown",
-          "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."
-        }
-      ]
-    },
-    {
-      "order": 2,
       "sourceNodeId": "490:60291",
       "sourceName": "1.1A_NOD",
       "pageTitle": "Vehicle selection",
@@ -41,23 +24,50 @@
       ]
     },
     {
-      "order": 3,
-      "sourceNodeId": "531:23422",
-      "sourceName": "NOD review - Individual",
-      "pageTitle": "Review",
-      "role": "normal-or-acknowledgement-state",
+      "order": 2,
+      "sourceNodeId": "0:9900",
+      "sourceName": "2.4_NOD",
+      "pageTitle": "Vehicle selection",
+      "role": "validation-error-state",
       "mappingStatus": "verified",
       "ctas": [
         {
           "label": "Back",
-          "sourceNodeId": "I531:23422;3436:107675;14884:18149;27:34844;10111:16021",
+          "sourceNodeId": "I751:12483;306:74514;10039:24334;5401:53426;10111:16021",
           "likelyTargetPage": "Unknown",
           "navigationStatus": "unknown",
           "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."
-        },
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "sourceNodeId": "751:10333",
+      "sourceName": "2.4_NOD",
+      "pageTitle": "Vehicle selection",
+      "role": "validation-error-state",
+      "mappingStatus": "verified",
+      "ctas": [
         {
-          "label": "Submit",
-          "sourceNodeId": "I531:23422;3436:107675;14884:18149;27:34845;27:34871;10111:15822",
+          "label": "Back",
+          "sourceNodeId": "I751:12485;306:74514;10039:24334;5401:53426;10111:16021",
+          "likelyTargetPage": "Unknown",
+          "navigationStatus": "unknown",
+          "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "sourceNodeId": "751:15260",
+      "sourceName": "2.4_NOD",
+      "pageTitle": "Vehicle selection",
+      "role": "validation-error-state",
+      "mappingStatus": "verified",
+      "ctas": [
+        {
+          "label": "Back",
+          "sourceNodeId": "I751:12489;6234:119046;10039:24334;5401:53426;10111:16021",
           "likelyTargetPage": "Unknown",
           "navigationStatus": "unknown",
           "evidence": "No explicit cross-page prototype link is confirmed by this no-fetch review."
