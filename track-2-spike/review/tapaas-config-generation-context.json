@@ -1,0 +1,99 @@
+{
+  "artefactType": "tapaas-config-generation-context",
+  "version": "0.1",
+  "purpose": "Provide compact generation context so a model can turn the Glen-facing Design IR into an engineering-review TaPaaS config schema candidate while preserving page, section and block structure.",
+  "sourceInputs": [
+    {
+      "path": "track-2-spike/review/known-pages-glen-input.json",
+      "role": "Primary Design IR input for Glen review"
+    },
+    {
+      "path": "track-2-spike/review/known-pages-page-map.md",
+      "role": "Human-readable map of selected page/frame/instance candidates"
+    },
+    {
+      "path": "track-2-spike/review/known-page-frame-selection.json",
+      "role": "Selected node metadata and review warnings"
+    },
+    {
+      "path": "track-2-spike/outputs/05-schema-candidate.pseudo.json",
+      "role": "Engineering-review pseudo-schema candidate, not confirmed TaPaaS schema"
+    },
+    {
+      "path": "track-2-spike/outputs/06-gap-report.md",
+      "role": "Known unknowns and review gates"
+    }
+  ],
+  "knownGlenFeedback": {
+    "jsonHadRequiredInformation": true,
+    "firstRunApproximateCorrectness": "around 70%",
+    "firstTwoPagesWorkedAsExpected": true,
+    "reviewPageLessReliable": true,
+    "firstRunIssue": "Sections were not created in the first run even though sections existed in the JSON.",
+    "secondReviewPassCorrectedIssue": true,
+    "likelyGap": "Generation context and prompting, not Figma extraction quality."
+  },
+  "structuralRules": [
+    "Treat the input JSON as Design IR, not final TaPaaS schema.",
+    "Generate a TaPaaS config schema candidate according to Glen's known specification.",
+    "Preserve every selected page candidate.",
+    "Preserve page order from the input.",
+    "Do not invent backend mapping, validation contracts, routing or persistence behaviour."
+  ],
+  "hierarchyRules": [
+    "Preserve page -> section -> block hierarchy.",
+    "Do not flatten blocks directly under a page when sections exist.",
+    "Every page must contain sections unless explicitly marked shell-only.",
+    "Every section must contain blocks or an explicit Unknown placeholder.",
+    "If the target schema uses different names for page, section or block, map to Glen's names while preserving the same hierarchy."
+  ],
+  "shellHandlingRules": [
+    "Treat shell/global content as inherited or excluded unless Glen's schema requires otherwise.",
+    "Do not treat header, footer, nav, search, account or global government/service chrome as transaction field evidence.",
+    "Record shell/global handling decisions in the gap report when uncertain."
+  ],
+  "ctaRules": [
+    "Keep CTAs separate from content blocks.",
+    "Do not convert CTA labels into field labels.",
+    "Preserve CTA labels such as Continue, Back, Submit and Exit when present.",
+    "Mark CTA targets or navigation behaviour as Unknown unless confirmed by Glen's schema or explicit evidence."
+  ],
+  "validationRules": [
+    "Keep validation and error evidence separate from normal field/content evidence.",
+    "Do not mix validation text into normal labels, headings or content blocks.",
+    "Mark validation model, error focus behaviour and backend-owned error taxonomy as Unknown unless confirmed by Glen's schema or engineering evidence."
+  ],
+  "unknownHandlingRules": [
+    "Mark unknown schema concepts as Unknown rather than inventing exact TaPaaS fields.",
+    "Preserve the Review INSTANCE caveat: the Review page candidate is an INSTANCE, not a clean child FRAME, and requires Glen/Michael confirmation.",
+    "Preserve privacy and legal content as requiring owner confirmation.",
+    "Do not claim accessibility, privacy/legal, GEL or TaPaaS approval."
+  ],
+  "acceptanceChecks": [
+    "All selected input candidates appear in the config.",
+    "Page order is preserved.",
+    "Page -> section -> block hierarchy is preserved.",
+    "No page with sections has blocks flattened directly under the page.",
+    "Each page has at least one section unless explicitly shell-only.",
+    "Each section has at least one block or explicit Unknown placeholder.",
+    "CTAs are represented separately from content blocks.",
+    "Validation evidence is not mixed into normal field labels.",
+    "Shell/global content is excluded or marked inherited.",
+    "Privacy and legal content remains marked as requiring owner confirmation.",
+    "Review INSTANCE caveat is preserved.",
+    "Unknowns remain unknown rather than invented.",
+    "Output does not claim production readiness or TaPaaS approval."
+  ],
+  "outputCaveats": [
+    "Engineering review aid only.",
+    "No production readiness claim.",
+    "No backend integration claim.",
+    "No TaPaaS schema compatibility claim.",
+    "No accessibility approval claim.",
+    "No privacy or legal approval claim.",
+    "No GEL approval claim.",
+    "No TaPaaS approval claim.",
+    "No live Figma fetch required."
+  ]
+}
+
