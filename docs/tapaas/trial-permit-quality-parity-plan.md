@@ -2,7 +2,7 @@
 
 Date: 2026-05-29
 
-Status: Slice 5 patched. Implementation changes are limited to Trial Permit visual/GEL parity, responsiveness and accessibility verification.
+Status: Slice 6B patched. Runtime changes remain limited to Slices 1 to 5. Slice 6B is documentation-only reusable rule promotion from Trial Permit hardening and MCP/Figma evidence.
 
 ## TLDR
 
@@ -250,6 +250,91 @@ Risks and unknowns after Slice 5:
 - No formal WCAG AA, GEL approval, TaPaaS approval or assistive-technology pass is implied.
 - The suspected ice-blue colour remains in shared preview styles because changing it would affect other components and transactions without source-backed token evidence.
 - The verification is component/test-level plus code inspection; visual parity still needs browser-based review against Figma/source.
+
+## Slice 6B documentation status
+
+Completed on 2026-05-30:
+
+- Recorded the latest MCP/Figma evidence as reusable transaction-assembly evidence, not as Trial Permit-specific source parity.
+- Promoted reusable TaPaaS/GEL transaction rules that were proven by Trial Permit hardening, repo evidence and the latest MCP inspection.
+- Reclassified Trial Permit as a simple transaction assembly benchmark built from reusable TaPaaS/GEL patterns.
+- Kept Trial Permit out of source-complete or production-like language because no standalone Trial Permit Figma source was found.
+- Left runtime code, tests, Storybook stories, acceptance manifest, package files, lockfiles, shared CSS/token files and Track 2 spike files unchanged.
+
+Latest MCP/Figma evidence inspected:
+
+- NOD Production: `gx2Dt1o34FQVFkiKwuSEI7`, node `0:9685`.
+- MPS Final: `75rryaOGOQPYkdUB4vHqK7`, node `0:16535`.
+- Owner Builder WIP walkthrough: `A7P3WSOHhJoEDHCKYNogRY`, node `1:190`.
+- Owner Builder layout specs: `A7P3WSOHhJoEDHCKYNogRY`, node `1:191`.
+- Owner Builder accessibility annotations: `A7P3WSOHhJoEDHCKYNogRY`, node `1:192`.
+- Owner Builder master templates/business rules: `A7P3WSOHhJoEDHCKYNogRY`, node `1:195`.
+- Subscribed source libraries: GEL Web UI Kit, Templates - TaPaaS Design Library and Components - TaPaaS Design Library.
+- GEL Button node `17291:7220`, confirming Primary, Secondary, Tertiary and Destructive are distinct button types.
+- GEL Error summary node `1323:3458`, confirming dark link treatment for error-summary links and error colour reserved for marker/icon/border/background treatment.
+- GEL Form header node `1334:6095`, confirming page label, page title and progress stepper inside the form-header area.
+
+Slice 6B decision:
+
+- Trial Permit remains useful as a simple transaction assembly quality benchmark.
+- Trial Permit is not a source-parity recreation of a Trial Permit-specific Figma flow.
+- Reusable rules can be promoted when they are backed by TaPaaS/GEL library evidence, transaction examples and the Trial Permit hardening work.
+- Trial Permit-specific wording, final service actions and policy-like content remain source-gated.
+
+Reusable rules promoted in Slice 6B:
+
+1. Use TaPaaS page templates first, not generic cards or blocks.
+2. Form header owns transaction label, page title and stepper composition.
+3. Keep source-required placeholders where exact content is missing.
+4. Privacy card is not a declaration checkbox.
+5. Privacy notice and T&Cs/declaration are separate concerns.
+6. Form/input pages should include required-field guidance and source-backed field instructions.
+7. Review pages need source-context edit actions.
+8. Review pages should use review info, fees and declaration review patterns where relevant.
+9. Confirmation uses confirmation-specific CTA patterns, not normal form-step CTAs.
+10. Confirmation should use transaction summary and next steps/what happens next patterns where relevant.
+11. Transaction CTA buttons belong on transaction pages except confirmation.
+12. End-of-transaction CTA buttons belong on success/confirmation steps.
+13. Error summary stays below page title/header, links to fields, and follows GEL component anatomy.
+14. Error-summary links should use dark link treatment, with error colour reserved for marker/icon/border/background treatment.
+15. Do not substitute generic UI when a TaPaaS/GEL component exists.
+16. Accessibility claims require measured or manual evidence.
+
+Items still source-gated after Slice 6B:
+
+- Exact Trial Permit privacy notice copy.
+- Exact T&Cs/declaration copy.
+- Exact permit-type explanation.
+- Exact Trial Permit confirmation copy, receipt/reference rules and post-submit actions.
+- Whether Trial Permit specifically needs Keep a record/TUTD.
+- Approved replacement for the suspected deprecated ice-blue token.
+- Field-level edit anchors or auto-return-to-review behaviour.
+
+Manual QA still required:
+
+- Browser screenshot or visual QA at desktop, tablet and narrow mobile widths.
+- Manual check that secondary headings resize and wrap acceptably in real rendered browsers.
+- Keyboard pass for error links, review edit controls and CTA order.
+- VoiceOver/NVDA testing for error summary, review edit actions, dynamic validation updates and post-submit state.
+- Contrast verification against rendered browser styles before any WCAG pass/fail claim.
+
+Items not promoted:
+
+- Exact Trial Permit privacy notice copy.
+- Exact T&Cs/declaration copy.
+- Exact permit-type explanation.
+- Exact Trial Permit confirmation copy, receipt/reference rules and post-submit actions.
+- Keep a record/TUTD as a Trial Permit requirement.
+- WCAG pass/fail or contrast claims.
+- Approved replacement for suspected deprecated ice-blue token.
+- Field-level edit anchors or auto-return-to-review.
+- Any claim that Trial Permit is Figma-complete, source-complete, production-like, GEL approved, TaPaaS approved or final-copy approved.
+
+Files changed in Slice 6B:
+
+- `docs/tapaas/trial-permit-quality-parity-plan.md`
+- `docs/tapaas/10-review-pack-mps-transaction-assembly.md`
+- `docs/tapaas/11-gel-storybook-architecture.md`
 
 ## Audit scope
 

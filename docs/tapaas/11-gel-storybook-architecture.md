@@ -43,6 +43,23 @@ Use this target structure for future Storybook navigation:
 | Transaction Assemblies | Stakeholders and product reviewers | Thin mocked transaction journeys and showcase-safe preview surfaces. | Mock-only unless later backend evidence exists. |
 | Visual QA & Evidence | Designers, source owners and Codex/Kiro maintenance | Intake boards, maturity backlog, screenshot-backed review and review-gate guidance. | Evidence-only unless separately manifest-backed. |
 
+## Transaction assembly review surfaces
+
+Transaction assembly review surfaces sit above isolated component stories and below production approval. They are useful for reviewing how TaPaaS and GEL patterns work together in a mocked transaction journey, but they do not create production, accessibility, GEL, TaPaaS, privacy, legal, policy or source-parity approval by themselves.
+
+Trial Permit can be considered for a future Storybook review surface as a simple transaction assembly benchmark. It should not be presented as a source-complete Trial Permit recreation unless a Trial Permit-specific source flow is supplied and reviewed.
+
+Storybook transaction review should distinguish:
+
+- component evidence: a component or pattern exists and can render in isolation
+- composition evidence: components are assembled with the expected page template, CTA, review, confirmation and validation relationships
+- source parity evidence: a specific source frame or flow has been checked against the coded surface
+- acceptance-manifest evidence: a deliberate manifest-backed target has been declared and passes the relevant checks
+
+Adding a Trial Permit story later would not automatically make it acceptance-backed. It should remain story-only until a deliberate manifest-backed story is created, moved or renamed.
+
+Do not update `docs/tapaas/09-component-acceptance-manifest.json` unless a Storybook ID changes, a new acceptance story is intentionally created, or an existing manifest-backed story must be moved or renamed.
+
 ## Phase 2 split status
 
 Phase 2A stopped before moving `SelectedMaturityComponents` because the story is manifest-backed. Phase 2B.1 moves that story into `Visual QA & Evidence/Selected Maturity` with a manifest-safe Storybook ID remap only.
