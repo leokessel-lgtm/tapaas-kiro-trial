@@ -2,7 +2,7 @@
 
 Date: 2026-05-29
 
-Status: Slice 4 patched. Implementation changes are limited to Trial Permit validation, error summary and field error behaviour.
+Status: Slice 5 patched. Implementation changes are limited to Trial Permit visual/GEL parity, responsiveness and accessibility verification.
 
 ## TLDR
 
@@ -196,6 +196,61 @@ Risks and unknowns after Slice 4:
 - The shared local `ErrorSummary` still contains preview styling and has not been source-measured for contrast.
 - No WCAG, GEL, TaPaaS, accessibility, privacy, legal or policy approval is implied.
 
+## Slice 5 patch status
+
+Completed on 2026-05-29:
+
+- Inspected the Trial Permit secondary/back CTA implementation and confirmed it uses the local GEL-shaped `Button` with `variant='secondary'`.
+- Added regression coverage that the Back CTA keeps the `gel-btn--secondary` class and does not use the destructive button class.
+- Preserved the Slice 3 CTA order and journey semantics. No route destinations or post-submit behaviours were changed.
+- Inspected the Trial Permit error summary after Slice 4 and confirmed it continues to use the repo `ErrorSummary` pattern with `data-gelweb-component='error-summary'`.
+- Added regression coverage for the Trial Permit error-summary id, GEL component marker and CSS class while preserving links, placement and validation timing.
+- Added review-page structure coverage for the current `ReviewInfoCard` and `ReviewFeesCard` composition.
+- Inspected responsive support in the current repo styles:
+  - buttons retain existing small-viewport full-width behaviour from `.gel-btn` mobile CSS;
+  - Trial Permit action buttons retain `flexWrap`;
+  - review summary rows retain the existing card-stacking rule at `max-width: 640px`.
+- Inspected the deprecated/ice-blue risk. The remaining `#f4f7f9` usage is in shared preview styles for TaPaaS review/fees/evidence/card-like patterns, not a Trial Permit-only local override.
+- Avoided changing shared TaPaaS preview colour styles in this slice because exact GEL/TaPaaS token replacement evidence is still missing.
+
+Files changed in Slice 5:
+
+- `src/TrialPermitSkeleton.test.tsx`
+- `docs/tapaas/trial-permit-quality-parity-plan.md`
+
+Verified visual/accessibility items in Slice 5:
+
+- Secondary/back CTA is not using destructive/error semantics in the Trial Permit action group.
+- CTA order remains Back, primary action, Exit on the review step.
+- Error summary remains structurally tied to the GEL-shaped `ErrorSummary` component and remains below the Slice 1 page title/header structure.
+- Error links remain available through the existing Slice 4 tests and structure.
+- Review page still renders the current review and fees card headings.
+- Button wrapping and review summary stacking are supported by the existing CSS rules and were not regressed by this slice.
+
+Deferred after Slice 5:
+
+- Browser screenshot or visual QA at desktop, tablet and narrow mobile widths.
+- Manual check that secondary headings resize and wrap acceptably in real rendered browsers.
+- Manual keyboard pass for error links, review edit controls and CTA order in a browser.
+- VoiceOver/NVDA testing for error summary, review edit actions and post-submit state.
+- Any shared TaPaaS preview style change for `#f4f7f9` until GEL/TaPaaS source confirms the replacement token or component treatment.
+- Storybook documentation and acceptance-manifest updates.
+
+Items needing GEL/Figma/source verification after Slice 5:
+
+- Exact GEL/TaPaaS secondary button visual treatment and hover/focus states.
+- Exact GEL/TaPaaS error-summary visual treatment, including link colour, icon treatment and role/announcement pattern.
+- Whether the shared TaPaaS review/fees card `#f4f7f9` background is the deprecated ice-blue token referenced in designer feedback and, if so, the approved replacement token.
+- Contrast for error summary links, field-error indicators, CTA colours and card backgrounds against rendered browser styles.
+- Exact responsive rules for secondary headings in Trial Permit templates.
+
+Risks and unknowns after Slice 5:
+
+- No contrast measurement was performed in this slice. Requires manual contrast verification against rendered browser styles.
+- No formal WCAG AA, GEL approval, TaPaaS approval or assistive-technology pass is implied.
+- The suspected ice-blue colour remains in shared preview styles because changing it would affect other components and transactions without source-backed token evidence.
+- The verification is component/test-level plus code inspection; visual parity still needs browser-based review against Figma/source.
+
 ## Audit scope
 
 ### Primary implementation files
@@ -272,7 +327,7 @@ Risks and unknowns after Slice 4:
 | Multiple pages differ from Figma design: titles, page structure, missing sections and missing components | Figma/source fidelity; page templates; content | All Trial Permit step components | Verify first, then fix | Use designer feedback as current source, but page-specific exact copy/sections need Figma/template verification. |
 | Form header is not used correctly | Page templates; Figma/source fidelity; component relationships | Top-level progress stepper and page headings | Fix now plus source verify for exact anatomy | Stepper should sit inside form header grey background; transaction name should be page label; page title should mirror each step. |
 | Review page has wrong title/component, missing edit functionality to relevant input page | Page templates; component choice; component relationships; accessibility | `ReviewStep`, `ReviewInfoCard` | Fix now | Add section-specific edit actions that return to relevant step. Preserve descriptive edit labels. |
-| Not using TaPaaS Review Card; missing functionality; uses deprecated GEL colour token ice blue; not using Fees component | Component choice; Figma/source fidelity; reusability / Storybook rule candidate | `ReviewInfoCard`, `ReviewFeesCard`, `.tapaas-review-card`, `.tapaas-fees-card` | Fix now for usage and deprecated token; verify exact Review Card source | `ReviewFeesCard` is used, but designer says Fees component is not used correctly or the page composition hides it. Replace deprecated `#f4f7f9` treatment. |
+| Not using TaPaaS Review Card; missing functionality; uses deprecated GEL colour token ice blue; not using Fees component | Component choice; Figma/source fidelity; reusability / Storybook rule candidate | `ReviewInfoCard`, `ReviewFeesCard`, `.tapaas-review-card`, `.tapaas-fees-card` | Partially fixed; token needs source verification | `ReviewInfoCard` and `ReviewFeesCard` are now used and covered by tests. Remaining `#f4f7f9` usage is shared preview styling, not a Trial Permit-only override; do not replace without approved token evidence. |
 | Confirmation page missing sections/components, including Keep a record or TUTD | Page templates; component choice; content; Figma/source fidelity | `ConfirmationStep` | Verify first | Need source-confirmed section names, TUTD meaning/content and whether `NextStepsCardPreview` applies. |
 | Confirmation summary card is misaligned, missing key info, includes unnecessary applicant name | Component choice; content; Figma/source fidelity | `TransactionSummaryCard` items | Fix now for applicant removal; verify missing key info | Remove applicant name unless source confirms it. Align summary card to confirmation template. |
 | Privacy page missing T&Cs and not using TaPaaS privacy card | Component choice; page templates; content; privacy | `PrivacyStep` | Fix now with placeholders | Use `PrivacyCardPreview` with privacy collection notice and terms sections. Owner-approved wording remains review-gated. |
@@ -286,7 +341,7 @@ Risks and unknowns after Slice 4:
 | Mandatory input field instructions missing | Page templates; accessibility; content | `InputStep`, possibly form header | Fix now | Add visible required-field guidance, likely `* indicates a required field`, using source-backed form input template pattern. |
 | Polite alert for error summary and links to relevant errors work and should be preserved | Accessibility; validation/error handling | `ErrorSummary`, `useTransactionStep` | Protect | Add test coverage around focus/link behaviour after changes. |
 | Error in-page alert appears above page title | Page templates; validation/error handling; accessibility | Top-level `ErrorSummary` before active step component | Fix now | Move error summary into the form/page structure after form header/page title, while keeping focus and links. |
-| Secondary headings may not adjust when resizing | Responsiveness; accessibility | Page headings and card headings | Verify first | Need browser check at desktop, tablet and 390px after layout changes. |
+| Secondary headings may not adjust when resizing | Responsiveness; accessibility | Page headings and card headings | Verified by code inspection; browser check still required | Existing heading and card styles have responsive support, but desktop/tablet/390px rendered checks are still deferred. |
 | Buttons and review card stacking appear responsive and should be preserved | Responsiveness | `TransactionCtaGroup`, `.tapaas-summary-row` | Protect | Add browser smoke checks if implementation changes are made. |
 | Could work for a simple transaction | Transaction flow; reusability | Overall Trial Permit | Protect | Keep scope as simple transaction hardening, not a full MPS-style transaction. |
 
@@ -303,7 +358,7 @@ Risks and unknowns after Slice 4:
 9. Add permit-type explanatory content that does not invent policy or eligibility rules.
 10. Rework review page to use the correct TaPaaS review card/frame pattern, include section-specific edit actions back to relevant input/declaration pages, and keep fees visibly as a Fees component.
 11. Remove unnecessary applicant name from confirmation summary unless source verifies it.
-12. Remove deprecated ice-blue style/token usage from review/fees cards.
+12. Verify deprecated ice-blue style/token usage in review/fees cards against GEL/TaPaaS source before changing shared preview styles.
 13. Add regression tests for preserved behaviours: validation waits for Continue, error links target fields, review edit routes back to relevant step, responsive button/review stacking remains intact.
 
 ## Items needing source or Figma verification
@@ -321,6 +376,7 @@ Risks and unknowns after Slice 4:
 | Error summary GEL correctness | GEL source or designer example | Existing error summary works functionally but may not match visual/component anatomy. |
 | Red error message treatment | GEL source or designer clarification | Need distinguish link colour, inline message text, border and icon colour. |
 | Secondary-heading resizing | Browser screenshots plus source expectation | Could be a content/layout issue rather than component defect. |
+| Shared review/fees card colour token | GEL/TaPaaS source token or Figma inspect data | `#f4f7f9` appears in shared preview card styles. Replacing it without source evidence could regress unrelated components. |
 
 ## Reusable rules for other transactions
 

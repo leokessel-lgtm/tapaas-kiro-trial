@@ -48,6 +48,9 @@ describe('TrialPermitSkeleton', () => {
     const heading = screen.getByRole('heading', { name: 'Application details' })
     const errorSummary = screen.getByRole('group', { name: 'Your form has errors' })
     expect(heading.compareDocumentPosition(errorSummary) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(errorSummary).toHaveAttribute('id', 'trial-permit-error-summary')
+    expect(errorSummary).toHaveAttribute('data-gelweb-component', 'error-summary')
+    expect(errorSummary).toHaveClass('gel-error-summary')
     expect(screen.getByText((_, element) => element?.textContent === '* indicates a required field.')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Enter your full name' })).toHaveAttribute('href', '#applicant-name')
     expect(screen.getByRole('link', { name: 'Select a permit type' })).toHaveAttribute('href', '#permit-type')
@@ -120,6 +123,8 @@ describe('TrialPermitSkeleton', () => {
     await completeDeclaration(user)
 
     expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Application details' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Fees' })).toBeInTheDocument()
     expect(screen.getByText('Jane Citizen')).toBeInTheDocument()
     expect(screen.getByText('Standard permit (mock)')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Declaration' })).toBeInTheDocument()
@@ -128,6 +133,9 @@ describe('TrialPermitSkeleton', () => {
     const reviewActions = screen.getByRole('group', { name: 'Transaction actions' })
     const reviewButtons = within(reviewActions).getAllByRole('button').map((button) => button.textContent)
     expect(reviewButtons).toEqual(['Back', 'Submit application', 'Exit'])
+    const backButton = within(reviewActions).getByRole('button', { name: 'Back' })
+    expect(backButton).toHaveClass('gel-btn--secondary')
+    expect(backButton).not.toHaveClass('gel-btn--destructive')
 
     await user.click(screen.getByRole('button', { name: 'Submit application' }))
 
