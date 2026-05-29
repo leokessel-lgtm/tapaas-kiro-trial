@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { useTransactionStep } from './useTransactionStep'
+import { type StepError, useTransactionStep } from './useTransactionStep'
 import {
   Button,
   Checkbox,
@@ -50,6 +50,7 @@ export function TrialPermitSkeleton() {
   const [applicantName, setApplicantName] = useState('')
   const [permitType, setPermitType] = useState('')
   const [declarationAccepted, setDeclarationAccepted] = useState(false)
+  const [submittedErrors, setSubmittedErrors] = useState<StepError[]>([])
 
   const getErrors = useCallback((s: PermitStep) => {
     const errs: { id: string; text: string }[] = []
@@ -70,10 +71,26 @@ export function TrialPermitSkeleton() {
     return errs
   }, [privacyAgreed, applicantName, permitType, declarationAccepted])
 
-  const { step, setStep, attempted, setAttempted, errors, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+  const { step, setStep, setAttempted, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+
+  function hasSubmittedError(id: string) {
+    return submittedErrors.some((error) => error.id === id)
+  }
+
+  function handleContinue() {
+    const nextErrors = getErrors(step)
+    setSubmittedErrors(nextErrors)
+    goNext()
+  }
+
+  function handleBack() {
+    setSubmittedErrors([])
+    goBack()
+  }
 
   function goToReviewSource(targetStep: Extract<PermitStep, 'input' | 'declaration'>) {
     setAttempted(false)
+    setSubmittedErrors([])
     setStep(targetStep)
     window.setTimeout(() => {
       window.scrollTo(0, 0)
@@ -95,14 +112,14 @@ export function TrialPermitSkeleton() {
         <TrialPermitFormHeader step={step} />
       )}
 
-      <ErrorSummary ref={errorSummaryRef} errors={errors} />
+      <ErrorSummary id='trial-permit-error-summary' ref={errorSummaryRef} errors={submittedErrors} />
 
       {step === 'privacy' && (
         <PrivacyStep
           privacyAgreed={privacyAgreed}
-          hasError={attempted && !privacyAgreed}
+          hasError={hasSubmittedError('privacy-confirmation')}
           onChange={setPrivacyAgreed}
-          onContinue={goNext}
+          onContinue={handleContinue}
           onExit={openExitModal}
         />
       )}
@@ -111,12 +128,12 @@ export function TrialPermitSkeleton() {
         <InputStep
           applicantName={applicantName}
           permitType={permitType}
-          nameError={attempted && !applicantName.trim()}
-          permitError={attempted && !permitType}
+          nameError={hasSubmittedError('applicant-name')}
+          permitError={hasSubmittedError('permit-type')}
           onNameChange={setApplicantName}
           onPermitChange={setPermitType}
-          onBack={goBack}
-          onContinue={goNext}
+          onBack={handleBack}
+          onContinue={handleContinue}
           onExit={openExitModal}
         />
       )}
@@ -124,10 +141,10 @@ export function TrialPermitSkeleton() {
       {step === 'declaration' && (
         <DeclarationStep
           accepted={declarationAccepted}
-          hasError={attempted && !declarationAccepted}
+          hasError={hasSubmittedError('declaration-accepted')}
           onChange={setDeclarationAccepted}
-          onBack={goBack}
-          onContinue={goNext}
+          onBack={handleBack}
+          onContinue={handleContinue}
           onExit={openExitModal}
         />
       )}
@@ -136,10 +153,10 @@ export function TrialPermitSkeleton() {
         <ReviewStep
           applicantName={applicantName}
           permitType={permitType}
-          onBack={goBack}
+          onBack={handleBack}
           onEditApplication={() => goToReviewSource('input')}
           onEditDeclaration={() => goToReviewSource('declaration')}
-          onSubmit={goNext}
+          onSubmit={handleContinue}
           onExit={openExitModal}
         />
       )}
@@ -149,6 +166,7 @@ export function TrialPermitSkeleton() {
           permitType={permitType}
           onStartAgain={() => {
             reset()
+            setSubmittedErrors([])
             setPrivacyAgreed(false)
             setApplicantName('')
             setPermitType('')
@@ -160,7 +178,7 @@ export function TrialPermitSkeleton() {
       <ExitModal
         isOpen={exitModalOpen}
         onContinue={closeExitModal}
-        onExit={() => { reset(); setPrivacyAgreed(false); setApplicantName(''); setPermitType(''); setDeclarationAccepted(false) }}
+        onExit={() => { reset(); setSubmittedErrors([]); setPrivacyAgreed(false); setApplicantName(''); setPermitType(''); setDeclarationAccepted(false) }}
         description='This preview does not save draft applications. If you exit, the mock form data will be cleared.'
       />
     </div>

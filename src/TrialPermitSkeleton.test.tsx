@@ -45,6 +45,10 @@ describe('TrialPermitSkeleton', () => {
     await completePrivacy(user)
     await user.click(screen.getByRole('button', { name: 'Continue' }))
 
+    const heading = screen.getByRole('heading', { name: 'Application details' })
+    const errorSummary = screen.getByRole('group', { name: 'Your form has errors' })
+    expect(heading.compareDocumentPosition(errorSummary) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(screen.getByText((_, element) => element?.textContent === '* indicates a required field.')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Enter your full name' })).toHaveAttribute('href', '#applicant-name')
     expect(screen.getByRole('link', { name: 'Select a permit type' })).toHaveAttribute('href', '#permit-type')
     expect(screen.getByText('[Source content required: permit type explanation]')).toBeInTheDocument()
@@ -52,6 +56,29 @@ describe('TrialPermitSkeleton', () => {
     await completeInput(user)
 
     expect(screen.getByRole('heading', { name: 'Declaration' })).toBeInTheDocument()
+  })
+
+  it('keeps submitted errors visible until Continue revalidates the current step', async () => {
+    const user = userEvent.setup()
+    render(<TrialPermitSkeleton />)
+
+    await completePrivacy(user)
+    await user.click(screen.getByRole('button', { name: 'Continue' }))
+
+    const fullNameInput = screen.getByLabelText(/Full name/)
+    expect(screen.getByRole('link', { name: 'Enter your full name' })).toHaveAttribute('href', '#applicant-name')
+    expect(fullNameInput).toHaveAttribute('aria-invalid', 'true')
+
+    await user.type(fullNameInput, 'Jane Citizen')
+
+    expect(screen.getByRole('link', { name: 'Enter your full name' })).toHaveAttribute('href', '#applicant-name')
+    expect(fullNameInput).toHaveAttribute('aria-invalid', 'true')
+
+    await user.click(screen.getByRole('button', { name: 'Continue' }))
+
+    expect(screen.queryByRole('link', { name: 'Enter your full name' })).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Select a permit type' })).toHaveAttribute('href', '#permit-type')
+    expect(fullNameInput).not.toHaveAttribute('aria-invalid')
   })
 
   it('maps review edit actions to the relevant source steps', async () => {

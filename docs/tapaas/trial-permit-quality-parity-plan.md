@@ -2,7 +2,7 @@
 
 Date: 2026-05-29
 
-Status: Slice 3 patched. Implementation changes are limited to Trial Permit component relationships and transaction behaviour.
+Status: Slice 4 patched. Implementation changes are limited to Trial Permit validation, error summary and field error behaviour.
 
 ## TLDR
 
@@ -153,6 +153,48 @@ Risks and unknowns after Slice 3:
 - Confirmation still uses placeholder next-step and receipt content; no operational instructions are confirmed.
 - The permit-type guidance is an explicit placeholder, not policy or eligibility content.
 - No accessibility measurement, WCAG claim, GEL approval, TaPaaS approval, privacy approval, legal approval or policy approval is implied.
+
+## Slice 4 patch status
+
+Completed on 2026-05-29:
+
+- Kept the existing repo `ErrorSummary` component as the closest available GEL-shaped pattern.
+- Added a Trial Permit-specific submitted-error state so error summary and field-level errors persist until the user clicks Continue again.
+- Preserved error-summary focus and links to relevant fields.
+- Added a stable `trial-permit-error-summary` id for the Trial Permit summary instance.
+- Preserved validation timing, field-level validation rules, data entry and navigation behaviour.
+- Confirmed the error summary remains below the Slice 1 page title/header structure.
+- Preserved the application-details mandatory-field instruction without adding duplicate content.
+- Kept Slice 2 and Slice 3 component structure and behaviours intact.
+
+Files changed in Slice 4:
+
+- `src/TrialPermitSkeleton.tsx`
+- `src/TrialPermitSkeleton.test.tsx`
+- `docs/tapaas/trial-permit-quality-parity-plan.md`
+
+Deferred after Slice 4:
+
+- Shared `ErrorSummary` implementation changes across all transactions.
+- Visual/pixel comparison against the real GEL ErrorSummary and field-error components.
+- Contrast measurement for summary links, field borders, icons or inline error text.
+- VoiceOver/NVDA announcement testing for the error summary, field errors and revalidation flow.
+- Any cross-transaction validation-state refactor.
+- Storybook documentation and acceptance-manifest updates.
+
+Items needing source/Figma/GEL verification after Slice 4:
+
+- Whether the local preview `ErrorSummary` should use `role="group"` or the GEL source `role="alert"` in this trial context.
+- Exact GEL/TaPaaS error-summary visual treatment, including link colour and icon treatment.
+- Exact field-level error styling and whether the current local preview should be changed globally.
+- Assistive-technology announcement behaviour for the submitted-error persistence pattern.
+- Whether required-field guidance should remain per page or move into a reusable form-header/content pattern.
+
+Risks and unknowns after Slice 4:
+
+- Error persistence is intentionally local to Trial Permit. Other skeletons still use the shared hook's live recomputation behaviour.
+- The shared local `ErrorSummary` still contains preview styling and has not been source-measured for contrast.
+- No WCAG, GEL, TaPaaS, accessibility, privacy, legal or policy approval is implied.
 
 ## Audit scope
 
