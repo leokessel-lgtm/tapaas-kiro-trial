@@ -4,12 +4,12 @@ import { describe, expect, it } from 'vitest'
 import { TrialPermitSkeleton } from './TrialPermitSkeleton'
 
 async function completePrivacy(user: ReturnType<typeof userEvent.setup>) {
-  await user.click(screen.getByRole('checkbox', { name: 'I have read and understand the privacy information.' }))
+  await user.click(screen.getByRole('checkbox', { name: 'I agree to the terms and conditions for this trial permit application.' }))
   await user.click(screen.getByRole('button', { name: 'Continue' }))
 }
 
 async function completeInput(user: ReturnType<typeof userEvent.setup>) {
-  await user.type(screen.getByLabelText('Full name'), 'Jane Citizen')
+  await user.type(screen.getByLabelText(/Full name/), 'Jane Citizen')
   await user.click(screen.getByRole('radio', { name: 'Standard permit (mock)' }))
   await user.click(screen.getByRole('button', { name: 'Continue' }))
 }
@@ -27,12 +27,15 @@ describe('TrialPermitSkeleton', () => {
     await user.click(screen.getByRole('button', { name: 'Continue' }))
 
     expect(screen.getByRole('group', { name: 'Your form has an error' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Confirm that you have read the privacy information' })).toHaveAttribute('href', '#privacy-confirmation')
+    expect(screen.getByRole('link', { name: 'Confirm that you agree to the terms and conditions' })).toHaveAttribute('href', '#privacy-confirmation')
     expect(screen.getByRole('heading', { name: 'Privacy information' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Trial permit privacy and terms' })).toBeInTheDocument()
+    expect(screen.getByText('[Source content required: privacy collection notice]')).toBeInTheDocument()
+    expect(screen.getByText('[Source content required: terms and conditions text]')).toBeInTheDocument()
 
     await completePrivacy(user)
 
-    expect(screen.getByRole('heading', { name: 'Apply for a trial permit' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Application details' })).toBeInTheDocument()
   })
 
   it('blocks empty input submission and then advances with valid details', async () => {
@@ -65,6 +68,7 @@ describe('TrialPermitSkeleton', () => {
     expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
     expect(screen.getByText('Jane Citizen')).toBeInTheDocument()
     expect(screen.getByText('Standard permit (mock)')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Declaration' })).toBeInTheDocument()
     expect(screen.getAllByText('$0.00')).toHaveLength(2)
 
     await user.click(screen.getByRole('button', { name: 'Submit application' }))
@@ -72,5 +76,7 @@ describe('TrialPermitSkeleton', () => {
     const status = screen.getByRole('status', { name: 'Transaction completed' })
     expect(within(status).getByRole('heading', { name: 'Application submitted' })).toBeInTheDocument()
     expect(screen.getByText('PERMIT-000000')).toBeInTheDocument()
+    expect(screen.queryByText('Jane Citizen')).not.toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Next steps' })).toBeInTheDocument()
   })
 })
