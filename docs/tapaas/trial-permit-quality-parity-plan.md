@@ -2,7 +2,7 @@
 
 Date: 2026-05-29
 
-Status: Slice 2 patched. Implementation changes are limited to Trial Permit page-template structure and component selection/alignment.
+Status: Slice 3 patched. Implementation changes are limited to Trial Permit component relationships and transaction behaviour.
 
 ## TLDR
 
@@ -101,6 +101,58 @@ Risks and unknowns after Slice 2:
 - The review page now uses more existing TaPaaS components, but edit behaviour remains deliberately deferred.
 - `NextStepsCardPreview` is source-backed as a component, but Trial Permit next-step content remains placeholder and owner-gated.
 - No formal accessibility, GEL, TaPaaS, privacy, legal or policy approval is implied.
+
+## Slice 3 patch status
+
+Completed on 2026-05-29:
+
+- Added review edit actions for the two evidenced review source contexts:
+  - `Application details` routes back to the application-details step.
+  - `Declaration` routes back to the declaration step.
+- Implemented the safest available step-level edit routing in the current skeleton.
+- Preserved validation timing and field-level validation logic while resetting attempted error display during review edit navigation.
+- Added local Trial Permit CTA ordering so Back appears before the primary action on review/input/declaration steps.
+- Kept secondary/back as a normal secondary action, not a destructive or error action.
+- Changed confirmation action label from `Start again` to `Start another application` so the confirmation state reads as post-submission rather than another form input step.
+- Kept confirmation action behaviour to the existing safe reset route; no final destination URL or service-specific action was invented.
+- Added source-required permit-type guidance placeholder:
+  - `[Source content required: permit type explanation]`
+- Kept confirmation summary aligned to transaction details without reintroducing applicant name.
+- Preserved Slice 1 and Slice 2 structures and component usage: `PrivacyCardPreview`, `ReviewInfoCard`, `ReviewFeesCard`, `DeclarationReview`, `TransactionSummaryCard` and `NextStepsCardPreview`.
+
+Files changed in Slice 3:
+
+- `src/TrialPermitSkeleton.tsx`
+- `src/TrialPermitSkeleton.test.tsx`
+- `docs/tapaas/trial-permit-quality-parity-plan.md`
+
+Deferred after Slice 3:
+
+- Full source-parity review edit routing to section anchors inside a step.
+- Any edit route that skips forward directly back to review after a single field edit.
+- Final CTA destinations, exit/save/session behaviour and post-submit service actions.
+- Keep a record / TUTD component or content.
+- Final permit-type guidance content.
+- Storybook documentation and acceptance-manifest updates.
+- Cross-transaction CTA or review-edit rule promotion.
+
+Items needing source/Figma verification after Slice 3:
+
+- Whether review edit links should target step-level pages or field/section anchors.
+- Exact edit-link wording and placement for the Trial Permit review page.
+- Confirmation CTA label, hierarchy and any real post-submit destination.
+- Whether `Start another application` is an acceptable preview-only reset label.
+- Whether permit-type guidance belongs before, inside or after the choice component.
+- Final source copy for permit-type explanation.
+- Keep a record / TUTD meaning, component evidence and placement.
+
+Risks and unknowns after Slice 3:
+
+- Review edit routing is step-level only. It should not be claimed as full source parity or field-level edit routing.
+- Local Trial Permit CTA ordering avoids changing shared components, but broader transaction CTA rules remain unpromoted.
+- Confirmation still uses placeholder next-step and receipt content; no operational instructions are confirmed.
+- The permit-type guidance is an explicit placeholder, not policy or eligibility content.
+- No accessibility measurement, WCAG claim, GEL approval, TaPaaS approval, privacy approval, legal approval or policy approval is implied.
 
 ## Audit scope
 

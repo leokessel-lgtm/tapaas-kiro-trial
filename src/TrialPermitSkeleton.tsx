@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react'
 import { useTransactionStep } from './useTransactionStep'
 import {
+  Button,
   Checkbox,
   ErrorSummary,
   Field,
@@ -19,7 +20,6 @@ import {
   PrivacyCardPreview,
   ReviewFeesCard,
   ReviewInfoCard,
-  TransactionCtaGroup,
   TransactionSummaryCard,
 } from './tapaas-preview'
 
@@ -70,7 +70,17 @@ export function TrialPermitSkeleton() {
     return errs
   }, [privacyAgreed, applicantName, permitType, declarationAccepted])
 
-  const { step, attempted, errors, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+  const { step, setStep, attempted, setAttempted, errors, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+
+  function goToReviewSource(targetStep: Extract<PermitStep, 'input' | 'declaration'>) {
+    setAttempted(false)
+    setStep(targetStep)
+    window.setTimeout(() => {
+      window.scrollTo(0, 0)
+      const heading = document.getElementById(`${targetStep}-heading`)
+      if (heading) { heading.tabIndex = -1; heading.focus() }
+    }, 0)
+  }
 
   return (
     <div>
@@ -127,6 +137,8 @@ export function TrialPermitSkeleton() {
           applicantName={applicantName}
           permitType={permitType}
           onBack={goBack}
+          onEditApplication={() => goToReviewSource('input')}
+          onEditDeclaration={() => goToReviewSource('declaration')}
           onSubmit={goNext}
           onExit={openExitModal}
         />
@@ -224,7 +236,7 @@ function PrivacyStep({
         hasError={hasError}
         errorMessage='Confirm that you agree to the terms and conditions.'
       />
-      <TransactionCtaGroup onContinue={onContinue} onExit={onExit} continueLabel='Continue' />
+      <TrialPermitActionGroup onContinue={onContinue} onExit={onExit} continueLabel='Continue' />
     </section>
   )
 }
@@ -285,7 +297,10 @@ function InputStep({
         hasError={permitError}
         errorMessage='Select a permit type.'
       />
-      <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
+      <p style={{ color: 'var(--gel-color-text-grey)', fontSize: '0.875rem', margin: '-0.5rem 0 1.5rem' }}>
+        [Source content required: permit type explanation]
+      </p>
+      <TrialPermitActionGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
     </section>
   )
 }
@@ -323,7 +338,7 @@ function DeclarationStep({
         hasError={hasError}
         errorMessage='Accept the declaration to continue.'
       />
-      <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
+      <TrialPermitActionGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
     </section>
   )
 }
@@ -332,12 +347,16 @@ function ReviewStep({
   applicantName,
   permitType,
   onBack,
+  onEditApplication,
+  onEditDeclaration,
   onSubmit,
   onExit,
 }: {
   applicantName: string
   permitType: string
   onBack: () => void
+  onEditApplication: () => void
+  onEditDeclaration: () => void
   onSubmit: () => void
   onExit: () => void
 }) {
@@ -358,6 +377,7 @@ function ReviewStep({
             ],
           },
         ]}
+        onEdit={onEditApplication}
       />
       <ReviewFeesCard
         fees={[
@@ -375,10 +395,13 @@ function ReviewStep({
           },
         ]}
       />
+      <p style={{ margin: '-0.75rem 0 1.5rem' }}>
+        <TextLink onClick={onEditDeclaration}>Edit declaration</TextLink>
+      </p>
       <InPageAlert variant='info' title='Payment excluded'>
         <p>No payment flow is included in this trial skeleton. Fee amounts need owner confirmation.</p>
       </InPageAlert>
-      <TransactionCtaGroup onBack={onBack} onContinue={onSubmit} onExit={onExit} continueLabel='Submit application' />
+      <TrialPermitActionGroup onBack={onBack} onContinue={onSubmit} onExit={onExit} continueLabel='Submit application' />
     </section>
   )
 }
@@ -432,10 +455,42 @@ function ConfirmationStep({
           All timeframes, contact methods and approval processes above are placeholders. They must be confirmed by the service owner before real use.
         </p>
       </InPageAlert>
-      <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start again' />
+      <TrialPermitActionGroup onContinue={onStartAgain} continueLabel='Start another application' />
       <p style={{ marginTop: '1rem' }}>
         <TextLink href='https://github.com/leokessel-lgtm/tapaas-kiro-trial/blob/main/docs/tapaas/00-source-inventory.md'>Review TaPaaS source inventory</TextLink>
       </p>
     </section>
+  )
+}
+
+function TrialPermitActionGroup({
+  onBack,
+  onContinue,
+  onExit,
+  continueLabel = 'Continue',
+  backLabel = 'Back',
+  exitLabel = 'Exit',
+}: {
+  onBack?: () => void
+  onContinue?: () => void
+  onExit?: () => void
+  continueLabel?: string
+  backLabel?: string
+  exitLabel?: string
+}) {
+  return (
+    <div
+      role='group'
+      aria-label='Transaction actions'
+      data-tapaas-component='transaction-action-area'
+      data-preview-boundary='trial-permit local CTA ordering; no new routing included'
+      style={{ alignItems: 'flex-start', display: 'flex', flexDirection: 'column', gap: '1rem', margin: '2rem 0 0' }}
+    >
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+        {onBack && <Button variant='secondary' onClick={onBack}>{backLabel}</Button>}
+        {onContinue && <Button onClick={onContinue}>{continueLabel}</Button>}
+      </div>
+      {onExit && <Button variant='link' onClick={onExit}>{exitLabel}</Button>}
+    </div>
   )
 }
