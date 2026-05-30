@@ -10,7 +10,6 @@ import {
   RadioButtonList,
   Select,
   Textarea,
-  TextLink,
 } from './gel'
 import {
   ConfirmationHeader,
@@ -496,10 +495,7 @@ function ConfirmationStep({ form, onStartAgain }: { form: FormState; onStartAgai
       <InPageAlert variant='info' title='Owner confirmation required'>
         <p>All timeframes, contact methods and approval processes above are placeholders. They must be confirmed by the service owner before real use.</p>
       </InPageAlert>
-      <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start again' />
-      <p style={{ marginTop: '1rem' }}>
-        <TextLink href='https://github.com/leokessel-lgtm/tapaas-kiro-trial/blob/main/docs/tapaas/00-source-inventory.md'>Review TaPaaS source inventory</TextLink>
-      </p>
+      <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start another application' />
     </section>
   )
 }

@@ -2,7 +2,7 @@
 
 Date: 2026-05-31
 
-Status: Slice 0 classification only. No runtime patch has been applied.
+Status: Slice 1 low-risk inherited cleanup completed. AMP remains a mock transaction skeleton with no confirmed transaction-specific source flow.
 
 ## TLDR
 
@@ -63,7 +63,7 @@ Current source classification:
 | Supporting information | Textarea with character count | AMP-specific; likely safe but copy/source remains gated. |
 | Declaration | Warning alert, placeholder declaration and checkbox | Inherited Trial Permit feedback applies; legal copy source-gated. |
 | Review | `ReviewInfoCard` sections and `ReviewFeesCard`, no edit actions | Inherited Trial Permit feedback applies; edit routing and exact review content source-gated. |
-| Confirmation | `ConfirmationHeader`, `TransactionSummaryCard`, next-step list, source-inventory link | Inherited Trial Permit feedback applies; source link should not remain in runtime if patched. |
+| Confirmation | `ConfirmationHeader`, `TransactionSummaryCard`, next-step list, end-of-transaction CTA | Slice 1 removed the developer-facing source-inventory link and aligned the CTA label to the Trial Permit-safe wording. Confirmation content remains source-gated. |
 
 ## Feedback classification
 
@@ -81,7 +81,7 @@ Current source classification:
 | AMP-10 | Privacy/T&Cs structure inherited from Trial Permit | inherited Trial Permit feedback; source-gated | AMP privacy page is free text and privacy acknowledgement; Trial Permit fix separated privacy notice from T&Cs. | Patch candidate if applying inherited structural cleanup. | Use placeholders; no final privacy/legal copy. |
 | AMP-11 | Form header/error summary placement inherited from Trial Permit | inherited Trial Permit feedback | AMP has step text and `ErrorSummary` before step body, not the hardened Trial Permit form-header composition. | Patch candidate, but larger blast radius. | Good reusable rule, but AMP has 9 steps so ProgressStepper usage boundary matters. |
 | AMP-12 | Review edit actions inherited from Trial Permit | inherited Trial Permit feedback | AMP review has no edit actions back to applicant/contact/market/accessibility/supporting/declaration steps. | Patch candidate after validation slice. | Step-level edit routing is safe; field-level anchors and auto-return-to-review remain source-gated. |
-| AMP-13 | Confirmation runtime source-inventory link | inherited Trial Permit feedback | AMP confirmation includes `Review TaPaaS source inventory` runtime link. | High-priority low-risk patch. | Trial Permit Slice 9 removed equivalent developer-facing runtime UI. |
+| AMP-13 | Confirmation runtime source-inventory link | inherited Trial Permit feedback | AMP confirmation included `Review TaPaaS source inventory` runtime link. | Fixed in Slice 1. | Trial Permit Slice 9 removed equivalent developer-facing runtime UI. |
 | AMP-14 | Review/fees/confirmation exact sections | source-gated | AMP has review cards, fees and summary, but no source confirms rows, fees or receipt rules. | Document only until source exists. | Do not add Keep a record/TUTD or final next steps without source. |
 | AMP-15 | Error-summary visual/accessibility behaviour | inherited Trial Permit feedback; manual QA | Shared `ErrorSummary` has been improved after Trial Permit, but AMP has no focused tests. | Test/protect when patching validation. | Do not claim WCAG or AT behaviour. |
 | AMP-16 | Buttons and review stacking responsiveness | positive/protected; manual QA | Shared `TransactionCtaGroup` now has Back-before-primary order; mobile CSS stacks buttons. | Protect. | Browser resize QA still required for AMP-specific longer content. |
@@ -106,7 +106,7 @@ Current source classification:
 
 | Priority | Fix | Why first | Safe boundary |
 |---|---|---|---|
-| 1 | Remove developer-facing source inventory link from AMP confirmation. | Low-risk inherited Trial Permit cleanup; runtime UI should not expose internal docs. | Runtime-only UI cleanup, no source-content claim. |
+| 1 | Remove developer-facing source inventory link from AMP confirmation and align restart CTA wording. | Low-risk inherited Trial Permit cleanup; runtime UI should not expose internal docs. | Completed in Slice 1. Runtime-only UI cleanup, no source-content claim. |
 | 2 | Fix DOB inline error state to handle both missing and invalid DOB. | Designer called out missing inline DOB error; current invalid-date summary can disagree with inline state. | Use local validation only; no age, identity or eligibility logic. |
 | 3 | Tighten preview-level email validation and add focused tests. | Current rule is very loose. | Keep simple and testable; no backend/email verification. |
 | 4 | Review contact labels, required markers and GEL field usage. | Direct designer focus area and likely reusable across form pages. | Use existing GEL preview components; do not introduce new component abstractions. |
@@ -144,13 +144,17 @@ Current source classification:
 
 Scope:
 
-- Remove runtime source-inventory link from AMP confirmation.
-- Add focused AMP regression coverage for confirmation content boundary.
+- Removed runtime source-inventory link from AMP confirmation.
+- Aligned confirmation CTA from `Start again` to `Start another application`.
+- Added focused AMP regression coverage for confirmation content boundary and inherited CTA ordering at review.
+- Did not change DOB/email validation, contact fields, support-needs structure, page splitting or source-gated confirmation copy.
 
 Validation:
 
+- `npm run acceptance:static`
 - `npm run test`
 - `npm run build:all`
+- `npm run parity`
 - `git diff --check`
 
 ### Slice 2 - DOB and email validation
