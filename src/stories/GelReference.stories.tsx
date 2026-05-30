@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 import {
+  Breadcrumb,
   Button,
   Callout,
   Checkbox,
@@ -12,6 +13,7 @@ import {
   ProgressStepper,
   RadioButtonList,
   Select,
+  StatusLabel,
   Textarea,
   TextLink,
 } from '../gel'
@@ -127,6 +129,48 @@ function ChoiceControlsExample() {
   )
 }
 
+function BreadcrumbReferenceExample() {
+  return (
+    <div className='storybook-stack'>
+      <ReferenceBoundaryNote />
+      <Heading level={2}>Breadcrumb</Heading>
+      <p>This story shows the local GEL reference boundary for simple transaction navigation context.</p>
+      <Breadcrumb
+        linksList={[
+          { content: 'Home', path: '/' },
+          { content: 'Driving and transport', path: '/driving-and-transport' },
+          { content: 'Mobility parking permits', path: '/mobility-parking-permits' },
+        ]}
+      />
+      <div className='storybook-note'>
+        <strong>Boundary</strong>
+        <p>This preview uses static links only. It does not provide routing, analytics, mobile truncation parity or production GEL package behaviour.</p>
+      </div>
+    </div>
+  )
+}
+
+function StatusLabelReferenceExample() {
+  return (
+    <div className='storybook-stack'>
+      <ReferenceBoundaryNote />
+      <Heading level={2}>Status label</Heading>
+      <p>This story shows local reference labels for non-final transaction review states.</p>
+      <div className='storybook-row'>
+        <StatusLabel text='Neutral' />
+        <StatusLabel text='Error' variant='error' />
+        <StatusLabel text='Warning' variant='warning' />
+        <StatusLabel text='Success' variant='success' />
+        <StatusLabel text='Info' variant='info' />
+      </div>
+      <div className='storybook-note'>
+        <strong>Boundary</strong>
+        <p>These labels are static reference examples. They do not prove status semantics, live announcements, workflow state or production GEL parity.</p>
+      </div>
+    </div>
+  )
+}
+
 export const ButtonsAndLinks: Story = {
   render: () => <ButtonsAndLinksExample />,
 }
@@ -137,6 +181,16 @@ export const FieldsAndInputs: Story = {
 
 export const ChoiceControls: Story = {
   render: () => <ChoiceControlsExample />,
+}
+
+export const BreadcrumbReference: Story = {
+  name: 'Breadcrumb',
+  render: () => <BreadcrumbReferenceExample />,
+}
+
+export const StatusLabelReference: Story = {
+  name: 'Status label',
+  render: () => <StatusLabelReferenceExample />,
 }
 
 export const FeedbackAndErrors: Story = {

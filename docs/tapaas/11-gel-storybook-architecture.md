@@ -94,6 +94,16 @@ The remaining manifest-backed split of `TaPaaS Preview/Composites` is deferred. 
 | Callout | Highlighted informational content | `FeedbackAndErrors` | import-as-is through `src/gel.ts` local preview boundary | Story-only | Source shows Callout wraps InPageAlert with `variant='callout'`. |
 | ProgressStepper | Short transaction progress display | `ProgressStepperReference` export, displayed as `Progress stepper` | import-as-is through `src/gel.ts` | Story-only | Use bounded 4-step reference only. |
 
+## Batch 3A reference inventory
+
+Batch 3A adds Storybook-only GEL Reference coverage for selected Navigation & Status components. These remain source-informed local previews through `src/gel.ts`; they are not real `@snsw-gel/react` adoption, not acceptance-manifest-backed, and not production, accessibility, WCAG, GEL, TaPaaS, legal, privacy or policy approval evidence.
+
+| GEL package/component | TaPaaS use case | Story target | Recommended action | Acceptance level | Notes |
+|---|---|---|---|---|---|
+| Breadcrumb | Transaction navigation context and page hierarchy review | `BreadcrumbReference` export, displayed as `Breadcrumb` | source-informed local preview through `src/gel.ts` | Story-only | Static links only. No routing, analytics, mobile truncation parity or production GEL package behaviour claim. |
+| StatusLabel | Transaction review/status labelling examples | `StatusLabelReference` export, displayed as `Status label` | source-informed local preview through `src/gel.ts` | Story-only | Static labels only. No workflow state, live announcement or production GEL package behaviour claim. |
+| Pagination | Multi-page result navigation | Deferred | do not add in Batch 3A | Deferred | Read-only coverage map rated transaction-review value low for current transaction assembly work. |
+
 ## Batch 2 pattern inventory
 
 Batch 2 adds story-only TaPaaS GEL patterns. These stories compose existing GEL primitives and do not create TaPaaS wrappers, transaction refactors or manifest entries.
