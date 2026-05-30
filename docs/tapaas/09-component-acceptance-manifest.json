@@ -70,7 +70,7 @@
             "mobileNoOverflow": true
           },
           {
-            "id": "tapaas-preview-composites--mps-confirmation-frame-figma-fidelity",
+            "id": "transaction-frames-mps--mps-confirmation-frame-figma-fidelity",
             "mode": "frame-review",
             "expectedText": "Your application has been submitted",
             "mobileNoOverflow": true
@@ -1003,7 +1003,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--mps-applicant-details-frame-figma-fidelity",
+            "id": "transaction-frames-mps--mps-applicant-details-frame-figma-fidelity",
             "mode": "isolated-review",
             "expectedText": "Personal details",
             "mobileNoOverflow": true
@@ -1243,7 +1243,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--mps-review-frame-figma-fidelity",
+            "id": "transaction-frames-mps--mps-review-frame-figma-fidelity",
             "mode": "isolated-review",
             "expectedText": "Review your application",
             "mobileNoOverflow": true
@@ -1298,7 +1298,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--mps-confirmation-frame-figma-fidelity",
+            "id": "transaction-frames-mps--mps-confirmation-frame-figma-fidelity",
             "mode": "isolated-review",
             "expectedText": "Your application has been submitted",
             "mobileNoOverflow": true
