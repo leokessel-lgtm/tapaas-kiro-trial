@@ -164,6 +164,36 @@ Modal and MoreInfoModal remain deferred. MoreInfoModal is not added because the 
 | Modal | Modal dialog | Deferred | do not add in Help & Disclosure reference | Deferred | Needs deeper review for focus management, return-focus, Escape handling, overlay behaviour and assistive-technology behaviour. |
 | MoreInfoModal | Deprecated contextual help modal/sliding tooltip direction | Deferred | do not add in Help & Disclosure reference | Deferred | Local source evidence says this direction is deprecated and points users toward MoreInfoPanel. |
 
+## GEL reference roadmap checkpoint
+
+The GEL Reference checkpoint is clean enough to pause expansion and return to transaction feedback work. Batches 3A to 3D and the Help & Disclosure static reference provide bounded, source-informed Storybook review surfaces only. They do not create acceptance-manifest entries, production GEL package adoption, runtime transaction behaviour, source parity proof, accessibility compliance, WCAG compliance, GEL approval or TaPaaS approval.
+
+Completed reference coverage:
+
+| Area | Completed local reference coverage | Storybook status |
+|---|---|---|
+| Batch 3A: Navigation & Status | `BreadcrumbReference`, `StatusLabelReference` | Story-only, non-manifest |
+| Batch 3B: Transaction Inputs | `FieldsetReference`, `CheckboxListReference`, `DateInputReference`, `DateMultiInputReference` | Story-only, non-manifest |
+| Batch 3C: Evidence & Upload | `FileInputStaticReference`, `FileUploadStaticReference` | Story-only, non-manifest |
+| Batch 3D: Loading & Placeholders | `LoaderStaticReference`, `SkeletonStaticReference` | Story-only, non-manifest |
+| Help & Disclosure | `MoreInfoPanelStaticReference` as `gel-reference-help-disclosure--more-info-panel-static-reference` | Story-only, non-manifest |
+
+Deferred reference coverage:
+
+| Component | Recommended status | Reason |
+|---|---|---|
+| `Modal` | Keep deferred | Modal previews can imply focus management, return-focus, Escape handling, overlay behaviour, portal behaviour and assistive-technology behaviour that this local Storybook layer has not proved. |
+| `MoreInfoModal` | Keep deferred | Local evidence points away from this direction, and modal-style help needs deeper source and behaviour review before public reference coverage. |
+| `DropZone` | Keep deferred | Drag-and-drop upload behaviour needs deeper keyboard, browser, assistive-technology and source review. |
+| `UploadedItem` | Keep deferred | Uploaded-file state, remove actions, status wording and backend/storage/security implications need deeper review. |
+| `Pagination` | Keep deferred | Current transaction assembly work has not shown enough transaction-review value to justify adding it ahead of higher-priority feedback work. |
+
+Recommended next step:
+
+- return to transaction feedback and quality-parity slices before adding more GEL reference stories
+- treat any future modal, help-overlay or upload-interaction work as source-gated and behaviour-gated
+- keep acceptance checks as structural validation only; they are not proof of production readiness, source parity, accessibility compliance or owner approval
+
 ## Batch 2 pattern inventory
 
 Batch 2 adds story-only TaPaaS GEL patterns. These stories compose existing GEL primitives and do not create TaPaaS wrappers, transaction refactors or manifest entries.
