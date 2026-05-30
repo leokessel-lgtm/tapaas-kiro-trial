@@ -9,6 +9,7 @@ import {
   Input,
   RadioButtonList,
   Select,
+  TextLink,
   Textarea,
 } from './gel'
 import {
@@ -121,7 +122,7 @@ export function AccessibleMarketPermitSkeleton() {
   }
 
   const getErrors = useCallback((s: MarketStep) => errorsForStep(s, form), [form])
-  const { step, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+  const { step, setStep, setAttempted, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
 
   function handleContinue() {
     const nextErrors = getErrors(step)
@@ -132,6 +133,12 @@ export function AccessibleMarketPermitSkeleton() {
   function handleBack() {
     setSubmittedErrors([])
     goBack()
+  }
+
+  function goToReviewSource(targetStep: Exclude<MarketStep, 'privacy' | 'review' | 'confirmation'>) {
+    setAttempted(false)
+    setSubmittedErrors([])
+    setStep(targetStep)
   }
 
   function resetTransaction() {
@@ -164,7 +171,7 @@ export function AccessibleMarketPermitSkeleton() {
       {step === 'accessibility' && <AccessibilityStep form={form} submittedErrors={submittedErrors} update={update} onBack={handleBack} onContinue={handleContinue} onExit={openExitModal} />}
       {step === 'supporting' && <SupportingStep form={form} submittedErrors={submittedErrors} update={update} onBack={handleBack} onContinue={handleContinue} onExit={openExitModal} />}
       {step === 'declaration' && <DeclarationStep form={form} submittedErrors={submittedErrors} update={update} onBack={handleBack} onContinue={handleContinue} onExit={openExitModal} />}
-      {step === 'review' && <ReviewStep form={form} onBack={handleBack} onSubmit={handleContinue} onExit={openExitModal} />}
+      {step === 'review' && <ReviewStep form={form} onBack={handleBack} onEditStep={goToReviewSource} onSubmit={handleContinue} onExit={openExitModal} />}
       {step === 'confirmation' && <ConfirmationStep form={form} onStartAgain={resetTransaction} />}
 
       <ExitModal
@@ -508,7 +515,19 @@ function DeclarationStep({ form, submittedErrors, update, onBack, onContinue, on
   )
 }
 
-function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBack: () => void; onSubmit: () => void; onExit: () => void }) {
+function ReviewStep({
+  form,
+  onBack,
+  onEditStep,
+  onSubmit,
+  onExit,
+}: {
+  form: FormState
+  onBack: () => void
+  onEditStep: (step: Exclude<MarketStep, 'privacy' | 'review' | 'confirmation'>) => void
+  onSubmit: () => void
+  onExit: () => void
+}) {
   const marketTypeLabel: Record<string, string> = { 'food-market': 'Food market', 'craft-market': 'Craft market', 'farmers-market': 'Farmers market', 'mixed-market': 'Mixed market' }
   return (
     <section aria-labelledby='review-heading'>
@@ -517,28 +536,31 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
       <ReviewInfoCard title='Applicant details' sections={[{ title: 'Personal information', rows: [
         { label: 'Full name', value: form.fullName },
         { label: 'Date of birth', value: `${form.dobDay}/${form.dobMonth}/${form.dobYear}` },
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('applicant')} />
       <ReviewInfoCard title='Contact details' sections={[{ title: 'Contact information', rows: [
         { label: 'Email', value: form.email },
         { label: 'Phone', value: form.phone },
         { label: 'Address', value: `${form.street}, ${form.suburb} ${form.state} ${form.postcode}` },
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('contact')} />
       <ReviewInfoCard title='Market details' sections={[{ title: 'Market information', rows: [
         { label: 'Market name', value: form.marketName },
         { label: 'Market type', value: marketTypeLabel[form.marketType] || form.marketType },
         { label: 'Event date', value: `${form.eventDay}/${form.eventMonth}/${form.eventYear}` },
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('market')} />
       <ReviewInfoCard title='Accessibility support' sections={[{ title: 'Support needs', rows: [
         { label: 'Needs support', value: form.needsSupport === 'yes' ? 'Yes' : 'No' },
         ...(form.needsSupport === 'yes' ? [{ label: 'Support details', value: form.supportDetails }] : []),
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('accessibility')} />
       <ReviewInfoCard title='Supporting information' sections={[{ title: 'Additional details', rows: [
         { label: 'Additional information', value: form.additionalInfo },
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('supporting')} />
       <ReviewFeesCard fees={[{ label: 'Application fee', amount: '$0.00' }, { label: 'Processing fee', amount: '$0.00' }]} totalAmount='$0.00' />
       <InPageAlert variant='info' title='Payment excluded'>
         <p>No payment flow is included in this trial skeleton. Fee amounts need owner confirmation.</p>
       </InPageAlert>
+      <p>
+        <TextLink onClick={() => onEditStep('declaration')}>Edit declaration</TextLink>
+      </p>
       <TransactionCtaGroup onBack={onBack} onContinue={onSubmit} onExit={onExit} continueLabel='Submit application' />
     </section>
   )

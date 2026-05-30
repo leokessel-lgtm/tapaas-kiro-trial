@@ -62,7 +62,7 @@ Current source classification:
 | Accessibility/support needs | `ConditionalQuestionPanel` with yes/no radio and a labelled support-details sub-section when Yes is selected | Slice 4 clarified the conditional follow-up structure and added validation/review tests. Manual QA remains required. |
 | Supporting information | Textarea with character count | AMP-specific; likely safe but copy/source remains gated. |
 | Declaration | Warning alert, placeholder declaration and checkbox | Inherited Trial Permit feedback applies; legal copy source-gated. |
-| Review | `ReviewInfoCard` sections and `ReviewFeesCard`, no edit actions | Inherited Trial Permit feedback applies; edit routing and exact review content source-gated. |
+| Review | `ReviewInfoCard` sections, `ReviewFeesCard` and step-level edit actions | Slice 6 adds edit actions back to source steps. Field-level anchors, auto-return-to-review and exact review content remain source-gated. |
 | Confirmation | `ConfirmationHeader`, `TransactionSummaryCard`, next-step list, end-of-transaction CTA | Slice 1 removed the developer-facing source-inventory link and aligned the CTA label to the Trial Permit-safe wording. Confirmation content remains source-gated. |
 
 ## Feedback classification
@@ -80,7 +80,7 @@ Current source classification:
 | AMP-09 | Input-page split/back-end dependency question | source-gated | AMP has separate applicant, contact, market, accessibility and supporting pages. Backend dependency is unknown. | Do not patch until owner/source decision. | Current split may be useful for review, but real AMP flow may not exist. Avoid inventing backend persistence or account/customer-record behaviour. |
 | AMP-10 | Privacy/T&Cs structure inherited from Trial Permit | inherited Trial Permit feedback; source-gated | AMP privacy page is free text and privacy acknowledgement; Trial Permit fix separated privacy notice from T&Cs. | Patch candidate if applying inherited structural cleanup. | Use placeholders; no final privacy/legal copy. |
 | AMP-11 | Form header/error summary placement inherited from Trial Permit | inherited Trial Permit feedback | AMP has step text and `ErrorSummary` before step body, not the hardened Trial Permit form-header composition. | Patch candidate, but larger blast radius. | Good reusable rule, but AMP has 9 steps so ProgressStepper usage boundary matters. |
-| AMP-12 | Review edit actions inherited from Trial Permit | inherited Trial Permit feedback | AMP review has no edit actions back to applicant/contact/market/accessibility/supporting/declaration steps. | Patch candidate after validation slice. | Step-level edit routing is safe; field-level anchors and auto-return-to-review remain source-gated. |
+| AMP-12 | Review edit actions inherited from Trial Permit | inherited Trial Permit feedback | AMP review now has step-level edit actions back to applicant/contact/market/accessibility/supporting/declaration steps. | Fixed in Slice 6. | Field-level anchors, section anchors and auto-return-to-review remain source-gated. |
 | AMP-13 | Confirmation runtime source-inventory link | inherited Trial Permit feedback | AMP confirmation included `Review TaPaaS source inventory` runtime link. | Fixed in Slice 1. | Trial Permit Slice 9 removed equivalent developer-facing runtime UI. |
 | AMP-14 | Review/fees/confirmation exact sections | source-gated | AMP has review cards, fees and summary, but no source confirms rows, fees or receipt rules. | Document only until source exists. | Do not add Keep a record/TUTD or final next steps without source. |
 | AMP-15 | Error-summary visual/accessibility behaviour | inherited Trial Permit feedback; manual QA | Shared `ErrorSummary` has been improved after Trial Permit, but AMP has no focused tests. | Test/protect when patching validation. | Do not claim WCAG or AT behaviour. |
@@ -98,7 +98,7 @@ Current source classification:
 | Conditional support-needs pattern exists | `ConditionalQuestionPanel` is used for yes/no support details. | Preserve the conditional pattern unless source says the page should be split. |
 | Conditional details are not framed as an assessment or service promise | Help text says no assessment, decision or service promise. | Keep this boundary. |
 | Support-needs validation exists | Slice 4 preserves answer-required and Yes-details-required validation. | Protect submitted-error timing and summary links; do not add focus/live-region claims without manual QA. |
-| Review uses TaPaaS cards and fee preview | `ReviewInfoCard` and `ReviewFeesCard` are present. | Improve edit/actions and rows without replacing with generic UI. |
+| Review uses TaPaaS cards and fee preview | `ReviewInfoCard`, `ReviewFeesCard` and step-level edit actions are present. | Protect the local preview-card pattern; do not add field anchors or source-specific review grouping without source evidence. |
 | Confirmation uses TaPaaS confirmation primitives | `ConfirmationHeader` and `TransactionSummaryCard` are present. | Keep confirmation-specific composition. |
 | Exit modal is available on transaction steps | `ExitModal` is wired to clear mock data. | Preserve; do not add real draft saving. |
 | Mock backend/payment boundaries are explicit | Review says no real payment; confirmation uses placeholders. | Preserve; do not invent backend, payment, receipt or approval logic. |
@@ -115,6 +115,7 @@ Current source classification:
 | 4 | Review contact labels, required markers and GEL field usage. | Direct designer focus area and likely reusable across form pages. | Completed in Slice 3 for AMP full name/contact fields. Uses existing GEL preview components; no new shared abstractions. |
 | 5 | Decide targeted full-width input behaviour for contact/supporting fields. | Likely visual polish and responsiveness issue. | Completed in Slice 3 for full name and primary contact/address text inputs. Supporting information remains deferred. |
 | 6 | Improve support-needs structure only if a browser/keyboard pass shows a real issue. | Conditional reveal is sensitive for AT behaviour. | Completed structurally in Slice 4; manual QA still required. No focus/live-region claims added. |
+| 7 | Add step-level review edit actions. | Remaining inherited Trial Permit review gap after Slice 5 reconciliation. | Completed in Slice 6. No field-level anchors, section anchors, auto-return-to-review or source-specific review grouping. |
 
 ## Source-gated decisions
 
@@ -256,7 +257,25 @@ Validation:
 - `npm run parity`
 - `git diff --check`
 
-### Slice 6 - Documentation and reusable rules
+### Slice 6 - Review edit actions
+
+Fixed:
+
+- Added step-level review edit actions for Applicant details, Contact details, Market details, Accessibility support, Supporting information and Declaration.
+- Each action returns to the matching AMP source step.
+- Preserved existing review rows, fee preview, validation behaviour and form state shape.
+
+Deferred:
+
+- Field-level anchors, section anchors and auto-return-to-review.
+- Source-specific review grouping, exact review rows and final copy.
+- Page splitting, backend dependency behaviour, support-needs behaviour and confirmation content.
+
+Boundary:
+
+- This is a preview-only inherited cleanup. It does not claim AMP source parity, production readiness, WCAG compliance, policy correctness, eligibility correctness or final-copy approval.
+
+### Slice 7 - Documentation and reusable rules
 
 Scope:
 

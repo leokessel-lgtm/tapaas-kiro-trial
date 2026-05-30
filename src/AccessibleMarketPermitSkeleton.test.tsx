@@ -227,6 +227,38 @@ describe('AccessibleMarketPermitSkeleton', () => {
     expect(screen.queryByText('Support details')).not.toBeInTheDocument()
   })
 
+  it('shows step-level review edit actions with clear accessible names', async () => {
+    const user = userEvent.setup()
+    render(<AccessibleMarketPermitSkeleton />)
+
+    await completeAccessibleMarketPermit(user)
+
+    expect(screen.getByRole('button', { name: 'Edit Applicant details' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Edit Contact details' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Edit Market details' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Edit Accessibility support' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Edit Supporting information' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Edit declaration' })).toBeInTheDocument()
+  })
+
+  it.each([
+    ['Edit Applicant details', 'Your details'],
+    ['Edit Contact details', 'Contact details'],
+    ['Edit Market details', 'Market details'],
+    ['Edit Accessibility support', 'Accessibility and support needs'],
+    ['Edit Supporting information', 'Supporting information'],
+    ['Edit declaration', 'Declaration'],
+  ])('%s returns to the relevant source step', async (editName, headingName) => {
+    const user = userEvent.setup()
+    render(<AccessibleMarketPermitSkeleton />)
+
+    await completeAccessibleMarketPermit(user)
+    await user.click(screen.getByRole('button', { name: editName }))
+
+    expect(screen.getByRole('heading', { name: headingName })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Review your application' })).not.toBeInTheDocument()
+  })
+
   it('submits the mock flow to confirmation without exposing source inventory links', async () => {
     const user = userEvent.setup()
     render(<AccessibleMarketPermitSkeleton />)
