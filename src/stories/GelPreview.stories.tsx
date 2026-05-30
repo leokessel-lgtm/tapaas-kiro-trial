@@ -19,11 +19,11 @@ import {
 import './storybook.css'
 
 const meta: Meta = {
-  title: 'GEL Preview/Form Controls',
+  title: 'Development Evidence/Legacy GEL Preview/Form Controls',
   parameters: {
     docs: {
       description: {
-        component: 'Preview-only GEL-style components used by the TaPaaS x Kiro trial. These are source-informed local previews, not production GEL exports.',
+        component: 'Legacy local GEL preview smoke surface retained for development evidence only. This is not the preferred designer review surface, not acceptance-manifest-backed, not real @snsw-gel/react adoption, and not production, WCAG, GEL or TaPaaS approval evidence. Use GEL Reference/* and TaPaaS GEL Patterns/* for curated review.',
       },
     },
   },
