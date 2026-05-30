@@ -46,6 +46,8 @@ Use this target structure for future Storybook navigation:
 
 Generated `.ai` stories are housed under `Development Evidence/Generated Checks`. They are not review-facing evidence. Curated `GEL Reference`, `TaPaaS Components` and `Transaction Frames` stories remain the preferred surfaces for design review, source-structure review and acceptance-backed evidence.
 
+The legacy `GEL Preview/Form Controls` group is housed under `Development Evidence/Legacy GEL Preview`. It is retained as local smoke/development evidence only, is not acceptance-manifest-backed, and should not be used as the preferred review surface. Use curated `GEL Reference/*` and `TaPaaS GEL Patterns/*` stories for review.
+
 ## Transaction assembly review surfaces
 
 Transaction assembly review surfaces sit above isolated component stories and below production approval. They are useful for reviewing how TaPaaS and GEL patterns work together in a mocked transaction journey, but they do not create production, accessibility, GEL, TaPaaS, privacy, legal, policy or source-parity approval by themselves.
