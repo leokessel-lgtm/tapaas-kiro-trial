@@ -800,7 +800,7 @@ export function Input({ id, value, onChange, hasError, disabled, type = 'text', 
       style={{
         display: 'block',
         width: inputWidth ? inputWidthMap[inputWidth] || '100%' : '100%',
-        maxWidth: inputWidth ? undefined : '372px',
+        maxWidth: inputWidth ? '100%' : '372px',
         height: '48px', padding: '0 0.825rem', fontSize: '1rem',
         fontFamily: 'var(--gel-font-body)',
         border: hasError ? '2px solid var(--gel-color-error)' : '2px solid #646974',
@@ -1109,7 +1109,7 @@ export function Select({ id, value, onChange, hasError, disabled, options, place
       style={{
         display: 'block',
         width: inputWidth ? inputWidthMap[inputWidth] || '100%' : '100%',
-        maxWidth: inputWidth ? undefined : '372px',
+        maxWidth: inputWidth ? '100%' : '372px',
         height: '48px', padding: '0 0.825rem', fontSize: '1rem',
         fontFamily: 'var(--gel-font-body)',
         border: hasError ? '2px solid var(--gel-color-error)' : '2px solid #646974',
