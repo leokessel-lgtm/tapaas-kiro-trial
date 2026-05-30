@@ -47,7 +47,7 @@ Use this target structure for future Storybook navigation:
 
 Transaction assembly review surfaces sit above isolated component stories and below production approval. They are useful for reviewing how TaPaaS and GEL patterns work together in a mocked transaction journey, but they do not create production, accessibility, GEL, TaPaaS, privacy, legal, policy or source-parity approval by themselves.
 
-Trial Permit can be considered for a future Storybook review surface as a simple transaction assembly benchmark. It should not be presented as a source-complete Trial Permit recreation unless a Trial Permit-specific source flow is supplied and reviewed.
+Trial Permit is available as a preview-only Storybook transaction assembly review surface and simple transaction assembly benchmark. It sits above isolated component evidence and below source-parity or production approval. It is not acceptance-manifest-backed and should be used to review composition, page structure, CTA ordering, review/edit behaviour and validation behaviour, not approval status. It should not be presented as a source-complete Trial Permit recreation unless a Trial Permit-specific source flow is supplied and reviewed.
 
 Storybook transaction review should distinguish:
 
@@ -56,7 +56,7 @@ Storybook transaction review should distinguish:
 - source parity evidence: a specific source frame or flow has been checked against the coded surface
 - acceptance-manifest evidence: a deliberate manifest-backed target has been declared and passes the relevant checks
 
-Adding a Trial Permit story later would not automatically make it acceptance-backed. It should remain story-only until a deliberate manifest-backed story is created, moved or renamed.
+The Trial Permit transaction assembly story remains story-only until a deliberate manifest-backed story is created, moved or renamed.
 
 Do not update `docs/tapaas/09-component-acceptance-manifest.json` unless a Storybook ID changes, a new acceptance story is intentionally created, or an existing manifest-backed story must be moved or renamed.
 

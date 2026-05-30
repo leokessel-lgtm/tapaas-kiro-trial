@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 import { Button, Field, Input, InPageAlert, Textarea } from '../gel'
 import { MobilityParkingPermitSkeleton } from '../MobilityParkingPermitSkeleton'
+import { TrialPermitSkeleton } from '../TrialPermitSkeleton'
 import {
   BusinessErrorPage,
   ConditionalQuestionPanel,
@@ -473,6 +474,18 @@ export const MpsEndToEndTransactionAssemblyV1: Story = {
       <MobilityParkingPermitSkeleton />
     </div>
   ),
+}
+
+export const TrialPermitTransactionAssembly: Story = {
+  name: 'Trial Permit Transaction Assembly',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Simple transaction assembly review surface for the Trial Permit flow. It demonstrates composition quality, page structure, component relationships, CTA ordering, review/edit behaviour and validation behaviour. It is not Trial Permit source parity, production-ready, final-copy approved, or GEL, TaPaaS, WCAG, privacy, legal or policy approval evidence. Source-required placeholders remain intentional where exact content is missing. Manual QA is still required for contrast, keyboard/focus, assistive technology and responsive behaviour.',
+      },
+    },
+  },
+  render: () => <TrialPermitSkeleton />,
 }
 
 export const NextStepsCard: Story = {
