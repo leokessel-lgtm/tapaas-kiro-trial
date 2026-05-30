@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react'
-import { useTransactionStep } from './useTransactionStep'
+import { type StepError, useTransactionStep } from './useTransactionStep'
 import {
+  Button,
   Checkbox,
   ErrorSummary,
   Field,
@@ -13,16 +14,20 @@ import {
 } from './gel'
 import {
   ConfirmationHeader,
+  DeclarationReview,
   ExitModal,
+  NextStepsCardPreview,
+  PrivacyCardPreview,
   ReviewFeesCard,
   ReviewInfoCard,
-  TransactionCtaGroup,
   TransactionSummaryCard,
 } from './tapaas-preview'
 
 type PermitStep = 'privacy' | 'input' | 'declaration' | 'review' | 'confirmation'
 
 const stepOrder: PermitStep[] = ['privacy', 'input', 'declaration', 'review', 'confirmation']
+
+const transactionName = 'Apply for a trial permit'
 
 const stepLabels: Record<PermitStep, string> = {
   privacy: 'Privacy',
@@ -32,16 +37,25 @@ const stepLabels: Record<PermitStep, string> = {
   confirmation: 'Confirmation',
 }
 
+const pageTitles: Record<PermitStep, string> = {
+  privacy: 'Privacy information',
+  input: 'Application details',
+  declaration: 'Declaration',
+  review: 'Review your application',
+  confirmation: 'Application submitted',
+}
+
 export function TrialPermitSkeleton() {
   const [privacyAgreed, setPrivacyAgreed] = useState(false)
   const [applicantName, setApplicantName] = useState('')
   const [permitType, setPermitType] = useState('')
   const [declarationAccepted, setDeclarationAccepted] = useState(false)
+  const [submittedErrors, setSubmittedErrors] = useState<StepError[]>([])
 
   const getErrors = useCallback((s: PermitStep) => {
     const errs: { id: string; text: string }[] = []
     if (s === 'privacy' && !privacyAgreed) {
-      errs.push({ id: 'privacy-confirmation', text: 'Confirm that you have read the privacy information' })
+      errs.push({ id: 'privacy-confirmation', text: 'Confirm that you agree to the terms and conditions' })
     }
     if (s === 'input') {
       if (!applicantName.trim()) {
@@ -57,37 +71,55 @@ export function TrialPermitSkeleton() {
     return errs
   }, [privacyAgreed, applicantName, permitType, declarationAccepted])
 
-  const { step, attempted, errors, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+  const { step, setStep, setAttempted, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+
+  function hasSubmittedError(id: string) {
+    return submittedErrors.some((error) => error.id === id)
+  }
+
+  function handleContinue() {
+    const nextErrors = getErrors(step)
+    setSubmittedErrors(nextErrors)
+    goNext()
+  }
+
+  function handleBack() {
+    setSubmittedErrors([])
+    goBack()
+  }
+
+  function goToReviewSource(targetStep: Extract<PermitStep, 'input' | 'declaration'>) {
+    setAttempted(false)
+    setSubmittedErrors([])
+    setStep(targetStep)
+    window.setTimeout(() => {
+      window.scrollTo(0, 0)
+      const heading = document.getElementById(`${targetStep}-heading`)
+      if (heading) { heading.tabIndex = -1; heading.focus() }
+    }, 0)
+  }
 
   return (
     <div>
       <div className='tapaas-trial-banner'>
-        <strong>TaPaaS v0.3 trial skeleton — Apply for a trial permit.</strong>
+        <strong>TaPaaS v0.3 trial skeleton — {transactionName}.</strong>
         <p style={{ margin: '0.25rem 0 0' }}>
           This is a non-production build-assist example using mock data only. Privacy, legal, fee and processing details need owner confirmation.
         </p>
       </div>
 
       {step !== 'confirmation' && (
-        <>
-          <ProgressStepper stepsList={stepOrder.map((s, i) => ({
-            content: stepLabels[s],
-            status: i < stepOrder.indexOf(step) ? 'completed' : i === stepOrder.indexOf(step) ? 'current' : 'todo',
-          }))} />
-          <p aria-live='polite' style={{ color: 'var(--gel-color-text-grey)', marginTop: 0 }}>
-            Step {stepOrder.indexOf(step) + 1} of {stepOrder.length}: {stepLabels[step]}
-          </p>
-        </>
+        <TrialPermitFormHeader step={step} />
       )}
 
-      <ErrorSummary ref={errorSummaryRef} errors={errors} />
+      <ErrorSummary id='trial-permit-error-summary' ref={errorSummaryRef} errors={submittedErrors} />
 
       {step === 'privacy' && (
         <PrivacyStep
           privacyAgreed={privacyAgreed}
-          hasError={attempted && !privacyAgreed}
+          hasError={hasSubmittedError('privacy-confirmation')}
           onChange={setPrivacyAgreed}
-          onContinue={goNext}
+          onContinue={handleContinue}
           onExit={openExitModal}
         />
       )}
@@ -96,12 +128,12 @@ export function TrialPermitSkeleton() {
         <InputStep
           applicantName={applicantName}
           permitType={permitType}
-          nameError={attempted && !applicantName.trim()}
-          permitError={attempted && !permitType}
+          nameError={hasSubmittedError('applicant-name')}
+          permitError={hasSubmittedError('permit-type')}
           onNameChange={setApplicantName}
           onPermitChange={setPermitType}
-          onBack={goBack}
-          onContinue={goNext}
+          onBack={handleBack}
+          onContinue={handleContinue}
           onExit={openExitModal}
         />
       )}
@@ -109,10 +141,10 @@ export function TrialPermitSkeleton() {
       {step === 'declaration' && (
         <DeclarationStep
           accepted={declarationAccepted}
-          hasError={attempted && !declarationAccepted}
+          hasError={hasSubmittedError('declaration-accepted')}
           onChange={setDeclarationAccepted}
-          onBack={goBack}
-          onContinue={goNext}
+          onBack={handleBack}
+          onContinue={handleContinue}
           onExit={openExitModal}
         />
       )}
@@ -121,18 +153,20 @@ export function TrialPermitSkeleton() {
         <ReviewStep
           applicantName={applicantName}
           permitType={permitType}
-          onBack={goBack}
-          onSubmit={goNext}
+          onBack={handleBack}
+          onEditApplication={() => goToReviewSource('input')}
+          onEditDeclaration={() => goToReviewSource('declaration')}
+          onSubmit={handleContinue}
           onExit={openExitModal}
         />
       )}
 
       {step === 'confirmation' && (
         <ConfirmationStep
-          applicantName={applicantName}
           permitType={permitType}
           onStartAgain={() => {
             reset()
+            setSubmittedErrors([])
             setPrivacyAgreed(false)
             setApplicantName('')
             setPermitType('')
@@ -144,10 +178,39 @@ export function TrialPermitSkeleton() {
       <ExitModal
         isOpen={exitModalOpen}
         onContinue={closeExitModal}
-        onExit={() => { reset(); setPrivacyAgreed(false); setApplicantName(''); setPermitType(''); setDeclarationAccepted(false) }}
+        onExit={() => { reset(); setSubmittedErrors([]); setPrivacyAgreed(false); setApplicantName(''); setPermitType(''); setDeclarationAccepted(false) }}
         description='This preview does not save draft applications. If you exit, the mock form data will be cleared.'
       />
     </div>
+  )
+}
+
+function TrialPermitFormHeader({ step }: { step: PermitStep }) {
+  return (
+    <header
+      aria-labelledby={`${step}-heading`}
+      style={{
+        background: '#f4f4f4',
+        borderBottom: '1px solid var(--gel-color-border)',
+        borderTop: '1px solid var(--gel-color-border)',
+        marginBottom: '1.5rem',
+        padding: '1.5rem',
+      }}
+    >
+      <p style={{ color: 'var(--gel-color-text-grey)', fontSize: '0.875rem', fontWeight: 700, margin: '0 0 0.25rem' }}>
+        {transactionName}
+      </p>
+      <Heading level={2} id={`${step}-heading`} style={{ marginBottom: '1.5rem' }}>
+        {pageTitles[step]}
+      </Heading>
+      <ProgressStepper stepsList={stepOrder.map((s, i) => ({
+        content: stepLabels[s],
+        status: i < stepOrder.indexOf(step) ? 'completed' : i === stepOrder.indexOf(step) ? 'current' : 'todo',
+      }))} />
+      <p aria-live='polite' style={{ color: 'var(--gel-color-text-grey)', margin: 0 }}>
+        Step {stepOrder.indexOf(step) + 1} of {stepOrder.length}: {stepLabels[step]}
+      </p>
+    </header>
   )
 }
 
@@ -166,24 +229,32 @@ function PrivacyStep({
 }) {
   return (
     <section aria-labelledby='privacy-heading'>
-      <Heading level={2} id='privacy-heading'>Privacy information</Heading>
-      <InPageAlert variant='info' title='Owner confirmation required'>
-        <p>
-          Replace this placeholder with the confirmed privacy collection notice for the trial permit service. Agency, purpose, disclosure and retention details must be confirmed before any real use.
-        </p>
-      </InPageAlert>
-      <p>
-        We collect your personal information to process your trial permit application. This information may be shared with [confirmed disclosure recipients]. For more information, see [confirmed privacy policy URL].
-      </p>
+      <PrivacyCardPreview
+        title='Trial permit privacy and terms'
+        description='Review the source-backed privacy and terms sections before continuing.'
+        showAcknowledgement={false}
+        sections={[
+          {
+            id: 'trial-permit-privacy-collection-notice',
+            title: 'Privacy collection notice',
+            content: <p>[Source content required: privacy collection notice]</p>,
+          },
+          {
+            id: 'trial-permit-terms-and-conditions',
+            title: 'Terms and conditions',
+            content: <p>[Source content required: terms and conditions text]</p>,
+          },
+        ]}
+      />
       <Checkbox
         id='privacy-confirmation'
-        label='I have read and understand the privacy information.'
+        label='I agree to the terms and conditions for this trial permit application.'
         checked={privacyAgreed}
         onChange={(value) => onChange(Boolean(value))}
         hasError={hasError}
-        errorMessage='Confirm that you have read the privacy information.'
+        errorMessage='Confirm that you agree to the terms and conditions.'
       />
-      <TransactionCtaGroup onContinue={onContinue} onExit={onExit} continueLabel='Continue' />
+      <TrialPermitActionGroup onContinue={onContinue} onExit={onExit} continueLabel='Continue' />
     </section>
   )
 }
@@ -211,13 +282,15 @@ function InputStep({
 }) {
   return (
     <section aria-labelledby='input-heading'>
-      <Heading level={2} id='input-heading'>Apply for a trial permit</Heading>
       <p>
         Enter your details to apply for a mock trial permit. This page uses mock data only and does not submit to a real service.
       </p>
+      <p style={{ fontSize: '0.875rem', margin: '0 0 1.5rem' }}>
+        <span style={{ color: 'var(--gel-color-error)', fontWeight: 700 }}>*</span> indicates a required field.
+      </p>
       <Field
         id='applicant-name'
-        label='Full name'
+        label={<strong>Full name *</strong>}
         helpMessage='Enter your first and last name as they appear on your identification.'
         hasError={nameError}
         errorMessage='Enter your full name.'
@@ -232,7 +305,7 @@ function InputStep({
       </Field>
       <RadioButtonList
         id='permit-type'
-        legend='Permit type'
+        legend={<strong>Permit type *</strong>}
         options={[
           { value: 'standard', label: 'Standard permit (mock)' },
           { value: 'extended', label: 'Extended permit (mock)' },
@@ -242,7 +315,10 @@ function InputStep({
         hasError={permitError}
         errorMessage='Select a permit type.'
       />
-      <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
+      <p style={{ color: 'var(--gel-color-text-grey)', fontSize: '0.875rem', margin: '-0.5rem 0 1.5rem' }}>
+        [Source content required: permit type explanation]
+      </p>
+      <TrialPermitActionGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
     </section>
   )
 }
@@ -264,7 +340,6 @@ function DeclarationStep({
 }) {
   return (
     <section aria-labelledby='declaration-heading'>
-      <Heading level={2} id='declaration-heading'>Declaration</Heading>
       <InPageAlert variant='warning' title='Legal wording required'>
         <p>
           This placeholder must be replaced with confirmed legal or policy wording before use in a real transaction. Do not use this declaration text in production.
@@ -281,7 +356,7 @@ function DeclarationStep({
         hasError={hasError}
         errorMessage='Accept the declaration to continue.'
       />
-      <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
+      <TrialPermitActionGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
     </section>
   )
 }
@@ -290,19 +365,22 @@ function ReviewStep({
   applicantName,
   permitType,
   onBack,
+  onEditApplication,
+  onEditDeclaration,
   onSubmit,
   onExit,
 }: {
   applicantName: string
   permitType: string
   onBack: () => void
+  onEditApplication: () => void
+  onEditDeclaration: () => void
   onSubmit: () => void
   onExit: () => void
 }) {
   const permitLabel = permitType === 'extended' ? 'Extended permit (mock)' : 'Standard permit (mock)'
   return (
     <section aria-labelledby='review-heading'>
-      <Heading level={2} id='review-heading'>Review your application</Heading>
       <p>
         Check the information below before submitting. This page does not submit to a real service.
       </p>
@@ -317,6 +395,7 @@ function ReviewStep({
             ],
           },
         ]}
+        onEdit={onEditApplication}
       />
       <ReviewFeesCard
         fees={[
@@ -324,20 +403,31 @@ function ReviewStep({
         ]}
         totalAmount='$0.00'
       />
+      <DeclarationReview
+        title='Declaration'
+        intro='You have accepted this declaration:'
+        sections={[
+          {
+            title: 'Applicant declaration',
+            statements: ['I declare that the information provided is true and correct.'],
+          },
+        ]}
+      />
+      <p style={{ margin: '-0.75rem 0 1.5rem' }}>
+        <TextLink onClick={onEditDeclaration}>Edit declaration</TextLink>
+      </p>
       <InPageAlert variant='info' title='Payment excluded'>
         <p>No payment flow is included in this trial skeleton. Fee amounts need owner confirmation.</p>
       </InPageAlert>
-      <TransactionCtaGroup onBack={onBack} onContinue={onSubmit} onExit={onExit} continueLabel='Submit application' />
+      <TrialPermitActionGroup onBack={onBack} onContinue={onSubmit} onExit={onExit} continueLabel='Submit application' />
     </section>
   )
 }
 
 function ConfirmationStep({
-  applicantName,
   permitType,
   onStartAgain,
 }: {
-  applicantName: string
   permitType: string
   onStartAgain: () => void
 }) {
@@ -351,7 +441,6 @@ function ConfirmationStep({
       <TransactionSummaryCard
         items={[
           { label: 'Reference number', value: 'PERMIT-000000', helpText: 'Mock reference only.' },
-          { label: 'Applicant', value: applicantName },
           { label: 'Permit type', value: permitLabel },
           { label: 'Receipt', value: 'No payment receipt generated' },
         ]}
@@ -360,21 +449,63 @@ function ConfirmationStep({
           Processing timeframes, receipt wording and next steps must be confirmed by the service owner before reuse. Expected processing time: [confirmed timeframe].
         </p>
       </TransactionSummaryCard>
-      <Heading level={2}>Next steps</Heading>
-      <ol className='tapaas-step-list'>
-        <li>Your application will be reviewed within [confirmed timeframe].</li>
-        <li>You will receive a notification at [confirmed contact method].</li>
-        <li>If approved, your permit will be available at [confirmed location or method].</li>
-      </ol>
+      <NextStepsCardPreview
+        items={[
+          {
+            id: 'trial-permit-review-timeframe',
+            heading: 'Application review',
+            body: <p>Your application will be reviewed within [confirmed timeframe].</p>,
+          },
+          {
+            id: 'trial-permit-notification',
+            heading: 'Notification',
+            body: <p>You will receive a notification at [confirmed contact method].</p>,
+          },
+          {
+            id: 'trial-permit-permit-access',
+            heading: 'Permit access',
+            body: <p>If approved, your permit will be available at [confirmed location or method].</p>,
+          },
+        ]}
+      />
       <InPageAlert variant='info' title='Owner confirmation required'>
         <p>
           All timeframes, contact methods and approval processes above are placeholders. They must be confirmed by the service owner before real use.
         </p>
       </InPageAlert>
-      <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start again' />
-      <p style={{ marginTop: '1rem' }}>
-        <TextLink href='https://github.com/leokessel-lgtm/tapaas-kiro-trial/blob/main/docs/tapaas/00-source-inventory.md'>Review TaPaaS source inventory</TextLink>
-      </p>
+      <TrialPermitActionGroup onContinue={onStartAgain} continueLabel='Start another application' />
     </section>
+  )
+}
+
+function TrialPermitActionGroup({
+  onBack,
+  onContinue,
+  onExit,
+  continueLabel = 'Continue',
+  backLabel = 'Back',
+  exitLabel = 'Exit',
+}: {
+  onBack?: () => void
+  onContinue?: () => void
+  onExit?: () => void
+  continueLabel?: string
+  backLabel?: string
+  exitLabel?: string
+}) {
+  return (
+    <div
+      role='group'
+      aria-label='Transaction actions'
+      data-tapaas-component='transaction-action-area'
+      data-preview-boundary='trial-permit local CTA ordering; no new routing included'
+      style={{ alignItems: 'flex-start', display: 'flex', flexDirection: 'column', gap: '1rem', margin: '2rem 0 0' }}
+    >
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+        {onBack && <Button variant='secondary' onClick={onBack}>{backLabel}</Button>}
+        {onContinue && <Button onClick={onContinue}>{continueLabel}</Button>}
+      </div>
+      {onExit && <Button variant='link' onClick={onExit}>{exitLabel}</Button>}
+    </div>
   )
 }

@@ -72,6 +72,26 @@ Known risks:
 - The transaction skeleton includes useful assembly logic, but not real identity, eligibility, upload, concession, backend, payment or persistence behaviour.
 - Review and confirmation screenshot evidence supports bounded content-frame review only, not full-frame parity across global chrome, footer or mobile layouts.
 
+## Experiment 1 learning: simple transaction assembly rules
+
+Trial Permit hardening in Experiment 1 showed that simple transaction assemblies should be reviewed against reusable TaPaaS/GEL rules, not only against visual similarity. A flow can look plausible while still missing page-template structure, component relationships, review edit routing, confirmation-specific CTAs or source-placeholder discipline.
+
+Trial Permit is now treated as a simple transaction assembly quality benchmark. It is not a source-parity recreation of a standalone Trial Permit Figma flow, because no standalone Trial Permit source flow has been found.
+
+For simple transaction assembly reviews, check:
+
+- page template use before one-off generic cards or blocks
+- form header composition, including transaction label, page title and stepper placement
+- privacy notice and T&Cs/declaration separation
+- risks where generic UI substitutes for an existing TaPaaS or GEL pattern
+- review section playback and edit relationships back to the relevant source context
+- confirmation-specific composition, including transaction summary, next steps/what happens next and end-of-transaction CTAs where relevant
+- validation timing, error-summary placement, field links and error visual treatment
+- source-required placeholders where exact copy, rules or post-submit actions are missing
+- accessibility and manual QA evidence, including keyboard order, heading order, focus order, dynamic content and contrast verification
+
+Avoid claiming production readiness, source parity, GEL approval, TaPaaS approval, final copy, legal/privacy/policy approval or WCAG compliance from a simple assembly benchmark. Source parity requires a source flow. Accessibility claims require measured or manual evidence.
+
 ## Stage-by-stage review table
 
 | Stage | Current status | Source backing | Storybook review surface | Transaction skeleton usage | Acceptance coverage | Main review question | Owner/reviewer needed |
