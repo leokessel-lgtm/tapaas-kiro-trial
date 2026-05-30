@@ -136,6 +136,20 @@ DropZone and UploadedItem are deferred because drag-and-drop, selected-file disp
 | DropZone | Drag-and-drop upload area | Deferred | do not add in Batch 3C | Deferred | Drag/drop can imply browser, keyboard and assistive-technology behaviour that has not been reviewed. |
 | UploadedItem | Uploaded-file row/status display | Deferred | do not add in Batch 3C | Deferred | Live GEL Storybook evidence exists, but the local source package snapshot is missing and remove/status semantics need deeper review. |
 
+## Batch 3D reference inventory
+
+Batch 3D adds static Storybook-only GEL Reference coverage for Loading & Placeholders. Loader and Skeleton are local reference previews through `src/gel.ts` for design and composition review only. They are not acceptance-manifest-backed, do not introduce the real `@snsw-gel/react` package dependency, and do not prove production loading behaviour, focus management, live-region behaviour, accessibility compliance, WCAG compliance, backend integration, data loading, GEL approval or TaPaaS approval.
+
+Modal, MoreInfoPanel and MoreInfoModal remain deferred because modal/help overlays can imply focus-management, return-focus, Escape handling, assistive-technology and approval readiness that this batch does not prove.
+
+| GEL package/component | TaPaaS use case | Story target | Recommended action | Acceptance level | Notes |
+|---|---|---|---|---|---|
+| Loader | Static loading indicator placement and neutral loading copy review | `LoaderStaticReference` export, displayed as `Loader static reference` | source-informed static local preview through `src/gel.ts` | Story-only | Non-operational spinner-style reference only. No async state, timers, fetches, route transitions, suspense, live regions, focus management or backend/data-loading behaviour. |
+| Skeleton | Static placeholder rows and cards for transaction-style content review | `SkeletonStaticReference` export, displayed as `Skeleton static reference` | source-informed static local preview through `src/gel.ts` | Story-only | Static placeholder blocks only. No real data loading, timing, progressive disclosure, content replacement, live regions or production behaviour claim. |
+| Modal | Modal dialog | Deferred | do not add in Batch 3D | Deferred | Needs deeper review for focus management, return-focus, Escape handling, overlay behaviour and assistive-technology behaviour. |
+| MoreInfoPanel | Modal-style contextual help panel | Deferred | do not add in Batch 3D | Deferred | Existing local preview is an inline disclosure variant; real modal-style MoreInfoPanel behaviour remains review-gated. |
+| MoreInfoModal | Contextual help modal | Deferred | do not add in Batch 3D | Deferred | Needs source and behaviour review before adding a public GEL Reference story. |
+
 ## Batch 2 pattern inventory
 
 Batch 2 adds story-only TaPaaS GEL patterns. These stories compose existing GEL primitives and do not create TaPaaS wrappers, transaction refactors or manifest entries.
