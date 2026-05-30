@@ -42,6 +42,9 @@ Use this target structure for future Storybook navigation:
 | Transaction Frames | Designers and source owners | Bounded source-review frames for MPS and future transaction screens. | Screenshot evidence supports review only, not full parity or approval. |
 | Transaction Assemblies | Stakeholders and product reviewers | Thin mocked transaction journeys and showcase-safe preview surfaces. | Mock-only unless later backend evidence exists. |
 | Visual QA & Evidence | Designers, source owners and Codex/Kiro maintenance | Intake boards, maturity backlog, screenshot-backed review and review-gate guidance. | Evidence-only unless separately manifest-backed. |
+| Development Evidence | Engineers and Codex/Kiro maintenance | Generated or development-only smoke stories that support local implementation checks. | Not review-facing, not acceptance-manifest-backed, and not production, source parity, GEL/TaPaaS approval or WCAG evidence. |
+
+Generated `.ai` stories are housed under `Development Evidence/Generated Checks`. They are not review-facing evidence. Curated `GEL Reference`, `TaPaaS Components` and `Transaction Frames` stories remain the preferred surfaces for design review, source-structure review and acceptance-backed evidence.
 
 ## Transaction assembly review surfaces
 
