@@ -1321,6 +1321,55 @@ export function MoreInfoDisclosure({ triggerText, title, children }: MoreInfoDis
 export const MoreInfoPanel = MoreInfoDisclosure
 
 // ---------------------------------------------------------------------------
+// MoreInfoPanelStaticReference
+// Source evidence: docs/source-evidence/gel-components/more-info-panel/
+// Static reference preview only. The real GEL MoreInfoPanel is modal-like and
+// includes portal, backdrop, focus-lock, Escape close and return-focus
+// behaviour. This local preview intentionally does not implement that behaviour.
+// ---------------------------------------------------------------------------
+export interface MoreInfoPanelStaticReferenceProps extends HTMLAttributes<HTMLDivElement> {
+  title?: string
+  triggerText?: string
+  children?: React.ReactNode
+  boundaryText?: React.ReactNode
+}
+
+export function MoreInfoPanelStaticReference({
+  title = 'Why we ask for this information',
+  triggerText = 'More information',
+  children,
+  boundaryText = 'Simplified local reference preview only. This is not the real GEL MoreInfoPanel implementation and does not provide portal, backdrop, focus-lock, Escape, return-focus, keyboard completeness, screen-reader completeness, accessibility compliance or approval evidence.',
+  className,
+  style,
+  ...rest
+}: MoreInfoPanelStaticReferenceProps) {
+  return (
+    <div
+      className={['gel-more-info-panel-static', className].filter(Boolean).join(' ')}
+      data-gelweb-component='more-info-panel-static-reference'
+      style={style}
+      {...rest}
+    >
+      <p className='gel-more-info-panel-static__trigger' aria-hidden='true'>
+        <span className='gel-more-info-panel-static__icon'>i</span>
+        {triggerText}
+      </p>
+      <div className='gel-more-info-panel-static__content'>
+        <strong className='gel-more-info-panel-static__title'>{title}</strong>
+        <div className='gel-more-info-panel-static__body'>
+          {children || (
+            <p>
+              This static panel shows where short contextual help could appear in a transaction page.
+            </p>
+          )}
+        </div>
+      </div>
+      <p className='gel-more-info-panel-static__boundary'>{boundaryText}</p>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
 // Accordion
 // Source evidence: docs/source-evidence/gel-components/accordion/
 // Uses button-based headings with aria-expanded and aria-controls.
