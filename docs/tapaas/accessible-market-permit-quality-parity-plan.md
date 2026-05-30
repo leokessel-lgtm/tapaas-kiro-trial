@@ -283,6 +283,32 @@ Scope:
 - Promote only rules proven by AMP patches plus reusable component/template evidence.
 - Do not promote AMP-specific copy, source flow, backend or policy assumptions.
 
+### Final public smoke closure
+
+Result:
+
+- Deployed main commit `c10897c` passed the final public AMP smoke end to end.
+- AMP opened from the public app.
+- The privacy/source caveat remained visible.
+- DOB summary link and inline error appeared for an invalid date and cleared after correction.
+- Contact details completed, including the native State select.
+- Email summary and inline error appeared for an invalid format and cleared after correction.
+- Support-needs No path continued.
+- Support-needs Yes without details blocked progression.
+- Support-needs Yes with details continued.
+- Review showed the support answer and support details separately.
+- Review edit actions returned to the correct source steps.
+- Submit reached confirmation.
+- Confirmation did not show the source inventory link.
+- Confirmation CTA was `Start another application`.
+- Confirmation caveat remained visible.
+
+Closure boundary:
+
+- AMP remains a synthetic transaction hardening surface.
+- This does not make AMP source-complete, production-ready, WCAG/accessibility compliant, GEL/TaPaaS approved or final-copy approved.
+- Final copy, policy, fees, eligibility, TUTD/Keep a record and backend/page split decisions remain owner/source-gated.
+
 ## Do not patch yet
 
 - Do not add backend calls, data loading, customer-record lookup, address lookup, email verification, payment, identity, eligibility, approval or real permit issuance logic.
