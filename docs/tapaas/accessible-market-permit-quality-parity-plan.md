@@ -2,7 +2,7 @@
 
 Date: 2026-05-31
 
-Status: Slice 1 low-risk inherited cleanup completed. AMP remains a mock transaction skeleton with no confirmed transaction-specific source flow.
+Status: Slice 2 DOB and email validation completed. AMP remains a mock transaction skeleton with no confirmed transaction-specific source flow.
 
 ## TLDR
 
@@ -56,8 +56,8 @@ Current source classification:
 |---|---|---|
 | Step model | 9 steps: privacy, applicant, contact, market, accessibility, supporting, declaration, review, confirmation | AMP-specific, build-tested skeleton structure; source-gated for exact flow. |
 | Privacy | Free text and generic privacy acknowledgement checkbox | Inherited Trial Permit feedback applies; should use privacy/T&Cs separation if patched. |
-| Applicant details | Full name plus hand-coded DOB fieldset | AMP-specific issue; DOB validation/error structure needs targeted patch. |
-| Contact details | Email, phone and postal address using `Field`, `Input`, `Select` | AMP-specific issue; labels/GEL usage/full-width behaviour need review. |
+| Applicant details | Full name plus hand-coded DOB fieldset | Slice 2 added missing vs invalid DOB inline error treatment and submitted-error timing. Further contact/GEL layout review remains separate. |
+| Contact details | Email, phone and postal address using `Field`, `Input`, `Select` | Slice 2 tightened preview-level email validation and submitted-error timing. Labels/GEL usage/full-width behaviour remain separate. |
 | Market details | Market name, market type and event date | Source-gated for real market fields and backend split. |
 | Accessibility/support needs | `ConditionalQuestionPanel` with yes/no radio and support-details textarea | AMP-specific and manual-QA-sensitive. |
 | Supporting information | Textarea with character count | AMP-specific; likely safe but copy/source remains gated. |
@@ -72,9 +72,9 @@ Current source classification:
 | AMP-01 | "Same comments as transaction above" | inherited Trial Permit feedback | Trial Permit reconciliation records page-template, privacy, review, confirmation, CTA, validation and source-gating rules. | Apply selectively to matching AMP defects. | Do not blindly copy Trial Permit runtime. AMP has 9 steps and conditional support needs. |
 | AMP-02 | AMP appears to be a made-up transaction | source-gated | No standalone AMP source flow in source inventory; evidence log frames AMP as a complexity skeleton. | Document boundary; do not claim source parity. | Keep AMP as mock/demo transaction unless source is supplied. |
 | AMP-03 | Contact details input labels and GEL usage | AMP-specific feedback; reusable rule candidate | Contact page uses local `Field`/`Input`/`Select`; shared `Field` label weight is 500 and inputs use fixed widths when `inputWidth` is set. | Patch candidate after classification. | Check labels, required markers, help text and whether contact fields should use the same required-field guidance as source-backed form pages. |
-| AMP-04 | DOB validation | AMP-specific feedback | DOB validation checks only presence and broad ranges; parsing permits impossible dates such as 31/02. | High-priority patch candidate. | Use static validation only; do not add age eligibility, identity or backend validation. |
-| AMP-05 | Email validation | AMP-specific feedback | Email check is a simple `@` plus dot test. | High-priority patch candidate, but keep lightweight. | Avoid overbuilding. Use a safer preview-level email validation rule and tests. |
-| AMP-06 | Missing inline DOB error | AMP-specific feedback | Inline DOB error appears only for missing fields through `dobErr`; invalid-date branch in `errorsForStep` does not set a separate inline invalid-date state. | High-priority patch candidate. | Field-level and summary error text should agree for missing vs invalid date. |
+| AMP-04 | DOB validation | AMP-specific feedback | DOB validation checked only presence and broad ranges; parsing permitted impossible dates such as 31/02. | Fixed in Slice 2. | Uses preview-level calendar-date checking only; no age eligibility, identity or backend validation. |
+| AMP-05 | Email validation | AMP-specific feedback | Email check was a simple `@` plus dot test. | Fixed in Slice 2. | Uses a lightweight preview-level format check; no production-grade or backend/email verification claim. |
+| AMP-06 | Missing inline DOB error | AMP-specific feedback | Inline DOB error appeared only for missing fields through `dobErr`; invalid-date branch in `errorsForStep` did not set a separate inline invalid-date state. | Fixed in Slice 2. | Field-level and summary error text now agree for missing vs invalid date. |
 | AMP-07 | Conditional accessibility/support needs structure | AMP-specific feedback; manual QA | Uses `ConditionalQuestionPanel`; conditional content appears after radio group with no focus move on reveal. | Patch carefully and manually QA. | Preserve source-backed conditional-panel pattern. Do not imply assessment, eligibility, service promise or automated decisioning. |
 | AMP-08 | Full-width input behaviour | AMP-specific feedback; manual QA | Many inputs use `inputWidth='xl'`, `lg`, `md`, `xs`; `Input` fixed-width mapping caps `xl` at 416px. | Inspect visually before patching; likely targeted width changes only. | Confirm whether "full-width" means container width, mobile width, or matching Figma input slot. |
 | AMP-09 | Input-page split/back-end dependency question | source-gated | AMP has separate applicant, contact, market, accessibility and supporting pages. Backend dependency is unknown. | Do not patch until owner/source decision. | Current split may be useful for review, but real AMP flow may not exist. Avoid inventing backend persistence or account/customer-record behaviour. |
@@ -101,14 +101,15 @@ Current source classification:
 | Confirmation uses TaPaaS confirmation primitives | `ConfirmationHeader` and `TransactionSummaryCard` are present. | Keep confirmation-specific composition. |
 | Exit modal is available on transaction steps | `ExitModal` is wired to clear mock data. | Preserve; do not add real draft saving. |
 | Mock backend/payment boundaries are explicit | Review says no real payment; confirmation uses placeholders. | Preserve; do not invent backend, payment, receipt or approval logic. |
+| Front-end DOB/email validation exists | Designer feedback identified date and email format validation as a positive. | Protect as preview-level validation only; do not turn it into eligibility, identity, backend or production-grade validation. |
 
 ## High-priority fixes
 
 | Priority | Fix | Why first | Safe boundary |
 |---|---|---|---|
 | 1 | Remove developer-facing source inventory link from AMP confirmation and align restart CTA wording. | Low-risk inherited Trial Permit cleanup; runtime UI should not expose internal docs. | Completed in Slice 1. Runtime-only UI cleanup, no source-content claim. |
-| 2 | Fix DOB inline error state to handle both missing and invalid DOB. | Designer called out missing inline DOB error; current invalid-date summary can disagree with inline state. | Use local validation only; no age, identity or eligibility logic. |
-| 3 | Tighten preview-level email validation and add focused tests. | Current rule is very loose. | Keep simple and testable; no backend/email verification. |
+| 2 | Fix DOB inline error state to handle both missing and invalid DOB. | Designer called out missing inline DOB error; current invalid-date summary can disagree with inline state. | Completed in Slice 2. Uses local preview validation only; no age, identity or eligibility logic. |
+| 3 | Tighten preview-level email validation and add focused tests. | Current rule is very loose. | Completed in Slice 2. Simple format validation only; no backend/email verification. |
 | 4 | Review contact labels, required markers and GEL field usage. | Direct designer focus area and likely reusable across form pages. | Use existing GEL preview components; do not introduce new component abstractions. |
 | 5 | Decide targeted full-width input behaviour for contact/supporting fields. | Likely visual polish and responsiveness issue. | Use responsive CSS/props only after browser check. |
 | 6 | Improve support-needs structure only if a browser/keyboard pass shows a real issue. | Conditional reveal is sensitive for AT behaviour. | Keep conditional content adjacent; no focus/live-region claims unless tested. |
@@ -161,15 +162,26 @@ Validation:
 
 Scope:
 
-- Add missing vs invalid DOB inline error treatment.
-- Tighten email validation without backend verification.
-- Add tests for missing DOB, invalid DOB, invalid email and valid continuation.
+- Added missing vs invalid DOB inline error treatment.
+- Kept the DOB summary link targeting the DOB day input while wiring the grouped DOB fields to the inline error text.
+- Tightened email validation to a lightweight preview-level format check.
+- Aligned AMP submitted-error timing with the Trial Permit pattern so errors persist until Continue revalidates the current step.
+- Added focused tests for invalid DOB, DOB summary link target, validation persistence, invalid email, valid DOB/email continuation and existing Slice 1 confirmation behaviour.
+- Did not change support-needs structure, contact field layout/labels, page splitting, backend dependency logic, final copy, eligibility, fees, policy or confirmation content.
+
+Preview-validation boundary:
+
+- This slice protects useful front-end date and email format feedback in the mock transaction only.
+- It does not claim production-grade date parsing, age eligibility, identity validation, backend validation, email verification or source/policy correctness.
 
 Validation:
 
-- focused AMP test if added
+- `npx vitest run src/AccessibleMarketPermitSkeleton.test.tsx`
+- `npm run acceptance:static`
 - `npm run test`
 - `npm run build:all`
+- `npm run parity`
+- `git diff --check`
 
 ### Slice 3 - Contact details GEL/input treatment
 
