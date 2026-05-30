@@ -105,6 +105,19 @@ Batch 3A adds Storybook-only GEL Reference coverage for selected Navigation & St
 | StatusLabel | Transaction review/status labelling examples | `StatusLabelReference` export, displayed as `Status label` | source-informed local preview through `src/gel.ts` | Story-only | Static labels only. No workflow state, live announcement or production GEL package behaviour claim. |
 | Pagination | Multi-page result navigation | Deferred | do not add in Batch 3A | Deferred | Read-only coverage map rated transaction-review value low for current transaction assembly work. |
 
+## Batch 3B reference inventory
+
+Batch 3B adds Storybook-only GEL Reference coverage for Transaction Inputs. These are local reference previews through `src/gel.ts` for design and composition review only. They are not acceptance-manifest-backed, do not introduce the real `@snsw-gel/react` package dependency, and do not prove production behaviour, source parity, accessibility compliance, WCAG compliance, GEL approval, TaPaaS approval, privacy approval, legal approval or policy approval.
+
+Date examples are visual/reference-only. They do not add date parsing, masking, validation, age checks, eligibility logic, storage, form submission or backend behaviour.
+
+| GEL package/component | TaPaaS use case | Story target | Recommended action | Acceptance level | Notes |
+|---|---|---|---|---|---|
+| Fieldset | Grouped transaction controls with a legend and help/error relationship | `FieldsetReference` export, displayed as `Fieldset` | source-informed local preview through `src/gel.ts` | Story-only | Semantic grouping reference only. Does not replicate GEL FocusGroup, theming, margin system or full accessibility behaviour. |
+| CheckboxList | Multiple independent checkbox options for neutral transaction preferences | `CheckboxListReference` export, displayed as `Checkbox list` | source-informed local preview through `src/gel.ts` | Story-only | No consent, declaration, privacy, eligibility, policy or approval logic. |
+| DateInput | Single date-shaped text input reference | `DateInputReference` export, displayed as `Date input` | source-informed local preview through `src/gel.ts` | Story-only | Visual reference only. No parsing, formatting, masking or validation callback behaviour. |
+| DateMultiInput | Day/month/year grouped date reference | `DateMultiInputReference` export, displayed as `Date multi input` | source-informed local preview through `src/gel.ts` | Story-only | Visual grouping reference only. No hidden value generation, date object handling, validation or age calculation. |
+
 ## Batch 2 pattern inventory
 
 Batch 2 adds story-only TaPaaS GEL patterns. These stories compose existing GEL primitives and do not create TaPaaS wrappers, transaction refactors or manifest entries.
