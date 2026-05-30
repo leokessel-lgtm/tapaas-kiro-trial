@@ -3,12 +3,13 @@ import { expect } from 'storybook/test'
 import { MpsReviewFramePreview } from './index'
 
 const meta = {
+  title: 'Development Evidence/Generated Checks/MPS Review Frame Preview',
   component: MpsReviewFramePreview,
   tags: ['ai-generated'],
   parameters: {
     docs: {
       description: {
-        component: 'Development-only smoke stories. Use TaPaaS Preview/Composites / MPS Review Frame - Bounded Source Review for designer-facing source-structure comparison.',
+        component: 'Generated development smoke coverage only. This is not designer review evidence, not acceptance-manifest-backed, and not production, source parity, GEL/TaPaaS approval or WCAG evidence. Use Transaction Frames/MPS for curated source-structure review.',
       },
     },
   },

@@ -3,12 +3,13 @@ import { expect } from 'storybook/test'
 import { NextStepsCardPreview } from './index'
 
 const meta = {
+  title: 'Development Evidence/Generated Checks/Next Steps Card Preview',
   component: NextStepsCardPreview,
   tags: ['ai-generated'],
   parameters: {
     docs: {
       description: {
-        component: 'Development-only smoke stories. Use TaPaaS Preview/Composites / Next Steps Card for designer-facing Figma comparison.',
+        component: 'Generated development smoke coverage only. This is not designer review evidence, not acceptance-manifest-backed, and not production, source parity, GEL/TaPaaS approval or WCAG evidence. Use TaPaaS Components/Review & Confirmation for curated design review.',
       },
     },
   },

@@ -3,8 +3,16 @@ import { expect } from 'storybook/test'
 import { InPageAlert } from '../gel'
 
 const meta = {
+  title: 'Development Evidence/Generated Checks/GEL In-page Alert',
   component: InPageAlert,
   tags: ['ai-generated'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Generated development smoke coverage only. This is not designer review evidence, not acceptance-manifest-backed, and not production, source parity, GEL/TaPaaS approval or WCAG evidence. Use GEL Reference/Core Primitives for curated design review.',
+      },
+    },
+  },
 } satisfies Meta<typeof InPageAlert>
 
 export default meta
