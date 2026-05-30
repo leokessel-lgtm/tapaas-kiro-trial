@@ -474,9 +474,6 @@ function ConfirmationStep({
         </p>
       </InPageAlert>
       <TrialPermitActionGroup onContinue={onStartAgain} continueLabel='Start another application' />
-      <p style={{ marginTop: '1rem' }}>
-        <TextLink href='https://github.com/leokessel-lgtm/tapaas-kiro-trial/blob/main/docs/tapaas/00-source-inventory.md'>Review TaPaaS source inventory</TextLink>
-      </p>
     </section>
   )
 }

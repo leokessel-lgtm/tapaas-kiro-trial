@@ -152,5 +152,6 @@ describe('TrialPermitSkeleton', () => {
     expect(screen.getByRole('heading', { name: 'Next steps' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Start another application' })).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Continue' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Review TaPaaS source inventory' })).not.toBeInTheDocument()
   })
 })

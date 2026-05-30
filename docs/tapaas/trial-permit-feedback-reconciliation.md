@@ -4,7 +4,7 @@ Date: 2026-05-30
 
 ## Executive summary
 
-Overall status: Trial Permit is hardened as a simple Experiment 1 transaction assembly benchmark. The Slice 8 follow-up fixes the one previously missed source-verified runtime item: error-summary links now use dark link treatment instead of the error colour.
+Overall status: Trial Permit is hardened as a simple Experiment 1 transaction assembly benchmark. Slice 8 fixed the source-verified error-summary link colour item, and Slice 9 closed the post-reconciliation cleanup items that were appropriate before designer-facing review: shared CTA ordering and removal of the developer-facing source inventory link from the confirmation UI.
 
 What is genuinely fixed:
 
@@ -14,7 +14,7 @@ What is genuinely fixed:
 - Privacy collection notice and T&Cs/declaration concerns are separated.
 - Privacy, review, fees, declaration review, transaction summary and next-steps patterns are used where repo evidence supports them.
 - Review edit actions return to the relevant source step, with a documented step-level limitation.
-- CTA order and confirmation action wording are improved.
+- CTA order and confirmation action wording are improved; shared `TransactionCtaGroup` now follows the Back-before-primary order when a Back action exists.
 - Submitted validation errors persist while typing and clear/revalidate only on Continue.
 - Mandatory-field guidance is present on the application-details step.
 
@@ -74,7 +74,7 @@ Partly addressed or source-gated items:
 | TP-09 | Transaction name should be page label. | Page templates | Fixed; Documented rule | `transactionName` is displayed as the form-header page label. | Preserve. | No |
 | TP-10 | Page title should mirror active step. | Page templates | Fixed; Documented rule | `pageTitles` drives the active heading in the form header. | Verify exact page title wording if source appears. | No |
 | TP-11 | Error in-page alert appears above page title. | Page templates; validation/error handling | Fixed; Protected | `ErrorSummary` is rendered after the form header; tests assert heading precedes summary. | Preserve placement. | No |
-| TP-12 | Secondary/back CTA does not follow expected left-side pattern. | Component relationships; page templates | Fixed; Protected | `TrialPermitActionGroup` renders Back before primary action; tests assert review order. | Broader shared CTA rule can be handled in future transactions if needed. | No |
+| TP-12 | Secondary/back CTA does not follow expected left-side pattern. | Component relationships; page templates | Fixed; Protected | `TrialPermitActionGroup` renders Back before primary action; shared `TransactionCtaGroup` now uses the same Back-before-primary order where Back exists; tests assert both paths. | Preserve when future transaction skeletons use the shared component. | No |
 | TP-13 | Secondary/back CTA has red/destructive styling concern. | Component choice; accessibility | Fixed; Manual QA required | Back uses `Button variant='secondary'`; tests assert `gel-btn--secondary` and not `gel-btn--destructive`. | Manual contrast/visual review still required. | No |
 | TP-14 | Confirmation CTA is missing secondary button and primary action appears wrong. | Transaction flow; component relationships | Partly addressed; Source-gated | Confirmation no longer shows Continue; primary label is `Start another application`. | Do not add final destination or secondary action without source evidence. | No |
 | TP-15 | Privacy card missing. | Component choice | Fixed | `PrivacyCardPreview` is used. | Keep final content source-gated. | No |
@@ -87,7 +87,7 @@ Partly addressed or source-gated items:
 | TP-22 | Transaction summary card misaligned, missing key info and includes unnecessary applicant name. | Component choice; content | Partly addressed; Source-gated | Uses `TransactionSummaryCard`; applicant name removed; summary includes reference, permit type and receipt placeholder. | Verify exact required rows, alignment and receipt/reference rules. | No |
 | TP-23 | Review edit button should go to relevant input page. | Component relationships | Fixed; Documented limitation | Application edit routes to application-details step; declaration edit routes to declaration step. | Field-level anchors and auto-return-to-review remain source-gated. | No |
 | TP-24 | Confirmation summary should use relevant transaction info. | Component relationships; content | Partly addressed | Summary uses reference, permit type and receipt placeholder, without applicant name. | Verify final transaction summary rules. | No |
-| TP-25 | Confirmation should use next-step/end-of-transaction composition. | Component relationships | Partly addressed; Source-gated | Uses `NextStepsCardPreview`; confirmation action is post-submit reset. | Verify final end-of-transaction CTA set and any Keep a record/TUTD need. | No |
+| TP-25 | Confirmation should use next-step/end-of-transaction composition. | Component relationships | Partly addressed; Source-gated | Uses `NextStepsCardPreview`; confirmation action is post-submit reset; developer-facing source inventory link was removed from the confirmation UI in Slice 9. | Verify final end-of-transaction CTA set and any Keep a record/TUTD need. | No |
 | TP-26 | Permit type explanation missing. | Content | Partly addressed; Source-gated | A source-required permit-type explanation placeholder is present. | Replace only with source-backed explanation. | No |
 | TP-27 | Missing T&Cs. | Content | Partly addressed; Source-gated | Terms and conditions section exists with source-required placeholder. | Replace placeholder with owner-approved terms. | No |
 | TP-28 | Privacy collection notice and intro text not reused. | Content; Figma/source fidelity | Source-gated | Privacy collection notice placeholder exists; intro copy remains preview/mock wording. | Source or owner-approved content required. | No |
@@ -139,7 +139,7 @@ Remaining component-choice caveats are source-gated or manual-QA-gated. The susp
 
 Review edit relationships are fixed at the safest available step level. Application details and declaration edits return to the relevant source step. Field-level anchors and auto-return-to-review are documented limitations, not hidden defects.
 
-CTA hierarchy is improved. Back appears before the primary action and uses the secondary button variant. Confirmation uses a post-submit reset label, `Start another application`, rather than Continue. Final destination URLs, service-specific secondary actions and exact end-of-transaction CTA patterns remain source-gated.
+CTA hierarchy is improved. Back appears before the primary action and uses the secondary button variant in both Trial Permit and the shared `TransactionCtaGroup`. Confirmation uses a post-submit reset label, `Start another application`, rather than Continue. Final destination URLs, service-specific secondary actions and exact end-of-transaction CTA patterns remain source-gated.
 
 ### Content
 
@@ -168,6 +168,8 @@ Trial Permit has produced reusable rules for future transaction assembly, but it
 - No original feedback item appears to be entirely missing from the parity plan or closure report.
 - Some early "fix now" entries in the parity plan are legacy planning text. Later slice status and the closure report supersede them.
 - The dark error-summary link treatment is now implemented in the shared local `ErrorSummary` and protected by focused Trial Permit regression coverage.
+- The shared CTA ordering mismatch identified after reconciliation has been fixed in Slice 9.
+- The developer-facing source inventory link has been removed from the Trial Permit confirmation runtime UI; source inventory documentation remains in docs.
 - Keep a record/TUTD is correctly deferred and source-gated.
 - Final copy is consistently source-gated and not claimed as complete.
 - There are no unsupported claims that Trial Permit is production-like, source-complete, WCAG compliant, GEL approved or TaPaaS approved.
@@ -191,6 +193,12 @@ Slice 8 closed the previously recommended error-summary visual treatment slice:
 - Shared local `ErrorSummary` links now use dark link treatment.
 - Error colour remains reserved for marker/icon/border/background.
 - Focused Trial Permit regression coverage protects link targets and link colour treatment.
+
+Slice 9 closed the post-reconciliation cleanup that was appropriate before designer-facing review:
+
+- Shared `TransactionCtaGroup` now renders Back before the primary action where a Back action exists.
+- Trial Permit confirmation no longer exposes the developer-facing source inventory link in runtime UI.
+- Source/content gates, Storybook deferral, manual accessibility QA and source-parity anti-claims remain unchanged.
 
 Remaining gates are not blockers for the next transaction:
 

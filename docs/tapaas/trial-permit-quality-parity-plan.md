@@ -2,7 +2,7 @@
 
 Date: 2026-05-29
 
-Status: Slice 8 patched. Runtime changes remain limited to Trial Permit hardening and the shared local `ErrorSummary` dark-link treatment fix. Slice 6B remains documentation-only reusable rule promotion from Trial Permit hardening and MCP/Figma evidence.
+Status: Slice 9 patched. Runtime changes remain limited to Trial Permit hardening, shared local `ErrorSummary` dark-link treatment and shared `TransactionCtaGroup` Back-before-primary ordering. Slice 6B remains documentation-only reusable rule promotion from Trial Permit hardening and MCP/Figma evidence.
 
 ## TLDR
 
@@ -149,7 +149,7 @@ Items needing source/Figma verification after Slice 3:
 Risks and unknowns after Slice 3:
 
 - Review edit routing is step-level only. It should not be claimed as full source parity or field-level edit routing.
-- Local Trial Permit CTA ordering avoids changing shared components, but broader transaction CTA rules remain unpromoted.
+- Local Trial Permit CTA ordering avoids changing shared components in Slice 3; Slice 9 later aligned shared `TransactionCtaGroup` ordering with the same Back-before-primary rule.
 - Confirmation still uses placeholder next-step and receipt content; no operational instructions are confirmed.
 - The permit-type guidance is an explicit placeholder, not policy or eligibility content.
 - No accessibility measurement, WCAG claim, GEL approval, TaPaaS approval, privacy approval, legal approval or policy approval is implied.
@@ -365,6 +365,38 @@ No new claims after Slice 8:
 - This fix does not claim Trial Permit source parity.
 - This fix does not imply GEL, TaPaaS, privacy, legal, policy or production approval.
 
+## Slice 9 patch status
+
+Completed on 2026-05-30:
+
+- Updated shared `TransactionCtaGroup` so Back/secondary appears before the primary action whenever a Back action exists.
+- Preserved existing button variants, labels, callbacks, grouping semantics and Exit link behaviour.
+- Removed the developer-facing `Review TaPaaS source inventory` link from the Trial Permit confirmation runtime UI.
+- Kept source inventory evidence in docs only.
+- Preserved Trial Permit confirmation CTA semantics: `Start another application` remains the safe post-submit reset action.
+- Kept Trial Permit Storybook expansion as optional/future; no Storybook story or acceptance-manifest entry was added.
+- Preserved source-gated content, manual accessibility gates, field-level edit limitations, Keep a record/TUTD deferral and suspected colour-token verification gates.
+
+Files changed in Slice 9:
+
+- `src/tapaas-preview/index.tsx`
+- `src/tapaas-preview/SelectedMaturityComponents.test.tsx`
+- `src/TrialPermitSkeleton.tsx`
+- `src/TrialPermitSkeleton.test.tsx`
+- `docs/tapaas/trial-permit-quality-parity-plan.md`
+- `docs/tapaas/trial-permit-feedback-reconciliation.md`
+- `docs/tapaas/trial-permit-closure-report.md`
+
+Still deferred after Slice 9:
+
+- Trial Permit-specific Storybook review surface and any acceptance-manifest entry.
+- Exact privacy, T&Cs/declaration, permit-type and confirmation copy.
+- Exact receipt/reference and post-submit service actions.
+- Whether Trial Permit specifically requires Keep a record/TUTD.
+- Field-level edit anchors and auto-return-to-review.
+- Approved replacement for the suspected review/fees card colour-token issue.
+- WCAG pass/fail, rendered contrast, keyboard/focus and assistive-technology claims.
+
 ## Audit scope
 
 ### Primary implementation files
@@ -436,7 +468,7 @@ No new claims after Slice 8:
 | Feedback item | Classification | Current likely source | Disposition | Notes |
 |---|---|---|---|---|
 | Correct steps and order | Transaction flow | `TrialPermitSkeleton.tsx` | Protect | Keep five-step model. |
-| Secondary/back CTA does not follow expected left-side pattern | Page templates; component relationships; responsiveness | `TransactionCtaGroup`, `.tapaas-primary-actions` | Fix now | Likely reusable `TransactionCtaGroup` rule. Verify exact desktop order against template guidance if available. |
+| Secondary/back CTA does not follow expected left-side pattern | Page templates; component relationships; responsiveness | `TransactionCtaGroup`, `.tapaas-primary-actions` | Fixed; protected | Slice 9 aligns shared `TransactionCtaGroup` with the Back-before-primary rule while preserving button variants and callbacks. |
 | Confirmation CTA is missing secondary button and primary action appears wrong | Page templates; component choice; content | `ConfirmationStep`, `TransactionCtaGroup` | Fix now plus verify label | Add secondary/end action pattern. Primary action label likely needs source confirmation. Do not invent real routing. |
 | Multiple pages differ from Figma design: titles, page structure, missing sections and missing components | Figma/source fidelity; page templates; content | All Trial Permit step components | Verify first, then fix | Use designer feedback as current source, but page-specific exact copy/sections need Figma/template verification. |
 | Form header is not used correctly | Page templates; Figma/source fidelity; component relationships | Top-level progress stepper and page headings | Fix now plus source verify for exact anatomy | Stepper should sit inside form header grey background; transaction name should be page label; page title should mirror each step. |

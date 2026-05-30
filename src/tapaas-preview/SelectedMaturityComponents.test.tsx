@@ -385,6 +385,10 @@ describe('selected TaPaaS maturity components', () => {
 
     const actionGroup = screen.getByRole('group', { name: 'Transaction actions' })
     expect(actionGroup).toHaveAttribute('data-tapaas-component', 'transaction-action-area')
+    const buttons = within(actionGroup).getAllByRole('button').map((button) => button.textContent)
+    expect(buttons).toEqual(['Back', 'Start another application', 'Return to Service NSW'])
+    expect(within(actionGroup).getByRole('button', { name: 'Back' })).toHaveClass('gel-btn--secondary')
+    expect(within(actionGroup).getByRole('button', { name: 'Back' })).not.toHaveClass('gel-btn--destructive')
     await user.click(within(actionGroup).getByRole('button', { name: 'Start another application' }))
     await user.click(within(actionGroup).getByRole('button', { name: 'Back' }))
     await user.click(within(actionGroup).getByRole('button', { name: 'Return to Service NSW' }))

@@ -35,6 +35,10 @@ Positive behaviours to preserve were also called out:
 | Slice 5 | Visual parity regression checks | Added regression coverage for secondary CTA class, error-summary structure and review component structure; documented manual visual, contrast and responsive checks. |
 | Slice 6A | Figma/MCP and repo evidence audit | Confirmed reusable evidence from TaPaaS/GEL libraries, NOD, MPS and Owner Builder files; no standalone Trial Permit Figma source was found. |
 | Slice 6B | Reusable rule promotion into docs | Promoted evidence-backed transaction assembly rules into the Trial Permit control plan, MPS review pack and Storybook architecture guidance. |
+| Slice 7 | Closure report | Captured Trial Permit closure status, remaining source/manual QA gates, reusable rules and next-transaction readiness checklist. |
+| Reconciliation | Feedback-by-feedback audit | Reconciled every original feedback item and identified one missed runtime item around error-summary link colour treatment. |
+| Slice 8 | Error-summary link treatment | Changed shared local `ErrorSummary` links to use the dark link token while preserving error colour for marker/icon/border/background. |
+| Slice 9 | Post-reconciliation cleanup | Aligned shared `TransactionCtaGroup` ordering with the Back-before-primary rule and removed the developer-facing source inventory link from Trial Permit confirmation UI. |
 
 ## Feedback exhaustion table
 
@@ -44,7 +48,7 @@ Positive behaviours to preserve were also called out:
 | Figma/source fidelity | Source-gated; not promoted | No standalone Trial Permit Figma flow was found. Trial Permit is a simple assembly benchmark, not a source-parity recreation. |
 | Page templates | Fixed; documented reusable rule | Form header, transaction label, page title, stepper placement and error-summary placement were hardened and promoted as reusable page-template rules. |
 | Component choice | Fixed; documented reusable rule | Privacy card, review info card, review fees card, declaration review, transaction summary and next-steps patterns are used where repo/source evidence supports them. |
-| Component relationships | Fixed; documented limitation | Review edit actions route to relevant source steps. Field-level anchors and auto-return-to-review remain deferred. |
+| Component relationships | Fixed; documented limitation | Review edit actions route to relevant source steps. Shared transaction CTA ordering now renders Back before the primary action where Back exists. Field-level anchors and auto-return-to-review remain deferred. |
 | Content | Source-gated | Privacy notice, T&Cs/declaration, permit-type explanation and confirmation copy remain explicit source-required placeholders or owner-gated items. |
 | Validation/error handling | Fixed; protected; documented reusable rule | Validation-on-Continue, persistent submitted errors, error links and placement below the page title/header are protected. |
 | Accessibility | Protected; manual QA required | Heading/page-title structure, error links and CTA order were improved or protected. WCAG, contrast and assistive-technology claims remain manual-evidence-gated. |
@@ -76,6 +80,7 @@ Keep these explicit and do not treat them as solved by Trial Permit hardening:
 - Review info, fees and declaration review patterns should be used where relevant.
 - Transaction CTAs belong at the bottom of transaction pages except confirmation.
 - Confirmation uses confirmation-specific CTA and summary/next-step composition.
+- Shared transaction CTA groups render Back before the primary action where a Back action exists.
 - Validation-on-Continue and error persistence are preferred for this pattern.
 - Error summary stays below page title/header and follows GEL anatomy.
 - Error-summary links use dark link treatment, not red error styling.

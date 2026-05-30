@@ -798,8 +798,8 @@ export function TransactionCtaGroup({
       data-preview-boundary='preview implementation; no routing included'
     >
       <div className='tapaas-primary-actions'>
-        {onContinue && <Button onClick={onContinue}>{continueLabel}</Button>}
         {onBack && <Button variant='secondary' onClick={onBack}>{backLabel}</Button>}
+        {onContinue && <Button onClick={onContinue}>{continueLabel}</Button>}
       </div>
       {onExit && (
         <Button variant='link' onClick={onExit}>{exitLabel}</Button>
