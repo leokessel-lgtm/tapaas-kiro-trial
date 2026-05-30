@@ -15,7 +15,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--next-steps-card",
+            "id": "tapaas-components-review-confirmation--next-steps-card",
             "mode": "isolated-review",
             "expectedText": "Application assessment",
             "mobileNoOverflow": true
@@ -64,7 +64,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--confirmation-header-pattern",
+            "id": "tapaas-components-review-confirmation--confirmation-header-pattern",
             "mode": "isolated-review",
             "expectedText": "Confirmation header",
             "mobileNoOverflow": true
@@ -476,7 +476,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--transaction-action-areas",
+            "id": "tapaas-components-review-confirmation--transaction-action-areas",
             "mode": "isolated-review",
             "expectedText": "Start another application",
             "mobileNoOverflow": true
@@ -623,7 +623,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--review-info-card-pattern",
+            "id": "tapaas-components-review-confirmation--review-info-card-pattern",
             "mode": "isolated-review",
             "expectedText": "Licence details",
             "mobileNoOverflow": true
@@ -672,7 +672,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--transaction-summary-card-pattern",
+            "id": "tapaas-components-review-confirmation--transaction-summary-card-pattern",
             "mode": "isolated-review",
             "expectedText": "Receipt details",
             "mobileNoOverflow": true
@@ -831,7 +831,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--declaration-review-pattern",
+            "id": "tapaas-components-review-confirmation--declaration-review-pattern",
             "mode": "isolated-review",
             "expectedText": "Declaration review",
             "mobileNoOverflow": true
@@ -891,7 +891,7 @@
         "required": true,
         "stories": [
           {
-            "id": "tapaas-preview-composites--legal-info-accordion-pattern",
+            "id": "tapaas-components-review-confirmation--legal-info-accordion-pattern",
             "mode": "isolated-review",
             "expectedText": "Legal info accordion",
             "mobileNoOverflow": true
