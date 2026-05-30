@@ -150,6 +150,20 @@ Modal, MoreInfoPanel and MoreInfoModal remain deferred because modal/help overla
 | MoreInfoPanel | Modal-style contextual help panel | Deferred | do not add in Batch 3D | Deferred | Existing local preview is an inline disclosure variant; real modal-style MoreInfoPanel behaviour remains review-gated. |
 | MoreInfoModal | Contextual help modal | Deferred | do not add in Batch 3D | Deferred | Needs source and behaviour review before adding a public GEL Reference story. |
 
+## Help & Disclosure reference inventory
+
+The Help & Disclosure reference adds a static Storybook-only `MoreInfoPanel`-style preview for design and composition review. It is not acceptance-manifest-backed, does not introduce the real `@snsw-gel/react` package dependency, and does not prove production behaviour, source parity, modal behaviour, portal behaviour, focus management, keyboard behaviour, screen-reader behaviour, accessibility compliance, WCAG compliance, GEL approval or TaPaaS approval.
+
+Real GEL `MoreInfoPanel` source evidence is modal-like and includes portal, backdrop, focus-lock, `aria-modal` dialog behaviour, Escape close, return-focus and scrollable-region behaviour. This local preview intentionally stays static and does not implement those behaviours. Any production use would need the real GEL implementation and manual accessibility validation.
+
+Modal and MoreInfoModal remain deferred. MoreInfoModal is not added because the local source evidence identifies the sliding-tooltip direction as deprecated and points toward MoreInfoPanel.
+
+| GEL package/component | TaPaaS use case | Story target | Recommended action | Acceptance level | Notes |
+|---|---|---|---|---|---|
+| MoreInfoPanel | Static contextual help/disclosure placement near transaction content | `MoreInfoPanelStaticReference` export, displayed as `MoreInfoPanel static reference` | source-informed static local preview through `src/gel.ts` | Story-only | Static reference only. No portal, backdrop, focus lock, Escape close, return focus, scroll lock, live regions, production interaction model or accessibility approval claim. |
+| Modal | Modal dialog | Deferred | do not add in Help & Disclosure reference | Deferred | Needs deeper review for focus management, return-focus, Escape handling, overlay behaviour and assistive-technology behaviour. |
+| MoreInfoModal | Deprecated contextual help modal/sliding tooltip direction | Deferred | do not add in Help & Disclosure reference | Deferred | Local source evidence says this direction is deprecated and points users toward MoreInfoPanel. |
+
 ## Batch 2 pattern inventory
 
 Batch 2 adds story-only TaPaaS GEL patterns. These stories compose existing GEL primitives and do not create TaPaaS wrappers, transaction refactors or manifest entries.

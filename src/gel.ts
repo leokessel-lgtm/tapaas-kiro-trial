@@ -48,5 +48,6 @@ export {
   StatusLabel,
   MoreInfoDisclosure,
   MoreInfoPanel,
+  MoreInfoPanelStaticReference,
   Accordion,
 } from './gel-preview'

@@ -611,6 +611,61 @@ select:focus-visible {
   line-height: 1.5;
 }
 
+/* --- MoreInfoPanel static reference --- */
+.gel-more-info-panel-static {
+  max-width: 42rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.gel-more-info-panel-static__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 0 0.5rem;
+  color: var(--gel-color-link);
+  font-family: var(--gel-font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.gel-more-info-panel-static__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--gel-color-link);
+  color: var(--gel-color-white);
+  font-size: 0.75rem;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.gel-more-info-panel-static__content {
+  border-left: 3px solid var(--gel-color-brand-dark, #002664);
+  background: #f4f7f9;
+  padding: 1rem 1.25rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.gel-more-info-panel-static__title {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.gel-more-info-panel-static__body > :last-child {
+  margin-bottom: 0;
+}
+
+.gel-more-info-panel-static__boundary {
+  margin: 0.75rem 0 0;
+  color: var(--gel-color-text-grey, #646974);
+  font-size: 0.875rem;
+}
+
 /* --- Accordion --- */
 .gel-accordion {
   margin: 0 0 1.5rem;
