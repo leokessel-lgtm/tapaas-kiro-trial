@@ -2,7 +2,7 @@
 
 Date: 2026-05-31
 
-Status: Slice 3 contact input treatment completed. AMP remains a mock transaction skeleton with no confirmed transaction-specific source flow.
+Status: Slice 4 support-needs conditional structure completed. AMP remains a mock transaction skeleton with no confirmed transaction-specific source flow.
 
 ## TLDR
 
@@ -59,7 +59,7 @@ Current source classification:
 | Applicant details | Full name plus hand-coded DOB fieldset | Slice 2 added DOB validation treatment. Slice 3 added required marker treatment and full-width input treatment for full name. |
 | Contact details | Email, phone and postal address using `Field`, `Input`, `Select` | Slice 2 tightened preview-level email validation. Slice 3 added required marker treatment and full-width treatment for primary contact/address text inputs. State and postcode remain intentionally compact. |
 | Market details | Market name, market type and event date | Source-gated for real market fields and backend split. |
-| Accessibility/support needs | `ConditionalQuestionPanel` with yes/no radio and support-details textarea | AMP-specific and manual-QA-sensitive. |
+| Accessibility/support needs | `ConditionalQuestionPanel` with yes/no radio and a labelled support-details sub-section when Yes is selected | Slice 4 clarified the conditional follow-up structure and added validation/review tests. Manual QA remains required. |
 | Supporting information | Textarea with character count | AMP-specific; likely safe but copy/source remains gated. |
 | Declaration | Warning alert, placeholder declaration and checkbox | Inherited Trial Permit feedback applies; legal copy source-gated. |
 | Review | `ReviewInfoCard` sections and `ReviewFeesCard`, no edit actions | Inherited Trial Permit feedback applies; edit routing and exact review content source-gated. |
@@ -75,7 +75,7 @@ Current source classification:
 | AMP-04 | DOB validation | AMP-specific feedback | DOB validation checked only presence and broad ranges; parsing permitted impossible dates such as 31/02. | Fixed in Slice 2. | Uses preview-level calendar-date checking only; no age eligibility, identity or backend validation. |
 | AMP-05 | Email validation | AMP-specific feedback | Email check was a simple `@` plus dot test. | Fixed in Slice 2. | Uses a lightweight preview-level format check; no production-grade or backend/email verification claim. |
 | AMP-06 | Missing inline DOB error | AMP-specific feedback | Inline DOB error appeared only for missing fields through `dobErr`; invalid-date branch in `errorsForStep` did not set a separate inline invalid-date state. | Fixed in Slice 2. | Field-level and summary error text now agree for missing vs invalid date. |
-| AMP-07 | Conditional accessibility/support needs structure | AMP-specific feedback; manual QA | Uses `ConditionalQuestionPanel`; conditional content appears after radio group with no focus move on reveal. | Patch carefully and manually QA. | Preserve source-backed conditional-panel pattern. Do not imply assessment, eligibility, service promise or automated decisioning. |
+| AMP-07 | Conditional accessibility/support needs structure | AMP-specific feedback; manual QA | Uses `ConditionalQuestionPanel`; Slice 4 now wraps the Yes follow-up textarea in a labelled support-details group. | Fixed structurally in Slice 4; manual QA remains required. | Preserves the conditional-panel pattern. Does not imply assessment, eligibility, service promise or automated decisioning. |
 | AMP-08 | Full-width input behaviour | AMP-specific feedback; manual QA | Many inputs used `inputWidth='xl'`, `lg`, `md`, `xs`; `Input` fixed-width mapping capped `xl` at 416px. | Fixed in Slice 3 for full name and primary contact/address text inputs. | State and postcode remain compact. Browser visual QA is still required because there is no AMP-specific source layout. |
 | AMP-09 | Input-page split/back-end dependency question | source-gated | AMP has separate applicant, contact, market, accessibility and supporting pages. Backend dependency is unknown. | Do not patch until owner/source decision. | Current split may be useful for review, but real AMP flow may not exist. Avoid inventing backend persistence or account/customer-record behaviour. |
 | AMP-10 | Privacy/T&Cs structure inherited from Trial Permit | inherited Trial Permit feedback; source-gated | AMP privacy page is free text and privacy acknowledgement; Trial Permit fix separated privacy notice from T&Cs. | Patch candidate if applying inherited structural cleanup. | Use placeholders; no final privacy/legal copy. |
@@ -97,6 +97,7 @@ Current source classification:
 | Uses local GEL-shaped form components | `Field`, `Input`, `Select`, `RadioButtonList`, `Checkbox`, `Textarea` are used. | Do not replace with ad hoc controls. |
 | Conditional support-needs pattern exists | `ConditionalQuestionPanel` is used for yes/no support details. | Preserve the conditional pattern unless source says the page should be split. |
 | Conditional details are not framed as an assessment or service promise | Help text says no assessment, decision or service promise. | Keep this boundary. |
+| Support-needs validation exists | Slice 4 preserves answer-required and Yes-details-required validation. | Protect submitted-error timing and summary links; do not add focus/live-region claims without manual QA. |
 | Review uses TaPaaS cards and fee preview | `ReviewInfoCard` and `ReviewFeesCard` are present. | Improve edit/actions and rows without replacing with generic UI. |
 | Confirmation uses TaPaaS confirmation primitives | `ConfirmationHeader` and `TransactionSummaryCard` are present. | Keep confirmation-specific composition. |
 | Exit modal is available on transaction steps | `ExitModal` is wired to clear mock data. | Preserve; do not add real draft saving. |
@@ -113,7 +114,7 @@ Current source classification:
 | 3 | Tighten preview-level email validation and add focused tests. | Current rule is very loose. | Completed in Slice 2. Simple format validation only; no backend/email verification. |
 | 4 | Review contact labels, required markers and GEL field usage. | Direct designer focus area and likely reusable across form pages. | Completed in Slice 3 for AMP full name/contact fields. Uses existing GEL preview components; no new shared abstractions. |
 | 5 | Decide targeted full-width input behaviour for contact/supporting fields. | Likely visual polish and responsiveness issue. | Completed in Slice 3 for full name and primary contact/address text inputs. Supporting information remains deferred. |
-| 6 | Improve support-needs structure only if a browser/keyboard pass shows a real issue. | Conditional reveal is sensitive for AT behaviour. | Keep conditional content adjacent; no focus/live-region claims unless tested. |
+| 6 | Improve support-needs structure only if a browser/keyboard pass shows a real issue. | Conditional reveal is sensitive for AT behaviour. | Completed structurally in Slice 4; manual QA still required. No focus/live-region claims added. |
 
 ## Source-gated decisions
 
@@ -215,14 +216,28 @@ Remaining manual QA:
 Scope:
 
 - Preserve `ConditionalQuestionPanel`.
-- Clarify wording and required/error treatment.
-- Add tests for "No" path, "Yes without details" blocked path and "Yes with details" path.
+- Clarified the Yes follow-up by wrapping the support-details textarea in a labelled local group.
+- Preserved `needsSupport` and `supportDetails` state shape.
+- Preserved validation rules: support-needs answer required; support details required only when Yes is selected.
+- Preserved error summary targets `#needs-support` and `#support-details`.
+- Preserved review representation as separate `Needs support` and `Support details` rows.
+- Added tests for no answer, No path, Yes without details, Yes with details and review representation for Yes/No states.
+- Did not add focus movement, live regions, page splitting, backend assumptions, review edit actions, confirmation content, final copy, policy, fees or eligibility logic.
+
+Manual QA boundary:
+
+- Keyboard, focus, screen-reader and responsive behaviour still require manual QA.
+- Automated tests protect structure and validation only; they do not prove WCAG/accessibility compliance.
+- Support-needs wording remains source-gated.
 
 Validation:
 
-- keyboard smoke
-- manual QA notes for AT behaviour
+- `npx vitest run src/AccessibleMarketPermitSkeleton.test.tsx`
+- `npm run acceptance:static`
 - `npm run test`
+- `npm run build:all`
+- `npm run parity`
+- `git diff --check`
 
 ### Slice 5 - Inherited template alignment
 

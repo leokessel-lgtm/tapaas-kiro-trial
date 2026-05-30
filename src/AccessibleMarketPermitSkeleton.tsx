@@ -448,9 +448,12 @@ function AccessibilityStep({ form, submittedErrors, update, onBack, onContinue, 
         hasError={supportErr}
         errorMessage='Select whether you need accessibility support'
       >
-        <Field id='support-details' label='Describe the support needed' helpMessage='This is placeholder content only. No assessment, decision or service promise is made.' hasError={detailsErr} errorMessage='Describe the support needed.'>
-          <Textarea id='support-details' value={form.supportDetails} onChange={(e) => update({ supportDetails: e.target.value })} hasError={detailsErr} rows={4} />
-        </Field>
+        <div role='group' aria-labelledby='support-details-group-heading' style={{ borderLeft: '4px solid var(--gel-color-border)', paddingLeft: '1rem', marginTop: '1rem' }}>
+          <Heading level={3} id='support-details-group-heading'>Support details</Heading>
+          <Field id='support-details' label='Describe the support needed' helpMessage='This is placeholder content only. No assessment, decision or service promise is made.' hasError={detailsErr} errorMessage='Describe the support needed.'>
+            <Textarea id='support-details' value={form.supportDetails} onChange={(e) => update({ supportDetails: e.target.value })} hasError={detailsErr} rows={4} />
+          </Field>
+        </div>
       </ConditionalQuestionPanel>
       <DetailsCard
         title='Your application so far'
