@@ -4,7 +4,7 @@ Date: 2026-05-30
 
 ## Executive summary
 
-Overall status: Trial Permit is substantially hardened as a simple Experiment 1 transaction assembly benchmark, but one source-verified visual feedback item appears not to be fully implemented in runtime.
+Overall status: Trial Permit is hardened as a simple Experiment 1 transaction assembly benchmark. The Slice 8 follow-up fixes the one previously missed source-verified runtime item: error-summary links now use dark link treatment instead of the error colour.
 
 What is genuinely fixed:
 
@@ -54,9 +54,8 @@ What remains manual QA:
 - VoiceOver/NVDA or equivalent assistive-technology testing.
 - Contrast measurement before any WCAG pass/fail claim.
 
-Missed or partly addressed items:
+Partly addressed or source-gated items:
 
-- The error-summary dark link treatment is documented as a reusable rule and GEL source evidence, but the current shared local `ErrorSummary` still styles error-summary links with `var(--gel-color-error)`. This is a narrow runtime mismatch.
 - Review, confirmation, privacy and declaration are structurally improved, but remain partly addressed where final copy or Trial Permit-specific Figma source is missing.
 - Confirmation Keep a record/TUTD is correctly deferred, not silently fixed.
 
@@ -95,12 +94,12 @@ Missed or partly addressed items:
 | TP-29 | Declaration/review/input intro text not source-backed. | Content | Source-gated; Partly addressed | Mock/non-production and source-required wording is visible; final copy is not claimed. | Replace only with source-backed content. | No |
 | TP-30 | Mandatory input field instructions missing. | Page templates; accessibility; content | Fixed | Application details includes `* indicates a required field.` | Verify wording if source requires different instruction. | No |
 | TP-31 | Error summary does not use GEL components correctly. | Validation/error handling; component choice | Partly addressed; Manual QA required | Uses shared local `ErrorSummary` with GEL marker, class and field links; tests cover structure. | Compare full visual/role anatomy against current GEL source before stronger claim. | No |
-| TP-32 | Error message displays in red. | Validation/error handling; accessibility | Missed; Documented rule only | Shared `ErrorSummary` links still use `style={{ color: 'var(--gel-color-error)' }}`. Slice 6B docs say error-summary links should use dark link treatment. | Narrow patch recommended for shared local `ErrorSummary` link colour and regression coverage. | Yes |
+| TP-32 | Error message displays in red. | Validation/error handling; accessibility | Fixed; Manual QA required | Shared `ErrorSummary` links now use `style={{ color: 'var(--gel-color-link)' }}`. Trial Permit tests check summary links target fields and do not use `var(--gel-color-error)`. | Contrast and assistive-technology checks remain manual QA. | No |
 | TP-33 | Error state disappears on entering input, not after Continue. | Validation/error handling | Fixed; Protected | Submitted errors are stored separately and tests confirm errors persist while typing until Continue revalidates. | Preserve. | No |
 | TP-34 | Polite alert for error summary works. | Accessibility; validation/error handling | Protected; Manual QA required | Error summary focus/link behaviour is preserved; step text has polite live region. | Manual AT testing still required for announcement quality. | No |
 | TP-35 | Error summary links to relevant errors work. | Accessibility; validation/error handling | Fixed; Protected | Tests assert links to privacy, name, permit type and declaration controls. | Preserve in future fields. | No |
 | TP-36 | Claimed WCAG AA contrast risk for secondary button. | Accessibility | Manual QA required; Not claimed | Tests only assert non-destructive class; closure report rejects WCAG claims. | Measure contrast in rendered browser before any pass/fail claim. | No |
-| TP-37 | Error-summary link styling should use dark link treatment. | Accessibility; validation/error handling | Missed in runtime; Documented rule | Slice 6B recorded GEL source evidence, but shared local `ErrorSummary` still uses the error colour for links. | Same narrow patch as TP-32. | Yes |
+| TP-37 | Error-summary link styling should use dark link treatment. | Accessibility; validation/error handling | Fixed; Documented rule | Slice 8 changed the shared local `ErrorSummary` link colour to `var(--gel-color-link)` while preserving error colour for icon/border/background. | Keep contrast and AT checks manual-QA gated unless measured. | No |
 | TP-38 | Heading order and layout. | Accessibility; page templates | Partly addressed; Manual QA required | Form header/page title structure improved; no standalone Trial Permit source or AT heading audit. | Manual heading and landmark review required. | No |
 | TP-39 | Manual keyboard/focus/AT checks. | Accessibility | Manual QA required | Closure report lists keyboard and VoiceOver/NVDA gates. | Perform browser and AT QA before any approval claim. | No |
 | TP-40 | Secondary headings may not resize correctly. | Responsiveness | Manual QA required | Existing CSS supports wrapping/stacking, but no browser screenshot pass was run in Slice 5. | Browser resize QA at sensible widths. | No |
@@ -150,7 +149,7 @@ Content is mostly source-gated by design. The runtime now uses explicit placehol
 
 Validation timing and field-link behaviour are fixed and protected. Submitted errors now persist while the user types and clear/revalidate only after Continue is clicked again.
 
-The main unresolved validation/error issue is visual: error-summary links are still rendered in the error colour in the shared local `ErrorSummary`, even though Slice 6B source evidence and reusable rules say they should use dark link treatment. This is a concrete runtime mismatch, not just a manual QA item.
+The main runtime validation/error behaviours are now fixed or protected. Error-summary links use the dark link token, errors persist while typing, errors clear/revalidate only on Continue, and links remain available to relevant fields. Visual contrast and assistive-technology behaviour remain manual QA.
 
 ### Accessibility
 
@@ -168,7 +167,7 @@ Trial Permit has produced reusable rules for future transaction assembly, but it
 
 - No original feedback item appears to be entirely missing from the parity plan or closure report.
 - Some early "fix now" entries in the parity plan are legacy planning text. Later slice status and the closure report supersede them.
-- The dark error-summary link treatment is documented and source-backed, but not implemented in the shared local `ErrorSummary`.
+- The dark error-summary link treatment is now implemented in the shared local `ErrorSummary` and protected by focused Trial Permit regression coverage.
 - Keep a record/TUTD is correctly deferred and source-gated.
 - Final copy is consistently source-gated and not claimed as complete.
 - There are no unsupported claims that Trial Permit is production-like, source-complete, WCAG compliant, GEL approved or TaPaaS approved.
@@ -181,23 +180,21 @@ Trial Permit has produced reusable rules for future transaction assembly, but it
 - Trial Permit-specific Keep a record/TUTD remains unverified.
 - WCAG, contrast and assistive-technology outcomes remain manual QA unless measured.
 - Source parity is not claimed.
-- The local shared `ErrorSummary` visual link treatment appears inconsistent with the promoted GEL rule and should be patched only as a narrow follow-up, with regression coverage.
+- The local shared `ErrorSummary` visual link treatment was corrected in Slice 8. Broader error-summary role, announcement, spacing and contrast parity still require source/manual verification.
 
 ## Decision
 
-Recommendation: Needs one more patch slice.
+Recommendation: Ready to move to the next transaction, subject to the already documented manual QA and source-gated content caveats.
 
-The narrowest useful slice is an error-summary visual treatment slice only:
+Slice 8 closed the previously recommended error-summary visual treatment slice:
 
-- Change the shared local `ErrorSummary` link treatment so summary links use the dark link treatment supported by GEL source evidence, with error colour reserved for marker/icon/border/background.
-- Add or update focused tests for error-summary link styling/structure.
-- Update the Trial Permit parity plan and this reconciliation report if the patch is accepted.
+- Shared local `ErrorSummary` links now use dark link treatment.
+- Error colour remains reserved for marker/icon/border/background.
+- Focused Trial Permit regression coverage protects link targets and link colour treatment.
 
-Suggested files for that slice:
+Remaining gates are not blockers for the next transaction:
 
-- `src/gel-preview/index.tsx`
-- `src/gel-preview/ErrorSummary.test.tsx` or `src/TrialPermitSkeleton.test.tsx`
-- `docs/tapaas/trial-permit-quality-parity-plan.md`
-- `docs/tapaas/trial-permit-feedback-reconciliation.md`
-
-Do not use that slice to change final copy, Trial Permit source-gated content, Keep a record/TUTD, Storybook stories, acceptance manifest or unrelated transactions.
+- final Trial Permit source copy and source-specific post-submit actions
+- Keep a record/TUTD verification
+- WCAG/contrast/assistive-technology evidence
+- standalone Trial Permit source-Figma parity

@@ -2,7 +2,7 @@
 
 Date: 2026-05-29
 
-Status: Slice 6B patched. Runtime changes remain limited to Slices 1 to 5. Slice 6B is documentation-only reusable rule promotion from Trial Permit hardening and MCP/Figma evidence.
+Status: Slice 8 patched. Runtime changes remain limited to Trial Permit hardening and the shared local `ErrorSummary` dark-link treatment fix. Slice 6B remains documentation-only reusable rule promotion from Trial Permit hardening and MCP/Figma evidence.
 
 ## TLDR
 
@@ -239,7 +239,7 @@ Deferred after Slice 5:
 Items needing GEL/Figma/source verification after Slice 5:
 
 - Exact GEL/TaPaaS secondary button visual treatment and hover/focus states.
-- Exact GEL/TaPaaS error-summary visual treatment, including link colour, icon treatment and role/announcement pattern.
+- Exact GEL/TaPaaS error-summary visual treatment beyond the Slice 8 dark-link fix, including icon treatment and role/announcement pattern.
 - Whether the shared TaPaaS review/fees card `#f4f7f9` background is the deprecated ice-blue token referenced in designer feedback and, if so, the approved replacement token.
 - Contrast for error summary links, field-error indicators, CTA colours and card backgrounds against rendered browser styles.
 - Exact responsive rules for secondary headings in Trial Permit templates.
@@ -336,6 +336,35 @@ Files changed in Slice 6B:
 - `docs/tapaas/10-review-pack-mps-transaction-assembly.md`
 - `docs/tapaas/11-gel-storybook-architecture.md`
 
+## Slice 8 patch status
+
+Completed on 2026-05-30:
+
+- Fixed the shared local `ErrorSummary` link colour treatment so error-summary links use the existing dark link token, `var(--gel-color-link)`, instead of `var(--gel-color-error)`.
+- Preserved error colour for the error-summary marker/icon/border/background treatment.
+- Preserved Trial Permit validation behaviour: submitted errors persist while typing and clear/revalidate only on Continue.
+- Preserved Trial Permit error-summary placement below the page title/header and links to relevant fields.
+- Added focused Trial Permit regression coverage for error-summary link targets and link colour token usage.
+
+Files changed in Slice 8:
+
+- `src/gel-preview/index.tsx`
+- `src/TrialPermitSkeleton.test.tsx`
+- `docs/tapaas/trial-permit-quality-parity-plan.md`
+- `docs/tapaas/trial-permit-feedback-reconciliation.md`
+
+Still manual-QA gated after Slice 8:
+
+- Contrast measurement for rendered error-summary links and other error-state colours.
+- VoiceOver/NVDA or equivalent assistive-technology behaviour for the summary, field links and dynamic validation updates.
+- Full GEL/TaPaaS visual parity for role/announcement, icon and spacing anatomy.
+
+No new claims after Slice 8:
+
+- This fix does not claim WCAG compliance.
+- This fix does not claim Trial Permit source parity.
+- This fix does not imply GEL, TaPaaS, privacy, legal, policy or production approval.
+
 ## Audit scope
 
 ### Primary implementation files
@@ -421,7 +450,7 @@ Files changed in Slice 6B:
 | Kiro did not reuse TaPaaS content for privacy collection notice or intro text in input, declaration and review pages | Content; Figma/source fidelity; reusability | Step copy in `TrialPermitSkeleton.tsx` | Verify first, then fix | Exact copy must come from TaPaaS source or owner-approved placeholder library. Do not invent final service copy. |
 | Missed opportunity to explain differences between permit types | Content; component relationships; reusability / Storybook rule candidate | `InputStep` radio options | Fix now with bounded placeholder or verify source | Could add help text/descriptions if supported. Avoid policy-like eligibility claims. |
 | Error summary does not use GEL components correctly | Validation/error handling; accessibility; component choice | `ErrorSummary` preview implementation | Verify first | Existing behaviour works partly. Need compare against GEL source/style before generic changes. |
-| Error message displays in red | Validation/error handling; accessibility; component choice | Error summary link inline style and input border/icon | Verify first | Designer likely means inline error text should not be red. Current links are red and inline error text is black with red icon. Confirm target. |
+| Error message displays in red | Validation/error handling; accessibility; component choice | Error summary link inline style and input border/icon | Fixed for error-summary links; manual QA for broader visual treatment | Slice 8 changed error-summary links to the dark link token while preserving error colour for marker/icon/border/background. Contrast and assistive-technology checks remain manual QA. |
 | Error state disappears on entering input, not after clicking Continue for validation | Validation/error handling | `useTransactionStep` attempted state plus state updates | Protect / test | Current logic appears to keep attempted true until valid Continue. Add regression test because this positive behaviour is explicitly desired. |
 | Mandatory input field instructions missing | Page templates; accessibility; content | `InputStep`, possibly form header | Fix now | Add visible required-field guidance, likely `* indicates a required field`, using source-backed form input template pattern. |
 | Polite alert for error summary and links to relevant errors work and should be preserved | Accessibility; validation/error handling | `ErrorSummary`, `useTransactionStep` | Protect | Add test coverage around focus/link behaviour after changes. |

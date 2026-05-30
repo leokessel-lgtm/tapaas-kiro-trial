@@ -127,7 +127,7 @@ export const ErrorSummary = forwardRef<HTMLDivElement, ErrorSummaryProps>(
               <li key={errorId}>
                 <a
                   href={errorId.startsWith('#') ? errorId : `#${errorId}`}
-                  style={{ color: 'var(--gel-color-error)', fontWeight: 700 }}
+                  style={{ color: 'var(--gel-color-link)', fontWeight: 700 }}
                   onClick={(e) => { e.preventDefault(); const target = document.getElementById(errorId.startsWith('#') ? errorId.slice(1) : errorId); if (target) { target.scrollIntoView({ block: 'center' }); target.focus() } }}
                 >
                   {text.replace(/\.$/, '')}
@@ -141,7 +141,7 @@ export const ErrorSummary = forwardRef<HTMLDivElement, ErrorSummaryProps>(
               <li key={errorId}>
                 <a
                   href={errorId.startsWith('#') ? errorId : `#${errorId}`}
-                  style={{ color: 'var(--gel-color-error)', fontWeight: 700 }}
+                  style={{ color: 'var(--gel-color-link)', fontWeight: 700 }}
                   onClick={(e) => { e.preventDefault(); const target = document.getElementById(errorId.startsWith('#') ? errorId.slice(1) : errorId); if (target) { target.scrollIntoView({ block: 'center' }); target.focus() } }}
                 >
                   {text.replace(/\.$/, '')}
