@@ -306,6 +306,122 @@ export function TextLink({ children, onClick, href }: TextLinkProps) {
 }
 
 // ---------------------------------------------------------------------------
+// Breadcrumb
+// Source evidence: docs/source-evidence/gel-components/breadcrumb/
+// Renders the source-backed nav/ordered-list structure for local Storybook
+// reference only. Internal links use normal anchors in this adapter because the
+// trial repo does not provide react-router.
+// ---------------------------------------------------------------------------
+export interface BreadcrumbLink {
+  content: string
+  path: string
+}
+
+export interface BreadcrumbProps extends HTMLAttributes<HTMLElement> {
+  linksList: BreadcrumbLink[]
+}
+
+export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(
+  function Breadcrumb({ linksList, style, ...rest }, ref) {
+    return (
+      <nav
+        ref={ref}
+        aria-label='Breadcrumb'
+        data-gelweb-component='breadcrumb'
+        style={{
+          display: 'flex',
+          alignItems: 'baseline',
+          fontFamily: 'var(--gel-font-body)',
+          fontSize: '0.875rem',
+          marginBottom: '1rem',
+          ...style,
+        }}
+        {...rest}
+      >
+        <ol style={{ display: 'inline', listStyle: 'none', margin: 0, padding: 0 }}>
+          {linksList.map(({ content, path }, index) => {
+            const isFirst = index === 0
+
+            return (
+              <li
+                key={`${content}-${path}`}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  margin: 0,
+                  padding: 0,
+                }}
+              >
+                {!isFirst && (
+                  <svg width='8' height='8' viewBox='0 0 8 8' aria-hidden='true' focusable='false' style={{ margin: '0 0.5rem', fill: '#646974' }}>
+                    <path d='M2.3.7 5.6 4 2.3 7.3 1.2 6.2 3.4 4 1.2 1.8z' />
+                  </svg>
+                )}
+                <a
+                  href={path}
+                  data-gel-analytics='breadcrumb'
+                  style={{
+                    color: 'var(--gel-color-link)',
+                    textDecoration: 'underline',
+                    fontWeight: 400,
+                  }}
+                >
+                  {content}
+                </a>
+              </li>
+            )
+          })}
+        </ol>
+      </nav>
+    )
+  },
+)
+
+// ---------------------------------------------------------------------------
+// StatusLabel
+// Source evidence: docs/source-evidence/gel-components/status-label/
+// Presentational local preview for Storybook reference only.
+// ---------------------------------------------------------------------------
+export type StatusLabelVariant = 'neutral' | 'error' | 'success' | 'warning' | 'info'
+
+export interface StatusLabelProps extends HTMLAttributes<HTMLSpanElement> {
+  text: string
+  variant?: StatusLabelVariant
+}
+
+const statusLabelStyles: Record<StatusLabelVariant, React.CSSProperties> = {
+  neutral: { backgroundColor: '#e6e9ed', color: 'var(--gel-color-text)' },
+  error: { backgroundColor: 'var(--gel-color-error)', color: 'var(--gel-color-white)' },
+  success: { backgroundColor: '#008a07', color: 'var(--gel-color-white)' },
+  warning: { backgroundColor: '#c95000', color: 'var(--gel-color-white)' },
+  info: { backgroundColor: 'var(--gel-color-brand-dark)', color: 'var(--gel-color-white)' },
+}
+
+export function StatusLabel({ text, variant = 'neutral', style, ...rest }: StatusLabelProps) {
+  return (
+    <span
+      data-gelweb-component={`status-label-${variant}`}
+      style={{
+        display: 'inline-block',
+        borderRadius: '16px',
+        fontFamily: 'var(--gel-font-body)',
+        fontSize: '0.875rem',
+        fontWeight: 700,
+        lineHeight: 1.4,
+        padding: '0.25rem 1rem',
+        textAlign: 'center',
+        whiteSpace: 'nowrap',
+        ...statusLabelStyles[variant],
+        ...style,
+      }}
+      {...rest}
+    >
+      {text}
+    </span>
+  )
+}
+
+// ---------------------------------------------------------------------------
 // Checkbox
 // Uses brand colour (#002664) for checked state. Adds aria-describedby for error.
 // ---------------------------------------------------------------------------
