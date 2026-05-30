@@ -31,7 +31,7 @@ async function completePrivacy(user: ReturnType<typeof userEvent.setup>) {
 }
 
 async function completeApplicantDetails(user: ReturnType<typeof userEvent.setup>) {
-  await user.type(screen.getByLabelText('Full name'), 'Alex Citizen')
+  await user.type(screen.getByLabelText('Full name *'), 'Alex Citizen')
   await user.type(screen.getByLabelText('Day'), '15')
   await user.type(screen.getByLabelText('Month'), '03')
   await user.type(screen.getByLabelText('Year'), '1990')
@@ -39,22 +39,41 @@ async function completeApplicantDetails(user: ReturnType<typeof userEvent.setup>
 }
 
 async function completeContactDetails(user: ReturnType<typeof userEvent.setup>, email = 'alex@example.test') {
-  await user.type(screen.getByLabelText('Email address'), email)
-  await user.type(screen.getByLabelText('Phone number'), '0400000000')
-  await user.type(screen.getByLabelText('Street address'), '1 Market Street')
-  await user.type(screen.getByLabelText('Suburb'), 'Sydney')
-  await user.selectOptions(screen.getByLabelText('State'), 'NSW')
-  await user.type(screen.getByLabelText('Postcode'), '2000')
+  await user.type(screen.getByLabelText('Email address *'), email)
+  await user.type(screen.getByLabelText('Phone number *'), '0400000000')
+  await user.type(screen.getByLabelText('Street address *'), '1 Market Street')
+  await user.type(screen.getByLabelText('Suburb *'), 'Sydney')
+  await user.selectOptions(screen.getByLabelText('State *'), 'NSW')
+  await user.type(screen.getByLabelText('Postcode *'), '2000')
   await user.click(screen.getByRole('button', { name: 'Continue' }))
 }
 
 describe('AccessibleMarketPermitSkeleton', () => {
+  it('renders required full name and primary contact inputs with full-width treatment', async () => {
+    const user = userEvent.setup()
+    render(<AccessibleMarketPermitSkeleton />)
+
+    await completePrivacy(user)
+
+    const fullName = screen.getByLabelText('Full name *')
+    expect(fullName).toHaveStyle({ width: '100%', maxWidth: '48rem' })
+
+    await completeApplicantDetails(user)
+
+    expect(screen.getByLabelText('Email address *')).toHaveStyle({ width: '100%', maxWidth: '48rem' })
+    expect(screen.getByLabelText('Phone number *')).toHaveStyle({ width: '100%', maxWidth: '48rem' })
+    expect(screen.getByLabelText('Street address *')).toHaveStyle({ width: '100%', maxWidth: '48rem' })
+    expect(screen.getByLabelText('Suburb *')).toHaveStyle({ width: '100%', maxWidth: '48rem' })
+    expect(screen.getByLabelText('State *')).toBeInTheDocument()
+    expect(screen.getByLabelText('Postcode *')).toBeInTheDocument()
+  })
+
   it('shows an inline invalid DOB error and keeps it until Continue revalidates', async () => {
     const user = userEvent.setup()
     render(<AccessibleMarketPermitSkeleton />)
 
     await completePrivacy(user)
-    await user.type(screen.getByLabelText('Full name'), 'Alex Citizen')
+    await user.type(screen.getByLabelText('Full name *'), 'Alex Citizen')
     await user.type(screen.getByLabelText('Day'), '31')
     await user.type(screen.getByLabelText('Month'), '02')
     await user.type(screen.getByLabelText('Year'), '1990')
@@ -89,11 +108,11 @@ describe('AccessibleMarketPermitSkeleton', () => {
     await completeContactDetails(user, 'alex@example')
 
     expect(screen.getByRole('link', { name: 'Enter a valid email address' })).toHaveAttribute('href', '#email')
-    expect(screen.getByLabelText('Email address')).toHaveAttribute('aria-invalid', 'true')
+    expect(screen.getByLabelText('Email address *')).toHaveAttribute('aria-invalid', 'true')
     expect(document.getElementById('email-error')).toHaveTextContent('Enter a valid email address.')
 
-    await user.clear(screen.getByLabelText('Email address'))
-    await user.type(screen.getByLabelText('Email address'), 'alex@example.test')
+    await user.clear(screen.getByLabelText('Email address *'))
+    await user.type(screen.getByLabelText('Email address *'), 'alex@example.test')
 
     expect(screen.getByRole('link', { name: 'Enter a valid email address' })).toBeInTheDocument()
     expect(document.getElementById('email-error')).toHaveTextContent('Enter a valid email address.')
@@ -102,6 +121,23 @@ describe('AccessibleMarketPermitSkeleton', () => {
 
     expect(screen.queryByRole('link', { name: 'Enter a valid email address' })).not.toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Market details' })).toBeInTheDocument()
+  })
+
+  it('keeps required contact fields on the contact step when they are empty', async () => {
+    const user = userEvent.setup()
+    render(<AccessibleMarketPermitSkeleton />)
+
+    await completePrivacy(user)
+    await completeApplicantDetails(user)
+    await user.click(screen.getByRole('button', { name: 'Continue' }))
+
+    expect(screen.getByRole('link', { name: 'Enter a valid email address' })).toHaveAttribute('href', '#email')
+    expect(screen.getByRole('link', { name: 'Enter your phone number' })).toHaveAttribute('href', '#phone')
+    expect(screen.getByRole('link', { name: 'Enter your street address' })).toHaveAttribute('href', '#street')
+    expect(screen.getByRole('link', { name: 'Enter your suburb' })).toHaveAttribute('href', '#suburb')
+    expect(screen.getByRole('link', { name: 'Select your state' })).toHaveAttribute('href', '#state')
+    expect(screen.getByRole('link', { name: 'Enter a valid 4-digit postcode' })).toHaveAttribute('href', '#postcode')
+    expect(screen.getByRole('heading', { name: 'Contact details' })).toBeInTheDocument()
   })
 
   it('submits the mock flow to confirmation without exposing source inventory links', async () => {

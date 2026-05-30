@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, type CSSProperties } from 'react'
 import { type StepError, useTransactionStep } from './useTransactionStep'
 import {
   Checkbox,
@@ -93,6 +93,23 @@ const initialState: FormState = {
   supportDetails: '',
   additionalInfo: '',
   declarationAccepted: false,
+}
+
+function fullWidthInputStyle(hasError?: boolean): CSSProperties {
+  return {
+    display: 'block',
+    width: '100%',
+    maxWidth: '48rem',
+    height: '48px',
+    padding: '0 0.825rem',
+    fontSize: '1rem',
+    fontFamily: 'var(--gel-font-body)',
+    border: hasError ? '2px solid var(--gel-color-error)' : '2px solid #646974',
+    borderRadius: '6px',
+    boxSizing: 'border-box',
+    color: 'var(--gel-color-text)',
+    backgroundColor: 'var(--gel-color-white)',
+  }
 }
 
 export function AccessibleMarketPermitSkeleton() {
@@ -276,8 +293,8 @@ function ApplicantStep({ form, submittedErrors, update, onBack, onContinue, onEx
   return (
     <section aria-labelledby='applicant-heading'>
       <Heading level={2} id='applicant-heading'>Your details</Heading>
-      <Field id='full-name' label='Full name' helpMessage='Enter your first and last name.' hasError={nameErr} errorMessage='Enter your full name.'>
-        <Input id='full-name' value={form.fullName} onChange={(e) => update({ fullName: e.target.value })} hasError={nameErr} inputWidth='xl' autoComplete='name' />
+      <Field id='full-name' label='Full name *' helpMessage='Enter your first and last name.' hasError={nameErr} errorMessage='Enter your full name.'>
+        <Input id='full-name' value={form.fullName} onChange={(e) => update({ fullName: e.target.value })} hasError={nameErr} autoComplete='name' style={fullWidthInputStyle(nameErr)} />
       </Field>
       <fieldset id='dob-fieldset' aria-invalid={dobErr || undefined} aria-describedby={dobDescribedBy} style={{ border: 'none', padding: 0, margin: '0 0 1.5rem' }}>
         <legend style={{ fontWeight: 500, fontSize: '1rem', marginBottom: '0.5rem' }}>Date of birth</legend>
@@ -317,21 +334,21 @@ function ContactStep({ form, submittedErrors, update, onBack, onContinue, onExit
   return (
     <section aria-labelledby='contact-heading'>
       <Heading level={2} id='contact-heading'>Contact details</Heading>
-      <Field id='email' label='Email address' hasError={emailErr} errorMessage='Enter a valid email address.'>
-        <Input id='email' type='email' value={form.email} onChange={(e) => update({ email: e.target.value })} hasError={emailErr} inputWidth='xl' autoComplete='email' />
+      <Field id='email' label='Email address *' hasError={emailErr} errorMessage='Enter a valid email address.'>
+        <Input id='email' type='email' value={form.email} onChange={(e) => update({ email: e.target.value })} hasError={emailErr} autoComplete='email' style={fullWidthInputStyle(emailErr)} />
       </Field>
-      <Field id='phone' label='Phone number' hasError={phoneErr} errorMessage='Enter your phone number.'>
-        <Input id='phone' type='tel' value={form.phone} onChange={(e) => update({ phone: e.target.value })} hasError={phoneErr} inputWidth='lg' autoComplete='tel' />
+      <Field id='phone' label='Phone number *' hasError={phoneErr} errorMessage='Enter your phone number.'>
+        <Input id='phone' type='tel' value={form.phone} onChange={(e) => update({ phone: e.target.value })} hasError={phoneErr} autoComplete='tel' style={fullWidthInputStyle(phoneErr)} />
       </Field>
       <fieldset style={{ border: 'none', padding: 0, margin: '0 0 1.5rem' }}>
         <legend style={{ fontWeight: 500, fontSize: '1rem', marginBottom: '1rem' }}>Postal address</legend>
-        <Field id='street' label='Street address' hasError={streetErr} errorMessage='Enter your street address.'>
-          <Input id='street' value={form.street} onChange={(e) => update({ street: e.target.value })} hasError={streetErr} inputWidth='xl' autoComplete='street-address' />
+        <Field id='street' label='Street address *' hasError={streetErr} errorMessage='Enter your street address.'>
+          <Input id='street' value={form.street} onChange={(e) => update({ street: e.target.value })} hasError={streetErr} autoComplete='street-address' style={fullWidthInputStyle(streetErr)} />
         </Field>
-        <Field id='suburb' label='Suburb' hasError={suburbErr} errorMessage='Enter your suburb.'>
-          <Input id='suburb' value={form.suburb} onChange={(e) => update({ suburb: e.target.value })} hasError={suburbErr} inputWidth='lg' autoComplete='address-level2' />
+        <Field id='suburb' label='Suburb *' hasError={suburbErr} errorMessage='Enter your suburb.'>
+          <Input id='suburb' value={form.suburb} onChange={(e) => update({ suburb: e.target.value })} hasError={suburbErr} autoComplete='address-level2' style={fullWidthInputStyle(suburbErr)} />
         </Field>
-        <Field id='state' label='State' hasError={stateErr} errorMessage='Select your state.'>
+        <Field id='state' label='State *' hasError={stateErr} errorMessage='Select your state.'>
           <Select
             id='state'
             value={form.state}
@@ -351,7 +368,7 @@ function ContactStep({ form, submittedErrors, update, onBack, onContinue, onExit
             ]}
           />
         </Field>
-        <Field id='postcode' label='Postcode' hasError={postcodeErr} errorMessage='Enter a valid 4-digit postcode.'>
+        <Field id='postcode' label='Postcode *' hasError={postcodeErr} errorMessage='Enter a valid 4-digit postcode.'>
           <Input id='postcode' value={form.postcode} onChange={(e) => update({ postcode: e.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={postcodeErr} inputWidth='xs' maxLength={4} autoComplete='postal-code' />
         </Field>
       </fieldset>
