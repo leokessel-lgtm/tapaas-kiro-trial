@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react'
-import { useTransactionStep } from './useTransactionStep'
+import { useState, useCallback, type CSSProperties } from 'react'
+import { type StepError, useTransactionStep } from './useTransactionStep'
 import {
   Checkbox,
   ErrorSummary,
@@ -9,8 +9,8 @@ import {
   Input,
   RadioButtonList,
   Select,
-  Textarea,
   TextLink,
+  Textarea,
 } from './gel'
 import {
   ConfirmationHeader,
@@ -96,15 +96,56 @@ const initialState: FormState = {
   declarationAccepted: false,
 }
 
+function fullWidthInputStyle(hasError?: boolean): CSSProperties {
+  return {
+    display: 'block',
+    width: '100%',
+    maxWidth: '48rem',
+    height: '48px',
+    padding: '0 0.825rem',
+    fontSize: '1rem',
+    fontFamily: 'var(--gel-font-body)',
+    border: hasError ? '2px solid var(--gel-color-error)' : '2px solid #646974',
+    borderRadius: '6px',
+    boxSizing: 'border-box',
+    color: 'var(--gel-color-text)',
+    backgroundColor: 'var(--gel-color-white)',
+  }
+}
+
 export function AccessibleMarketPermitSkeleton() {
   const [form, setForm] = useState<FormState>(initialState)
+  const [submittedErrors, setSubmittedErrors] = useState<StepError[]>([])
 
   function update(patch: Partial<FormState>) {
     setForm((prev) => ({ ...prev, ...patch }))
   }
 
   const getErrors = useCallback((s: MarketStep) => errorsForStep(s, form), [form])
-  const { step, attempted, errors, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+  const { step, setStep, setAttempted, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+
+  function handleContinue() {
+    const nextErrors = getErrors(step)
+    setSubmittedErrors(nextErrors)
+    goNext()
+  }
+
+  function handleBack() {
+    setSubmittedErrors([])
+    goBack()
+  }
+
+  function goToReviewSource(targetStep: Exclude<MarketStep, 'privacy' | 'review' | 'confirmation'>) {
+    setAttempted(false)
+    setSubmittedErrors([])
+    setStep(targetStep)
+  }
+
+  function resetTransaction() {
+    setSubmittedErrors([])
+    reset()
+    setForm(initialState)
+  }
 
   return (
     <div>
@@ -121,22 +162,22 @@ export function AccessibleMarketPermitSkeleton() {
         </p>
       )}
 
-      <ErrorSummary ref={errorSummaryRef} errors={errors} />
+      <ErrorSummary ref={errorSummaryRef} errors={submittedErrors} />
 
-      {step === 'privacy' && <PrivacyStep form={form} attempted={attempted} update={update} onContinue={goNext} onExit={openExitModal} />}
-      {step === 'applicant' && <ApplicantStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
-      {step === 'contact' && <ContactStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
-      {step === 'market' && <MarketStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
-      {step === 'accessibility' && <AccessibilityStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
-      {step === 'supporting' && <SupportingStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
-      {step === 'declaration' && <DeclarationStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
-      {step === 'review' && <ReviewStep form={form} onBack={goBack} onSubmit={goNext} onExit={openExitModal} />}
-      {step === 'confirmation' && <ConfirmationStep form={form} onStartAgain={() => { reset(); setForm(initialState) }} />}
+      {step === 'privacy' && <PrivacyStep form={form} submittedErrors={submittedErrors} update={update} onContinue={handleContinue} onExit={openExitModal} />}
+      {step === 'applicant' && <ApplicantStep form={form} submittedErrors={submittedErrors} update={update} onBack={handleBack} onContinue={handleContinue} onExit={openExitModal} />}
+      {step === 'contact' && <ContactStep form={form} submittedErrors={submittedErrors} update={update} onBack={handleBack} onContinue={handleContinue} onExit={openExitModal} />}
+      {step === 'market' && <MarketStep form={form} submittedErrors={submittedErrors} update={update} onBack={handleBack} onContinue={handleContinue} onExit={openExitModal} />}
+      {step === 'accessibility' && <AccessibilityStep form={form} submittedErrors={submittedErrors} update={update} onBack={handleBack} onContinue={handleContinue} onExit={openExitModal} />}
+      {step === 'supporting' && <SupportingStep form={form} submittedErrors={submittedErrors} update={update} onBack={handleBack} onContinue={handleContinue} onExit={openExitModal} />}
+      {step === 'declaration' && <DeclarationStep form={form} submittedErrors={submittedErrors} update={update} onBack={handleBack} onContinue={handleContinue} onExit={openExitModal} />}
+      {step === 'review' && <ReviewStep form={form} onBack={handleBack} onEditStep={goToReviewSource} onSubmit={handleContinue} onExit={openExitModal} />}
+      {step === 'confirmation' && <ConfirmationStep form={form} onStartAgain={resetTransaction} />}
 
       <ExitModal
         isOpen={exitModalOpen}
         onContinue={closeExitModal}
-        onExit={() => { reset(); setForm(initialState) }}
+        onExit={resetTransaction}
         description='This preview does not save draft applications. If you exit, the mock form data will be cleared.'
       />
     </div>
@@ -151,14 +192,11 @@ function errorsForStep(step: MarketStep, form: FormState) {
   }
   if (step === 'applicant') {
     if (!form.fullName.trim()) errs.push({ id: 'full-name', text: 'Enter your full name' })
-    if (!form.dobDay || !form.dobMonth || !form.dobYear) errs.push({ id: 'dob-day', text: 'Enter your date of birth' })
-    else {
-      const d = parseInt(form.dobDay), m = parseInt(form.dobMonth), y = parseInt(form.dobYear)
-      if (d < 1 || d > 31 || m < 1 || m > 12 || y < 1900 || y > 2026) errs.push({ id: 'dob-day', text: 'Enter a valid date of birth' })
-    }
+    const dobError = getDobErrorText(form)
+    if (dobError) errs.push({ id: 'dob-day', text: dobError })
   }
   if (step === 'contact') {
-    if (!form.email.trim() || !form.email.includes('@') || !form.email.split('@')[1]?.includes('.')) errs.push({ id: 'email', text: 'Enter a valid email address' })
+    if (!isPreviewEmail(form.email)) errs.push({ id: 'email', text: 'Enter a valid email address' })
     if (!form.phone.trim()) errs.push({ id: 'phone', text: 'Enter your phone number' })
     if (!form.street.trim()) errs.push({ id: 'street', text: 'Enter your street address' })
     if (!form.suburb.trim()) errs.push({ id: 'suburb', text: 'Enter your suburb' })
@@ -187,17 +225,51 @@ function errorsForStep(step: MarketStep, form: FormState) {
   return errs
 }
 
+function getDobErrorText(form: FormState) {
+  if (!form.dobDay || !form.dobMonth || !form.dobYear) return 'Enter your date of birth'
+  if (!isPreviewDate(form.dobDay, form.dobMonth, form.dobYear, 1900, 2026)) return 'Enter a valid date of birth'
+  return ''
+}
+
+function isPreviewDate(dayValue: string, monthValue: string, yearValue: string, minYear: number, maxYear: number) {
+  if (!/^\d{1,2}$/.test(dayValue) || !/^\d{1,2}$/.test(monthValue) || !/^\d{4}$/.test(yearValue)) return false
+  const day = Number(dayValue)
+  const month = Number(monthValue)
+  const year = Number(yearValue)
+  const date = new Date(year, month - 1, day)
+  return (
+    year >= minYear &&
+    year <= maxYear &&
+    date.getFullYear() === year &&
+    date.getMonth() === month - 1 &&
+    date.getDate() === day
+  )
+}
+
+function isPreviewEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())
+}
+
+function hasSubmittedError(errors: StepError[], id: string) {
+  return errors.some((error) => error.id === id)
+}
+
+function submittedErrorText(errors: StepError[], id: string) {
+  return errors.find((error) => error.id === id)?.text ?? ''
+}
+
 // --- Page components ---
 interface StepProps {
   form: FormState
-  attempted: boolean
+  submittedErrors: StepError[]
   update: (patch: Partial<FormState>) => void
   onBack?: () => void
   onContinue: () => void
   onExit: () => void
 }
 
-function PrivacyStep({ form, attempted, update, onContinue, onExit }: StepProps) {
+function PrivacyStep({ form, submittedErrors, update, onContinue, onExit }: StepProps) {
+  const privacyErr = hasSubmittedError(submittedErrors, 'privacy-confirmation')
   return (
     <section aria-labelledby='privacy-heading'>
       <Heading level={2} id='privacy-heading'>Privacy information</Heading>
@@ -210,7 +282,7 @@ function PrivacyStep({ form, attempted, update, onContinue, onExit }: StepProps)
         label='I have read and understand the privacy information.'
         checked={form.privacyAgreed}
         onChange={(v) => update({ privacyAgreed: Boolean(v) })}
-        hasError={attempted && !form.privacyAgreed}
+        hasError={privacyErr}
         errorMessage='Confirm that you have read the privacy information.'
       />
       <TransactionCtaGroup onContinue={onContinue} onExit={onExit} continueLabel='Continue' />
@@ -218,35 +290,39 @@ function PrivacyStep({ form, attempted, update, onContinue, onExit }: StepProps)
   )
 }
 
-function ApplicantStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  const nameErr = attempted && !form.fullName.trim()
-  const dobErr = attempted && (!form.dobDay || !form.dobMonth || !form.dobYear)
+function ApplicantStep({ form, submittedErrors, update, onBack, onContinue, onExit }: StepProps) {
+  const nameErr = hasSubmittedError(submittedErrors, 'full-name')
+  const dobErrorMessage = submittedErrorText(submittedErrors, 'dob-day')
+  const dobErr = Boolean(dobErrorMessage)
+  const dobHelpId = 'dob-help'
+  const dobErrorId = dobErr ? 'dob-day-error' : undefined
+  const dobDescribedBy = [dobHelpId, dobErrorId].filter(Boolean).join(' ') || undefined
   return (
     <section aria-labelledby='applicant-heading'>
       <Heading level={2} id='applicant-heading'>Your details</Heading>
-      <Field id='full-name' label='Full name' helpMessage='Enter your first and last name.' hasError={nameErr} errorMessage='Enter your full name.'>
-        <Input id='full-name' value={form.fullName} onChange={(e) => update({ fullName: e.target.value })} hasError={nameErr} inputWidth='xl' autoComplete='name' />
+      <Field id='full-name' label='Full name *' helpMessage='Enter your first and last name.' hasError={nameErr} errorMessage='Enter your full name.'>
+        <Input id='full-name' value={form.fullName} onChange={(e) => update({ fullName: e.target.value })} hasError={nameErr} autoComplete='name' style={fullWidthInputStyle(nameErr)} />
       </Field>
-      <fieldset style={{ border: 'none', padding: 0, margin: '0 0 1.5rem' }}>
+      <fieldset id='dob-fieldset' aria-invalid={dobErr || undefined} aria-describedby={dobDescribedBy} style={{ border: 'none', padding: 0, margin: '0 0 1.5rem' }}>
         <legend style={{ fontWeight: 500, fontSize: '1rem', marginBottom: '0.5rem' }}>Date of birth</legend>
-        <p style={{ fontSize: '0.875rem', margin: '0 0 0.5rem', color: 'var(--gel-color-text-grey)' }}>For example, 15 03 1990</p>
+        <p id={dobHelpId} style={{ fontSize: '0.875rem', margin: '0 0 0.5rem', color: 'var(--gel-color-text-grey)' }}>For example, 15 03 1990</p>
         <div style={{ display: 'flex', gap: '0.75rem' }}>
           <div>
             <label htmlFor='dob-day' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Day</label>
-            <Input id='dob-day' value={form.dobDay} onChange={(e) => update({ dobDay: e.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={dobErr} inputWidth='xxs' maxLength={2} />
+            <Input id='dob-day' value={form.dobDay} onChange={(e) => update({ dobDay: e.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={dobErr} inputWidth='xxs' maxLength={2} aria-describedby={dobDescribedBy} />
           </div>
           <div>
             <label htmlFor='dob-month' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Month</label>
-            <Input id='dob-month' value={form.dobMonth} onChange={(e) => update({ dobMonth: e.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={dobErr} inputWidth='xxs' maxLength={2} />
+            <Input id='dob-month' value={form.dobMonth} onChange={(e) => update({ dobMonth: e.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={dobErr} inputWidth='xxs' maxLength={2} aria-describedby={dobDescribedBy} />
           </div>
           <div>
             <label htmlFor='dob-year' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Year</label>
-            <Input id='dob-year' value={form.dobYear} onChange={(e) => update({ dobYear: e.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={dobErr} inputWidth='sm' maxLength={4} />
+            <Input id='dob-year' value={form.dobYear} onChange={(e) => update({ dobYear: e.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={dobErr} inputWidth='sm' maxLength={4} aria-describedby={dobDescribedBy} />
           </div>
         </div>
         {dobErr && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'var(--gel-color-error-bg)', padding: '0.5rem 1rem', marginTop: '0.5rem', fontWeight: 700, fontSize: '1rem' }}>
-            <span style={{ color: 'var(--gel-color-error)' }}>⊘</span> Enter your date of birth.
+          <div id={dobErrorId} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'var(--gel-color-error-bg)', padding: '0.5rem 1rem', marginTop: '0.5rem', fontWeight: 700, fontSize: '1rem' }}>
+            <span style={{ color: 'var(--gel-color-error)' }}>⊘</span> {dobErrorMessage}.
           </div>
         )}
       </fieldset>
@@ -255,31 +331,31 @@ function ApplicantStep({ form, attempted, update, onBack, onContinue, onExit }: 
   )
 }
 
-function ContactStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  const emailErr = attempted && (!form.email.trim() || !form.email.includes('@') || !form.email.split('@')[1]?.includes('.'))
-  const phoneErr = attempted && !form.phone.trim()
-  const streetErr = attempted && !form.street.trim()
-  const suburbErr = attempted && !form.suburb.trim()
-  const stateErr = attempted && !form.state
-  const postcodeErr = attempted && (!form.postcode.trim() || form.postcode.length !== 4)
+function ContactStep({ form, submittedErrors, update, onBack, onContinue, onExit }: StepProps) {
+  const emailErr = hasSubmittedError(submittedErrors, 'email')
+  const phoneErr = hasSubmittedError(submittedErrors, 'phone')
+  const streetErr = hasSubmittedError(submittedErrors, 'street')
+  const suburbErr = hasSubmittedError(submittedErrors, 'suburb')
+  const stateErr = hasSubmittedError(submittedErrors, 'state')
+  const postcodeErr = hasSubmittedError(submittedErrors, 'postcode')
   return (
     <section aria-labelledby='contact-heading'>
       <Heading level={2} id='contact-heading'>Contact details</Heading>
-      <Field id='email' label='Email address' hasError={emailErr} errorMessage='Enter a valid email address.'>
-        <Input id='email' type='email' value={form.email} onChange={(e) => update({ email: e.target.value })} hasError={emailErr} inputWidth='xl' autoComplete='email' />
+      <Field id='email' label='Email address *' hasError={emailErr} errorMessage='Enter a valid email address.'>
+        <Input id='email' type='email' value={form.email} onChange={(e) => update({ email: e.target.value })} hasError={emailErr} autoComplete='email' style={fullWidthInputStyle(emailErr)} />
       </Field>
-      <Field id='phone' label='Phone number' hasError={phoneErr} errorMessage='Enter your phone number.'>
-        <Input id='phone' type='tel' value={form.phone} onChange={(e) => update({ phone: e.target.value })} hasError={phoneErr} inputWidth='lg' autoComplete='tel' />
+      <Field id='phone' label='Phone number *' hasError={phoneErr} errorMessage='Enter your phone number.'>
+        <Input id='phone' type='tel' value={form.phone} onChange={(e) => update({ phone: e.target.value })} hasError={phoneErr} autoComplete='tel' style={fullWidthInputStyle(phoneErr)} />
       </Field>
       <fieldset style={{ border: 'none', padding: 0, margin: '0 0 1.5rem' }}>
         <legend style={{ fontWeight: 500, fontSize: '1rem', marginBottom: '1rem' }}>Postal address</legend>
-        <Field id='street' label='Street address' hasError={streetErr} errorMessage='Enter your street address.'>
-          <Input id='street' value={form.street} onChange={(e) => update({ street: e.target.value })} hasError={streetErr} inputWidth='xl' autoComplete='street-address' />
+        <Field id='street' label='Street address *' hasError={streetErr} errorMessage='Enter your street address.'>
+          <Input id='street' value={form.street} onChange={(e) => update({ street: e.target.value })} hasError={streetErr} autoComplete='street-address' style={fullWidthInputStyle(streetErr)} />
         </Field>
-        <Field id='suburb' label='Suburb' hasError={suburbErr} errorMessage='Enter your suburb.'>
-          <Input id='suburb' value={form.suburb} onChange={(e) => update({ suburb: e.target.value })} hasError={suburbErr} inputWidth='lg' autoComplete='address-level2' />
+        <Field id='suburb' label='Suburb *' hasError={suburbErr} errorMessage='Enter your suburb.'>
+          <Input id='suburb' value={form.suburb} onChange={(e) => update({ suburb: e.target.value })} hasError={suburbErr} autoComplete='address-level2' style={fullWidthInputStyle(suburbErr)} />
         </Field>
-        <Field id='state' label='State' hasError={stateErr} errorMessage='Select your state.'>
+        <Field id='state' label='State *' hasError={stateErr} errorMessage='Select your state.'>
           <Select
             id='state'
             value={form.state}
@@ -299,7 +375,7 @@ function ContactStep({ form, attempted, update, onBack, onContinue, onExit }: St
             ]}
           />
         </Field>
-        <Field id='postcode' label='Postcode' hasError={postcodeErr} errorMessage='Enter a valid 4-digit postcode.'>
+        <Field id='postcode' label='Postcode *' hasError={postcodeErr} errorMessage='Enter a valid 4-digit postcode.'>
           <Input id='postcode' value={form.postcode} onChange={(e) => update({ postcode: e.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={postcodeErr} inputWidth='xs' maxLength={4} autoComplete='postal-code' />
         </Field>
       </fieldset>
@@ -308,10 +384,10 @@ function ContactStep({ form, attempted, update, onBack, onContinue, onExit }: St
   )
 }
 
-function MarketStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  const nameErr = attempted && !form.marketName.trim()
-  const typeErr = attempted && !form.marketType
-  const dateErr = attempted && (!form.eventDay || !form.eventMonth || !form.eventYear)
+function MarketStep({ form, submittedErrors, update, onBack, onContinue, onExit }: StepProps) {
+  const nameErr = hasSubmittedError(submittedErrors, 'market-name')
+  const typeErr = hasSubmittedError(submittedErrors, 'market-type')
+  const dateErr = hasSubmittedError(submittedErrors, 'event-day')
   return (
     <section aria-labelledby='market-heading'>
       <Heading level={2} id='market-heading'>Market details</Heading>
@@ -360,9 +436,9 @@ function MarketStep({ form, attempted, update, onBack, onContinue, onExit }: Ste
   )
 }
 
-function AccessibilityStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  const supportErr = attempted && !form.needsSupport
-  const detailsErr = attempted && form.needsSupport === 'yes' && !form.supportDetails.trim()
+function AccessibilityStep({ form, submittedErrors, update, onBack, onContinue, onExit }: StepProps) {
+  const supportErr = hasSubmittedError(submittedErrors, 'needs-support')
+  const detailsErr = hasSubmittedError(submittedErrors, 'support-details')
   return (
     <section aria-labelledby='accessibility-heading'>
       <Heading level={2} id='accessibility-heading'>Accessibility and support needs</Heading>
@@ -379,9 +455,12 @@ function AccessibilityStep({ form, attempted, update, onBack, onContinue, onExit
         hasError={supportErr}
         errorMessage='Select whether you need accessibility support'
       >
-        <Field id='support-details' label='Describe the support needed' helpMessage='This is placeholder content only. No assessment, decision or service promise is made.' hasError={detailsErr} errorMessage='Describe the support needed.'>
-          <Textarea id='support-details' value={form.supportDetails} onChange={(e) => update({ supportDetails: e.target.value })} hasError={detailsErr} rows={4} />
-        </Field>
+        <div role='group' aria-labelledby='support-details-group-heading' style={{ borderLeft: '4px solid var(--gel-color-border)', paddingLeft: '1rem', marginTop: '1rem' }}>
+          <Heading level={3} id='support-details-group-heading'>Support details</Heading>
+          <Field id='support-details' label='Describe the support needed' helpMessage='This is placeholder content only. No assessment, decision or service promise is made.' hasError={detailsErr} errorMessage='Describe the support needed.'>
+            <Textarea id='support-details' value={form.supportDetails} onChange={(e) => update({ supportDetails: e.target.value })} hasError={detailsErr} rows={4} />
+          </Field>
+        </div>
       </ConditionalQuestionPanel>
       <DetailsCard
         title='Your application so far'
@@ -396,8 +475,8 @@ function AccessibilityStep({ form, attempted, update, onBack, onContinue, onExit
   )
 }
 
-function SupportingStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  const infoErr = attempted && !form.additionalInfo.trim()
+function SupportingStep({ form, submittedErrors, update, onBack, onContinue, onExit }: StepProps) {
+  const infoErr = hasSubmittedError(submittedErrors, 'additional-info')
   const charLimit = 500
   return (
     <section aria-labelledby='supporting-heading'>
@@ -414,7 +493,8 @@ function SupportingStep({ form, attempted, update, onBack, onContinue, onExit }:
   )
 }
 
-function DeclarationStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
+function DeclarationStep({ form, submittedErrors, update, onBack, onContinue, onExit }: StepProps) {
+  const declarationErr = hasSubmittedError(submittedErrors, 'declaration-accepted')
   return (
     <section aria-labelledby='declaration-heading'>
       <Heading level={2} id='declaration-heading'>Declaration</Heading>
@@ -427,7 +507,7 @@ function DeclarationStep({ form, attempted, update, onBack, onContinue, onExit }
         label='I declare that the information provided is true and correct.'
         checked={form.declarationAccepted}
         onChange={(v) => update({ declarationAccepted: Boolean(v) })}
-        hasError={attempted && !form.declarationAccepted}
+        hasError={declarationErr}
         errorMessage='Accept the declaration to continue.'
       />
       <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
@@ -435,7 +515,19 @@ function DeclarationStep({ form, attempted, update, onBack, onContinue, onExit }
   )
 }
 
-function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBack: () => void; onSubmit: () => void; onExit: () => void }) {
+function ReviewStep({
+  form,
+  onBack,
+  onEditStep,
+  onSubmit,
+  onExit,
+}: {
+  form: FormState
+  onBack: () => void
+  onEditStep: (step: Exclude<MarketStep, 'privacy' | 'review' | 'confirmation'>) => void
+  onSubmit: () => void
+  onExit: () => void
+}) {
   const marketTypeLabel: Record<string, string> = { 'food-market': 'Food market', 'craft-market': 'Craft market', 'farmers-market': 'Farmers market', 'mixed-market': 'Mixed market' }
   return (
     <section aria-labelledby='review-heading'>
@@ -444,28 +536,31 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
       <ReviewInfoCard title='Applicant details' sections={[{ title: 'Personal information', rows: [
         { label: 'Full name', value: form.fullName },
         { label: 'Date of birth', value: `${form.dobDay}/${form.dobMonth}/${form.dobYear}` },
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('applicant')} />
       <ReviewInfoCard title='Contact details' sections={[{ title: 'Contact information', rows: [
         { label: 'Email', value: form.email },
         { label: 'Phone', value: form.phone },
         { label: 'Address', value: `${form.street}, ${form.suburb} ${form.state} ${form.postcode}` },
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('contact')} />
       <ReviewInfoCard title='Market details' sections={[{ title: 'Market information', rows: [
         { label: 'Market name', value: form.marketName },
         { label: 'Market type', value: marketTypeLabel[form.marketType] || form.marketType },
         { label: 'Event date', value: `${form.eventDay}/${form.eventMonth}/${form.eventYear}` },
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('market')} />
       <ReviewInfoCard title='Accessibility support' sections={[{ title: 'Support needs', rows: [
         { label: 'Needs support', value: form.needsSupport === 'yes' ? 'Yes' : 'No' },
         ...(form.needsSupport === 'yes' ? [{ label: 'Support details', value: form.supportDetails }] : []),
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('accessibility')} />
       <ReviewInfoCard title='Supporting information' sections={[{ title: 'Additional details', rows: [
         { label: 'Additional information', value: form.additionalInfo },
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('supporting')} />
       <ReviewFeesCard fees={[{ label: 'Application fee', amount: '$0.00' }, { label: 'Processing fee', amount: '$0.00' }]} totalAmount='$0.00' />
       <InPageAlert variant='info' title='Payment excluded'>
         <p>No payment flow is included in this trial skeleton. Fee amounts need owner confirmation.</p>
       </InPageAlert>
+      <p>
+        <TextLink onClick={() => onEditStep('declaration')}>Edit declaration</TextLink>
+      </p>
       <TransactionCtaGroup onBack={onBack} onContinue={onSubmit} onExit={onExit} continueLabel='Submit application' />
     </section>
   )
@@ -496,10 +591,7 @@ function ConfirmationStep({ form, onStartAgain }: { form: FormState; onStartAgai
       <InPageAlert variant='info' title='Owner confirmation required'>
         <p>All timeframes, contact methods and approval processes above are placeholders. They must be confirmed by the service owner before real use.</p>
       </InPageAlert>
-      <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start again' />
-      <p style={{ marginTop: '1rem' }}>
-        <TextLink href='https://github.com/leokessel-lgtm/tapaas-kiro-trial/blob/main/docs/tapaas/00-source-inventory.md'>Review TaPaaS source inventory</TextLink>
-      </p>
+      <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start another application' />
     </section>
   )
 }
