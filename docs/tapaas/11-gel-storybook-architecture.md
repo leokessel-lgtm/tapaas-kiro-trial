@@ -118,6 +118,19 @@ Date examples are visual/reference-only. They do not add date parsing, masking, 
 | DateInput | Single date-shaped text input reference | `DateInputReference` export, displayed as `Date input` | source-informed local preview through `src/gel.ts` | Story-only | Visual reference only. No parsing, formatting, masking or validation callback behaviour. |
 | DateMultiInput | Day/month/year grouped date reference | `DateMultiInputReference` export, displayed as `Date multi input` | source-informed local preview through `src/gel.ts` | Story-only | Visual grouping reference only. No hidden value generation, date object handling, validation or age calculation. |
 
+## Batch 3C reference inventory
+
+Batch 3C adds static Storybook-only GEL Reference coverage for Evidence & Upload. These are local reference previews through `src/gel.ts` for design and composition review only. They are not acceptance-manifest-backed, do not introduce the real `@snsw-gel/react` package dependency, and do not prove production upload behaviour, upload security, privacy handling, file validation, accessibility compliance, WCAG compliance, backend integration, GEL approval, TaPaaS approval, legal approval or policy approval.
+
+DropZone and UploadedItem are deferred because drag-and-drop, selected-file display, remove-file behaviour and uploaded-file state need deeper source and behaviour review before this trial should preview them.
+
+| GEL package/component | TaPaaS use case | Story target | Recommended action | Acceptance level | Notes |
+|---|---|---|---|---|---|
+| FileInput | Static placement of label, hint and select-file style action in an evidence step | `FileInputStaticReference` export, displayed as `File input static reference` | source-informed static local preview through `src/gel.ts` | Story-only | Does not render `input[type='file']`, open a file picker, read selected files, validate file type/size/count, upload, store, scan or persist files. |
+| FileUpload | Static shell showing upload guidance and action placement in a transaction page | `FileUploadStaticReference` export, displayed as `File upload static reference` | source-informed static local preview through `src/gel.ts` | Story-only | No DropZone, UploadedItem, progress, remove-file action, API call, backend integration, storage, validation, scanning or production behaviour claim. |
+| DropZone | Drag-and-drop upload area | Deferred | do not add in Batch 3C | Deferred | Drag/drop can imply browser, keyboard and assistive-technology behaviour that has not been reviewed. |
+| UploadedItem | Uploaded-file row/status display | Deferred | do not add in Batch 3C | Deferred | Live GEL Storybook evidence exists, but the local source package snapshot is missing and remove/status semantics need deeper review. |
+
 ## Batch 2 pattern inventory
 
 Batch 2 adds story-only TaPaaS GEL patterns. These stories compose existing GEL primitives and do not create TaPaaS wrappers, transaction refactors or manifest entries.

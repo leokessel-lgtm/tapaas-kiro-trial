@@ -230,6 +230,79 @@ select:focus-visible {
   margin-top: 0.5rem;
 }
 
+/* --- Evidence and upload static references --- */
+.gel-file-input {
+  display: block;
+  max-width: 36rem;
+}
+
+.gel-file-input__label {
+  color: var(--gel-color-text);
+  display: block;
+  font-family: var(--gel-font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.gel-file-input__help,
+.gel-file-input__boundary,
+.gel-file-upload__instruction {
+  color: var(--gel-color-text-grey);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0 0 0.75rem;
+}
+
+.gel-file-input__button {
+  align-items: center;
+  background-color: var(--gel-color-primary);
+  border: 2px solid var(--gel-color-primary);
+  border-radius: var(--gel-radius);
+  color: var(--gel-color-white);
+  display: inline-flex;
+  font-family: var(--gel-font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.5;
+  min-height: 48px;
+  min-width: 160px;
+  padding: 0.625rem 1.5rem;
+}
+
+.gel-file-input__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.gel-file-input__boundary {
+  background-color: #f4f7f9;
+  border-left: 3px solid var(--gel-color-brand-dark);
+  color: var(--gel-color-text);
+  margin: 0.75rem 0 0;
+  padding: 0.75rem 1rem;
+}
+
+.gel-file-upload {
+  max-width: 48rem;
+}
+
+.gel-file-upload__fieldset {
+  margin-bottom: 0;
+}
+
+.gel-file-upload__shell {
+  border: 2px solid var(--gel-color-border-dark);
+  border-radius: var(--gel-radius);
+  padding: 1rem;
+}
+
+.gel-file-upload__instruction {
+  color: var(--gel-color-text);
+}
+
 /* --- Mobile responsive --- */
 @media (max-width: 479px) {
   button[type="button"],

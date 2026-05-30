@@ -34,6 +34,8 @@ export {
   CheckboxList,
   DateInput,
   DateMultiInput,
+  FileInput,
+  FileUpload,
   InPageAlert,
   Field,
   Fieldset,
