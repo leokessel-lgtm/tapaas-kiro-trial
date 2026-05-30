@@ -594,6 +594,184 @@ export function Field({ id, label, helpMessage, hasError, errorMessage, children
 }
 
 // ---------------------------------------------------------------------------
+// Fieldset
+// Source evidence: docs/source-evidence/gel-components/fieldset/
+// Local reference preview for grouped form controls only. Does not replicate
+// GEL FocusGroup, theming, margin system or full accessibility behaviour.
+// ---------------------------------------------------------------------------
+export interface FieldsetProps extends HTMLAttributes<HTMLFieldSetElement> {
+  legend: React.ReactNode
+  helpMessage?: React.ReactNode
+  hasError?: boolean
+  errorMessage?: React.ReactNode
+  smallLegend?: boolean
+  disabled?: boolean
+  children?: React.ReactNode
+}
+
+export const Fieldset = forwardRef<HTMLFieldSetElement, FieldsetProps>(
+  function Fieldset(
+    { id, legend, helpMessage, hasError, errorMessage, smallLegend, disabled, children, className, style, ...rest },
+    ref,
+  ) {
+    const elemId = id ?? 'fieldset'
+    const helpId = helpMessage ? `${elemId}-help` : undefined
+    const errorId = hasError && errorMessage ? `${elemId}-error` : undefined
+    const describedBy = [helpId, errorId].filter(Boolean).join(' ') || undefined
+    const classes = ['gel-fieldset', smallLegend ? 'gel-fieldset--small-legend' : '', className]
+      .filter(Boolean)
+      .join(' ')
+
+    return (
+      <fieldset
+        id={id}
+        ref={ref}
+        className={classes}
+        disabled={disabled}
+        aria-invalid={hasError || undefined}
+        aria-describedby={describedBy}
+        data-gelweb-component='fieldset'
+        style={style}
+        {...rest}
+      >
+        <legend className='gel-fieldset__legend'>
+          <span className='gel-fieldset__legend-label'>{legend}</span>
+        </legend>
+        {helpMessage && (
+          <p id={helpId} className='gel-fieldset__help'>
+            {helpMessage}
+          </p>
+        )}
+        <div className='gel-fieldset__content'>{children}</div>
+        {hasError && errorMessage && (
+          <div id={errorId} className='gel-fieldset__error'>
+            <svg width='20' height='20' viewBox='0 0 20 20' fill='var(--gel-color-error)' aria-hidden='true' focusable='false'>
+              <path d='M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0Zm1 15H9v-2h2v2Zm0-4H9V5h2v6Z' />
+            </svg>
+            <span>{errorMessage}</span>
+          </div>
+        )}
+      </fieldset>
+    )
+  },
+)
+
+// ---------------------------------------------------------------------------
+// CheckboxList
+// Source evidence: docs/source-evidence/gel-components/checkbox-list/
+// Local reference preview for grouped multi-select options only. It does not
+// implement GEL slot behaviour, validation rules or policy/consent semantics.
+// ---------------------------------------------------------------------------
+export interface CheckboxListOption<T extends string = string> {
+  value: T
+  label: React.ReactNode
+  clarify?: React.ReactNode
+  editor?: React.ReactNode
+  disabled?: boolean
+}
+
+export interface CheckboxListProps<T extends string = string> extends Omit<FieldsetProps, 'children' | 'onChange'> {
+  options: CheckboxListOption<T>[]
+  name?: string
+  value?: T[]
+  defaultValue?: T[]
+  onChange?: (value: T[]) => void
+}
+
+export const CheckboxList = forwardRef<HTMLFieldSetElement, CheckboxListProps>(
+  function CheckboxList(
+    { id, name, options, value, defaultValue = [], onChange, hasError, errorMessage, ...fieldsetProps },
+    ref,
+  ) {
+    const baseId = id ?? 'checkbox-list'
+    const [internalValue, setInternalValue] = React.useState<string[]>(defaultValue)
+    const selected = value ?? internalValue
+
+    const updateSelected = (nextValue: string, checked: boolean) => {
+      const nextSelected = checked
+        ? Array.from(new Set([...selected, nextValue]))
+        : selected.filter((item) => item !== nextValue)
+
+      if (!value) {
+        setInternalValue(nextSelected)
+      }
+
+      onChange?.(nextSelected)
+    }
+
+    return (
+      <Fieldset
+        {...fieldsetProps}
+        id={id}
+        ref={ref}
+        smallLegend
+        hasError={hasError}
+        errorMessage={errorMessage}
+        data-gelweb-component='checkbox-list'
+      >
+        <div className='gel-checkbox-list'>
+          {options.map((option, index) => {
+            const optionId = `${baseId}-${index}`
+            const clarifyId = option.clarify ? `${optionId}-clarify` : undefined
+            const editorId = option.editor ? `${optionId}-editor` : undefined
+            const checked = selected.includes(option.value)
+            const borderColor = hasError ? 'var(--gel-color-error)' : checked ? '#002664' : '#646974'
+            const describedBy = [clarifyId, checked && editorId].filter(Boolean).join(' ') || undefined
+
+            return (
+              <div key={option.value} className='gel-checkbox-list__option'>
+                <input
+                  type='checkbox'
+                  id={optionId}
+                  name={name ?? baseId}
+                  value={option.value}
+                  checked={checked}
+                  disabled={option.disabled}
+                  onChange={(event) => updateSelected(option.value, event.target.checked)}
+                  aria-invalid={hasError || undefined}
+                  aria-describedby={describedBy}
+                  aria-expanded={option.editor ? checked : undefined}
+                  aria-controls={checked && editorId ? editorId : undefined}
+                  className='snsw-preview-control-input'
+                  style={{ position: 'absolute', width: '2.75rem', height: '2.75rem', opacity: 0, top: '-0.375rem', left: '-0.375rem', cursor: option.disabled ? 'not-allowed' : 'pointer' }}
+                />
+                <label htmlFor={optionId} className='gel-checkbox-list__label'>
+                  <span
+                    aria-hidden='true'
+                    className='gel-checkbox-list__box'
+                    style={{
+                      borderColor,
+                      backgroundColor: checked ? '#002664' : 'var(--gel-color-white)',
+                    }}
+                  >
+                    {checked && (
+                      <svg width='14' height='11' viewBox='0 0 14 11' fill='#ffffff'>
+                        <path d='M13.4 1.4c.2-.2.2-.5 0-.7L11.8.1c-.2-.2-.5-.2-.7 0L5 6.2 2.9 4.1c-.2-.2-.5-.2-.7 0L.6 5.7c-.2.2-.2.5 0 .7l4.1 4.1c.2.2.5.2.7 0l8-8Z' />
+                      </svg>
+                    )}
+                  </span>
+                  {option.label}
+                </label>
+                {option.clarify && (
+                  <p id={clarifyId} className='gel-checkbox-list__clarify'>
+                    {option.clarify}
+                  </p>
+                )}
+                {option.editor && checked && (
+                  <p id={editorId} className='gel-checkbox-list__editor'>
+                    {option.editor}
+                  </p>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      </Fieldset>
+    )
+  },
+)
+
+// ---------------------------------------------------------------------------
 // Input
 // Fixed: removed outline:none so :focus-visible CSS works. Added aria-invalid.
 // ---------------------------------------------------------------------------
@@ -632,6 +810,129 @@ export function Input({ id, value, onChange, hasError, disabled, type = 'text', 
       data-gelweb-component='input'
       {...rest}
     />
+  )
+}
+
+// ---------------------------------------------------------------------------
+// DateInput
+// Source evidence: docs/source-evidence/gel-components/date-input/
+// Reference-only text input. This does not implement GEL date parsing,
+// formatting, masking or validation callbacks.
+// ---------------------------------------------------------------------------
+export interface DateInputProps extends InputProps {
+  dateFormat?: 'DD/MM/YYYY' | 'MM/YY' | 'MM/YYYY'
+}
+
+const dateInputWidthMap: Record<NonNullable<DateInputProps['dateFormat']>, InputProps['inputWidth']> = {
+  'DD/MM/YYYY': 'md',
+  'MM/YY': 'xs',
+  'MM/YYYY': 'sm',
+}
+
+const dateInputPlaceholderMap: Record<NonNullable<DateInputProps['dateFormat']>, string> = {
+  'DD/MM/YYYY': 'DD/MM/YYYY',
+  'MM/YY': 'MM/YY',
+  'MM/YYYY': 'MM/YYYY',
+}
+
+export function DateInput({ dateFormat = 'DD/MM/YYYY', inputWidth, placeholder, ...rest }: DateInputProps & Record<string, unknown>) {
+  return (
+    <Input
+      {...rest}
+      type='text'
+      inputMode='numeric'
+      inputWidth={inputWidth ?? dateInputWidthMap[dateFormat]}
+      placeholder={placeholder ?? dateInputPlaceholderMap[dateFormat]}
+      data-gelweb-component='date-input'
+    />
+  )
+}
+
+// ---------------------------------------------------------------------------
+// DateMultiInput
+// Source evidence: docs/source-evidence/gel-components/date-multi-input/
+// Reference-only day/month/year grouping. This does not implement GEL date
+// object handling, hidden form value generation, parsing, masking or validation.
+// ---------------------------------------------------------------------------
+export interface DateMultiInputValue {
+  day?: string
+  month?: string
+  year?: string
+}
+
+export interface DateMultiInputProps extends Omit<FieldsetProps, 'legend' | 'children' | 'onChange'> {
+  label: React.ReactNode
+  value?: DateMultiInputValue
+  onChange?: (value: DateMultiInputValue) => void
+  name?: string
+  hideDay?: boolean
+}
+
+const dateMultiInputMonths = [
+  { value: 'jan', text: 'Jan' },
+  { value: 'feb', text: 'Feb' },
+  { value: 'mar', text: 'Mar' },
+  { value: 'apr', text: 'Apr' },
+  { value: 'may', text: 'May' },
+  { value: 'jun', text: 'Jun' },
+  { value: 'jul', text: 'Jul' },
+  { value: 'aug', text: 'Aug' },
+  { value: 'sep', text: 'Sep' },
+  { value: 'oct', text: 'Oct' },
+  { value: 'nov', text: 'Nov' },
+  { value: 'dec', text: 'Dec' },
+]
+
+export function DateMultiInput({ id, label, value = {}, onChange, name, hideDay, disabled, ...fieldsetProps }: DateMultiInputProps) {
+  const baseId = id ?? 'date-multi-input'
+  const updateValue = (key: keyof DateMultiInputValue, nextValue: string) => {
+    onChange?.({ ...value, [key]: nextValue })
+  }
+
+  return (
+    <div data-gelweb-component='date-multi-input'>
+      <Fieldset {...fieldsetProps} id={id} legend={label} disabled={disabled}>
+        <div className='gel-date-multi-input__row'>
+          {!hideDay && (
+            <Field id={`${baseId}-day`} label='Day'>
+              <Input
+                id={`${baseId}-day`}
+                name={name ? `${name}-day` : undefined}
+                value={value.day ?? ''}
+                onChange={(event) => updateValue('day', event.target.value)}
+                inputWidth='xxs'
+                inputMode='numeric'
+                maxLength={2}
+                disabled={disabled}
+              />
+            </Field>
+          )}
+          <Field id={`${baseId}-month`} label='Month'>
+            <Select
+              id={`${baseId}-month`}
+              name={name ? `${name}-month` : undefined}
+              value={value.month ?? ''}
+              onChange={(event) => updateValue('month', event.target.value)}
+              inputWidth='md'
+              options={dateMultiInputMonths}
+              disabled={disabled}
+            />
+          </Field>
+          <Field id={`${baseId}-year`} label='Year'>
+            <Input
+              id={`${baseId}-year`}
+              name={name ? `${name}-year` : undefined}
+              value={value.year ?? ''}
+              onChange={(event) => updateValue('year', event.target.value)}
+              inputWidth='xs'
+              inputMode='numeric'
+              maxLength={4}
+              disabled={disabled}
+            />
+          </Field>
+        </div>
+      </Fieldset>
+    </div>
   )
 }
 
