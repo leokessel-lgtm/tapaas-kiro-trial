@@ -303,6 +303,131 @@ select:focus-visible {
   color: var(--gel-color-text);
 }
 
+/* --- Loading and placeholder static references --- */
+.gel-loader {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  max-width: 31.25rem;
+  text-align: center;
+}
+
+.gel-loader--full-page .gel-loader__message {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.gel-loader__spinner {
+  border: 6px solid var(--gel-color-border);
+  border-radius: 50%;
+  border-top-color: var(--gel-color-brand-dark);
+  display: block;
+  height: 70px;
+  width: 70px;
+}
+
+.gel-loader__message {
+  color: var(--gel-color-text);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 0.75rem 0 0;
+}
+
+.gel-loader__boundary,
+.gel-skeleton__boundary {
+  background-color: #f4f7f9;
+  border-left: 3px solid var(--gel-color-brand-dark);
+  color: var(--gel-color-text);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 1rem 0 0;
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.gel-skeleton {
+  display: block;
+  max-width: 48rem;
+}
+
+.gel-skeleton__label {
+  color: var(--gel-color-text);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0 0 0.75rem;
+}
+
+.gel-skeleton__content {
+  border: 1px solid var(--gel-color-border);
+  border-radius: var(--gel-radius);
+  padding: 1rem;
+}
+
+.gel-skeleton__heading,
+.gel-skeleton__row,
+.gel-skeleton__card-title,
+.gel-skeleton__card-line {
+  background: #e6ebef;
+  border-radius: 4px;
+  display: block;
+}
+
+.gel-skeleton__heading {
+  height: 1.5rem;
+  margin-bottom: 1rem;
+  max-width: 18rem;
+}
+
+.gel-skeleton__rows {
+  display: grid;
+  gap: 0.625rem;
+  margin-bottom: 1.25rem;
+}
+
+.gel-skeleton__row {
+  height: 1rem;
+  max-width: 100%;
+}
+
+.gel-skeleton__row--2,
+.gel-skeleton__row--5 {
+  max-width: 84%;
+}
+
+.gel-skeleton__row--3,
+.gel-skeleton__row--6 {
+  max-width: 68%;
+}
+
+.gel-skeleton__cards {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.gel-skeleton__card {
+  border: 1px solid var(--gel-color-border);
+  border-radius: var(--gel-radius);
+  display: grid;
+  gap: 0.625rem;
+  padding: 1rem;
+}
+
+.gel-skeleton__card-title {
+  height: 1.125rem;
+  max-width: 14rem;
+}
+
+.gel-skeleton__card-line {
+  height: 0.875rem;
+  max-width: 100%;
+}
+
+.gel-skeleton__card-line--short {
+  max-width: 60%;
+}
+
 /* --- Mobile responsive --- */
 @media (max-width: 479px) {
   button[type="button"],

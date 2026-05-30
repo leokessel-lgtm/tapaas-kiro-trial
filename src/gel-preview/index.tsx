@@ -1049,6 +1049,96 @@ export function FileUpload({
 }
 
 // ---------------------------------------------------------------------------
+// Loader
+// Source evidence: docs/source-evidence/gel-components/loader/
+// Static reference preview only. It does not implement async loading, timers,
+// fetches, route transitions, suspense, live regions or focus management.
+// ---------------------------------------------------------------------------
+export interface LoaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'content'> {
+  content?: React.ReactNode
+  fullPage?: boolean
+  boundaryText?: React.ReactNode
+}
+
+export function Loader({
+  content = 'Loading',
+  fullPage = false,
+  boundaryText = 'Static reference only. This is not a live loading implementation or accessibility proof.',
+  className,
+  style,
+  ...rest
+}: LoaderProps) {
+  return (
+    <div
+      aria-hidden='true'
+      className={['gel-loader', fullPage ? 'gel-loader--full-page' : '', className].filter(Boolean).join(' ')}
+      data-gelweb-component='loader'
+      style={style}
+      {...rest}
+    >
+      <span className='gel-loader__spinner' />
+      <p className='gel-loader__message'>{content}</p>
+      <p className='gel-loader__boundary'>{boundaryText}</p>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Skeleton
+// Source evidence: docs/source-evidence/gel-components/skeleton/
+// Static reference preview only. It does not implement real data loading,
+// timing, progressive disclosure, live regions or focus management.
+// ---------------------------------------------------------------------------
+export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
+  label?: string
+  rows?: number
+  cards?: number
+  boundaryText?: React.ReactNode
+}
+
+export function Skeleton({
+  label = 'Transaction content placeholder',
+  rows = 3,
+  cards = 2,
+  boundaryText = 'Static reference only. This preview does not load data, time placeholder changes or reveal real content progressively.',
+  className,
+  style,
+  ...rest
+}: SkeletonProps) {
+  const safeRows = Math.max(1, Math.min(rows, 6))
+  const safeCards = Math.max(1, Math.min(cards, 3))
+
+  return (
+    <div
+      className={['gel-skeleton', className].filter(Boolean).join(' ')}
+      data-gelweb-component='skeleton'
+      style={style}
+      {...rest}
+    >
+      <p className='gel-skeleton__label'>{label}</p>
+      <div className='gel-skeleton__content' aria-hidden='true'>
+        <span className='gel-skeleton__heading' />
+        <div className='gel-skeleton__rows'>
+          {Array.from({ length: safeRows }).map((_, index) => (
+            <span key={index} className={`gel-skeleton__row gel-skeleton__row--${index + 1}`} />
+          ))}
+        </div>
+        <div className='gel-skeleton__cards'>
+          {Array.from({ length: safeCards }).map((_, index) => (
+            <span key={index} className='gel-skeleton__card'>
+              <span className='gel-skeleton__card-title' />
+              <span className='gel-skeleton__card-line' />
+              <span className='gel-skeleton__card-line gel-skeleton__card-line--short' />
+            </span>
+          ))}
+        </div>
+      </div>
+      <p className='gel-skeleton__boundary'>{boundaryText}</p>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
 // Textarea
 // Fixed: removed outline:none, added aria-invalid, uses gel-textarea class.
 // ---------------------------------------------------------------------------
