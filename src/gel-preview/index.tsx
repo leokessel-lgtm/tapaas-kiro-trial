@@ -937,6 +937,118 @@ export function DateMultiInput({ id, label, value = {}, onChange, name, hideDay,
 }
 
 // ---------------------------------------------------------------------------
+// FileInput
+// Source evidence: docs/source-evidence/gel-components/file-input/
+// Static reference preview only. It intentionally avoids input[type='file'],
+// file picker, selection processing, upload or validation behaviour.
+// ---------------------------------------------------------------------------
+export interface FileInputProps extends HTMLAttributes<HTMLDivElement> {
+  id?: string
+  label: React.ReactNode
+  helpMessage?: React.ReactNode
+  buttonLabel?: string
+  boundaryText?: React.ReactNode
+}
+
+export function FileInput({
+  id = 'file-input',
+  label,
+  helpMessage,
+  buttonLabel = 'Choose file',
+  boundaryText = 'Static reference only. File selection is not enabled in this preview.',
+  className,
+  style,
+  ...rest
+}: FileInputProps) {
+  const labelId = `${id}-label`
+  const helpId = helpMessage ? `${id}-help` : undefined
+  const boundaryId = `${id}-boundary`
+  const describedBy = [helpId, boundaryId].filter(Boolean).join(' ')
+
+  return (
+    <div
+      id={id}
+      role='group'
+      aria-labelledby={labelId}
+      aria-describedby={describedBy}
+      className={['gel-file-input', className].filter(Boolean).join(' ')}
+      data-gelweb-component='file-input'
+      style={style}
+      {...rest}
+    >
+      <span id={labelId} className='gel-file-input__label'>
+        {label}
+      </span>
+      {helpMessage && (
+        <p id={helpId} className='gel-file-input__help'>
+          {helpMessage}
+        </p>
+      )}
+      <button type='button' className='gel-file-input__button' disabled>
+        {buttonLabel}
+      </button>
+      <p id={boundaryId} className='gel-file-input__boundary'>
+        {boundaryText}
+      </p>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// FileUpload
+// Source evidence: docs/source-evidence/gel-components/file-upload/
+// Static composition shell only. It does not include DropZone, UploadedItem,
+// upload, remove-file, progress, API, storage, scanning or validation behaviour.
+// ---------------------------------------------------------------------------
+export interface FileUploadProps extends HTMLAttributes<HTMLDivElement> {
+  id?: string
+  legend: React.ReactNode
+  helpMessage?: React.ReactNode
+  instruction?: React.ReactNode
+  actionLabel?: string
+  boundaryText?: React.ReactNode
+}
+
+export function FileUpload({
+  id = 'file-upload',
+  legend,
+  helpMessage,
+  instruction = 'Use this static shell to review where evidence upload guidance and action controls would sit in a transaction page.',
+  actionLabel = 'Choose file',
+  boundaryText = 'Static reference only. This preview does not upload, store, scan, validate or process files.',
+  className,
+  style,
+  ...rest
+}: FileUploadProps) {
+  return (
+    <div
+      className={['gel-file-upload', className].filter(Boolean).join(' ')}
+      data-gelweb-pattern='file-upload'
+      style={style}
+      {...rest}
+    >
+      <Fieldset
+        id={id}
+        legend={legend}
+        helpMessage={helpMessage}
+        className='gel-file-upload__fieldset'
+      >
+        <div className='gel-file-upload__shell' aria-label='Static file upload shell'>
+          <p className='gel-file-upload__instruction'>{instruction}</p>
+          <FileInput
+            id={`${id}-file-input`}
+            label='Select supporting document'
+            helpMessage='The file type, size and count rules are intentionally not represented in this static preview.'
+            buttonLabel={actionLabel}
+            boundaryText={boundaryText}
+          />
+        </div>
+      </Fieldset>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
 // Textarea
 // Fixed: removed outline:none, added aria-invalid, uses gel-textarea class.
 // ---------------------------------------------------------------------------
