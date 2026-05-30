@@ -66,6 +66,7 @@ External/source evidence checked:
 | Live GEL Storybook index | JSON reachable with relevant GEL entries for Breadcrumb, StatusLabel, Fieldset, CheckboxList, DateInput, DateMultiInput, FileInput, FileUpload, DropZone, UploadedItem, Modal, MoreInfoPanel, Loader and Skeleton | Does not prove the local preview implementation matches GEL package internals |
 | Figma MCP library check | MPS file had subscribed libraries including `GEL Web UI Kit` | No current transaction-specific node was selected for exact parity comparison |
 | Figma design-system search | Batch keyword search returned no direct component hits | Inconclusive, not evidence that components are absent |
+| Supplied Figma source URLs, 2026-05-30 | MCP screenshots captured for MPS page `MzngfrwuAT3YI3JRxTgTTo` node `0:16535`, MPS/Water Carting mobile reference node `0:33253`, Components library node `31:73426`, and Templates library node `3395:41359` | These are large overview/source-board captures. They improve source orientation, but do not prove exact component-by-component visual parity without targeted child frame comparison |
 | Repo source evidence | TaPaaS component registry, relationship map, coverage matrix, MPS source notes and screenshot pack references are present | Some screenshot pack files are outside the committed repo |
 
 Validation commands run before report creation for audit evidence:
@@ -346,6 +347,9 @@ Source/Figma/GEL notes:
 - The live GEL Storybook index supports that the reference targets exist in GEL, including the 3A, 3B, 3C and likely 3D candidate areas.
 - The local preview adapter should remain framed as source-informed. It is not a substitute for importing and testing `@snsw-gel/react`.
 - MPS source evidence is stronger than most other transaction evidence because it has a relationship map, coverage matrix, frame stories, review pack and screenshot evidence references.
+- The supplied MPS Figma URL for node `0:16535` is an overview of the MPS Final board. It supports broad flow orientation, but exact visual parity still needs targeted extraction of the specific child frames used by Storybook.
+- The supplied `0:33253` Figma URL resolves to the Water Carting mobile board inside the same source file. Treat it as mobile transaction-template reference only, not MPS-specific parity evidence.
+- The supplied Components and Templates URLs support source orientation for backend-error/component and privacy-step/template patterns, but targeted node checks remain required before changing source-gated visual details.
 - Trial Permit has runtime hardening and deployment evidence, but transaction-specific Storybook parity remains optional and non-manifest unless explicitly approved.
 - The known `#f4f7f9` background colour concern appears in shared preview CSS and remains source-gated. It should not be patched without approved token/source evidence.
 
@@ -361,6 +365,7 @@ Findings:
 
 | Story/component | Source compared against | Severity | Confidence | Evidence | Recommended next action |
 |---|---|---|---|---|---|
+| Storybook mobile overflow, follow-up 2026-05-30 | Local full-catalogue mobile browser sweep at 390 x 844 | Medium, fixed | Strong | Initial sweep found 5 mobile overflow stories; `Input` and `Select` local preview widths were clamped to container width; follow-up sweep across all 69 stories returned zero overflow issues | Keep the clamp; do not treat this as GEL package parity evidence |
 | GEL Reference stories | Live GEL index plus local caveats | Low | Moderate | Representative GEL stories rendered with visible source-informed caveats | Keep non-manifest; do not claim package parity |
 | Batch 3C FileInput/FileUpload | Live GEL index plus local static-boundary docs | Medium | Moderate | Stories rendered at desktop/mobile and contained zero `input[type="file"]` elements | Keep caveats visible; defer DropZone/UploadedItem |
 | MPS Review frame | Repo source evidence and screenshot pack references | Medium | Moderate | Story rendered at desktop/mobile without horizontal overflow | Run a future visual QA pass against committed/reference screenshots |
@@ -372,6 +377,16 @@ Findings:
 | Legacy `.ai` stories | Implementation evidence only | Medium | Strong | Visible Storybook titles use generated/dev naming | Rehouse or retire during Storybook IA cleanup |
 
 No pixel-perfect claim is made. Current visual confidence is enough to say the stories render and are suitable for bounded review, not enough to approve parity.
+
+Source-parity patch deferrals after supplied Figma URL review:
+
+| Area | Decision | Reason |
+|---|---|---|
+| MPS frame spacing, footer chrome and exact mobile layout | Defer | The supplied MPS node is a large overview board. Patch only after targeted child-frame comparison for the exact Storybook frame. |
+| Water Carting mobile layouts | Defer for MPS | The supplied mobile node is useful mobile transaction-template evidence, but it is not MPS-specific source parity evidence. |
+| Backend/business error visuals | Defer | The supplied Components node is an overview/reference board. Patch only after selecting the exact backend-error child component/frame. |
+| Privacy-step and transaction-template details | Defer | The supplied Templates node supports page-template orientation, not exact content, copy, spacing or approval for current stories. |
+| Shared `#f4f7f9` review-card background | Defer | Still source-gated until a selected source component/frame or approved token decision confirms replacement. |
 
 ## Component quality findings
 
