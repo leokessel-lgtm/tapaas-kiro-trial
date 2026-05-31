@@ -200,6 +200,54 @@ Still source-gated or deferred:
 - Tell Us Then/TUTD or related transaction content.
 - Confirmation mobile/responsive and assistive-technology QA.
 
+## Slice 7A status
+
+Slice 7A performs a full-flow QA pass after the MPS structural slices. It does not patch runtime code, introduce backend behaviour, change Storybook, change package files, change lockfiles, change the acceptance manifest, or claim MPS parity, production readiness, WCAG compliance or accessibility approval.
+
+QA checks performed:
+
+- Ran the full mock-success path from privacy through account/identity, application type, applicant details, representative/contact, eligibility, medical evidence, concession, delivery, payment, declaration, review and confirmation.
+- Checked desktop, tablet and mobile viewport widths for the mock-success path.
+- Checked review-page boundaries: no non-routing edit buttons, no leaked mock validation selector, trial-only system states remain grouped, and evidence/payment/concession states remain explicitly mock-only.
+- Checked confirmation-page boundaries: source-gated next steps, `Keep a record` placeholder, trial boundary and absence of the developer-facing component-template relationship map link.
+- Checked validation summary targets for replacement reason, concession card option and concession mock validation result.
+
+Defects found:
+
+- No MPS-specific runtime defect was found in the checked flow.
+- Tablet-width horizontal overflow was detected at the full-page level, but inspection traced it to the shared Service NSW header search chrome, not the MPS transaction content. This remains outside the MPS slice.
+
+Patched in Slice 7A:
+
+- No runtime code was patched.
+- This plan was updated with the QA result and remaining caveats.
+
+Still source-gated or deferred:
+
+- Final MPS source/content parity review by designers.
+- Manual keyboard, focus, screen-reader and assistive-technology QA.
+- Shared Service NSW chrome responsive overflow, if the trial later decides to patch global layout.
+- Final confirmation copy, notification timing, receipt/reference, payment, permit issue, approval and backend behaviour.
+
+Designer review readiness:
+
+- Ready for a bounded designer review pass focused on structure, content boundaries, mocked-state clarity and source-gated gaps.
+- Not ready for source-parity sign-off, production approval, WCAG/accessibility compliance claims, privacy/legal/policy approval or reusable TaPaaS rule extraction.
+
+Recommended next slice:
+
+- Slice 8A: prepare a designer review pack that summarises what changed, what is source-backed, what remains mock-only and what remains source-gated.
+
+## Slice 8A status
+
+Slice 8A packages the current MPS repair state for bounded designer review. It is documentation-only and does not patch runtime code, tests, Storybook, acceptance-manifest entries, package files, lockfiles, Track 2 files or Community Venue files.
+
+Created review artefact:
+
+- [MPS designer review pack](./mps-designer-review-pack.md)
+
+The review pack separates `SOURCE_CONFIRMED`, `SOURCE_GATED`, `MOCK_BE_STATE`, `TRIAL_ONLY`, `DEFERRED` and `REUSABILITY_GATED` items. It also repeats the non-claims around source parity, production readiness, WCAG/accessibility compliance, real backend/API processing, real approval/permit/payment/concession behaviour and reusable TaPaaS rule promotion.
+
 ## Source access report
 
 File key: `MzngfrwuAT3YI3JRxTgTTo`
