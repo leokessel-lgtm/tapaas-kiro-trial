@@ -28,6 +28,40 @@ Still deferred:
 - Final MPS content, policy, fees, receipt, notification timing, delivery, approval and fulfilment wording.
 - Accessibility, responsive and assistive-technology QA beyond existing automated checks.
 
+## Slice 2B status
+
+Slice 2B applies a narrow page-template audit and container-alignment pass. It does not rebuild detailed review content, detailed confirmation content, field logic, backend behaviour or component choices.
+
+Current page/template mapping:
+
+| Runtime page | Template marker | Treatment |
+|---|---|---|
+| Privacy information | `start-intro` | Start or introductory page placeholder. Privacy copy remains owner-gated. |
+| Account and identity | `identity-state` | Mock account and proof-of-identity state. No identity proofing is performed. |
+| Application type, applicant details, representative/contact pages | `form-page` | Form pages with source-gated field and control decisions. |
+| Eligibility questions | `eligibility-state` | Hybrid form/system-state area. Eligibility decision remains mock/deferred. |
+| Medical evidence | `evidence-state` | Evidence status preview only. No upload, storage, scanning or backend evidence handling. |
+| Concession details | `concession-validation-state` | Mock validation-state chooser only. No real card validation. |
+| Delivery preferences | `kiro-stress-test-form` | Trial-only stress-test page, not confirmed MPS source flow. |
+| Payment simulation | `mock-payment-state` | Mock payment/routing state. No provider, receipt or refund behaviour. |
+| Declaration | `declaration` | Placeholder legal/policy wording only. |
+| Review | `review` | Existing source-informed review frame plus deferred mock/system summaries. Detailed rebuild remains deferred. |
+| Outcome | `confirmation` | Existing source-informed confirmation frame plus trial boundary. Detailed rebuild remains deferred. |
+
+Fixed in Slice 2B:
+
+- Added internal page-template markers to the MPS runtime pages so future slices can distinguish form pages, source-informed frames, mock system states and Kiro stress-test pages.
+- Fixed the successful outcome wrapper so its `aria-labelledby` target exists.
+- Added focused tests for page-template markers, review container presence and confirmation container labelling.
+
+Still source-gated or deferred:
+
+- Whether the representative/contact page belongs in the MPS source flow.
+- Whether delivery belongs in the MPS source flow or remains a Kiro stress-test page.
+- Review section content, edit routing, concession validity, fees and declaration details.
+- Confirmation summary, Keep a record, next steps, TUTD, receipt/reference and post-submit wording.
+- Backend-derived state modelling for identity, existing permit lookup, eligibility, concession, medical evidence, payment and assessment.
+
 ## Source access report
 
 File key: `MzngfrwuAT3YI3JRxTgTTo`

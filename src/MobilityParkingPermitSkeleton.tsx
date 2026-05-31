@@ -390,7 +390,7 @@ interface StepProps {
 
 function PrivacyStep({ form, attempted, update, onContinue, onExit }: StepProps) {
   return (
-    <section aria-labelledby='privacy-heading'>
+    <section aria-labelledby='privacy-heading' data-mps-page-template='start-intro'>
       <Heading level={2} id='privacy-heading'>Privacy information</Heading>
       <InPageAlert variant='info' title='Owner confirmation required'>
         <p>Replace this placeholder with the confirmed Mobility Parking Scheme privacy collection notice.</p>
@@ -411,7 +411,7 @@ function PrivacyStep({ form, attempted, update, onContinue, onExit }: StepProps)
 
 function AccountStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
   return (
-    <section aria-labelledby='account-heading'>
+    <section aria-labelledby='account-heading' data-mps-page-template='identity-state'>
       <Heading level={2} id='account-heading'>Account and identity</Heading>
       <InPageAlert variant='warning' title='Identity proofing is simulated'>
         <p>The MPS Figma flow includes MyAccount and proof-of-identity screens. This prototype uses a static mock state only and does not perform identity checks.</p>
@@ -459,7 +459,7 @@ function AccountStep({ form, attempted, update, onBack, onContinue, onExit }: St
 function ApplicationTypeStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
   const needsPermitNumber = form.applicationType === 'renew' || form.applicationType === 'replace'
   return (
-    <section aria-labelledby='app-type-heading'>
+    <section aria-labelledby='app-type-heading' data-mps-page-template='form-page'>
       <Heading level={2} id='app-type-heading'>Application type</Heading>
       <RadioButtonCards
         id='application-type'
@@ -531,7 +531,7 @@ function ApplicantStep({ form, attempted, update, onBack, onContinue, onExit }: 
   }
 
   return (
-    <section aria-labelledby='applicant-heading'>
+    <section aria-labelledby='applicant-heading' data-mps-page-template='form-page'>
       <span id='applicant-heading' hidden>Applicant details</span>
       <MpsApplicantDetailsFramePreview
         addressMode={form.applicantAddressMode}
@@ -582,7 +582,7 @@ interface RepresentativeStepProps extends StepProps {
 
 function RepresentativeStep({ form, attempted, update, updateContact, addContact, removeContact, onBack, onContinue, onExit }: RepresentativeStepProps) {
   return (
-    <section aria-labelledby='representative-heading'>
+    <section aria-labelledby='representative-heading' data-mps-page-template='form-page'>
       <Heading level={2} id='representative-heading'>Representative and authorised contacts</Heading>
       <ConditionalQuestionPanel
         id='has-representative'
@@ -632,7 +632,7 @@ function RepresentativeStep({ form, attempted, update, updateContact, addContact
 
 function EligibilityStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
   return (
-    <section aria-labelledby='eligibility-heading'>
+    <section aria-labelledby='eligibility-heading' data-mps-page-template='eligibility-state'>
       <Heading level={2} id='eligibility-heading'>Eligibility questions</Heading>
       <InPageAlert variant='warning' title='No eligibility decision is made'>
         <p>These questions mirror the shape of the MPS Figma flow, but the answers do not assess or decide eligibility.</p>
@@ -689,7 +689,7 @@ function MedicalEvidenceStep({ form, attempted, update, onBack, onContinue, onEx
   const medicalEvidenceState = form.medicalEvidenceMethod === 'uploaded' ? 'provided' : 'required'
 
   return (
-    <section aria-labelledby='medical-heading'>
+    <section aria-labelledby='medical-heading' data-mps-page-template='evidence-state'>
       <Heading level={2} id='medical-heading'>Medical evidence</Heading>
       <InPageAlert variant='info' title='File upload is deliberately mocked'>
         <p>GEL file upload is high risk and needs deeper source-backed review. This preview records an evidence scenario only and does not upload files.</p>
@@ -747,7 +747,7 @@ function MedicalEvidenceStep({ form, attempted, update, onBack, onContinue, onEx
 function ConcessionStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
   const needsCard = form.concessionCardType !== '' && form.concessionCardType !== 'none'
   return (
-    <section aria-labelledby='concession-heading'>
+    <section aria-labelledby='concession-heading' data-mps-page-template='concession-validation-state'>
       <Heading level={2} id='concession-heading'>Concession details</Heading>
       <InPageAlert variant='warning' title='Concession validation is simulated'>
         <p>The MPS Figma file includes invalid, duplicate and mismatch states. This page lets you choose a mock outcome but does not validate a real card.</p>
@@ -790,7 +790,7 @@ function ConcessionStep({ form, attempted, update, onBack, onContinue, onExit }:
 
 function DeliveryStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
   return (
-    <section aria-labelledby='delivery-heading'>
+    <section aria-labelledby='delivery-heading' data-mps-page-template='kiro-stress-test-form'>
       <Heading level={2} id='delivery-heading'>Delivery preferences</Heading>
       <InPageAlert variant='info' title='Trial-only delivery stress path'>
         <p>This page is a Kiro stress-test route only. It is not confirmed in the MPS source flow and does not set real delivery, approval or fulfilment behaviour.</p>
@@ -814,7 +814,7 @@ function DeliveryStep({ form, attempted, update, onBack, onContinue, onExit }: S
 
 function PaymentStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
   return (
-    <section aria-labelledby='payment-heading'>
+    <section aria-labelledby='payment-heading' data-mps-page-template='mock-payment-state'>
       <Heading level={2} id='payment-heading'>Payment simulation</Heading>
       <ReviewFeesCard
         title='Mock fee estimate'
@@ -848,7 +848,7 @@ function PaymentStep({ form, attempted, update, onBack, onContinue, onExit }: St
 
 function DeclarationStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
   return (
-    <section aria-labelledby='declaration-heading'>
+    <section aria-labelledby='declaration-heading' data-mps-page-template='declaration'>
       <Heading level={2} id='declaration-heading'>Declaration</Heading>
       <InPageAlert variant='warning' title='Legal wording required'>
         <p>This placeholder must be replaced with confirmed MPS declaration wording before real use.</p>
@@ -869,7 +869,7 @@ function DeclarationStep({ form, attempted, update, onBack, onContinue, onExit }
 
 function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBack: () => void; onSubmit: () => void; onExit: () => void }) {
   return (
-    <section aria-label='MPS review and supporting preview status'>
+    <section aria-label='MPS review and supporting preview status' data-mps-page-template='review'>
       <MpsReviewFramePreview
         sections={[
           {
@@ -948,7 +948,8 @@ function OutcomeStep({ form, onStartAgain }: { form: FormState; onStartAgain: ()
 
   const manual = isManualReview(form)
   return (
-    <section aria-labelledby='outcome-heading'>
+    <section aria-labelledby='outcome-heading' data-mps-page-template='confirmation'>
+      <span id='outcome-heading' hidden>Mobility Parking Scheme outcome</span>
       <MpsConfirmationFramePreview
         title={manual ? 'Your application has been received for manual review' : 'Your application has been submitted'}
         referenceNumber={manual ? 'MPS-REVIEW-000000' : 'MPS-MOCK-000000'}

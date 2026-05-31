@@ -108,9 +108,10 @@ async function completeSuccessfulPathToPayment(user: ReturnType<typeof userEvent
 describe('MobilityParkingPermitSkeleton', () => {
   it('blocks the privacy step and then completes a mock successful MPS path', async () => {
     const user = userEvent.setup()
-    render(<MobilityParkingPermitSkeleton />)
+    const { container } = render(<MobilityParkingPermitSkeleton />)
 
     expect(screen.getByText('Step 1 of 7: Start and privacy')).toBeInTheDocument()
+    expect(container.querySelector('[data-mps-page-template="start-intro"]')).toBeInTheDocument()
 
     await continueFromCurrentStep(user)
     expect(screen.getByRole('link', { name: 'Confirm that you have read the privacy information' })).toHaveAttribute('href', '#privacy-confirmation')
@@ -118,6 +119,7 @@ describe('MobilityParkingPermitSkeleton', () => {
     await reachApplicantDetailsStep(user)
 
     expect(screen.getByRole('heading', { name: 'Personal details' })).toBeInTheDocument()
+    expect(container.querySelector('[data-mps-page-template="form-page"]')).toBeInTheDocument()
     expect(screen.getByLabelText('Residential address *')).toBeInTheDocument()
     await fillApplicantSearchStep(user)
     await continueFromCurrentStep(user)
@@ -127,6 +129,7 @@ describe('MobilityParkingPermitSkeleton', () => {
     await continueFromCurrentStep(user)
 
     expect(screen.getByRole('heading', { name: 'Eligibility questions' })).toBeInTheDocument()
+    expect(container.querySelector('[data-mps-page-template="eligibility-state"]')).toBeInTheDocument()
     await user.click(screen.getByRole('radio', { name: 'No' }))
     await user.click(screen.getAllByRole('radio', { name: 'Yes (mock)' })[0])
     await user.click(screen.getAllByRole('radio', { name: 'Yes (mock)' })[1])
@@ -134,16 +137,19 @@ describe('MobilityParkingPermitSkeleton', () => {
     await continueFromCurrentStep(user)
 
     expect(screen.getByRole('heading', { name: 'Medical evidence' })).toBeInTheDocument()
+    expect(container.querySelector('[data-mps-page-template="evidence-state"]')).toBeInTheDocument()
     await user.click(screen.getByRole('radio', { name: 'Medical certificate (mock)' }))
     await user.click(screen.getByRole('radio', { name: 'Mock uploaded now' }))
     await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
     await continueFromCurrentStep(user)
 
     expect(screen.getByRole('heading', { name: 'Concession details' })).toBeInTheDocument()
+    expect(container.querySelector('[data-mps-page-template="concession-validation-state"]')).toBeInTheDocument()
     await user.selectOptions(screen.getByLabelText('Concession card option'), 'none')
     await continueFromCurrentStep(user)
 
     expect(screen.getByRole('heading', { name: 'Delivery preferences' })).toBeInTheDocument()
+    expect(container.querySelector('[data-mps-page-template="kiro-stress-test-form"]')).toBeInTheDocument()
     expect(screen.getByText('Trial-only delivery stress path')).toBeInTheDocument()
     expect(screen.getByText('This page is a Kiro stress-test route only. It is not confirmed in the MPS source flow and does not set real delivery, approval or fulfilment behaviour.')).toBeInTheDocument()
     expect(screen.getByRole('group', { name: 'Choose a trial-only delivery route' })).toBeInTheDocument()
@@ -152,14 +158,17 @@ describe('MobilityParkingPermitSkeleton', () => {
     await continueFromCurrentStep(user)
 
     expect(screen.getByRole('heading', { name: 'Payment simulation' })).toBeInTheDocument()
+    expect(container.querySelector('[data-mps-page-template="mock-payment-state"]')).toBeInTheDocument()
     await user.click(screen.getByRole('radio', { name: 'Mock payment succeeds and application submits' }))
     await continueFromCurrentStep(user)
 
     expect(screen.getByRole('heading', { name: 'Declaration' })).toBeInTheDocument()
+    expect(container.querySelector('[data-mps-page-template="declaration"]')).toBeInTheDocument()
     await user.click(screen.getByRole('checkbox', { name: 'I declare that the information provided is true and correct.' }))
     await continueFromCurrentStep(user)
 
     expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
+    expect(container.querySelector('[data-mps-page-template="review"]')).toBeInTheDocument()
     expect(screen.getByText('Alex Citizen')).toBeInTheDocument()
     expect(screen.getByText('New application')).toBeInTheDocument()
     expect(screen.getByText('1 Mock Street, Sydney NSW 2000')).toBeInTheDocument()
@@ -171,6 +180,7 @@ describe('MobilityParkingPermitSkeleton', () => {
 
     const status = screen.getByRole('status', { name: 'Transaction completed' })
     expect(within(status).getByRole('heading', { name: 'Your application has been submitted' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Mobility Parking Scheme outcome' })).toHaveAttribute('data-mps-page-template', 'confirmation')
     expect(screen.getByText('MPS-MOCK-000000')).toBeInTheDocument()
   })
 
