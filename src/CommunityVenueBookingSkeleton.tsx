@@ -9,12 +9,13 @@ import {
   Input,
   Select,
   Textarea,
-  TextLink,
   MoreInfoDisclosure,
   Accordion,
+  TextLink,
 } from './gel'
 import {
   ConfirmationHeader,
+  DeclarationReview,
   ExitModal,
   ReviewFeesCard,
   ReviewInfoCard,
@@ -88,7 +89,12 @@ export function CommunityVenueBookingSkeleton() {
   }
 
   const getErrors = useCallback((s: VenueStep) => errorsForStep(s, form), [form])
-  const { step, attempted, errors, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+  const { step, setStep, attempted, setAttempted, errors, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+
+  function goToReviewSource(targetStep: Exclude<VenueStep, 'privacy' | 'review' | 'confirmation'>) {
+    setAttempted(false)
+    setStep(targetStep)
+  }
 
   return (
     <div>
@@ -113,7 +119,7 @@ export function CommunityVenueBookingSkeleton() {
       {step === 'accessibility' && <AccessibilityStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
       {step === 'supporting' && <SupportingStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
       {step === 'declaration' && <DeclarationStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
-      {step === 'review' && <ReviewStep form={form} onBack={goBack} onSubmit={goNext} onExit={openExitModal} />}
+      {step === 'review' && <ReviewStep form={form} onBack={goBack} onEditStep={goToReviewSource} onSubmit={goNext} onExit={openExitModal} />}
       {step === 'confirmation' && <ConfirmationStep form={form} onStartAgain={() => { reset(); setForm(initialState) }} />}
 
       <ExitModal
@@ -130,7 +136,7 @@ export function CommunityVenueBookingSkeleton() {
 function errorsForStep(step: VenueStep, form: FormState) {
   const errs: { id: string; text: string }[] = []
   if (step === 'privacy' && !form.privacyAgreed) {
-    errs.push({ id: 'privacy-confirmation', text: 'Confirm that you have read the privacy information' })
+    errs.push({ id: 'privacy-confirmation', text: 'Confirm that you have read the privacy and terms information' })
   }
   if (step === 'applicant') {
     if (!form.fullName.trim()) errs.push({ id: 'full-name', text: 'Enter your full name' })
@@ -174,16 +180,27 @@ function PrivacyStep({ form, attempted, update, onContinue, onExit }: StepProps)
     <section aria-labelledby='privacy-heading'>
       <Heading level={2} id='privacy-heading'>Privacy information</Heading>
       <InPageAlert variant='info' title='Owner confirmation required'>
-        <p>Replace this placeholder with the confirmed privacy collection notice for the community venue booking service.</p>
+        <p>Replace these placeholders with the confirmed privacy collection notice, terms and notification wording for the community venue booking service.</p>
       </InPageAlert>
-      <p>We collect your personal information to process your community venue booking. This information may be shared with [confirmed disclosure recipients]. For more information, see [confirmed privacy policy URL].</p>
+      <section aria-labelledby='privacy-collection-notice-heading'>
+        <Heading level={3} id='privacy-collection-notice-heading'>Privacy collection notice</Heading>
+        <p>We collect your personal information to process your community venue booking. This information may be shared with [confirmed disclosure recipients]. For more information, see [confirmed privacy policy URL].</p>
+      </section>
+      <section aria-labelledby='terms-and-conditions-heading'>
+        <Heading level={3} id='terms-and-conditions-heading'>Terms and conditions</Heading>
+        <p>Terms, conditions and consent wording for this booking must be supplied by the service owner before real use.</p>
+      </section>
+      <section aria-labelledby='notifications-heading'>
+        <Heading level={3} id='notifications-heading'>Notifications</Heading>
+        <p>Notification channels, timing and content are placeholders in this preview and need owner confirmation.</p>
+      </section>
       <Checkbox
         id='privacy-confirmation'
-        label='I have read and understand the privacy information.'
+        label='I have read and understand the privacy and terms information.'
         checked={form.privacyAgreed}
         onChange={(v) => update({ privacyAgreed: Boolean(v) })}
         hasError={attempted && !form.privacyAgreed}
-        errorMessage='Confirm that you have read the privacy information.'
+        errorMessage='Confirm that you have read the privacy and terms information.'
       />
       <TransactionCtaGroup onContinue={onContinue} onExit={onExit} continueLabel='Continue' />
     </section>
@@ -370,7 +387,19 @@ function DeclarationStep({ form, attempted, update, onBack, onContinue, onExit }
   )
 }
 
-function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBack: () => void; onSubmit: () => void; onExit: () => void }) {
+function ReviewStep({
+  form,
+  onBack,
+  onEditStep,
+  onSubmit,
+  onExit,
+}: {
+  form: FormState
+  onBack: () => void
+  onEditStep: (step: Exclude<VenueStep, 'privacy' | 'review' | 'confirmation'>) => void
+  onSubmit: () => void
+  onExit: () => void
+}) {
   const venueTypeLabel: Record<string, string> = { 'meeting-room': 'Meeting room', 'hall': 'Hall', 'outdoor-space': 'Outdoor space' }
   return (
     <section aria-labelledby='review-heading'>
@@ -380,19 +409,32 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
         { label: 'Full name', value: form.fullName },
         { label: 'Email', value: form.email },
         { label: 'Phone', value: form.phone },
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('applicant')} />
       <ReviewInfoCard title='Venue booking details' sections={[{ title: 'Venue information', rows: [
         { label: 'Venue type', value: venueTypeLabel[form.venueType] || form.venueType },
         { label: 'Booking purpose', value: form.bookingPurpose },
         { label: 'Booking date', value: `${form.eventDay}/${form.eventMonth}/${form.eventYear}` },
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('venue')} />
       <ReviewInfoCard title='Accessibility and equipment' sections={[{ title: 'Support needs', rows: [
         { label: 'Needs support', value: form.needsSupport === 'yes' ? 'Yes' : 'No' },
         ...(form.needsSupport === 'yes' ? [{ label: 'Support details', value: form.supportDetails }] : []),
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('accessibility')} />
       <ReviewInfoCard title='Supporting information' sections={[{ title: 'Additional details', rows: [
         { label: 'Additional information', value: form.additionalInfo },
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('supporting')} />
+      <DeclarationReview
+        intro='You accepted this placeholder declaration before reviewing the booking:'
+        sections={[{
+          title: 'Declaration accepted',
+          statements: [
+            'I declare that the information provided is true and correct.',
+            'Legal consequence wording remains source-gated and must be confirmed by the policy owner.',
+          ],
+        }]}
+      />
+      <p>
+        <TextLink onClick={() => onEditStep('declaration')}>Edit declaration</TextLink>
+      </p>
       <ReviewFeesCard fees={[{ label: 'Venue booking fee', amount: '$0.00' }]} totalAmount='$0.00' />
       <InPageAlert variant='info' title='Payment excluded'>
         <p>No payment flow is included in this trial skeleton. Fee amounts need owner confirmation.</p>
@@ -426,10 +468,7 @@ function ConfirmationStep({ form, onStartAgain }: { form: FormState; onStartAgai
       <InPageAlert variant='info' title='Owner confirmation required'>
         <p>All timeframes, contact methods and approval processes above are placeholders. They must be confirmed by the service owner before real use.</p>
       </InPageAlert>
-      <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start again' />
-      <p style={{ marginTop: '1rem' }}>
-        <TextLink href='https://github.com/leokessel-lgtm/tapaas-kiro-trial/blob/main/docs/tapaas/00-source-inventory.md'>Review TaPaaS source inventory</TextLink>
-      </p>
+      <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start another booking' />
     </section>
   )
 }
