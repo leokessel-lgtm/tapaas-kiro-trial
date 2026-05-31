@@ -88,6 +88,33 @@ Retained or deferred:
 - Review and confirmation fields remain deferred to later template-backed rebuild slices.
 - No MPS-specific component choice rule is promoted to reusable TaPaaS guidance from this slice alone.
 
+## Slice 3B status
+
+Slice 3B adds focused validation and error-handling coverage for the Slice 3A radio-group changes. It does not rewrite validation rules, introduce backend/API behaviour, rebuild review content or rebuild confirmation content.
+
+Validation issues audited:
+
+- Required group validation for `Reason for replacement`, `Concession card option` and `Mock validation result`.
+- Error summary links for radio groups changed or affected by Slice 3A.
+- Inline group-level error placement for radio groups.
+- Validation wording that could imply real backend concession validation.
+
+Fixed or protected in Slice 3B:
+
+- Added focused tests proving the replacement-reason error summary link targets `#replace-reason`.
+- Added focused tests proving concession card option errors target `#concession-card-type`.
+- Added focused tests proving concession validation result errors target `#concession-validation-scenario`.
+- Added focused tests proving the changed radio groups expose inline group-level error messages.
+- Protected the existing visible `Concession validation is simulated` boundary while testing validation.
+
+Retained or deferred:
+
+- No DOB, applicant-frame, payment, backend, review or confirmation validation rules were changed.
+- Existing mock/system-state warnings remain separate from editable field validation.
+- Error-summary focus behaviour is not claimed as accessibility compliance.
+- Broader validation timing, keyboard, focus and assistive-technology checks remain manual QA until the MPS structure is stable.
+- No MPS-specific validation rule is promoted to reusable TaPaaS guidance from this slice alone.
+
 ## Source access report
 
 File key: `MzngfrwuAT3YI3JRxTgTTo`

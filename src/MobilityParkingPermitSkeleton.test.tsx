@@ -79,6 +79,14 @@ async function reachMedicalEvidenceStep(user: ReturnType<typeof userEvent.setup>
   await continueFromCurrentStep(user)
 }
 
+async function reachConcessionStep(user: ReturnType<typeof userEvent.setup>) {
+  await reachMedicalEvidenceStep(user)
+  await user.click(screen.getByRole('radio', { name: 'Medical certificate (mock)' }))
+  await user.click(screen.getByRole('radio', { name: 'Mock uploaded now' }))
+  await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
+  await continueFromCurrentStep(user)
+}
+
 async function completeSuccessfulPathToPayment(user: ReturnType<typeof userEvent.setup>) {
   await reachApplicantDetailsStep(user)
   await fillApplicantSearchStep(user)
@@ -304,6 +312,42 @@ describe('MobilityParkingPermitSkeleton', () => {
     expect(screen.getByLabelText('Existing permit number')).toBeInTheDocument()
     expect(screen.getByText('Mock only. No permit lookup is performed.')).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /find|lookup|search/i })).not.toBeInTheDocument()
+  })
+
+  it('links replacement-reason validation summary to the radio group and shows inline group error', async () => {
+    const user = userEvent.setup()
+    render(<MobilityParkingPermitSkeleton />)
+
+    await reachApplicationTypeStep(user)
+    await user.click(screen.getByRole('radio', { name: 'Replace a permit (mock)' }))
+    await user.type(screen.getByLabelText('Existing permit number'), 'MPS-REPLACE-001')
+    await continueFromCurrentStep(user)
+
+    expect(screen.getByRole('link', { name: 'Select a replacement reason' })).toHaveAttribute('href', '#replace-reason')
+    expect(screen.getByRole('group', { name: 'Reason for replacement' })).toHaveAttribute('aria-describedby', 'replace-reason-error')
+    expect(screen.getAllByText('Select a replacement reason.')).toHaveLength(1)
+    expect(screen.getByRole('radio', { name: 'Lost permit (mock)' })).toBeInTheDocument()
+  })
+
+  it('links concession radio-group validation summary to the relevant groups and keeps mock state separate', async () => {
+    const user = userEvent.setup()
+    render(<MobilityParkingPermitSkeleton />)
+
+    await reachConcessionStep(user)
+    await continueFromCurrentStep(user)
+
+    expect(screen.getByRole('link', { name: 'Select a concession card option' })).toHaveAttribute('href', '#concession-card-type')
+    expect(screen.getByRole('group', { name: 'Concession card option' })).toHaveAttribute('aria-describedby', 'concession-card-type-error')
+    expect(screen.getAllByText('Select a concession card option.')).toHaveLength(1)
+    expect(screen.getByText('Concession validation is simulated')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('radio', { name: 'Centrelink card (mock)' }))
+    await continueFromCurrentStep(user)
+
+    expect(screen.getByRole('link', { name: 'Enter the concession card number' })).toHaveAttribute('href', '#concession-card-number')
+    expect(screen.getByRole('link', { name: 'Select a mock concession validation result' })).toHaveAttribute('href', '#concession-validation-scenario')
+    expect(screen.getByRole('group', { name: 'Mock validation result' })).toHaveAttribute('aria-describedby', 'concession-validation-scenario-error')
+    expect(screen.getAllByText('Select a mock concession validation result.')).toHaveLength(1)
   })
 
   it('carries the renewal branch through to review without lookup or backend behaviour', async () => {
