@@ -130,3 +130,26 @@ Do not patch runtime code until this plan is reviewed.
 | Runtime code changed in Slice 0 | No. |
 | Storybook files changed in Slice 0 | No. |
 | Track 2 raw files | Not read or touched. |
+
+## Slice 2 low-risk confirmation cleanup
+
+Slice 2 applies only low-risk inherited confirmation cleanup. It does not change page grouping, privacy/T&Cs/declaration structure, dropdown/accordion component choice, review edit actions, fees, eligibility, backend/page dependency logic or final confirmation copy.
+
+Fixed items:
+
+- Removed the developer-facing `Review TaPaaS source inventory` link from the Community Venue runtime confirmation UI.
+- Changed the confirmation CTA label from `Start again` to `Start another booking` as preview-safe wording.
+- Preserved the existing callback/reset behaviour and existing source-required placeholders.
+- Added focused Community Venue regression coverage for completing the mock flow, absence of the source-inventory link and the confirmation CTA label.
+
+Deferred items remain:
+
+- Step/page grouping and whether input content should sit under one step with multiple pages.
+- Privacy collection notice, T&Cs and declaration separation.
+- Whether applicant details are needed when profile connect or login is mandatory.
+- Dropdown, MoreInfoDisclosure and Accordion component-choice review.
+- Review edit actions.
+- Fee, receipt, approval, booking allocation, backend and service-owner process rules.
+- Manual keyboard, focus, screen-reader, responsive and contrast QA.
+
+Slice 2 does not make Community Venue source-complete, production-ready, WCAG/accessibility compliant, GEL/TaPaaS approved or final-copy approved.
