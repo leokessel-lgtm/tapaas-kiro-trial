@@ -197,6 +197,7 @@
       ],
       "evidence": {
         "notes": [
+          "docs/tapaas/components/email-confirmation-modal.md",
           "docs/source-evidence/tapaas-design-library/components/email-confirmation-modal.md"
         ],
         "logKey": "Extract Email confirmation modal into preview component",
@@ -401,6 +402,8 @@
       ],
       "evidence": {
         "notes": [
+          "docs/tapaas/components/search-vehicle-input.md",
+          "docs/source-evidence/tapaas-design-library/components/search-vehicle-input.md",
           "docs/tapaas/04-evidence-log.md"
         ],
         "logKey": "Migrate `TapaasSearchAction` into active v0.3 preview package",
