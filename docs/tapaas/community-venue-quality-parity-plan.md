@@ -217,3 +217,48 @@ Deferred runtime items:
 - Changing fees, policy, legal, final copy or backend decisions.
 
 Slice 4 does not make Community Venue source-complete, source-correct, production-ready, WCAG/accessibility compliant, GEL/TaPaaS approved, product-approved or final-copy approved.
+
+## Slice 5 component-choice decision boundary
+
+Slice 5 is a documentation-only decision boundary for component choice. It does not change runtime code, tests, Storybook stories, source adapters, package files or lockfiles.
+
+Current component inventory:
+
+- Venue type uses `Select`.
+- Venue help uses `MoreInfoDisclosure`.
+- Support yes/no uses `ConditionalQuestionPanel`.
+- Support guidance uses `Accordion`.
+
+Decisions for now:
+
+- Preserve `Select` as a known source-informed primitive for the venue type field.
+- Preserve `ConditionalQuestionPanel` for the support yes/no relationship.
+- Preserve `MoreInfoDisclosure` for prototype use only. It is a simplified local disclosure and does not claim full GEL `MoreInfoPanel` modal behaviour.
+- Preserve `Accordion` for prototype use only. Its latest/current component status and keyboard, focus and screen-reader behaviour require source or manual review before any production claim.
+
+Source-gated decisions remain:
+
+- Whether venue type should remain a `Select` or become a radio/card choice or another component.
+- Whether a current TaPaaS/GEL component should replace `MoreInfoDisclosure`.
+- Whether `Accordion` is the latest/current component for support guidance.
+- Whether support guidance belongs inline, in an accordion, in disclosure or as separate content.
+- Any GEL package parity or accessibility compliance claim.
+
+Runtime component changes require at least one of:
+
+- Community Venue-specific source or Figma evidence.
+- TaPaaS/GEL component registry evidence.
+- Explicit designer or engineer decision.
+- Manual QA defect.
+- Clear runtime or usability issue.
+
+Deferred items remain:
+
+- Component replacement.
+- Dropdown, accordion or disclosure redesign.
+- Storybook updates.
+- Acceptance manifest changes.
+- Package, lockfile or source adapter changes.
+- Final copy, policy, fees or backend decisions.
+
+Slice 5 does not make Community Venue source-complete, source-correct, production-ready, WCAG/accessibility compliant, GEL/TaPaaS approved, product-approved, source-component-current or final-copy approved.
