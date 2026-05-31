@@ -414,3 +414,24 @@ Storybook, manifest and acceptance changes must be explicitly scoped before any 
 ## Validation
 
 Slice 1A requires `git diff --check` only unless files beyond docs are changed.
+
+## Designer review readiness boundary slice
+
+This slice tightens the visible review boundary before designers inspect the current MPS surface. It does not change source flow, validation logic, backend routing, payment, identity, eligibility, medical evidence handling, Storybook, acceptance manifest, package files or lockfiles.
+
+Runtime clarity added:
+
+- Medical evidence choices now read as static source-state previews instead of upload-like actions.
+- The medical evidence alert now states that required/provided/uploaded source states, file rules and state meaning are unresolved.
+- Review-page mock/system rows are described as designer-review prompts only.
+- Confirmation is described as a structure-review surface only, not approved operational next steps, return-card instructions or notification wording.
+
+Still source-gated or deferred:
+
+- True medical evidence state mapping, upload/remove-file boundaries, file rules, privacy/security handling and medical assessment.
+- Final MPS review row order, edit routing, fees, concession issuer/number/validation and declaration wording.
+- Final confirmation title punctuation, reference format, lodgement date, notification timing, return-card wording, TUTD/related content and service-owner instructions.
+- Whether representative/contact, delivery and payment remain trial-only stress paths or should be removed/moved.
+- Manual keyboard, focus, screen-reader, responsive and contrast QA.
+
+This slice does not make MPS source-complete, production-ready, WCAG/accessibility compliant, GEL/TaPaaS approved, product-approved, legal-approved, privacy-approved, policy-approved or final-copy approved.

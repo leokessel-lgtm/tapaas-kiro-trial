@@ -327,3 +327,26 @@ Closure boundary:
 | Reusable Figma/TaPaaS evidence | Existing source inventory and template/component registries only. No new MCP call. |
 | Track 2 raw files | Not read or touched. |
 | Runtime code | Not changed in this slice. |
+
+## Designer review close-out note
+
+AMP is ready for bounded designer review as a synthetic transaction hardening surface only.
+
+Bring these fixed items to review:
+
+- DOB and email validation now show preview-level field and summary errors.
+- Support-needs Yes/No and details are structurally separated.
+- Primary contact/address text inputs use local full-width treatment where previously called out.
+- Review has step-level edit actions.
+- Confirmation no longer exposes the source-inventory link and uses `Start another application`.
+
+Bring these decisions to review rather than patching them before source input:
+
+- Whether AMP is a real transaction candidate or remains synthetic.
+- Exact page split and backend/customer-record dependency.
+- Privacy/T&Cs/declaration structure and final wording.
+- Exact contact labels, source field layout and full-width rules.
+- Fees, confirmation content, Keep a record/TUTD and post-submit actions.
+- Manual keyboard, focus, screen-reader, responsive and contrast QA.
+
+Do not claim AMP source parity, production readiness, WCAG/accessibility compliance, GEL/TaPaaS approval, privacy/legal/policy approval or final-copy approval.

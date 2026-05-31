@@ -313,3 +313,26 @@ Closure boundary:
 - Community Venue remains a synthetic transaction hardening surface.
 - This does not make Community Venue source-complete, source-correct, production-ready, WCAG/accessibility compliant, GEL/TaPaaS approved, product-approved, privacy-approved, legal-approved, policy-approved or final-copy approved.
 - Final copy, source flow, profile-connect, page grouping, component-current decisions, fees, receipts, booking allocation, service obligations, backend behaviour and manual accessibility/responsive QA remain owner/source-gated.
+
+## Designer review close-out note
+
+Community Venue is ready for bounded designer review as a synthetic transaction hardening surface only.
+
+Bring these fixed items to review:
+
+- Confirmation no longer exposes the source-inventory link.
+- Confirmation uses `Start another booking`.
+- Privacy, terms and notifications are separated with placeholder/source-gated copy.
+- Declaration playback appears on review.
+- Review has step-level edit actions back to the current source pages.
+
+Bring these decisions to review rather than patching them before source input:
+
+- Whether venue booking requires login or Profile Connect.
+- Whether applicant, venue, accessibility and supporting content are top-level steps or pages inside one input step.
+- Whether a single declaration should be a standalone step, point-in-time declaration, or review/input content.
+- Whether `Select`, `MoreInfoDisclosure` and `Accordion` are the right current components for the venue and support content.
+- Exact fees, receipt, booking allocation, confirmation next steps and service-owner process wording.
+- Manual keyboard, focus, screen-reader, responsive and contrast QA.
+
+Do not claim Community Venue source parity, production readiness, WCAG/accessibility compliance, GEL/TaPaaS approval, product approval, privacy/legal/policy approval or final-copy approval.

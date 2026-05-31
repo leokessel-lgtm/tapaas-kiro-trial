@@ -36,7 +36,7 @@ async function completeFromApplicantDetailsToReview(user: ReturnType<typeof user
   await continueFromCurrentStep(user)
 
   await user.click(screen.getByRole('radio', { name: 'Medical certificate (mock)' }))
-  await user.click(screen.getByRole('radio', { name: 'Mock uploaded now' }))
+  await user.click(screen.getByRole('radio', { name: 'Static provided/uploaded state preview' }))
   await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
   await continueFromCurrentStep(user)
 
@@ -82,7 +82,7 @@ async function reachMedicalEvidenceStep(user: ReturnType<typeof userEvent.setup>
 async function reachConcessionStep(user: ReturnType<typeof userEvent.setup>) {
   await reachMedicalEvidenceStep(user)
   await user.click(screen.getByRole('radio', { name: 'Medical certificate (mock)' }))
-  await user.click(screen.getByRole('radio', { name: 'Mock uploaded now' }))
+  await user.click(screen.getByRole('radio', { name: 'Static provided/uploaded state preview' }))
   await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
   await continueFromCurrentStep(user)
 }
@@ -102,7 +102,7 @@ async function completeSuccessfulPathToPayment(user: ReturnType<typeof userEvent
   await continueFromCurrentStep(user)
 
   await user.click(screen.getByRole('radio', { name: 'Medical certificate (mock)' }))
-  await user.click(screen.getByRole('radio', { name: 'Mock uploaded now' }))
+  await user.click(screen.getByRole('radio', { name: 'Static provided/uploaded state preview' }))
   await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
   await continueFromCurrentStep(user)
 
@@ -165,7 +165,10 @@ describe('MobilityParkingPermitSkeleton', () => {
     expect(screen.getByRole('heading', { name: 'Medical evidence' })).toBeInTheDocument()
     expect(container.querySelector('[data-mps-page-template="evidence-state"]')).toBeInTheDocument()
     await user.click(screen.getByRole('radio', { name: 'Medical certificate (mock)' }))
-    await user.click(screen.getByRole('radio', { name: 'Mock uploaded now' }))
+    expect(screen.getByText('Medical evidence source state is unresolved')).toBeInTheDocument()
+    expect(screen.getByText('The source frames show required and provided/uploaded states for certificate and report evidence, but the file rules and true state meaning are not confirmed. This preview is status-only and does not upload, remove, store, validate, scan or assess files.')).toBeInTheDocument()
+    await user.click(screen.getByRole('radio', { name: 'Static provided/uploaded state preview' }))
+    expect(screen.queryByRole('radio', { name: 'Mock uploaded now' })).not.toBeInTheDocument()
     await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
     await continueFromCurrentStep(user)
 
@@ -205,7 +208,7 @@ describe('MobilityParkingPermitSkeleton', () => {
     expect(screen.getByText('New application')).toBeInTheDocument()
     expect(screen.getByText('1 Mock Street, Sydney NSW 2000')).toBeInTheDocument()
     expect(screen.getByText('Mock/system state summary')).toBeInTheDocument()
-    expect(screen.getByText('Representative/contact, delivery, payment, evidence and assessment rows are trial-only or mock state summaries. They do not prove backend validation, eligibility, payment, approval or permit issue behaviour.')).toBeInTheDocument()
+    expect(screen.getByText('Representative/contact, delivery, payment, evidence and assessment rows are designer-review prompts only. They remain trial-only or mock state summaries and do not prove backend validation, eligibility, payment, approval or permit issue behaviour.')).toBeInTheDocument()
     expect(screen.getByText('Mock application fee')).toBeInTheDocument()
     expect(screen.getByText('First name')).toBeInTheDocument()
     expect(screen.getByText('Last name')).toBeInTheDocument()
@@ -236,7 +239,7 @@ describe('MobilityParkingPermitSkeleton', () => {
     expect(screen.getByText('Source-observed permit mailout step: no permit issue or delivery has occurred in this preview.')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Return expired or replaced cards' })).toBeInTheDocument()
     expect(screen.getByText('Source-observed return-card instructions and fine warnings require service-owner confirmation before they can be treated as operational guidance.')).toBeInTheDocument()
-    expect(screen.getByText('Source-observed confirmation content is shown for review only. No approval, permit issue, payment receipt, eligibility decision, lodgement record or concession validation has occurred.')).toBeInTheDocument()
+    expect(screen.getByText('Source-observed confirmation content is shown to review structure only. Next steps, return-card content and notification wording are not approved operational instructions. No approval, permit issue, payment receipt, eligibility decision, lodgement record or concession validation has occurred.')).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'Review TaPaaS component-template relationship map' })).not.toBeInTheDocument()
   })
 
@@ -247,7 +250,7 @@ describe('MobilityParkingPermitSkeleton', () => {
     await reachMedicalEvidenceStep(user)
 
     await user.click(screen.getByRole('radio', { name: 'Medical certificate (mock)' }))
-    await user.click(screen.getByRole('radio', { name: 'Mock uploaded now' }))
+    await user.click(screen.getByRole('radio', { name: 'Static provided/uploaded state preview' }))
 
     expect(screen.getByRole('heading', { name: 'Medical document' })).toBeInTheDocument()
     expect(screen.getByText('medicalcertificate_april2020.png')).toBeInTheDocument()
@@ -264,7 +267,7 @@ describe('MobilityParkingPermitSkeleton', () => {
     await reachMedicalEvidenceStep(user)
 
     await user.click(screen.getByRole('radio', { name: 'Medical report (mock)' }))
-    await user.click(screen.getByRole('radio', { name: 'Mock uploaded now' }))
+    await user.click(screen.getByRole('radio', { name: 'Static provided/uploaded state preview' }))
 
     expect(screen.getByText('medicalreport_april2020.png')).toBeInTheDocument()
     expect(screen.getByText('Medical report')).toBeInTheDocument()
@@ -279,7 +282,7 @@ describe('MobilityParkingPermitSkeleton', () => {
     await reachMedicalEvidenceStep(user)
 
     await user.click(screen.getByRole('radio', { name: 'Medical report (mock)' }))
-    await user.click(screen.getByRole('radio', { name: 'Provide after submission' }))
+    await user.click(screen.getByRole('radio', { name: 'Static required/provide-later preview' }))
 
     expect(screen.getByText('Required')).toBeInTheDocument()
     expect(screen.queryByText('medicalcertificate_april2020.png')).not.toBeInTheDocument()

@@ -28,6 +28,15 @@ MPS Medical Evidence remains ambiguity evidence until owner/designer confirmatio
 - `EvidenceChecklistCard` can summarise static evidence states such as required, provided, not required and needs review.
 - Existing manifest boundaries state no real upload, remove-file behaviour, file storage, file validation, virus scanning, backend integration, medical assessment logic, privacy/security approval claim or production validation.
 
+## Pre-designer review runtime wording
+
+The MPS transaction now avoids upload-like action labels on the medical evidence step:
+
+- `Static provided/uploaded state preview` shows the static provided/uploaded source-state preview.
+- `Static required/provide-later preview` shows the static required/provide-later source-state preview.
+
+These labels are review prompts only. They do not resolve whether source `uploaded` means selected, attached, submitted, accepted, verified or stored. They also do not introduce file input, upload, remove-file, storage, validation, virus scanning, backend, assessment, privacy/security or production behaviour.
+
 ## Unresolved state-mapping questions
 
 - Does source `uploaded` mean locally selected, attached to a draft, submitted to a backend, accepted by the service, verified, or stored?
