@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { CommunityVenueBookingSkeleton } from './CommunityVenueBookingSkeleton'
 
 async function completeCommunityVenueBooking(user: ReturnType<typeof userEvent.setup>) {
-  await user.click(screen.getByRole('checkbox', { name: 'I have read and understand the privacy information.' }))
+  await user.click(screen.getByRole('checkbox', { name: 'I have read and understand the privacy and terms information.' }))
   await user.click(screen.getByRole('button', { name: 'Continue' }))
 
   await user.type(screen.getByLabelText('Full name'), 'Alex Citizen')
@@ -30,6 +30,27 @@ async function completeCommunityVenueBooking(user: ReturnType<typeof userEvent.s
 }
 
 describe('CommunityVenueBookingSkeleton', () => {
+  it('shows separate placeholder privacy, terms and notification sections', () => {
+    render(<CommunityVenueBookingSkeleton />)
+
+    expect(screen.getByRole('heading', { name: 'Privacy collection notice' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Terms and conditions' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Notifications' })).toBeInTheDocument()
+    expect(screen.getByText('Replace these placeholders with the confirmed privacy collection notice, terms and notification wording for the community venue booking service.')).toBeInTheDocument()
+    expect(screen.getByRole('checkbox', { name: 'I have read and understand the privacy and terms information.' })).toBeInTheDocument()
+  })
+
+  it('keeps declaration source-gated and replays accepted declaration on review', async () => {
+    const user = userEvent.setup()
+    render(<CommunityVenueBookingSkeleton />)
+
+    await completeCommunityVenueBooking(user)
+
+    expect(screen.getByRole('heading', { name: 'Review your booking' })).toBeInTheDocument()
+    expect(screen.getByText('You accepted this placeholder declaration before reviewing the booking:')).toBeInTheDocument()
+    expect(screen.getByText('Legal consequence wording remains source-gated and must be confirmed by the policy owner.')).toBeInTheDocument()
+  })
+
   it('completes the mock flow to the confirmation step', async () => {
     const user = userEvent.setup()
     render(<CommunityVenueBookingSkeleton />)

@@ -153,3 +153,28 @@ Deferred items remain:
 - Manual keyboard, focus, screen-reader, responsive and contrast QA.
 
 Slice 2 does not make Community Venue source-complete, production-ready, WCAG/accessibility compliant, GEL/TaPaaS approved or final-copy approved.
+
+## Slice 3 privacy, terms and declaration structure
+
+Slice 3 applies only structural cleanup for privacy, terms and declaration review playback. It does not change page grouping, step count, dropdown/accordion component choice, review edit actions, fees, eligibility, backend/page dependency logic or final privacy/legal/policy copy.
+
+Fixed items:
+
+- Split the runtime privacy step into visible placeholder sections for `Privacy collection notice`, `Terms and conditions` and `Notifications`.
+- Kept privacy, terms and notification wording source-gated with owner-confirmation caveats.
+- Updated the privacy acknowledgement label to refer to privacy and terms information without claiming final legal acceptance.
+- Preserved the declaration step, declaration checkbox behaviour and visible legal/source-required caveat.
+- Added declaration playback on the review page using placeholder/source-gated declaration content.
+- Added focused Community Venue regression coverage for privacy/T&Cs section labels, placeholder caveat, declaration review playback and the existing confirmation flow.
+
+Deferred items remain:
+
+- Exact privacy collection notice wording.
+- Exact terms and conditions wording.
+- Exact declaration wording and legal consequence text.
+- Whether the single-point declaration should remain a standalone step.
+- Whether Community Venue needs a confirmed source flow, service owner approval or legal/privacy approval.
+- Page grouping, component-choice review, review edit actions, fees, receipt, approval, booking allocation, backend and service-owner process rules.
+- Manual keyboard, focus, screen-reader, responsive and contrast QA.
+
+Slice 3 does not make Community Venue source-complete, production-ready, WCAG/accessibility compliant, privacy-approved, legal-approved, policy-approved, GEL/TaPaaS approved or final-copy approved.

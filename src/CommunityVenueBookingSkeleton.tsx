@@ -14,6 +14,7 @@ import {
 } from './gel'
 import {
   ConfirmationHeader,
+  DeclarationReview,
   ExitModal,
   ReviewFeesCard,
   ReviewInfoCard,
@@ -129,7 +130,7 @@ export function CommunityVenueBookingSkeleton() {
 function errorsForStep(step: VenueStep, form: FormState) {
   const errs: { id: string; text: string }[] = []
   if (step === 'privacy' && !form.privacyAgreed) {
-    errs.push({ id: 'privacy-confirmation', text: 'Confirm that you have read the privacy information' })
+    errs.push({ id: 'privacy-confirmation', text: 'Confirm that you have read the privacy and terms information' })
   }
   if (step === 'applicant') {
     if (!form.fullName.trim()) errs.push({ id: 'full-name', text: 'Enter your full name' })
@@ -173,16 +174,27 @@ function PrivacyStep({ form, attempted, update, onContinue, onExit }: StepProps)
     <section aria-labelledby='privacy-heading'>
       <Heading level={2} id='privacy-heading'>Privacy information</Heading>
       <InPageAlert variant='info' title='Owner confirmation required'>
-        <p>Replace this placeholder with the confirmed privacy collection notice for the community venue booking service.</p>
+        <p>Replace these placeholders with the confirmed privacy collection notice, terms and notification wording for the community venue booking service.</p>
       </InPageAlert>
-      <p>We collect your personal information to process your community venue booking. This information may be shared with [confirmed disclosure recipients]. For more information, see [confirmed privacy policy URL].</p>
+      <section aria-labelledby='privacy-collection-notice-heading'>
+        <Heading level={3} id='privacy-collection-notice-heading'>Privacy collection notice</Heading>
+        <p>We collect your personal information to process your community venue booking. This information may be shared with [confirmed disclosure recipients]. For more information, see [confirmed privacy policy URL].</p>
+      </section>
+      <section aria-labelledby='terms-and-conditions-heading'>
+        <Heading level={3} id='terms-and-conditions-heading'>Terms and conditions</Heading>
+        <p>Terms, conditions and consent wording for this booking must be supplied by the service owner before real use.</p>
+      </section>
+      <section aria-labelledby='notifications-heading'>
+        <Heading level={3} id='notifications-heading'>Notifications</Heading>
+        <p>Notification channels, timing and content are placeholders in this preview and need owner confirmation.</p>
+      </section>
       <Checkbox
         id='privacy-confirmation'
-        label='I have read and understand the privacy information.'
+        label='I have read and understand the privacy and terms information.'
         checked={form.privacyAgreed}
         onChange={(v) => update({ privacyAgreed: Boolean(v) })}
         hasError={attempted && !form.privacyAgreed}
-        errorMessage='Confirm that you have read the privacy information.'
+        errorMessage='Confirm that you have read the privacy and terms information.'
       />
       <TransactionCtaGroup onContinue={onContinue} onExit={onExit} continueLabel='Continue' />
     </section>
@@ -392,6 +404,16 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
       <ReviewInfoCard title='Supporting information' sections={[{ title: 'Additional details', rows: [
         { label: 'Additional information', value: form.additionalInfo },
       ] }]} />
+      <DeclarationReview
+        intro='You accepted this placeholder declaration before reviewing the booking:'
+        sections={[{
+          title: 'Declaration accepted',
+          statements: [
+            'I declare that the information provided is true and correct.',
+            'Legal consequence wording remains source-gated and must be confirmed by the policy owner.',
+          ],
+        }]}
+      />
       <ReviewFeesCard fees={[{ label: 'Venue booking fee', amount: '$0.00' }]} totalAmount='$0.00' />
       <InPageAlert variant='info' title='Payment excluded'>
         <p>No payment flow is included in this trial skeleton. Fee amounts need owner confirmation.</p>
