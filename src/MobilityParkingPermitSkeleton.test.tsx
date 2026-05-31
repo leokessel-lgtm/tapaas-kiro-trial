@@ -40,7 +40,7 @@ async function completeFromApplicantDetailsToReview(user: ReturnType<typeof user
   await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
   await continueFromCurrentStep(user)
 
-  await user.selectOptions(screen.getByLabelText('Concession card option'), 'none')
+  await user.click(screen.getByRole('radio', { name: 'No concession card (mock)' }))
   await continueFromCurrentStep(user)
 
   await user.click(screen.getByRole('radio', { name: 'Post to residential address (mock)' }))
@@ -98,7 +98,7 @@ async function completeSuccessfulPathToPayment(user: ReturnType<typeof userEvent
   await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
   await continueFromCurrentStep(user)
 
-  await user.selectOptions(screen.getByLabelText('Concession card option'), 'none')
+  await user.click(screen.getByRole('radio', { name: 'No concession card (mock)' }))
   await continueFromCurrentStep(user)
 
   await user.click(screen.getByRole('radio', { name: 'Post to residential address (mock)' }))
@@ -145,7 +145,9 @@ describe('MobilityParkingPermitSkeleton', () => {
 
     expect(screen.getByRole('heading', { name: 'Concession details' })).toBeInTheDocument()
     expect(container.querySelector('[data-mps-page-template="concession-validation-state"]')).toBeInTheDocument()
-    await user.selectOptions(screen.getByLabelText('Concession card option'), 'none')
+    expect(screen.getByRole('group', { name: 'Concession card option' })).toBeInTheDocument()
+    expect(screen.queryByRole('combobox', { name: 'Concession card option' })).not.toBeInTheDocument()
+    await user.click(screen.getByRole('radio', { name: 'No concession card (mock)' }))
     await continueFromCurrentStep(user)
 
     expect(screen.getByRole('heading', { name: 'Delivery preferences' })).toBeInTheDocument()
@@ -234,7 +236,7 @@ describe('MobilityParkingPermitSkeleton', () => {
     await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
     await continueFromCurrentStep(user)
 
-    await user.selectOptions(screen.getByLabelText('Concession card option'), 'none')
+    await user.click(screen.getByRole('radio', { name: 'No concession card (mock)' }))
     await continueFromCurrentStep(user)
 
     await user.click(screen.getByRole('radio', { name: 'Post to residential address (mock)' }))
@@ -295,7 +297,7 @@ describe('MobilityParkingPermitSkeleton', () => {
     await user.click(screen.getByRole('radio', { name: 'Apply for a new permit (mock)' }))
 
     expect(screen.queryByLabelText('Existing permit number')).not.toBeInTheDocument()
-    expect(screen.queryByLabelText('Reason for replacement')).not.toBeInTheDocument()
+    expect(screen.queryByRole('group', { name: 'Reason for replacement' })).not.toBeInTheDocument()
 
     await user.click(screen.getByRole('radio', { name: 'Renew an existing permit (mock)' }))
 
@@ -330,11 +332,12 @@ describe('MobilityParkingPermitSkeleton', () => {
     await user.click(screen.getByRole('radio', { name: 'Replace a permit (mock)' }))
 
     expect(screen.getByLabelText('Existing permit number')).toBeInTheDocument()
-    expect(screen.getByLabelText('Reason for replacement')).toBeInTheDocument()
+    expect(screen.getByRole('group', { name: 'Reason for replacement' })).toBeInTheDocument()
+    expect(screen.queryByRole('combobox', { name: 'Reason for replacement' })).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /find|lookup|search/i })).not.toBeInTheDocument()
 
     await user.type(screen.getByLabelText('Existing permit number'), 'MPS-REPLACE-001')
-    await user.selectOptions(screen.getByLabelText('Reason for replacement'), 'lost')
+    await user.click(screen.getByRole('radio', { name: 'Lost permit (mock)' }))
     await continueFromCurrentStep(user)
 
     await completeFromApplicantDetailsToReview(user)

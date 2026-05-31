@@ -62,6 +62,32 @@ Still source-gated or deferred:
 - Confirmation summary, Keep a record, next steps, TUTD, receipt/reference and post-submit wording.
 - Backend-derived state modelling for identity, existing permit lookup, eligibility, concession, medical evidence, payment and assessment.
 
+## Slice 3A status
+
+Slice 3A applies a narrow component-choice and field-relationship cleanup. It does not change validation rules, backend/API state modelling, review content, confirmation content, page routing or reusable TaPaaS rules.
+
+Component-choice issues audited:
+
+- Small fixed option sets currently rendered as dropdowns/selects.
+- Nested or visually nested radio/choice patterns.
+- Checkbox/radio misuse.
+- Weak grouping between question text, options and conditional follow-up content.
+- Mock/system-state content that could look like editable customer input.
+
+Fixed in Slice 3A:
+
+- `Reason for replacement` now uses a radio group instead of a select because the preview exposes three fixed mutually exclusive options.
+- `Concession card option` now uses a radio group instead of a select because the preview exposes three fixed mutually exclusive options and controls conditional concession-card follow-up fields.
+- Focused tests assert both changed groups are radio groups and no longer render as comboboxes.
+- Existing Slice 2A boundary labels and Slice 2B page-template markers are preserved.
+
+Retained or deferred:
+
+- Month, street type and state inputs remain in the applicant frame preview because changing those embedded source-informed fields would be a broader applicant-frame/component slice.
+- Existing permit lookup, concession validation result, payment scenario and eligibility questions remain mock/system-state previews, not backend implementations.
+- Review and confirmation fields remain deferred to later template-backed rebuild slices.
+- No MPS-specific component choice rule is promoted to reusable TaPaaS guidance from this slice alone.
+
 ## Source access report
 
 File key: `MzngfrwuAT3YI3JRxTgTTo`

@@ -11,7 +11,6 @@ import {
   Input,
   MoreInfoDisclosure,
   RadioButtonList,
-  Select,
   Textarea,
   TextLink,
 } from './gel'
@@ -481,20 +480,19 @@ function ApplicationTypeStep({ form, attempted, update, onBack, onContinue, onEx
         </Field>
       )}
       {form.applicationType === 'replace' && (
-        <Field id='replace-reason' label='Reason for replacement' hasError={attempted && !form.replaceReason} errorMessage='Select a replacement reason.'>
-          <Select
-            id='replace-reason'
-            value={form.replaceReason}
-            onChange={(event) => update({ replaceReason: event.target.value })}
-            hasError={attempted && !form.replaceReason}
-            inputWidth='xl'
-            options={[
-              { value: 'lost', text: 'Lost permit (mock)' },
-              { value: 'stolen', text: 'Stolen permit (mock)' },
-              { value: 'damaged', text: 'Damaged permit (mock)' },
-            ]}
-          />
-        </Field>
+        <RadioButtonList
+          id='replace-reason'
+          legend='Reason for replacement'
+          options={[
+            { value: 'lost', label: 'Lost permit (mock)' },
+            { value: 'stolen', label: 'Stolen permit (mock)' },
+            { value: 'damaged', label: 'Damaged permit (mock)' },
+          ]}
+          value={form.replaceReason}
+          onChange={(value) => update({ replaceReason: String(value) })}
+          hasError={attempted && !form.replaceReason}
+          errorMessage='Select a replacement reason.'
+        />
       )}
       <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
     </section>
@@ -752,13 +750,23 @@ function ConcessionStep({ form, attempted, update, onBack, onContinue, onExit }:
       <InPageAlert variant='warning' title='Concession validation is simulated'>
         <p>The MPS Figma file includes invalid, duplicate and mismatch states. This page lets you choose a mock outcome but does not validate a real card.</p>
       </InPageAlert>
-      <Field id='concession-card-type' label='Concession card option' hasError={attempted && !form.concessionCardType} errorMessage='Select a concession card option.'>
-        <Select id='concession-card-type' value={form.concessionCardType} onChange={(event) => update({ concessionCardType: event.target.value as FormState['concessionCardType'], concessionCardNumber: '', concessionValidationScenario: '' })} hasError={attempted && !form.concessionCardType} inputWidth='xl' options={[
-          { value: 'none', text: 'No concession card (mock)' },
-          { value: 'centrelink', text: 'Centrelink card (mock)' },
-          { value: 'dva', text: 'DVA card (mock)' },
-        ]} />
-      </Field>
+      <RadioButtonList
+        id='concession-card-type'
+        legend='Concession card option'
+        options={[
+          { value: 'none', label: 'No concession card (mock)' },
+          { value: 'centrelink', label: 'Centrelink card (mock)' },
+          { value: 'dva', label: 'DVA card (mock)' },
+        ]}
+        value={form.concessionCardType}
+        onChange={(value) => update({
+          concessionCardType: String(value) as FormState['concessionCardType'],
+          concessionCardNumber: '',
+          concessionValidationScenario: '',
+        })}
+        hasError={attempted && !form.concessionCardType}
+        errorMessage='Select a concession card option.'
+      />
       {needsCard && (
         <>
           <Field id='concession-card-number' label='Concession card number' helpMessage='Mock only. Do not enter a real card number.' hasError={attempted && !form.concessionCardNumber.trim()} errorMessage='Enter the concession card number.'>
