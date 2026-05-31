@@ -144,6 +144,10 @@ describe('MobilityParkingPermitSkeleton', () => {
     await continueFromCurrentStep(user)
 
     expect(screen.getByRole('heading', { name: 'Delivery preferences' })).toBeInTheDocument()
+    expect(screen.getByText('Trial-only delivery stress path')).toBeInTheDocument()
+    expect(screen.getByText('This page is a Kiro stress-test route only. It is not confirmed in the MPS source flow and does not set real delivery, approval or fulfilment behaviour.')).toBeInTheDocument()
+    expect(screen.getByRole('group', { name: 'Choose a trial-only delivery route' })).toBeInTheDocument()
+    expect(screen.queryByText('How would the permit be delivered if the real service approves the application?')).not.toBeInTheDocument()
     await user.click(screen.getByRole('radio', { name: 'Post to residential address (mock)' }))
     await continueFromCurrentStep(user)
 
@@ -159,6 +163,9 @@ describe('MobilityParkingPermitSkeleton', () => {
     expect(screen.getByText('Alex Citizen')).toBeInTheDocument()
     expect(screen.getByText('New application')).toBeInTheDocument()
     expect(screen.getByText('1 Mock Street, Sydney NSW 2000')).toBeInTheDocument()
+    expect(screen.getByText('Mock/system state summary')).toBeInTheDocument()
+    expect(screen.getByText('Evidence, concession, payment and assessment rows are trial-only state summaries. They do not prove backend validation, eligibility, payment, approval or permit issue behaviour.')).toBeInTheDocument()
+    expect(screen.getByText('Mock application fee')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'Submit mock application' }))
 

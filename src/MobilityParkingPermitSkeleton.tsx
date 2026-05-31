@@ -792,9 +792,12 @@ function DeliveryStep({ form, attempted, update, onBack, onContinue, onExit }: S
   return (
     <section aria-labelledby='delivery-heading'>
       <Heading level={2} id='delivery-heading'>Delivery preferences</Heading>
+      <InPageAlert variant='info' title='Trial-only delivery stress path'>
+        <p>This page is a Kiro stress-test route only. It is not confirmed in the MPS source flow and does not set real delivery, approval or fulfilment behaviour.</p>
+      </InPageAlert>
       <RadioButtonList
         id='delivery-method'
-        legend='How would the permit be delivered if the real service approves the application?'
+        legend='Choose a trial-only delivery route'
         options={[{ value: 'post', label: 'Post to residential address (mock)' }, { value: 'service-centre', label: 'Collect at a service centre (mock)' }]}
         value={form.deliveryMethod}
         onChange={(value) => update({ deliveryMethod: String(value) as FormState['deliveryMethod'] })}
@@ -908,10 +911,13 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
         onSubmit={onSubmit}
         onExit={onExit}
       />
+      <InPageAlert variant='info' title='Mock/system state summary'>
+        <p>Evidence, concession, payment and assessment rows are trial-only state summaries. They do not prove backend validation, eligibility, payment, approval or permit issue behaviour.</p>
+      </InPageAlert>
       <EvidenceChecklistCard title='Evidence and validation status' items={evidenceItems(form)} />
       <AssessmentSummaryPanel title='Mock assessment summary' items={assessmentItems(form)} />
       <LegalInfoAccordion />
-      <ReviewFeesCard fees={[{ label: 'Application fee', amount: '$0.00' }]} totalAmount='$0.00' />
+      <ReviewFeesCard fees={[{ label: 'Mock application fee', amount: '$0.00' }]} totalAmount='$0.00' />
     </section>
   )
 }

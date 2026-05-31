@@ -8,6 +8,26 @@ Slice 1A is documentation-only. It does not patch runtime UI, Storybook stories,
 
 This plan does not claim MPS source parity, production readiness, WCAG compliance, accessibility compliance, GEL approval, TaPaaS approval, privacy approval, legal approval, policy approval or final copy approval.
 
+## Slice 2A status
+
+Slice 2A applies a narrow mock/source/system-state boundary cleanup to the MPS preview skeleton only.
+
+Fixed in Slice 2A:
+
+- Delivery preferences now carry a visible `Trial-only delivery stress path` caveat.
+- The delivery question no longer frames the mock route as behaviour after real service approval.
+- Review now carries a compact `Mock/system state summary` caveat before the evidence, concession, payment and assessment summaries.
+- The review fee row is labelled as a mock application fee.
+- Focused MPS tests cover the delivery boundary, removed real-service delivery wording, review boundary and mock fee label.
+
+Still deferred:
+
+- Review page rebuild from the source/template map.
+- Confirmation page rebuild from the source/template map.
+- Real permit lookup, identity proofing, concession validation, medical evidence handling, payment and backend assessment behaviour.
+- Final MPS content, policy, fees, receipt, notification timing, delivery, approval and fulfilment wording.
+- Accessibility, responsive and assistive-technology QA beyond existing automated checks.
+
 ## Source access report
 
 File key: `MzngfrwuAT3YI3JRxTgTTo`
@@ -77,7 +97,7 @@ Do not use these as production approval evidence. They are live Figma/MCP source
 
 ## Recommended patch slices
 
-Do not patch runtime UI until this plan is reviewed.
+Slice 1A was the source baseline and patch plan. Slice 2A is now limited to boundary cleanup; later slices still need review before broader UI or behaviour changes.
 
 | Order | Slice | Purpose | Boundary |
 |---|---|---|---|
