@@ -51,6 +51,35 @@ describe('CommunityVenueBookingSkeleton', () => {
     expect(screen.getByText('Legal consequence wording remains source-gated and must be confirmed by the policy owner.')).toBeInTheDocument()
   })
 
+  it('shows step-level review edit actions with clear names', async () => {
+    const user = userEvent.setup()
+    render(<CommunityVenueBookingSkeleton />)
+
+    await completeCommunityVenueBooking(user)
+
+    expect(screen.getByRole('button', { name: 'Edit Applicant details' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Edit Venue booking details' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Edit Accessibility and equipment' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Edit Supporting information' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Edit declaration' })).toBeInTheDocument()
+  })
+
+  it.each([
+    ['Edit Applicant details', 'Applicant details'],
+    ['Edit Venue booking details', 'Venue booking details'],
+    ['Edit Accessibility and equipment', 'Accessibility and equipment'],
+    ['Edit Supporting information', 'Supporting information'],
+    ['Edit declaration', 'Declaration'],
+  ])('returns from %s to the source page', async (editLabel, expectedHeading) => {
+    const user = userEvent.setup()
+    render(<CommunityVenueBookingSkeleton />)
+
+    await completeCommunityVenueBooking(user)
+    await user.click(screen.getByRole('button', { name: editLabel }))
+
+    expect(screen.getByRole('heading', { name: expectedHeading })).toBeInTheDocument()
+  })
+
   it('completes the mock flow to the confirmation step', async () => {
     const user = userEvent.setup()
     render(<CommunityVenueBookingSkeleton />)

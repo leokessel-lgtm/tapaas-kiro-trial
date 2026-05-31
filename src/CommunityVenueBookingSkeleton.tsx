@@ -11,6 +11,7 @@ import {
   Textarea,
   MoreInfoDisclosure,
   Accordion,
+  TextLink,
 } from './gel'
 import {
   ConfirmationHeader,
@@ -88,7 +89,12 @@ export function CommunityVenueBookingSkeleton() {
   }
 
   const getErrors = useCallback((s: VenueStep) => errorsForStep(s, form), [form])
-  const { step, attempted, errors, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+  const { step, setStep, attempted, setAttempted, errors, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+
+  function goToReviewSource(targetStep: Exclude<VenueStep, 'privacy' | 'review' | 'confirmation'>) {
+    setAttempted(false)
+    setStep(targetStep)
+  }
 
   return (
     <div>
@@ -113,7 +119,7 @@ export function CommunityVenueBookingSkeleton() {
       {step === 'accessibility' && <AccessibilityStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
       {step === 'supporting' && <SupportingStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
       {step === 'declaration' && <DeclarationStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
-      {step === 'review' && <ReviewStep form={form} onBack={goBack} onSubmit={goNext} onExit={openExitModal} />}
+      {step === 'review' && <ReviewStep form={form} onBack={goBack} onEditStep={goToReviewSource} onSubmit={goNext} onExit={openExitModal} />}
       {step === 'confirmation' && <ConfirmationStep form={form} onStartAgain={() => { reset(); setForm(initialState) }} />}
 
       <ExitModal
@@ -381,7 +387,19 @@ function DeclarationStep({ form, attempted, update, onBack, onContinue, onExit }
   )
 }
 
-function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBack: () => void; onSubmit: () => void; onExit: () => void }) {
+function ReviewStep({
+  form,
+  onBack,
+  onEditStep,
+  onSubmit,
+  onExit,
+}: {
+  form: FormState
+  onBack: () => void
+  onEditStep: (step: Exclude<VenueStep, 'privacy' | 'review' | 'confirmation'>) => void
+  onSubmit: () => void
+  onExit: () => void
+}) {
   const venueTypeLabel: Record<string, string> = { 'meeting-room': 'Meeting room', 'hall': 'Hall', 'outdoor-space': 'Outdoor space' }
   return (
     <section aria-labelledby='review-heading'>
@@ -391,19 +409,19 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
         { label: 'Full name', value: form.fullName },
         { label: 'Email', value: form.email },
         { label: 'Phone', value: form.phone },
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('applicant')} />
       <ReviewInfoCard title='Venue booking details' sections={[{ title: 'Venue information', rows: [
         { label: 'Venue type', value: venueTypeLabel[form.venueType] || form.venueType },
         { label: 'Booking purpose', value: form.bookingPurpose },
         { label: 'Booking date', value: `${form.eventDay}/${form.eventMonth}/${form.eventYear}` },
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('venue')} />
       <ReviewInfoCard title='Accessibility and equipment' sections={[{ title: 'Support needs', rows: [
         { label: 'Needs support', value: form.needsSupport === 'yes' ? 'Yes' : 'No' },
         ...(form.needsSupport === 'yes' ? [{ label: 'Support details', value: form.supportDetails }] : []),
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('accessibility')} />
       <ReviewInfoCard title='Supporting information' sections={[{ title: 'Additional details', rows: [
         { label: 'Additional information', value: form.additionalInfo },
-      ] }]} />
+      ] }]} onEdit={() => onEditStep('supporting')} />
       <DeclarationReview
         intro='You accepted this placeholder declaration before reviewing the booking:'
         sections={[{
@@ -414,6 +432,9 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
           ],
         }]}
       />
+      <p>
+        <TextLink onClick={() => onEditStep('declaration')}>Edit declaration</TextLink>
+      </p>
       <ReviewFeesCard fees={[{ label: 'Venue booking fee', amount: '$0.00' }]} totalAmount='$0.00' />
       <InPageAlert variant='info' title='Payment excluded'>
         <p>No payment flow is included in this trial skeleton. Fee amounts need owner confirmation.</p>

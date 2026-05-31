@@ -262,3 +262,28 @@ Deferred items remain:
 - Final copy, policy, fees or backend decisions.
 
 Slice 5 does not make Community Venue source-complete, source-correct, production-ready, WCAG/accessibility compliant, GEL/TaPaaS approved, product-approved, source-component-current or final-copy approved.
+
+## Slice 6 review edit actions
+
+Slice 6 adds step-level review edit actions only. It does not change review content, field-level anchors, page grouping, component choice, fees, policy, backend behaviour, confirmation content or final copy.
+
+Fixed items:
+
+- Added review edit actions for `Applicant details`, `Venue booking details`, `Accessibility and equipment`, `Supporting information` and `declaration`.
+- Each edit action returns to the relevant existing source step.
+- Edit navigation clears attempted validation state before moving away from review.
+- Preserved existing review rows, declaration playback, fee placeholder, payment-excluded alert, submit CTA and confirmation behaviour.
+- Added focused regression coverage for all edit labels and each edit target.
+
+Deferred items remain:
+
+- Field-level edit anchors.
+- Section anchors.
+- Auto-return-to-review after editing.
+- Source-specific review grouping.
+- Page grouping and progress model changes.
+- Component-choice changes.
+- Fees, policy, backend, legal, privacy and final-copy decisions.
+- Manual keyboard, focus, screen-reader, responsive and contrast QA.
+
+Slice 6 does not make Community Venue source-complete, source-correct, production-ready, WCAG/accessibility compliant, GEL/TaPaaS approved, legal-approved, privacy-approved, policy-approved or final-copy approved.
