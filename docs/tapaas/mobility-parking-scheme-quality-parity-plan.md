@@ -115,6 +115,36 @@ Retained or deferred:
 - Broader validation timing, keyboard, focus and assistive-technology checks remain manual QA until the MPS structure is stable.
 - No MPS-specific validation rule is promoted to reusable TaPaaS guidance from this slice alone.
 
+## Slice 4A status
+
+Slice 4A clarifies backend/API-adjacent state modelling. It does not introduce backend calls, production eligibility logic, real concession validation, real medical evidence handling, real payment behaviour, review rebuilds or confirmation rebuilds.
+
+State model audit:
+
+| State area | Current treatment | Slice 4A classification |
+|---|---|---|
+| Proof of identity | Static mock account card and POI acknowledgement | Mock backend/API state. No identity proofing. |
+| Existing permit number | Customer-entered text field with no lookup action | Customer-entered mock value. Existing permit lookup remains deferred. |
+| Eligibility result | User answers plus mock assessment summary | Mock/system-derived preview. No eligibility decision. |
+| Concession card option | Customer-selected radio group | Customer-entered concession option for preview flow only. |
+| Concession validation result | Reviewer-selected radio group | Mock backend/API state selector. Not customer-entered data. |
+| Medical evidence status | Source-informed status card plus mock evidence scenario | Mock evidence state. No upload, storage, scanning or backend evidence processing. |
+| Fee/payment state | Mock fee estimate and payment scenario radio group | Mock payment/routing state. No provider, receipt or refund behaviour. |
+| Manual review or assessment state | Mock assessment summary and outcome routing | Mock assessment state. No approval or permit issue. |
+
+Patched in Slice 4A:
+
+- Added a visible `Trial-only validation state selector` caveat before the concession validation result radio group.
+- Clarified that the concession validation result is a simulated backend result for reviewers, not a customer-entered concession field.
+- Added focused test coverage for the concession validation state boundary.
+
+Left untouched:
+
+- Existing permit lookup remains absent and source/backend-gated.
+- Proof of identity, eligibility, medical evidence, fee/payment and manual-review states remain mock-only.
+- Review and confirmation content remain deferred to later template-backed slices.
+- No MPS-specific backend/API rule is promoted to reusable TaPaaS guidance from this slice alone.
+
 ## Source access report
 
 File key: `MzngfrwuAT3YI3JRxTgTTo`

@@ -772,6 +772,9 @@ function ConcessionStep({ form, attempted, update, onBack, onContinue, onExit }:
           <Field id='concession-card-number' label='Concession card number' helpMessage='Mock only. Do not enter a real card number.' hasError={attempted && !form.concessionCardNumber.trim()} errorMessage='Enter the concession card number.'>
             <Input id='concession-card-number' value={form.concessionCardNumber} onChange={(event) => update({ concessionCardNumber: event.target.value })} hasError={attempted && !form.concessionCardNumber.trim()} inputWidth='lg' />
           </Field>
+          <InPageAlert variant='info' title='Trial-only validation state selector'>
+            <p>This control lets reviewers choose a simulated backend validation result. It is not a customer-entered concession field and does not call a real concession service.</p>
+          </InPageAlert>
           <RadioButtonList
             id='concession-validation-scenario'
             legend='Mock validation result'

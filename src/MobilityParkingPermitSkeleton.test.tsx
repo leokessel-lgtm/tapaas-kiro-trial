@@ -350,6 +350,18 @@ describe('MobilityParkingPermitSkeleton', () => {
     expect(screen.getAllByText('Select a mock concession validation result.')).toHaveLength(1)
   })
 
+  it('labels concession validation result as trial-only backend state, not customer-entered data', async () => {
+    const user = userEvent.setup()
+    render(<MobilityParkingPermitSkeleton />)
+
+    await reachConcessionStep(user)
+    await user.click(screen.getByRole('radio', { name: 'Centrelink card (mock)' }))
+
+    expect(screen.getByText('Trial-only validation state selector')).toBeInTheDocument()
+    expect(screen.getByText('This control lets reviewers choose a simulated backend validation result. It is not a customer-entered concession field and does not call a real concession service.')).toBeInTheDocument()
+    expect(screen.getByRole('group', { name: 'Mock validation result' })).toBeInTheDocument()
+  })
+
   it('carries the renewal branch through to review without lookup or backend behaviour', async () => {
     const user = userEvent.setup()
     render(<MobilityParkingPermitSkeleton />)
