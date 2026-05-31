@@ -178,3 +178,42 @@ Deferred items remain:
 - Manual keyboard, focus, screen-reader, responsive and contrast QA.
 
 Slice 3 does not make Community Venue source-complete, production-ready, WCAG/accessibility compliant, privacy-approved, legal-approved, policy-approved, GEL/TaPaaS approved or final-copy approved.
+
+## Slice 4 page grouping decision boundary
+
+Slice 4 is a documentation-only decision boundary for page grouping and input architecture. It does not change runtime code, tests, page order, progress wording or component choices.
+
+Current implementation:
+
+- Community Venue currently exposes 8 visible steps: privacy, applicant, venue, accessibility, supporting, declaration, review and confirmation.
+- Applicant details, venue booking details, accessibility and equipment, and supporting information behave as focused input pages.
+- These four input-like pages sit between Privacy and Declaration.
+
+Template interpretation:
+
+- For analysis purposes, treat the four middle pages as multi-page input pages within a broader input stage.
+- The TaPaaS page template registry allows multiple form input pages between Privacy and Declaration for transactions with more than 5 steps.
+- Do not claim the current 8-step progress model is source-correct.
+- Do not claim a 5-stage progress model is required without Community Venue source or product confirmation.
+
+Source/product gates remain:
+
+- Whether Community Venue should expose 8 steps or a 5-stage model with input sub-pages.
+- Whether applicant details are required if login or profile connect is mandatory.
+- Whether accessibility and supporting information belong under one input stage.
+- Final page titles, progress model and source parity.
+
+Reusable Kiro rule candidate:
+
+- Before generating bespoke top-level steps, model TaPaaS transaction structure as Privacy, multi-page Input, Declaration, Review and Confirmation; then decide whether input pages should be shown as sub-pages or top-level progress steps based on source/product evidence.
+
+Deferred runtime items:
+
+- Changing `Step X of 8` wording.
+- Merging, removing or reordering input pages.
+- Changing applicant/profile-connect assumptions.
+- Changing dropdowns, accordions or component choice.
+- Adding review edit actions.
+- Changing fees, policy, legal, final copy or backend decisions.
+
+Slice 4 does not make Community Venue source-complete, source-correct, production-ready, WCAG/accessibility compliant, GEL/TaPaaS approved, product-approved or final-copy approved.
