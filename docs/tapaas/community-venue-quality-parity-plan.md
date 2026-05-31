@@ -287,3 +287,29 @@ Deferred items remain:
 - Manual keyboard, focus, screen-reader, responsive and contrast QA.
 
 Slice 6 does not make Community Venue source-complete, source-correct, production-ready, WCAG/accessibility compliant, GEL/TaPaaS approved, legal-approved, privacy-approved, policy-approved or final-copy approved.
+
+### Final public smoke closure
+
+Result:
+
+- Deployed main commit `fc24743` passed the final public Community Venue smoke end to end.
+- GitHub Pages deployment for `fc24743` completed successfully.
+- The public app served bundle `assets/index-ws1CgxHR.js`.
+- Community Venue opened from the public app switcher.
+- The synthetic/non-production caveat remained visible.
+- The privacy step showed separate placeholder sections for `Privacy collection notice`, `Terms and conditions` and `Notifications`.
+- The privacy and terms checkbox remained visible and did not claim final legal approval or final source copy.
+- Applicant details, venue booking details, accessibility and equipment, supporting information and declaration completed through the public flow.
+- Review loaded and showed the current Community Venue review sections.
+- Review edit actions returned to the correct source steps for Applicant details, Venue booking details, Accessibility and equipment, Supporting information and declaration.
+- Submit reached confirmation.
+- Confirmation showed `Booking submitted` with placeholder reference `VENUE-000000`.
+- Confirmation did not show the developer-facing `Review TaPaaS source inventory` link.
+- Confirmation CTA was `Start another booking`.
+- No visible source-complete, production-ready, WCAG/accessibility compliant, GEL/TaPaaS approved, product-approved or final-copy approved claim was found during the smoke check.
+
+Closure boundary:
+
+- Community Venue remains a synthetic transaction hardening surface.
+- This does not make Community Venue source-complete, source-correct, production-ready, WCAG/accessibility compliant, GEL/TaPaaS approved, product-approved, privacy-approved, legal-approved, policy-approved or final-copy approved.
+- Final copy, source flow, profile-connect, page grouping, component-current decisions, fees, receipts, booking allocation, service obligations, backend behaviour and manual accessibility/responsive QA remain owner/source-gated.
