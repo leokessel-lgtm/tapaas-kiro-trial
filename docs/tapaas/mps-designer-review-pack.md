@@ -135,6 +135,16 @@ MPS is ready for a bounded designer review pass focused on structure, source-gat
 
 MPS is not ready for source-parity sign-off, production approval, accessibility compliance claims, privacy/legal/policy approval, backend integration decisions or reusable TaPaaS rule extraction.
 
+### Pre-review boundary tightening
+
+Before designer review, the runtime now makes three extra boundaries visible:
+
+- Medical evidence is presented as a static source-state preview, not an upload path. Required/provided/uploaded state meaning, file rules, remove-file behaviour, storage, validation, scanning, assessment and privacy/security handling remain unresolved.
+- Review-page representative/contact, delivery, payment, evidence and assessment rows are designer-review prompts only. They remain trial-only or mock state summaries.
+- Confirmation source-observed next steps and return-card content are shown to review structure only. They are not approved operational instructions and do not imply lodgement, approval, permit issue, payment receipt, notification or concession validation.
+
+Use those boundaries as discussion prompts. Do not treat them as design sign-off or source parity.
+
 ## Recommended next action
 
 Run a designer review against this pack, the row-by-row audit and the current MPS preview. Capture feedback as either:

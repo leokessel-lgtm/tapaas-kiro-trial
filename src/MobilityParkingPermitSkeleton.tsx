@@ -682,8 +682,8 @@ function MedicalEvidenceStep({ form, attempted, update, onBack, onContinue, onEx
   return (
     <section aria-labelledby='medical-heading' data-mps-page-template='evidence-state'>
       <Heading level={2} id='medical-heading'>Medical evidence</Heading>
-      <InPageAlert variant='info' title='File upload is deliberately mocked'>
-        <p>GEL file upload is high risk and needs deeper source-backed review. This preview records an evidence scenario only and does not upload files.</p>
+      <InPageAlert variant='info' title='Medical evidence source state is unresolved'>
+        <p>The source frames show required and provided/uploaded states for certificate and report evidence, but the file rules and true state meaning are not confirmed. This preview is status-only and does not upload, remove, store, validate, scan or assess files.</p>
       </InPageAlert>
       <RadioButtonList
         id='medical-evidence-type'
@@ -697,7 +697,7 @@ function MedicalEvidenceStep({ form, attempted, update, onBack, onContinue, onEx
       <RadioButtonList
         id='medical-evidence-method'
         legend='How will the evidence be provided?'
-        options={[{ value: 'uploaded', label: 'Mock uploaded now' }, { value: 'provide-later', label: 'Provide after submission' }]}
+        options={[{ value: 'uploaded', label: 'Static provided/uploaded state preview' }, { value: 'provide-later', label: 'Static required/provide-later preview' }]}
         value={form.medicalEvidenceMethod}
         onChange={(value) => update({ medicalEvidenceMethod: String(value) as FormState['medicalEvidenceMethod'] })}
         hasError={attempted && !form.medicalEvidenceMethod}
@@ -898,7 +898,7 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
         onExit={onExit}
       />
       <InPageAlert variant='info' title='Mock/system state summary'>
-        <p>Representative/contact, delivery, payment, evidence and assessment rows are trial-only or mock state summaries. They do not prove backend validation, eligibility, payment, approval or permit issue behaviour.</p>
+        <p>Representative/contact, delivery, payment, evidence and assessment rows are designer-review prompts only. They remain trial-only or mock state summaries and do not prove backend validation, eligibility, payment, approval or permit issue behaviour.</p>
       </InPageAlert>
       <EvidenceChecklistCard title='Evidence and validation status' items={evidenceItems(form)} />
       <AssessmentSummaryPanel title='Mock assessment summary' items={assessmentItems(form)} />
@@ -951,8 +951,8 @@ function OutcomeStep({ form, onStartAgain }: { form: FormState; onStartAgain: ()
         )}
         onStartAgain={onStartAgain}
       />
-      <InPageAlert variant='info' title='Trial boundary'>
-        <p>Source-observed confirmation content is shown for review only. No approval, permit issue, payment receipt, eligibility decision, lodgement record or concession validation has occurred.</p>
+      <InPageAlert variant='info' title='Designer review boundary'>
+        <p>Source-observed confirmation content is shown to review structure only. Next steps, return-card content and notification wording are not approved operational instructions. No approval, permit issue, payment receipt, eligibility decision, lodgement record or concession validation has occurred.</p>
       </InPageAlert>
     </section>
   )
