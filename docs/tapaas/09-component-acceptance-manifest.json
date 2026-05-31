@@ -785,7 +785,7 @@
           {
             "id": "tapaas-components-cards-panels--details-card-context",
             "mode": "catalogue-review",
-            "expectedText": "Mock account context",
+            "expectedText": "MyAccount context",
             "mobileNoOverflow": true
           }
         ]

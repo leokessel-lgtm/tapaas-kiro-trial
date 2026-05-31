@@ -5,7 +5,9 @@ import {
   DeclarationReview,
   InteractiveDetailsCard,
   LegalInfoAccordion,
+  PermitApplicationPictogram,
   RadioButtonCards,
+  RenewApplicationPictogram,
   backendErrorExamples,
 } from '../tapaas-preview'
 import './storybook.css'
@@ -40,8 +42,8 @@ function SelectedMaturityComponentsExample() {
         value={applicationType}
         onChange={setApplicationType}
         options={[
-          { value: 'new', label: 'Apply for a new permit', description: 'Start a new mock application.', pictogram: <SelectedMaturityPermitIcon /> },
-          { value: 'renew', label: 'Renew a permit', description: 'Use an existing mock permit number.', pictogram: <SelectedMaturityRefreshIcon /> },
+          { value: 'new', label: 'Apply for a new permit', description: 'Start a new mock application.', pictogram: <PermitApplicationPictogram /> },
+          { value: 'renew', label: 'Renew a permit', description: 'Use an existing mock permit number.', pictogram: <RenewApplicationPictogram /> },
         ]}
         required
       />
@@ -77,20 +79,4 @@ function SelectedMaturityComponentsExample() {
 
 export const SelectedMaturityComponents: Story = {
   render: () => <SelectedMaturityComponentsExample />,
-}
-
-function SelectedMaturityPermitIcon() {
-  return (
-    <svg viewBox='0 0 32 32' focusable='false'>
-      <path fill='currentColor' d='M8 4h12l4 4v20H8V4Zm11 2.8V9h2.2L19 6.8ZM11 13h10v2H11v-2Zm0 4h10v2H11v-2Zm0 4h7v2h-7v-2Z' />
-    </svg>
-  )
-}
-
-function SelectedMaturityRefreshIcon() {
-  return (
-    <svg viewBox='0 0 32 32' focusable='false'>
-      <path fill='currentColor' d='M23.5 9.8A9 9 0 1 0 25 16h-3a6 6 0 1 1-1.1-3.5L17 16h10V6l-3.5 3.8Z' />
-    </svg>
-  )
 }

@@ -8,6 +8,21 @@ Slice 1A is documentation-only. It does not patch runtime UI, Storybook stories,
 
 This plan does not claim MPS source parity, production readiness, WCAG compliance, accessibility compliance, GEL approval, TaPaaS approval, privacy approval, legal approval, policy approval or final copy approval.
 
+## Source-parity triage status - account, application cards and applicant step marker
+
+This pass applies a narrow source-informed correction for the three deployed review items:
+
+- The account context surface now uses the read-only details-card pattern and removes the non-source `Change mock account` action. It remains a static MyAccount context preview only and does not perform identity proofing or use real account data.
+- The MPS application-type cards now use shared decorative pictograms instead of `N`, `R` and `P` letter placeholders. The same pictogram exports are reused by Storybook radio-card examples so the transaction and catalogue review surface do not drift.
+- The red `Step 1 of 4` marker is retained and protected because it belongs to the source-backed applicant details frame, while the outer transaction still exposes the broader seven-stage prototype step text.
+
+Still review-gated:
+
+- Exact MyAccount and proof-of-identity frame behaviour.
+- Final account, branch and permit copy.
+- Exact TaPaaS pictogram assets and selected, hover, focus and error-state pixel parity.
+- Assistive-technology behaviour and any production accessibility claim.
+
 ## Slice 2A status
 
 Slice 2A applies a narrow mock/source/system-state boundary cleanup to the MPS preview skeleton only.

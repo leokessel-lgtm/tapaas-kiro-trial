@@ -19,16 +19,19 @@ import {
   ConditionalQuestionPanel,
   ConfirmationHeader,
   DeclarationReview,
+  DetailsCard,
   EvidenceChecklistCard,
   ExitModal,
-  InteractiveDetailsCard,
   LegalInfoAccordion,
   MpsApplicantDetailsFramePreview,
   MpsConfirmationFramePreview,
   MpsMedicalEvidenceStatusPreview,
   MpsReviewFramePreview,
+  PermitApplicationPictogram,
   RadioButtonCards,
+  RenewApplicationPictogram,
   RepeatableGroup,
+  ReplaceApplicationPictogram,
   ReviewFeesCard,
   ReviewInfoCard,
   TransactionCtaGroup,
@@ -421,17 +424,14 @@ function AccountStep({ form, attempted, update, onBack, onContinue, onExit }: St
         errorMessage='Select an account and identity scenario.'
       />
       {form.accountScenario === 'signed-in' && (
-        <InteractiveDetailsCard
-          title='Mock account context'
-          description='Read-only context only. No real account data is used.'
-          statusLabel='Mock verified'
+        <DetailsCard
+          title='MyAccount context'
+          description='Source-informed account context only. No real account data or identity proofing is used.'
+          statusLabel='Preview only'
           rows={[
             { label: 'Account name', value: 'Alex Citizen' },
-            { label: 'Identity status', value: 'Verified in mock scenario' },
+            { label: 'Identity proofing', value: 'Simulated only' },
             { label: 'Email', value: 'alex.citizen@example.test' },
-          ]}
-          actions={[
-            { label: 'Change mock account', onAction: () => update({ accountScenario: 'guest' }), variant: 'secondary' },
           ]}
         />
       )}
@@ -457,9 +457,9 @@ function ApplicationTypeStep({ form, attempted, update, onBack, onContinue, onEx
         id='application-type'
         legend='What do you want to do?'
         options={[
-          { value: 'new', label: 'Apply for a new permit (mock)', description: 'Start a new mock MPS application.', pictogram: 'N' },
-          { value: 'renew', label: 'Renew an existing permit (mock)', description: 'Use an existing mock permit number.', pictogram: 'R' },
-          { value: 'replace', label: 'Replace a permit (mock)', description: 'Choose a mock replacement reason.', pictogram: 'P' },
+          { value: 'new', label: 'Apply for a new permit (mock)', description: 'Start a new mock MPS application.', pictogram: <PermitApplicationPictogram /> },
+          { value: 'renew', label: 'Renew an existing permit (mock)', description: 'Use an existing mock permit number.', pictogram: <RenewApplicationPictogram /> },
+          { value: 'replace', label: 'Replace a permit (mock)', description: 'Choose a mock replacement reason.', pictogram: <ReplaceApplicationPictogram /> },
         ]}
         value={form.applicationType}
         onChange={(value) => update({ applicationType: String(value) as FormState['applicationType'], replaceReason: '', permitNumber: '' })}
