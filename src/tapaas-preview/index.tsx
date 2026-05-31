@@ -50,6 +50,30 @@ export interface RadioButtonCardOption {
   pictogram?: React.ReactNode
 }
 
+export function PermitApplicationPictogram() {
+  return (
+    <svg viewBox='0 0 32 32' focusable='false'>
+      <path fill='currentColor' d='M8 4h12l4 4v20H8V4Zm11 2.8V9h2.2L19 6.8ZM11 13h10v2H11v-2Zm0 4h10v2H11v-2Zm0 4h7v2h-7v-2Z' />
+    </svg>
+  )
+}
+
+export function RenewApplicationPictogram() {
+  return (
+    <svg viewBox='0 0 32 32' focusable='false'>
+      <path fill='currentColor' d='M23.5 9.8A9 9 0 1 0 25 16h-3a6 6 0 1 1-1.1-3.5L17 16h10V6l-3.5 3.8Z' />
+    </svg>
+  )
+}
+
+export function ReplaceApplicationPictogram() {
+  return (
+    <svg viewBox='0 0 32 32' focusable='false'>
+      <path fill='currentColor' d='M8 6h14l2 2v3h-3V9H11v14h5v3H8V6Zm17 8.5 3 3-8.6 8.6H16v-3.4l9-8.2Zm-2.1 2.2-4.9 4.5V24h2.6l4.8-4.8-2.5-2.5Z' />
+    </svg>
+  )
+}
+
 export interface BackendErrorExample {
   code: string
   title: string

@@ -69,6 +69,7 @@ The preview was adjusted to:
 - preserve a visible radio-control marker inside each card
 - keep the whole card selectable through the associated native radio input and label
 - replace letter placeholders with decorative SVG pictogram placeholders
+- reuse shared decorative pictogram exports in MPS runtime and Storybook examples so transaction and catalogue review surfaces do not drift
 - keep the component classified as a preview candidate, not production TaPaaS or GEL
 
 This improves visual and behavioural review quality, but it is still not a pixel-perfect implementation. Exact TaPaaS pictogram assets, final spacing and final selected/error state treatment still need TaPaaS/GEL confirmation.

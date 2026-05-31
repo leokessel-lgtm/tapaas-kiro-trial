@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 
 async function continueFromCurrentStep(page: import('@playwright/test').Page) {
-  await page.getByRole('button', { name: 'Continue' }).click()
+  await page.getByRole('button', { name: /^(Continue|Next)$/ }).click()
 }
 
 async function chooseByLabelText(page: import('@playwright/test').Page, label: string | RegExp) {
@@ -55,22 +55,26 @@ test.describe('published preview app', () => {
     await continueFromCurrentStep(page)
 
     await chooseByLabelText(page, 'Signed in with verified account details (mock)')
+    await expect(page.getByRole('region', { name: 'MyAccount context' })).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Change mock account' })).toHaveCount(0)
     await chooseByLabelText(page, 'I understand proof of identity is not performed in this prototype.')
     await continueFromCurrentStep(page)
 
+    await expect(page.getByText('N', { exact: true })).toHaveCount(0)
+    await expect(page.getByText('R', { exact: true })).toHaveCount(0)
+    await expect(page.getByText('P', { exact: true })).toHaveCount(0)
     await chooseByLabelText(page, 'Apply for a new permit (mock)')
     await continueFromCurrentStep(page)
 
-    await page.getByLabel('Full name').fill('Alex Citizen')
+    await expect(page.getByText('Step 1 of 4')).toBeVisible()
+    await page.getByLabel('First name *').fill('Alex')
+    await page.getByLabel('Last name *').fill('Citizen')
     await page.getByLabel('Day').fill('15')
-    await page.getByLabel('Month').fill('03')
+    await page.getByLabel('Month').selectOption('mar')
     await page.getByLabel('Year').fill('1990')
-    await page.getByLabel('Email address').fill('alex@example.test')
-    await page.getByLabel('Phone number').fill('0400000000')
-    await page.getByLabel('Street address').fill('1 Mock Street')
-    await page.getByLabel('Suburb').fill('Sydney')
-    await page.getByLabel('State').selectOption('NSW')
-    await page.getByLabel('Postcode').fill('2000')
+    await page.getByLabel('Email address *').fill('alex@example.test')
+    await page.getByLabel('Phone number *').fill('0400000000')
+    await page.getByLabel('Residential address *').fill('1 Mock Street, Sydney NSW 2000')
     await continueFromCurrentStep(page)
 
     await chooseByLabelText(page, 'No')
@@ -87,7 +91,7 @@ test.describe('published preview app', () => {
     await chooseByLabelText(page, 'I understand medical evidence handling is simulated only.')
     await continueFromCurrentStep(page)
 
-    await page.getByLabel('Concession card option').selectOption('none')
+    await chooseByLabelText(page, 'No')
     await continueFromCurrentStep(page)
 
     await chooseByLabelText(page, 'Post to residential address (mock)')
@@ -100,7 +104,8 @@ test.describe('published preview app', () => {
     await continueFromCurrentStep(page)
 
     await expect(page.getByRole('heading', { name: 'Review your application' })).toBeVisible()
-    await expect(page.getByText('Alex Citizen')).toBeVisible()
+    await expect(page.getByText('Alex', { exact: true })).toBeVisible()
+    await expect(page.getByText('Citizen', { exact: true })).toBeVisible()
     await page.getByRole('button', { name: 'Submit mock application' }).click()
 
     await expect(page.getByRole('status', { name: 'Transaction completed' })).toBeVisible()
@@ -114,11 +119,11 @@ test.describe('published Storybook', () => {
     expect(indexResponse.ok()).toBe(true)
 
     const index = await indexResponse.json()
-    expect(index.entries['gel-preview-form-controls--inputs-and-fields']).toBeTruthy()
+    expect(index.entries['development-evidence-legacy-gel-preview-form-controls--inputs-and-fields']).toBeTruthy()
     expect(index.entries['tapaas-preview-composites--review-and-confirmation']).toBeTruthy()
-    expect(index.entries['tapaas-evidence-component-intake-board--intake-overview']).toBeTruthy()
+    expect(index.entries['visual-qa-evidence-component-intake-board--intake-overview']).toBeTruthy()
 
-    await page.goto('storybook/iframe.html?id=tapaas-evidence-component-intake-board--intake-overview&viewMode=story')
+    await page.goto('storybook/iframe.html?id=visual-qa-evidence-component-intake-board--intake-overview&viewMode=story')
     await expect(page.getByRole('heading', { name: 'Component intake board' })).toBeVisible()
     await expect(page.getByRole('columnheader', { name: 'Candidate' })).toBeVisible()
     await expect(page.getByRole('columnheader', { name: 'Status' })).toBeVisible()

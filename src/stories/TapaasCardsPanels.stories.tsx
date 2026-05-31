@@ -62,12 +62,12 @@ export const DetailsCardContext: Story = {
   render: () => (
     <div className='storybook-stack'>
       <DetailsCard
-        title='Mock account context'
-        description='Read-only context only. No real account data is used.'
-        statusLabel='Mock verified'
+        title='MyAccount context'
+        description='Source-informed account context only. No real account data or identity proofing is used.'
+        statusLabel='Preview only'
         rows={[
           { label: 'Account name', value: 'Alex Citizen' },
-          { label: 'Identity status', value: 'Verified in mock scenario' },
+          { label: 'Identity proofing', value: 'Simulated only' },
           { label: 'Email', value: 'alex.citizen@example.test' },
         ]}
       />

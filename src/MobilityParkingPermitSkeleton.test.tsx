@@ -114,6 +114,23 @@ async function completeSuccessfulPathToPayment(user: ReturnType<typeof userEvent
 }
 
 describe('MobilityParkingPermitSkeleton', () => {
+  it('renders the account context as a source-informed read-only card', async () => {
+    const user = userEvent.setup()
+    render(<MobilityParkingPermitSkeleton />)
+
+    await user.click(screen.getByRole('checkbox', { name: 'I have read and understand the privacy information.' }))
+    await continueFromCurrentStep(user)
+    await user.click(screen.getByRole('radio', { name: 'Signed in with verified account details (mock)' }))
+
+    const accountCard = screen.getByRole('region', { name: 'MyAccount context' })
+    expect(within(accountCard).getByText('Source-informed account context only. No real account data or identity proofing is used.')).toBeInTheDocument()
+    expect(within(accountCard).getByText('Preview only')).toBeInTheDocument()
+    expect(within(accountCard).getByText('Identity proofing')).toBeInTheDocument()
+    expect(within(accountCard).getByText('Simulated only')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Change mock account' })).not.toBeInTheDocument()
+    expect(screen.queryByText('Mock account context')).not.toBeInTheDocument()
+  })
+
   it('blocks the privacy step and then completes a mock successful MPS path', async () => {
     const user = userEvent.setup()
     const { container } = render(<MobilityParkingPermitSkeleton />)
@@ -127,6 +144,7 @@ describe('MobilityParkingPermitSkeleton', () => {
     await reachApplicantDetailsStep(user)
 
     expect(screen.getByRole('heading', { name: 'Personal details' })).toBeInTheDocument()
+    expect(screen.getByText('Step 1 of 4')).toBeInTheDocument()
     expect(container.querySelector('[data-mps-page-template="form-page"]')).toBeInTheDocument()
     expect(screen.getByLabelText('Residential address *')).toBeInTheDocument()
     await fillApplicantSearchStep(user)
@@ -330,6 +348,9 @@ describe('MobilityParkingPermitSkeleton', () => {
     await reachApplicationTypeStep(user)
 
     expect(screen.getByRole('heading', { name: 'Application type' })).toBeInTheDocument()
+    expect(screen.queryByText('N')).not.toBeInTheDocument()
+    expect(screen.queryByText('R')).not.toBeInTheDocument()
+    expect(screen.queryByText('P')).not.toBeInTheDocument()
     await user.click(screen.getByRole('radio', { name: 'Apply for a new permit (mock)' }))
 
     expect(screen.queryByLabelText('Existing permit number')).not.toBeInTheDocument()
