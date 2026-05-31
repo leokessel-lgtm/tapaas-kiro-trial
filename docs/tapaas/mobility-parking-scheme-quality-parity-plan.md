@@ -175,6 +175,31 @@ Still source-gated or deferred:
 - Real concession validation result handling.
 - Confirmation page rebuild.
 
+## Slice 6A status
+
+Slice 6A rebuilds the MPS confirmation page content boundary within the existing preview frame. It does not introduce backend calls, real receipt handling, real permit issue, real payment records, final notification copy, Storybook changes, acceptance-manifest changes, or source-parity claims.
+
+Confirmation issues audited:
+
+- Next-step wording should not imply a real assessment timeframe, notification channel or permit issue process.
+- Keep-a-record content should remain a source-gated placeholder until a service owner confirms receipt, record and payment behaviour.
+- Development-only reference links should not appear in the transaction confirmation UI.
+- Confirmation should preserve the existing trial boundary that no approval, permit issue, payment receipt, eligibility decision or concession validation has occurred.
+
+Patched in Slice 6A:
+
+- Replaced operational next-step wording with source-gated placeholders for assessment timeframe, notification timing and permit issue.
+- Added a visible `Keep a record` placeholder that states no real receipt, permit, approval record or payment record has been issued.
+- Removed the developer-facing `Review TaPaaS component-template relationship map` link from the MPS confirmation page.
+- Added focused tests for confirmation next steps, keep-a-record boundary, trial boundary and absence of the developer-facing source link.
+
+Still source-gated or deferred:
+
+- Final confirmation title, reference format, summary rows, notification copy and next-step content.
+- Real receipt, record, payment, permit issue and approval handling.
+- Tell Us Then/TUTD or related transaction content.
+- Confirmation mobile/responsive and assistive-technology QA.
+
 ## Source access report
 
 File key: `MzngfrwuAT3YI3JRxTgTTo`

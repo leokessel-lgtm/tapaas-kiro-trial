@@ -12,7 +12,6 @@ import {
   MoreInfoDisclosure,
   RadioButtonList,
   Textarea,
-  TextLink,
 } from './gel'
 import {
   AssessmentSummaryPanel,
@@ -978,19 +977,21 @@ function OutcomeStep({ form, onStartAgain }: { form: FormState; onStartAgain: ()
           { label: 'Outcome route', value: manual ? 'Manual review' : 'Submitted', helpText: 'Mock outcome only.' },
         ]}
         nextSteps={[
-          { id: 'assessment', content: 'Your mock application will be assessed within [confirmed timeframe].' },
-          { id: 'updates', content: 'You will receive updates by [confirmed contact channel].' },
-          { id: 'issue', content: 'If the real service approves the application, the permit would be issued using the confirmed delivery method.' },
+          { id: 'assessment', content: 'Assessment timeframe is source-gated and needs service-owner confirmation.' },
+          { id: 'updates', content: 'Notification channel and timing are source-gated and need service-owner confirmation.' },
+          { id: 'issue', content: 'Permit issue and delivery steps are not confirmed in this preview.' },
         ]}
-        relatedContent={<p>Assessment wording, reference format, notification timing and next steps need service-owner confirmation.</p>}
+        relatedContent={(
+          <section aria-labelledby='mps-confirmation-keep-record-heading'>
+            <Heading level={3} id='mps-confirmation-keep-record-heading'>Keep a record</Heading>
+            <p>This is a source-gated confirmation placeholder. No real receipt, permit, approval record or payment record has been issued.</p>
+          </section>
+        )}
         onStartAgain={onStartAgain}
       />
       <InPageAlert variant='info' title='Trial boundary'>
         <p>No approval, permit issue, payment receipt, eligibility decision or concession validation has occurred.</p>
       </InPageAlert>
-      <p style={{ marginTop: '1rem' }}>
-        <TextLink href='https://github.com/leokessel-lgtm/tapaas-kiro-trial/blob/main/docs/tapaas/05-component-template-relationship-map.md'>Review TaPaaS component-template relationship map</TextLink>
-      </p>
     </section>
   )
 }

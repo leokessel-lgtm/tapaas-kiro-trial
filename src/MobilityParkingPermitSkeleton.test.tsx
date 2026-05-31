@@ -200,6 +200,13 @@ describe('MobilityParkingPermitSkeleton', () => {
     expect(within(status).getByRole('heading', { name: 'Your application has been submitted' })).toBeInTheDocument()
     expect(screen.getByRole('region', { name: 'Mobility Parking Scheme outcome' })).toHaveAttribute('data-mps-page-template', 'confirmation')
     expect(screen.getByText('MPS-MOCK-000000')).toBeInTheDocument()
+    expect(screen.getByText('Assessment timeframe is source-gated and needs service-owner confirmation.')).toBeInTheDocument()
+    expect(screen.getByText('Notification channel and timing are source-gated and need service-owner confirmation.')).toBeInTheDocument()
+    expect(screen.getByText('Permit issue and delivery steps are not confirmed in this preview.')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Keep a record' })).toBeInTheDocument()
+    expect(screen.getByText('This is a source-gated confirmation placeholder. No real receipt, permit, approval record or payment record has been issued.')).toBeInTheDocument()
+    expect(screen.getByText('No approval, permit issue, payment receipt, eligibility decision or concession validation has occurred.')).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Review TaPaaS component-template relationship map' })).not.toBeInTheDocument()
   })
 
   it('shows the source-backed certificate uploaded status without upload or remove controls', async () => {
