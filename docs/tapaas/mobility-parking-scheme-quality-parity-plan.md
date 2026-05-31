@@ -41,7 +41,7 @@ Current page/template mapping:
 | Application type, applicant details, representative/contact pages | `form-page` | Form pages with source-gated field and control decisions. |
 | Eligibility questions | `eligibility-state` | Hybrid form/system-state area. Eligibility decision remains mock/deferred. |
 | Medical evidence | `evidence-state` | Evidence status preview only. No upload, storage, scanning or backend evidence handling. |
-| Concession details | `concession-validation-state` | Mock validation-state chooser only. No real card validation. |
+| Concession details | `concession-source-state` | Source-confirmed Yes/No question only. Card issuer, card number and validation remain source-gated. |
 | Delivery preferences | `kiro-stress-test-form` | Trial-only stress-test page, not confirmed MPS source flow. |
 | Payment simulation | `mock-payment-state` | Mock payment/routing state. No provider, receipt or refund behaviour. |
 | Declaration | `declaration` | Placeholder legal/policy wording only. |
@@ -77,14 +77,14 @@ Component-choice issues audited:
 Fixed in Slice 3A:
 
 - `Reason for replacement` now uses a radio group instead of a select because the preview exposes three fixed mutually exclusive options.
-- `Concession card option` now uses a radio group instead of a select because the preview exposes three fixed mutually exclusive options and controls conditional concession-card follow-up fields.
+- `Concession card option` used a radio group instead of a select in this slice. Slice 9C later narrowed this to the source-observed Yes/No concession question.
 - Focused tests assert both changed groups are radio groups and no longer render as comboboxes.
 - Existing Slice 2A boundary labels and Slice 2B page-template markers are preserved.
 
 Retained or deferred:
 
 - Month, street type and state inputs remain in the applicant frame preview because changing those embedded source-informed fields would be a broader applicant-frame/component slice.
-- Existing permit lookup, concession validation result, payment scenario and eligibility questions remain mock/system-state previews, not backend implementations.
+- Existing permit lookup, payment scenario and eligibility questions remain mock/system-state previews, not backend implementations. Concession validation was later removed from the editable flow in Slice 9C and is now source-gated.
 - Review and confirmation fields remain deferred to later template-backed rebuild slices.
 - No MPS-specific component choice rule is promoted to reusable TaPaaS guidance from this slice alone.
 
@@ -94,7 +94,7 @@ Slice 3B adds focused validation and error-handling coverage for the Slice 3A ra
 
 Validation issues audited:
 
-- Required group validation for `Reason for replacement`, `Concession card option` and `Mock validation result`.
+- Required group validation for `Reason for replacement`, `Concession card option` and `Mock validation result`. Slice 9C later replaced the concession area with a source-observed Yes/No group and removed the mock validation selector.
 - Error summary links for radio groups changed or affected by Slice 3A.
 - Inline group-level error placement for radio groups.
 - Validation wording that could imply real backend concession validation.
@@ -104,8 +104,9 @@ Fixed or protected in Slice 3B:
 - Added focused tests proving the replacement-reason error summary link targets `#replace-reason`.
 - Added focused tests proving concession card option errors target `#concession-card-type`.
 - Added focused tests proving concession validation result errors target `#concession-validation-scenario`.
+- Slice 9C later replaced this coverage with tests proving the source-observed Yes/No question targets `#has-concession-card`.
 - Added focused tests proving the changed radio groups expose inline group-level error messages.
-- Protected the existing visible `Concession validation is simulated` boundary while testing validation.
+- Protected the visible `Concession validation is simulated` boundary while testing validation. Slice 9C later removed that selector from the editable customer flow and replaced it with a source-gated boundary.
 
 Retained or deferred:
 
@@ -126,8 +127,8 @@ State model audit:
 | Proof of identity | Static mock account card and POI acknowledgement | Mock backend/API state. No identity proofing. |
 | Existing permit number | Customer-entered text field with no lookup action | Customer-entered mock value. Existing permit lookup remains deferred. |
 | Eligibility result | User answers plus mock assessment summary | Mock/system-derived preview. No eligibility decision. |
-| Concession card option | Customer-selected radio group | Customer-entered concession option for preview flow only. |
-| Concession validation result | Reviewer-selected radio group | Mock backend/API state selector. Not customer-entered data. |
+| Concession card Yes/No | Customer-selected radio group | Source-observed preview question only. |
+| Concession issuer, number and validation result | Not collected in the runtime input flow | Source-gated pending designer and service-owner confirmation. |
 | Medical evidence status | Source-informed status card plus mock evidence scenario | Mock evidence state. No upload, storage, scanning or backend evidence processing. |
 | Fee/payment state | Mock fee estimate and payment scenario radio group | Mock payment/routing state. No provider, receipt or refund behaviour. |
 | Manual review or assessment state | Mock assessment summary and outcome routing | Mock assessment state. No approval or permit issue. |
@@ -137,6 +138,7 @@ Patched in Slice 4A:
 - Added a visible `Trial-only validation state selector` caveat before the concession validation result radio group.
 - Clarified that the concession validation result is a simulated backend result for reviewers, not a customer-entered concession field.
 - Added focused test coverage for the concession validation state boundary.
+- Slice 9C later superseded this runtime treatment by removing the mock selector and gating issuer, number and validation details.
 
 Left untouched:
 
@@ -153,7 +155,7 @@ Review issues audited:
 
 - Review content should be summary-style, not editable-form-style.
 - Customer-entered answers should be separated from mock/backend/system-derived results.
-- Concession validation should remain clearly simulated backend state.
+- Concession issuer, number and validation should remain clearly source-gated unless designers and service owners confirm the intended input and backend treatment.
 - Evidence status should not imply real upload, storage, scanning or assessment.
 - Existing permit lookup/result state should remain separate from the customer-entered permit number.
 - Review edit actions should not appear unless they route to existing editable pages or sections.
@@ -162,8 +164,8 @@ Patched in Slice 5A:
 
 - Review sections now separate application details, personal details, concession card details and `Trial-only system states`.
 - Existing permit number is labelled as a customer-entered mock value with no lookup result.
-- Concession validation result is labelled as a simulated backend result for trial review only.
-- Medical evidence, delivery and payment review rows are grouped as trial-only system states with mock-only help text.
+- Concession card details now use a source-observed Yes/No row, with issuer and number shown as source-gated when needed.
+- Medical evidence, representative/contact, delivery and payment review rows are grouped as trial-only stress and backend states with mock-only or source-gated help text.
 - Removed non-routing review edit buttons from the MPS skeleton review page.
 - Added focused tests for review summary-style structure, trial-only state grouping, concession validation separation and absence of non-routing edit buttons.
 
@@ -172,7 +174,7 @@ Still source-gated or deferred:
 - Source-confirmed review section order, final row labels, fees and declarations.
 - Section-level edit routing from review back to editable pages.
 - Existing permit lookup result handling.
-- Real concession validation result handling.
+- Real concession issuer, number and validation handling.
 - Confirmation page rebuild.
 
 ## Slice 6A status
@@ -189,7 +191,7 @@ Confirmation issues audited:
 Patched in Slice 6A:
 
 - Replaced operational next-step wording with source-gated placeholders for assessment timeframe, notification timing and permit issue.
-- Added a visible `Keep a record` placeholder that states no real receipt, permit, approval record or payment record has been issued.
+- Added a visible `Keep a record` placeholder that states no real receipt, permit, approval record or payment record has been issued. Slice 9D later replaced this with a caveated source-observed return-card area.
 - Removed the developer-facing `Review TaPaaS component-template relationship map` link from the MPS confirmation page.
 - Added focused tests for confirmation next steps, keep-a-record boundary, trial boundary and absence of the developer-facing source link.
 
@@ -209,7 +211,7 @@ QA checks performed:
 - Ran the full mock-success path from privacy through account/identity, application type, applicant details, representative/contact, eligibility, medical evidence, concession, delivery, payment, declaration, review and confirmation.
 - Checked desktop, tablet and mobile viewport widths for the mock-success path.
 - Checked review-page boundaries: no non-routing edit buttons, no leaked mock validation selector, trial-only system states remain grouped, and evidence/payment/concession states remain explicitly mock-only.
-- Checked confirmation-page boundaries: source-gated next steps, `Keep a record` placeholder, trial boundary and absence of the developer-facing component-template relationship map link.
+- Checked confirmation-page boundaries: source-gated next steps, `Keep a record` placeholder, trial boundary and absence of the developer-facing component-template relationship map link. Slice 9D later replaced `Keep a record` with a caveated source-observed return-card area.
 - Checked validation summary targets for replacement reason, concession card option and concession mock validation result.
 
 Defects found:
@@ -256,7 +258,28 @@ Created audit artefact:
 
 - [MPS source-informed row-by-row audit](./mps-source-informed-row-by-row-audit.md)
 
-The audit compares the current runtime against source nodes `0:33144`, `0:33185`, `0:33222`, `0:17387`, `0:17405`, `0:17316`, `0:17333`, `0:17357` and `0:17370`. It records concession as the highest-risk source gap because the inspected source page uses a simple NSW concession card Yes/No question while the runtime expands that area into card type, card number and mock validation result.
+The audit compares the runtime against source nodes `0:33144`, `0:33185`, `0:33222`, `0:17387`, `0:17405`, `0:17316`, `0:17333`, `0:17357` and `0:17370`. It recorded concession as the highest-risk source gap because the inspected source page uses a simple NSW concession card Yes/No question while the pre-9C runtime expanded that area into card type, card number and mock validation result.
+
+## Slices 9C to 9G status
+
+Slices 9C to 9G apply the audited MPS runtime and documentation cleanup after the Slice 9B row-by-row audit. They do not introduce real backend behaviour, Storybook changes, acceptance-manifest entries, package changes, lockfile changes, Track 2 changes or source-parity claims.
+
+Fixed in Slices 9C to 9G:
+
+- Slice 9C: Concession input now follows the inspected source question, `Do you have a New South Wales concession card?`, with `Yes` and `No` options only.
+- Slice 9C: Card issuer, card number, concession validation, recovery states and backend concession rules are visibly source-gated and are not collected in the runtime input flow.
+- Slice 9D: Confirmation uses the source-observed assessment heading, application label, lodgement-date row, next-step areas and return-card area with visible service-owner/source-gated caveats.
+- Slice 9E: Review playback now separates first name and last name, adds permit type, and presents concession rows as Yes/No plus source-gated issuer and number rows.
+- Slice 9F: Representative/contact, delivery, payment, evidence and assessment rows remain grouped as trial-only or mock state summaries rather than source-parity content.
+- Slice 9G: The designer review pack and row-by-row audit have been updated to reflect the post-audit runtime state.
+
+Still source-gated or deferred:
+
+- Final concession issuer, number, validation, recovery and backend rules.
+- Whether representative/contact, delivery and payment belong in the confirmed MPS source flow or remain trial-only review aids.
+- Real identity proofing, existing-permit lookup, medical evidence upload/storage/scanning, payment, assessment, approval, permit issue, receipt and notification behaviour.
+- Final confirmation, return-card, fine-warning, Tell Us Then/TUTD, declaration, fee and post-submit content.
+- Review edit routing and manual keyboard, focus, screen-reader, responsive and assistive-technology QA.
 
 Slice 9B does not claim source parity, production readiness, accessibility compliance, GEL approval, TaPaaS approval, final copy approval, backend integration or reusable rule readiness.
 

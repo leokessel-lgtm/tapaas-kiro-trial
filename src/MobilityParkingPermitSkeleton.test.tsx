@@ -40,7 +40,7 @@ async function completeFromApplicantDetailsToReview(user: ReturnType<typeof user
   await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
   await continueFromCurrentStep(user)
 
-  await user.click(screen.getByRole('radio', { name: 'No concession card (mock)' }))
+  await user.click(screen.getByRole('radio', { name: 'No' }))
   await continueFromCurrentStep(user)
 
   await user.click(screen.getByRole('radio', { name: 'Post to residential address (mock)' }))
@@ -106,7 +106,7 @@ async function completeSuccessfulPathToPayment(user: ReturnType<typeof userEvent
   await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
   await continueFromCurrentStep(user)
 
-  await user.click(screen.getByRole('radio', { name: 'No concession card (mock)' }))
+  await user.click(screen.getByRole('radio', { name: 'No' }))
   await continueFromCurrentStep(user)
 
   await user.click(screen.getByRole('radio', { name: 'Post to residential address (mock)' }))
@@ -151,11 +151,14 @@ describe('MobilityParkingPermitSkeleton', () => {
     await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
     await continueFromCurrentStep(user)
 
-    expect(screen.getByRole('heading', { name: 'Concession details' })).toBeInTheDocument()
-    expect(container.querySelector('[data-mps-page-template="concession-validation-state"]')).toBeInTheDocument()
-    expect(screen.getByRole('group', { name: 'Concession card option' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Concession card details' })).toBeInTheDocument()
+    expect(container.querySelector('[data-mps-page-template="concession-source-state"]')).toBeInTheDocument()
+    expect(screen.getByText('Concession details are source-gated')).toBeInTheDocument()
+    expect(screen.getByRole('group', { name: 'Do you have a New South Wales concession card?' })).toBeInTheDocument()
     expect(screen.queryByRole('combobox', { name: 'Concession card option' })).not.toBeInTheDocument()
-    await user.click(screen.getByRole('radio', { name: 'No concession card (mock)' }))
+    expect(screen.queryByLabelText('Concession card number')).not.toBeInTheDocument()
+    expect(screen.queryByRole('group', { name: 'Mock validation result' })).not.toBeInTheDocument()
+    await user.click(screen.getByRole('radio', { name: 'No' }))
     await continueFromCurrentStep(user)
 
     expect(screen.getByRole('heading', { name: 'Delivery preferences' })).toBeInTheDocument()
@@ -179,17 +182,25 @@ describe('MobilityParkingPermitSkeleton', () => {
 
     expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
     expect(container.querySelector('[data-mps-page-template="review"]')).toBeInTheDocument()
-    expect(screen.getByText('Alex Citizen')).toBeInTheDocument()
+    expect(screen.getByText('Alex')).toBeInTheDocument()
+    expect(screen.getByText('Citizen')).toBeInTheDocument()
     expect(screen.getByText('New application')).toBeInTheDocument()
     expect(screen.getByText('1 Mock Street, Sydney NSW 2000')).toBeInTheDocument()
     expect(screen.getByText('Mock/system state summary')).toBeInTheDocument()
-    expect(screen.getByText('Evidence, concession, payment and assessment rows are trial-only state summaries. They do not prove backend validation, eligibility, payment, approval or permit issue behaviour.')).toBeInTheDocument()
+    expect(screen.getByText('Representative/contact, delivery, payment, evidence and assessment rows are trial-only or mock state summaries. They do not prove backend validation, eligibility, payment, approval or permit issue behaviour.')).toBeInTheDocument()
     expect(screen.getByText('Mock application fee')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Trial-only system states' })).toBeInTheDocument()
-    expect(screen.getByText('Concession validation result')).toBeInTheDocument()
-    expect(screen.getByText('Simulated backend result for trial review only.')).toBeInTheDocument()
+    expect(screen.getByText('First name')).toBeInTheDocument()
+    expect(screen.getByText('Last name')).toBeInTheDocument()
+    expect(screen.getByText('Permit type')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Trial-only stress and backend states' })).toBeInTheDocument()
+    expect(screen.getByText('Has New South Wales concession card')).toBeInTheDocument()
+    expect(screen.getByText('Card issuer')).toBeInTheDocument()
+    expect(screen.getByText('Card number')).toBeInTheDocument()
+    expect(screen.getAllByText('Not applicable').length).toBeGreaterThan(0)
+    expect(screen.queryByText('Concession validation result')).not.toBeInTheDocument()
     expect(screen.getByText('Medical evidence status')).toBeInTheDocument()
     expect(screen.getByText('No real upload, storage, scanning or assessment occurs.')).toBeInTheDocument()
+    expect(screen.getByText('Representative/contact route')).toBeInTheDocument()
     expect(screen.getByText('Payment route')).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Edit Application details' })).not.toBeInTheDocument()
     expect(screen.queryByRole('group', { name: 'Mock validation result' })).not.toBeInTheDocument()
@@ -197,15 +208,17 @@ describe('MobilityParkingPermitSkeleton', () => {
     await user.click(screen.getByRole('button', { name: 'Submit mock application' }))
 
     const status = screen.getByRole('status', { name: 'Transaction completed' })
-    expect(within(status).getByRole('heading', { name: 'Your application has been submitted' })).toBeInTheDocument()
+    expect(within(status).getByRole('heading', { name: 'Your application has been submitted for assessment' })).toBeInTheDocument()
     expect(screen.getByRole('region', { name: 'Mobility Parking Scheme outcome' })).toHaveAttribute('data-mps-page-template', 'confirmation')
     expect(screen.getByText('MPS-MOCK-000000')).toBeInTheDocument()
-    expect(screen.getByText('Assessment timeframe is source-gated and needs service-owner confirmation.')).toBeInTheDocument()
-    expect(screen.getByText('Notification channel and timing are source-gated and need service-owner confirmation.')).toBeInTheDocument()
-    expect(screen.getByText('Permit issue and delivery steps are not confirmed in this preview.')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Keep a record' })).toBeInTheDocument()
-    expect(screen.getByText('This is a source-gated confirmation placeholder. No real receipt, permit, approval record or payment record has been issued.')).toBeInTheDocument()
-    expect(screen.getByText('No approval, permit issue, payment receipt, eligibility decision or concession validation has occurred.')).toBeInTheDocument()
+    expect(screen.getByText('Apply for a Mobility Parking Permit')).toBeInTheDocument()
+    expect(screen.getByText('Source-observed assessment step: your application will be reviewed. Timing and ownership need service-owner confirmation.')).toBeInTheDocument()
+    expect(screen.getByText('Source-observed contact/payment step: further information and payment processing rules are not connected in this preview.')).toBeInTheDocument()
+    expect(screen.getByText('Source-observed service-centre step: any visit requirement needs service-owner confirmation.')).toBeInTheDocument()
+    expect(screen.getByText('Source-observed permit mailout step: no permit issue or delivery has occurred in this preview.')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Return expired or replaced cards' })).toBeInTheDocument()
+    expect(screen.getByText('Source-observed return-card instructions and fine warnings require service-owner confirmation before they can be treated as operational guidance.')).toBeInTheDocument()
+    expect(screen.getByText('Source-observed confirmation content is shown for review only. No approval, permit issue, payment receipt, eligibility decision, lodgement record or concession validation has occurred.')).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'Review TaPaaS component-template relationship map' })).not.toBeInTheDocument()
   })
 
@@ -259,7 +272,7 @@ describe('MobilityParkingPermitSkeleton', () => {
     await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
     await continueFromCurrentStep(user)
 
-    await user.click(screen.getByRole('radio', { name: 'No concession card (mock)' }))
+    await user.click(screen.getByRole('radio', { name: 'No' }))
     await continueFromCurrentStep(user)
 
     await user.click(screen.getByRole('radio', { name: 'Post to residential address (mock)' }))
@@ -344,37 +357,33 @@ describe('MobilityParkingPermitSkeleton', () => {
     expect(screen.getByRole('radio', { name: 'Lost permit (mock)' })).toBeInTheDocument()
   })
 
-  it('links concession radio-group validation summary to the relevant groups and keeps mock state separate', async () => {
+  it('links concession Yes/No validation summary to the source-confirmed group', async () => {
     const user = userEvent.setup()
     render(<MobilityParkingPermitSkeleton />)
 
     await reachConcessionStep(user)
     await continueFromCurrentStep(user)
 
-    expect(screen.getByRole('link', { name: 'Select a concession card option' })).toHaveAttribute('href', '#concession-card-type')
-    expect(screen.getByRole('group', { name: 'Concession card option' })).toHaveAttribute('aria-describedby', 'concession-card-type-error')
-    expect(screen.getAllByText('Select a concession card option.')).toHaveLength(1)
-    expect(screen.getByText('Concession validation is simulated')).toBeInTheDocument()
-
-    await user.click(screen.getByRole('radio', { name: 'Centrelink card (mock)' }))
-    await continueFromCurrentStep(user)
-
-    expect(screen.getByRole('link', { name: 'Enter the concession card number' })).toHaveAttribute('href', '#concession-card-number')
-    expect(screen.getByRole('link', { name: 'Select a mock concession validation result' })).toHaveAttribute('href', '#concession-validation-scenario')
-    expect(screen.getByRole('group', { name: 'Mock validation result' })).toHaveAttribute('aria-describedby', 'concession-validation-scenario-error')
-    expect(screen.getAllByText('Select a mock concession validation result.')).toHaveLength(1)
+    expect(screen.getByRole('link', { name: 'Select whether the applicant has a New South Wales concession card' })).toHaveAttribute('href', '#has-concession-card')
+    expect(screen.getByRole('group', { name: 'Do you have a New South Wales concession card?' })).toHaveAttribute('aria-describedby', 'has-concession-card-error')
+    expect(screen.getAllByText('Select whether the applicant has a New South Wales concession card.')).toHaveLength(1)
+    expect(screen.getByText('Concession details are source-gated')).toBeInTheDocument()
+    expect(screen.queryByLabelText('Concession card number')).not.toBeInTheDocument()
+    expect(screen.queryByRole('group', { name: 'Mock validation result' })).not.toBeInTheDocument()
   })
 
-  it('labels concession validation result as trial-only backend state, not customer-entered data', async () => {
+  it('keeps concession card issuer, number and validation source-gated when Yes is selected', async () => {
     const user = userEvent.setup()
     render(<MobilityParkingPermitSkeleton />)
 
     await reachConcessionStep(user)
-    await user.click(screen.getByRole('radio', { name: 'Centrelink card (mock)' }))
+    await user.click(screen.getByRole('radio', { name: 'Yes' }))
 
-    expect(screen.getByText('Trial-only validation state selector')).toBeInTheDocument()
-    expect(screen.getByText('This control lets reviewers choose a simulated backend validation result. It is not a customer-entered concession field and does not call a real concession service.')).toBeInTheDocument()
-    expect(screen.getByRole('group', { name: 'Mock validation result' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'What is still source-gated' }))
+    expect(screen.getByText('Card issuer, card number, concession validation, recovery states and backend rules need designer and service-owner confirmation before they can be added to this preview.')).toBeInTheDocument()
+    expect(screen.queryByLabelText('Concession card number')).not.toBeInTheDocument()
+    expect(screen.queryByText('Trial-only validation state selector')).not.toBeInTheDocument()
+    expect(screen.queryByRole('group', { name: 'Mock validation result' })).not.toBeInTheDocument()
   })
 
   it('carries the renewal branch through to review without lookup or backend behaviour', async () => {
@@ -392,7 +401,7 @@ describe('MobilityParkingPermitSkeleton', () => {
     expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
     expect(screen.getByText('Renewal')).toBeInTheDocument()
     expect(screen.getByText('MPS-RENEW-001')).toBeInTheDocument()
-    expect(screen.getByText('Not applicable')).toBeInTheDocument()
+    expect(screen.getAllByText('Not applicable').length).toBeGreaterThan(0)
   })
 
   it('carries the replacement branch and reason through to review without lookup or backend behaviour', async () => {

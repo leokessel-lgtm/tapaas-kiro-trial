@@ -92,7 +92,7 @@ const mpsStageMap: Record<MpsStep, { number: number; label: string; detail?: str
   representative: { number: 3, label: 'Personal details', detail: 'Representative and authorised contacts' },
   eligibility: { number: 4, label: 'Eligibility', detail: 'Mock eligibility questions' },
   medical: { number: 5, label: 'Medical evidence', detail: 'Mock evidence status only' },
-  concession: { number: 6, label: 'Concession card details', detail: 'Mock concession validation states' },
+  concession: { number: 6, label: 'Concession card details', detail: 'Source-confirmed Yes/No question' },
   delivery: { number: 7, label: 'Review and submit', detail: 'Kiro stress-test addition: delivery preference' },
   payment: { number: 7, label: 'Review and submit', detail: 'Kiro stress-test addition: payment routing' },
   declaration: { number: 7, label: 'Review and submit', detail: 'Declaration before review' },
@@ -143,9 +143,7 @@ interface FormState {
   medicalEvidenceType: 'certificate' | 'report' | ''
   medicalEvidenceMethod: 'uploaded' | 'provide-later' | ''
   medicalEvidenceAcknowledged: boolean
-  concessionCardType: 'none' | 'centrelink' | 'dva' | ''
-  concessionCardNumber: string
-  concessionValidationScenario: 'valid' | 'invalid' | 'mismatch' | 'duplicate' | ''
+  hasConcessionCard: 'yes' | 'no' | ''
   deliveryMethod: 'post' | 'service-centre' | ''
   deliveryInstructions: string
   paymentScenario: 'success' | 'failed' | 'cancelled' | 'manual-review' | ''
@@ -189,9 +187,7 @@ const initialState: FormState = {
   medicalEvidenceType: '',
   medicalEvidenceMethod: '',
   medicalEvidenceAcknowledged: false,
-  concessionCardType: '',
-  concessionCardNumber: '',
-  concessionValidationScenario: '',
+  hasConcessionCard: '',
   deliveryMethod: '',
   deliveryInstructions: '',
   paymentScenario: '',
@@ -350,9 +346,7 @@ function errorsForStep(step: MpsStep, form: FormState) {
     if (!form.medicalEvidenceAcknowledged) errs.push({ id: 'medical-evidence-acknowledged', text: 'Confirm that medical evidence handling is simulated only' })
   }
   if (step === 'concession') {
-    if (!form.concessionCardType) errs.push({ id: 'concession-card-type', text: 'Select a concession card option' })
-    if (form.concessionCardType !== 'none' && !form.concessionCardNumber.trim()) errs.push({ id: 'concession-card-number', text: 'Enter the concession card number' })
-    if (form.concessionCardType !== 'none' && !form.concessionValidationScenario) errs.push({ id: 'concession-validation-scenario', text: 'Select a mock concession validation result' })
+    if (!form.hasConcessionCard) errs.push({ id: 'has-concession-card', text: 'Select whether the applicant has a New South Wales concession card' })
   }
   if (step === 'delivery') {
     if (!form.deliveryMethod) errs.push({ id: 'delivery-method', text: 'Select a delivery method' })
@@ -718,7 +712,7 @@ function MedicalEvidenceStep({ form, attempted, update, onBack, onContinue, onEx
         title='Supporting evidence status'
         items={[
           { id: 'identity', label: 'Identity evidence', status: form.poiAcknowledged ? 'provided' : 'needs-review', description: 'Static mock proof-of-identity state only.' },
-          { id: 'concession', label: 'Concession evidence', status: form.concessionCardType && form.concessionCardType !== 'none' ? 'needs-review' : 'not-required', description: 'Concession validation is simulated on the next page.' },
+          { id: 'concession', label: 'Concession evidence', status: form.hasConcessionCard === 'yes' ? 'needs-review' : 'not-required', description: 'Concession card issuer, number and validation remain source-gated.' },
         ]}
       />
       <Checkbox
@@ -742,56 +736,26 @@ function MedicalEvidenceStep({ form, attempted, update, onBack, onContinue, onEx
 }
 
 function ConcessionStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  const needsCard = form.concessionCardType !== '' && form.concessionCardType !== 'none'
   return (
-    <section aria-labelledby='concession-heading' data-mps-page-template='concession-validation-state'>
-      <Heading level={2} id='concession-heading'>Concession details</Heading>
-      <InPageAlert variant='warning' title='Concession validation is simulated'>
-        <p>The MPS Figma file includes invalid, duplicate and mismatch states. This page lets you choose a mock outcome but does not validate a real card.</p>
+    <section aria-labelledby='concession-heading' data-mps-page-template='concession-source-state'>
+      <Heading level={2} id='concession-heading'>Concession card details</Heading>
+      <InPageAlert variant='info' title='Concession details are source-gated'>
+        <p>The inspected MPS source frame confirms this Yes/No question only. Card issuer, card number and backend validation remain source-gated and are not collected in this preview.</p>
       </InPageAlert>
       <RadioButtonList
-        id='concession-card-type'
-        legend='Concession card option'
+        id='has-concession-card'
+        legend='Do you have a New South Wales concession card?'
         options={[
-          { value: 'none', label: 'No concession card (mock)' },
-          { value: 'centrelink', label: 'Centrelink card (mock)' },
-          { value: 'dva', label: 'DVA card (mock)' },
+          { value: 'yes', label: 'Yes' },
+          { value: 'no', label: 'No' },
         ]}
-        value={form.concessionCardType}
-        onChange={(value) => update({
-          concessionCardType: String(value) as FormState['concessionCardType'],
-          concessionCardNumber: '',
-          concessionValidationScenario: '',
-        })}
-        hasError={attempted && !form.concessionCardType}
-        errorMessage='Select a concession card option.'
+        value={form.hasConcessionCard}
+        onChange={(value) => update({ hasConcessionCard: String(value) as FormState['hasConcessionCard'] })}
+        hasError={attempted && !form.hasConcessionCard}
+        errorMessage='Select whether the applicant has a New South Wales concession card.'
       />
-      {needsCard && (
-        <>
-          <Field id='concession-card-number' label='Concession card number' helpMessage='Mock only. Do not enter a real card number.' hasError={attempted && !form.concessionCardNumber.trim()} errorMessage='Enter the concession card number.'>
-            <Input id='concession-card-number' value={form.concessionCardNumber} onChange={(event) => update({ concessionCardNumber: event.target.value })} hasError={attempted && !form.concessionCardNumber.trim()} inputWidth='lg' />
-          </Field>
-          <InPageAlert variant='info' title='Trial-only validation state selector'>
-            <p>This control lets reviewers choose a simulated backend validation result. It is not a customer-entered concession field and does not call a real concession service.</p>
-          </InPageAlert>
-          <RadioButtonList
-            id='concession-validation-scenario'
-            legend='Mock validation result'
-            options={[
-              { value: 'valid', label: 'Card validates successfully' },
-              { value: 'invalid', label: 'Card number invalid' },
-              { value: 'mismatch', label: 'Card details do not match applicant' },
-              { value: 'duplicate', label: 'Card already used on another application' },
-            ]}
-            value={form.concessionValidationScenario}
-            onChange={(value) => update({ concessionValidationScenario: String(value) as FormState['concessionValidationScenario'] })}
-            hasError={attempted && !form.concessionValidationScenario}
-            errorMessage='Select a mock concession validation result.'
-          />
-        </>
-      )}
-      <MoreInfoDisclosure triggerText='Why these mock outcomes exist' title='Concession validation states'>
-        <p>MPS Figma inventory includes several concession error variants. This preview tests routing and content treatment only. Real backend rules, wording and recovery paths need owner confirmation.</p>
+      <MoreInfoDisclosure triggerText='What is still source-gated' title='Concession source boundaries'>
+        <p>Card issuer, card number, concession validation, recovery states and backend rules need designer and service-owner confirmation before they can be added to this preview.</p>
       </MoreInfoDisclosure>
       <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
     </section>
@@ -887,6 +851,7 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
             title: 'Application details',
             rows: [
               { label: 'Application type', value: appTypeLabel(form) },
+              { label: 'Permit type', value: 'Mobility parking permit', helpText: 'Source-aligned label for review only. No permit issue has occurred.' },
               { label: 'Existing permit number', value: form.permitNumber || 'Not provided', helpText: 'Customer-entered mock value. No permit lookup result is shown.' },
               { label: 'Replacement reason', value: replaceReasonLabel(form) },
             ],
@@ -895,27 +860,30 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
             id: 'mps-review-personal',
             title: 'Personal details',
             rows: [
-              { label: 'Full name', value: form.fullName },
+              { label: 'First name', value: form.firstName },
+              { label: 'Last name', value: form.lastName },
               { label: 'Date of birth', value: dateOfBirthLabel(form) },
+              { label: 'Residential address', value: addressLabel(form) },
               { label: 'Email', value: form.email },
-              { label: 'Phone', value: form.phone },
-              { label: 'Address', value: addressLabel(form) },
+              { label: 'Phone number', value: form.phone },
             ],
           },
           {
             id: 'mps-review-concession',
             title: 'Concession card details',
             rows: [
-              { label: 'Card type', value: concessionTypeLabel(form) },
-              { label: 'Concession validation result', value: concessionValidationLabel(form), helpText: 'Simulated backend result for trial review only.' },
+              { label: 'Has New South Wales concession card', value: concessionCardLabel(form) },
+              { label: 'Card issuer', value: sourceGatedConcessionValue(form), helpText: 'Source-gated. Not collected in this preview.' },
+              { label: 'Card number', value: sourceGatedConcessionValue(form), helpText: 'Source-gated. Not collected in this preview.' },
             ],
           },
           {
             id: 'mps-review-system-state',
-            title: 'Trial-only system states',
+            title: 'Trial-only stress and backend states',
             rows: [
               { label: 'Proof of identity state', value: form.poiAcknowledged ? 'Mock acknowledged' : 'Needs review', helpText: 'Static mock proof-of-identity state only.' },
               { label: 'Medical evidence status', value: evidenceLabel(form), helpText: 'No real upload, storage, scanning or assessment occurs.' },
+              { label: 'Representative/contact route', value: representativeLabel(form), helpText: 'Skeleton-only. No standalone MPS representative/contact source frame is confirmed.' },
               { label: 'Delivery route', value: deliveryLabel(form), helpText: 'Kiro stress-test route only. Not confirmed as MPS source behaviour.' },
               { label: 'Payment route', value: paymentScenarioLabel(form), helpText: 'Mock payment and routing state only. No payment provider, receipt or refund behaviour is connected.' },
             ],
@@ -930,7 +898,7 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
         onExit={onExit}
       />
       <InPageAlert variant='info' title='Mock/system state summary'>
-        <p>Evidence, concession, payment and assessment rows are trial-only state summaries. They do not prove backend validation, eligibility, payment, approval or permit issue behaviour.</p>
+        <p>Representative/contact, delivery, payment, evidence and assessment rows are trial-only or mock state summaries. They do not prove backend validation, eligibility, payment, approval or permit issue behaviour.</p>
       </InPageAlert>
       <EvidenceChecklistCard title='Evidence and validation status' items={evidenceItems(form)} />
       <AssessmentSummaryPanel title='Mock assessment summary' items={assessmentItems(form)} />
@@ -955,42 +923,36 @@ function OutcomeStep({ form, onStartAgain }: { form: FormState; onStartAgain: ()
       />
     )
   }
-  if (form.concessionCardType !== 'none' && ['invalid', 'mismatch', 'duplicate'].includes(form.concessionValidationScenario)) {
-    return (
-      <BackendErrorExamplePage
-        example={backendErrorExamples.concessionNeedsAttention}
-        onStartAgain={onStartAgain}
-      />
-    )
-  }
-
   const manual = isManualReview(form)
   return (
     <section aria-labelledby='outcome-heading' data-mps-page-template='confirmation'>
       <span id='outcome-heading' hidden>Mobility Parking Scheme outcome</span>
       <MpsConfirmationFramePreview
-        title={manual ? 'Your application has been received for manual review' : 'Your application has been submitted'}
+        title='Your application has been submitted for assessment'
         referenceNumber={manual ? 'MPS-REVIEW-000000' : 'MPS-MOCK-000000'}
         applicationDetails={[
           { label: 'Applicant', value: form.fullName },
-          { label: 'Application type', value: appTypeLabel(form) },
+          { label: 'Application', value: 'Apply for a Mobility Parking Permit' },
+          { label: 'Lodgement date', value: 'Source-gated', helpText: 'The source frame includes a lodgement date. This preview does not create a real lodgement record.' },
+          { label: 'Application type', value: appTypeLabel(form), helpText: 'Mock branch captured during the preview flow.' },
           { label: 'Outcome route', value: manual ? 'Manual review' : 'Submitted', helpText: 'Mock outcome only.' },
         ]}
         nextSteps={[
-          { id: 'assessment', content: 'Assessment timeframe is source-gated and needs service-owner confirmation.' },
-          { id: 'updates', content: 'Notification channel and timing are source-gated and need service-owner confirmation.' },
-          { id: 'issue', content: 'Permit issue and delivery steps are not confirmed in this preview.' },
+          { id: 'assessment', content: 'Source-observed assessment step: your application will be reviewed. Timing and ownership need service-owner confirmation.' },
+          { id: 'updates', content: 'Source-observed contact/payment step: further information and payment processing rules are not connected in this preview.' },
+          { id: 'service-centre', content: 'Source-observed service-centre step: any visit requirement needs service-owner confirmation.' },
+          { id: 'issue', content: 'Source-observed permit mailout step: no permit issue or delivery has occurred in this preview.' },
         ]}
         relatedContent={(
-          <section aria-labelledby='mps-confirmation-keep-record-heading'>
-            <Heading level={3} id='mps-confirmation-keep-record-heading'>Keep a record</Heading>
-            <p>This is a source-gated confirmation placeholder. No real receipt, permit, approval record or payment record has been issued.</p>
+          <section aria-labelledby='mps-confirmation-return-cards-heading'>
+            <Heading level={3} id='mps-confirmation-return-cards-heading'>Return expired or replaced cards</Heading>
+            <p>Source-observed return-card instructions and fine warnings require service-owner confirmation before they can be treated as operational guidance.</p>
           </section>
         )}
         onStartAgain={onStartAgain}
       />
       <InPageAlert variant='info' title='Trial boundary'>
-        <p>No approval, permit issue, payment receipt, eligibility decision or concession validation has occurred.</p>
+        <p>Source-observed confirmation content is shown for review only. No approval, permit issue, payment receipt, eligibility decision, lodgement record or concession validation has occurred.</p>
       </InPageAlert>
     </section>
   )
@@ -1000,7 +962,7 @@ function evidenceItems(form: FormState) {
   return [
     { id: 'identity', label: 'Proof of identity', status: form.poiAcknowledged ? 'provided' as const : 'needs-review' as const, description: 'Static mock state only.' },
     { id: 'medical', label: 'Medical evidence', status: form.medicalEvidenceMethod === 'uploaded' ? 'provided' as const : 'needs-review' as const, description: evidenceLabel(form) },
-    { id: 'concession', label: 'Concession evidence', status: form.concessionCardType === 'none' ? 'not-required' as const : form.concessionValidationScenario === 'valid' ? 'provided' as const : 'needs-review' as const, description: concessionValidationLabel(form) },
+    { id: 'concession', label: 'Concession evidence', status: form.hasConcessionCard === 'yes' ? 'needs-review' as const : 'not-required' as const, description: concessionCardLabel(form) },
   ]
 }
 
@@ -1009,7 +971,7 @@ function assessmentItems(form: FormState) {
     { label: 'Eligibility decision', value: 'Not assessed', tone: 'warning' as const },
     { label: 'Identity proofing', value: form.poiAcknowledged ? 'Mock acknowledged' : 'Needs review', tone: form.poiAcknowledged ? 'good' as const : 'warning' as const },
     { label: 'Medical evidence', value: form.medicalEvidenceMethod === 'uploaded' ? 'Mock provided' : 'Manual review likely', tone: form.medicalEvidenceMethod === 'uploaded' ? 'good' as const : 'warning' as const },
-    { label: 'Concession validation', value: concessionValidationLabel(form), tone: form.concessionValidationScenario === 'valid' || form.concessionCardType === 'none' ? 'good' as const : form.concessionValidationScenario ? 'error' as const : 'neutral' as const },
+    { label: 'Concession card details', value: concessionCardLabel(form), tone: form.hasConcessionCard === 'yes' ? 'warning' as const : 'neutral' as const },
     { label: 'Route after submission', value: isManualReview(form) ? 'Manual review' : 'Standard mock submission', tone: isManualReview(form) ? 'warning' as const : 'good' as const },
   ]
 }
@@ -1036,19 +998,15 @@ function replaceReasonLabel(form: FormState) {
   return 'Not selected'
 }
 
-function concessionTypeLabel(form: FormState) {
-  if (form.concessionCardType === 'centrelink') return 'Centrelink'
-  if (form.concessionCardType === 'dva') return 'DVA'
-  if (form.concessionCardType === 'none') return 'None'
+function concessionCardLabel(form: FormState) {
+  if (form.hasConcessionCard === 'yes') return 'Yes'
+  if (form.hasConcessionCard === 'no') return 'No'
   return 'Not selected'
 }
 
-function concessionValidationLabel(form: FormState) {
-  if (form.concessionCardType === 'none') return 'Not required'
-  if (form.concessionValidationScenario === 'valid') return 'Valid in mock scenario'
-  if (form.concessionValidationScenario === 'invalid') return 'Invalid in mock scenario'
-  if (form.concessionValidationScenario === 'mismatch') return 'Details mismatch in mock scenario'
-  if (form.concessionValidationScenario === 'duplicate') return 'Duplicate in mock scenario'
+function sourceGatedConcessionValue(form: FormState) {
+  if (form.hasConcessionCard === 'yes') return 'Source-gated'
+  if (form.hasConcessionCard === 'no') return 'Not applicable'
   return 'Not selected'
 }
 
@@ -1069,6 +1027,12 @@ function paymentScenarioLabel(form: FormState) {
   if (form.paymentScenario === 'failed') return 'Mock payment fails'
   if (form.paymentScenario === 'cancelled') return 'Mock payment is cancelled'
   if (form.paymentScenario === 'manual-review') return 'Manual review route'
+  return 'Not selected'
+}
+
+function representativeLabel(form: FormState) {
+  if (form.hasRepresentative === 'yes') return 'Representative recorded in skeleton-only preview'
+  if (form.hasRepresentative === 'no') return 'No representative'
   return 'Not selected'
 }
 
