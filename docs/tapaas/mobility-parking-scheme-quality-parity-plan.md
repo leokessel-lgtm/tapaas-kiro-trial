@@ -248,6 +248,18 @@ Created review artefact:
 
 The review pack separates `SOURCE_CONFIRMED`, `SOURCE_GATED`, `MOCK_BE_STATE`, `TRIAL_ONLY`, `DEFERRED` and `REUSABILITY_GATED` items. It also repeats the non-claims around source parity, production readiness, WCAG/accessibility compliance, real backend/API processing, real approval/permit/payment/concession behaviour and reusable TaPaaS rule promotion.
 
+## Slice 9B status
+
+Slice 9B adds a docs-only row-by-row audit before any further MPS runtime patching. It does not change runtime code, tests, Storybook, acceptance-manifest entries, package files, lockfiles, Track 2 files, Community Venue files or shared Service NSW chrome.
+
+Created audit artefact:
+
+- [MPS source-informed row-by-row audit](./mps-source-informed-row-by-row-audit.md)
+
+The audit compares the current runtime against source nodes `0:33144`, `0:33185`, `0:33222`, `0:17387`, `0:17405`, `0:17316`, `0:17333`, `0:17357` and `0:17370`. It records concession as the highest-risk source gap because the inspected source page uses a simple NSW concession card Yes/No question while the runtime expands that area into card type, card number and mock validation result.
+
+Slice 9B does not claim source parity, production readiness, accessibility compliance, GEL approval, TaPaaS approval, final copy approval, backend integration or reusable rule readiness.
+
 ## Source access report
 
 File key: `MzngfrwuAT3YI3JRxTgTTo`
