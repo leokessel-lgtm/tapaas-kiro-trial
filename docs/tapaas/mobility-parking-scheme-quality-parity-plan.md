@@ -145,6 +145,36 @@ Left untouched:
 - Review and confirmation content remain deferred to later template-backed slices.
 - No MPS-specific backend/API rule is promoted to reusable TaPaaS guidance from this slice alone.
 
+## Slice 5A status
+
+Slice 5A rebuilds the MPS review page structure within the existing preview frame. It does not rebuild confirmation, introduce backend calls, add Storybook stories, change the acceptance manifest, or claim source parity.
+
+Review issues audited:
+
+- Review content should be summary-style, not editable-form-style.
+- Customer-entered answers should be separated from mock/backend/system-derived results.
+- Concession validation should remain clearly simulated backend state.
+- Evidence status should not imply real upload, storage, scanning or assessment.
+- Existing permit lookup/result state should remain separate from the customer-entered permit number.
+- Review edit actions should not appear unless they route to existing editable pages or sections.
+
+Patched in Slice 5A:
+
+- Review sections now separate application details, personal details, concession card details and `Trial-only system states`.
+- Existing permit number is labelled as a customer-entered mock value with no lookup result.
+- Concession validation result is labelled as a simulated backend result for trial review only.
+- Medical evidence, delivery and payment review rows are grouped as trial-only system states with mock-only help text.
+- Removed non-routing review edit buttons from the MPS skeleton review page.
+- Added focused tests for review summary-style structure, trial-only state grouping, concession validation separation and absence of non-routing edit buttons.
+
+Still source-gated or deferred:
+
+- Source-confirmed review section order, final row labels, fees and declarations.
+- Section-level edit routing from review back to editable pages.
+- Existing permit lookup result handling.
+- Real concession validation result handling.
+- Confirmation page rebuild.
+
 ## Source access report
 
 File key: `MzngfrwuAT3YI3JRxTgTTo`

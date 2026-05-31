@@ -185,6 +185,14 @@ describe('MobilityParkingPermitSkeleton', () => {
     expect(screen.getByText('Mock/system state summary')).toBeInTheDocument()
     expect(screen.getByText('Evidence, concession, payment and assessment rows are trial-only state summaries. They do not prove backend validation, eligibility, payment, approval or permit issue behaviour.')).toBeInTheDocument()
     expect(screen.getByText('Mock application fee')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Trial-only system states' })).toBeInTheDocument()
+    expect(screen.getByText('Concession validation result')).toBeInTheDocument()
+    expect(screen.getByText('Simulated backend result for trial review only.')).toBeInTheDocument()
+    expect(screen.getByText('Medical evidence status')).toBeInTheDocument()
+    expect(screen.getByText('No real upload, storage, scanning or assessment occurs.')).toBeInTheDocument()
+    expect(screen.getByText('Payment route')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Edit Application details' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('group', { name: 'Mock validation result' })).not.toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'Submit mock application' }))
 

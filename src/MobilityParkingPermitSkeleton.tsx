@@ -888,7 +888,7 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
             title: 'Application details',
             rows: [
               { label: 'Application type', value: appTypeLabel(form) },
-              { label: 'Existing permit', value: form.permitNumber || 'Not provided' },
+              { label: 'Existing permit number', value: form.permitNumber || 'Not provided', helpText: 'Customer-entered mock value. No permit lookup result is shown.' },
               { label: 'Replacement reason', value: replaceReasonLabel(form) },
             ],
           },
@@ -908,8 +908,17 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
             title: 'Concession card details',
             rows: [
               { label: 'Card type', value: concessionTypeLabel(form) },
-              { label: 'Mock validation', value: concessionValidationLabel(form) },
-              { label: 'Delivery method', value: deliveryLabel(form) },
+              { label: 'Concession validation result', value: concessionValidationLabel(form), helpText: 'Simulated backend result for trial review only.' },
+            ],
+          },
+          {
+            id: 'mps-review-system-state',
+            title: 'Trial-only system states',
+            rows: [
+              { label: 'Proof of identity state', value: form.poiAcknowledged ? 'Mock acknowledged' : 'Needs review', helpText: 'Static mock proof-of-identity state only.' },
+              { label: 'Medical evidence status', value: evidenceLabel(form), helpText: 'No real upload, storage, scanning or assessment occurs.' },
+              { label: 'Delivery route', value: deliveryLabel(form), helpText: 'Kiro stress-test route only. Not confirmed as MPS source behaviour.' },
+              { label: 'Payment route', value: paymentScenarioLabel(form), helpText: 'Mock payment and routing state only. No payment provider, receipt or refund behaviour is connected.' },
             ],
           },
         ]}
@@ -917,7 +926,6 @@ function ReviewStep({ form, onBack, onSubmit, onExit }: { form: FormState; onBac
           'I declare that the information provided is true and correct.',
           'I understand this prototype does not assess eligibility or submit to a real service.',
         ]}
-        onEdit={() => undefined}
         onBack={onBack}
         onSubmit={onSubmit}
         onExit={onExit}
@@ -1052,6 +1060,14 @@ function evidenceLabel(form: FormState) {
 function deliveryLabel(form: FormState) {
   if (form.deliveryMethod === 'post') return 'Post to residential address'
   if (form.deliveryMethod === 'service-centre') return 'Collect at a service centre'
+  return 'Not selected'
+}
+
+function paymentScenarioLabel(form: FormState) {
+  if (form.paymentScenario === 'success') return 'Mock payment succeeds'
+  if (form.paymentScenario === 'failed') return 'Mock payment fails'
+  if (form.paymentScenario === 'cancelled') return 'Mock payment is cancelled'
+  if (form.paymentScenario === 'manual-review') return 'Manual review route'
   return 'Not selected'
 }
 
