@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import type { ReactNode } from 'react'
 import { AccessibleMarketPermitSkeleton } from '../AccessibleMarketPermitSkeleton'
+import { BuskingPermitSkeleton } from '../BuskingPermitSkeleton'
 import { TrialPermitSkeleton } from '../TrialPermitSkeleton'
 import './storybook.css'
 
@@ -9,7 +10,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Clara-aligned transaction examples rendered for Storybook review. These stories are preview-only and do not claim production readiness, accessibility compliance, WCAG compliance, GEL approval, TaPaaS approval, privacy approval, legal approval, policy approval or governance clearance.',
+        component: 'TaPaaS transaction examples rendered for Storybook review using the committed Clara/TaPaaS rule layer. These stories are preview-only and do not claim production readiness, accessibility compliance, WCAG compliance, GEL approval, TaPaaS approval, privacy approval, legal approval, policy approval or governance clearance.',
       },
     },
   },
@@ -82,6 +83,34 @@ export const AccessibleMarketPermitClaraAligned: Story = {
         </ul>
       </TransactionBoundaryNote>
       <AccessibleMarketPermitSkeleton />
+    </div>
+  ),
+}
+
+
+export const BuskingPermitRuleGeneratedPrototype: Story = {
+  name: 'Busking Permit - Rule-generated Prototype',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Prompt-generated, submitted-for-review TaPaaS transaction prototype using the committed Clara/TaPaaS rule layer. Uses a 5-step progress stepper with confirmation excluded.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-board'>
+      <TransactionBoundaryNote transactionType='Busking Permit - rule-generated prototype'>
+        <ul>
+          <li>Prompt-generated prototype using the Clara/TaPaaS rule layer. It has not been reviewed or approved by Clara, TaPaaS, GEL, legal, privacy, accessibility or governance owners.</li>
+          <li>Longer staged flow with stable stepper labels and no confirmation step in the stepper.</li>
+          <li>Privacy and terms first.</li>
+          <li>Authenticated personal details are read-only playback from Account/Profile.</li>
+          <li>Performance details and additional details capture transaction-specific information.</li>
+          <li>Declaration sits on the Additional details page.</li>
+          <li>Confirmation is submitted-for-review with genuine next steps.</li>
+        </ul>
+      </TransactionBoundaryNote>
+      <BuskingPermitSkeleton />
     </div>
   ),
 }

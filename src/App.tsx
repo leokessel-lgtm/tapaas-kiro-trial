@@ -4,8 +4,9 @@ import { TrialPermitSkeleton } from './TrialPermitSkeleton'
 import { AccessibleMarketPermitSkeleton } from './AccessibleMarketPermitSkeleton'
 import { CommunityVenueBookingSkeleton } from './CommunityVenueBookingSkeleton'
 import { MobilityParkingPermitSkeleton } from './MobilityParkingPermitSkeleton'
+import { BuskingPermitSkeleton } from './BuskingPermitSkeleton'
 
-type ActiveSkeleton = 'permit' | 'market' | 'venue' | 'mps'
+type ActiveSkeleton = 'permit' | 'market' | 'venue' | 'mps' | 'busking'
 
 const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; subtitle: string }> = {
   permit: {
@@ -28,6 +29,11 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
     title: 'Mobility Parking Scheme permit',
     subtitle: 'Apply for a Mobility Parking Scheme permit and receive a submitted application receipt.',
   },
+  busking: {
+    label: 'Busking permit prototype',
+    title: 'Apply for a busking permit',
+    subtitle: 'Apply for permission to perform busking in a public place and receive a submitted application receipt.',
+  },
 }
 
 const switcherOptions: { id: ActiveSkeleton; label: string }[] = [
@@ -35,6 +41,7 @@ const switcherOptions: { id: ActiveSkeleton; label: string }[] = [
   { id: 'market', label: 'Accessible market permit' },
   { id: 'venue', label: 'Community venue booking' },
   { id: 'mps', label: 'Mobility Parking Scheme' },
+  { id: 'busking', label: 'Busking permit prototype' },
 ]
 
 export function App() {
@@ -73,6 +80,7 @@ export function App() {
       {active === 'market' && <AccessibleMarketPermitSkeleton />}
       {active === 'venue' && <CommunityVenueBookingSkeleton />}
       {active === 'mps' && <MobilityParkingPermitSkeleton />}
+      {active === 'busking' && <BuskingPermitSkeleton />}
     </ServiceNSWChrome>
   )
 }
