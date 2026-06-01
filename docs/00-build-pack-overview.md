@@ -52,6 +52,7 @@ The pack is intended to help teams build faster and more safely during the trial
 |------|---------|
 | Working preview app | TaPaaS transaction skeleton and local preview components |
 | `docs/tapaas/` | TaPaaS source inventory, component registry, page registry and evidence log |
+| `docs/tapaas/designer-package/` | Designer-facing Clara/TaPaaS transaction rules package, brief templates, review checklists and example guides |
 | `docs/` folder | Engineer guides for getting to production-ready pages |
 | `.kiro/steering/` | Content, safety and TaPaaS rules loaded automatically into Kiro |
 
