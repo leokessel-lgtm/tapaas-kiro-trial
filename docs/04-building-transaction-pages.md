@@ -7,7 +7,7 @@ This page is older generic build guidance for local transaction pages. For curre
 - `docs/tapaas/designer-package/README.md`
 - `docs/tapaas/12-clara-tapaas-transaction-rules-v01.md`
 
-Only `TrialPermitSkeleton` and `AccessibleMarketPermitSkeleton` are currently Clara-aligned runtime examples. Treat older generic, MPS, Community Venue and stress-test skeletons as legacy/pre-Clara, source-bounded or development examples unless a later slice explicitly aligns them.
+`TrialPermitSkeleton`, `AccessibleMarketPermitSkeleton` and `MobilityParkingPermitSkeleton` are currently Clara-aligned runtime examples. `CommunityVenueBookingSkeleton` is being aligned in Slice 9B. Treat older generic and stress-test skeletons as legacy/pre-Clara, source-bounded or development examples unless a later slice explicitly aligns them.
 
 ## Page structure
 

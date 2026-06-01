@@ -15,7 +15,7 @@ For current Clara/TaPaaS transaction rules, start with:
 - `docs/tapaas/12-clara-tapaas-transaction-rules-v01.md`
 - `docs/tapaas/designer-package/README.md`
 
-As of Slice 7A, only Trial Permit and Accessible Market Permit are Clara-aligned runtime examples. MPS remains a legacy/pre-Clara evidence surface with source-frame-aligned areas, but it is not yet Clara/TaPaaS-rule aligned as a transaction.
+As of commit `3504298`, MPS is a Clara-aligned runtime example. This matrix still records MPS source-frame, Storybook, test and evidence coverage, so status values such as `aligned` continue to mean source-frame/story/test/evidence connection rather than formal approval, production readiness or accessibility compliance.
 
 Status values:
 

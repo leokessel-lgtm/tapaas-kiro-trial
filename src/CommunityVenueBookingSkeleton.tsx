@@ -1,59 +1,66 @@
-import { useState, useCallback } from 'react'
-import { useTransactionStep } from './useTransactionStep'
+import { useCallback, useState } from 'react'
+import { type StepError, useTransactionStep } from './useTransactionStep'
 import {
+  Button,
   Checkbox,
   ErrorSummary,
   Field,
   Heading,
-  InPageAlert,
   Input,
   Select,
   Textarea,
   MoreInfoDisclosure,
   Accordion,
-  TextLink,
 } from './gel'
 import {
   ConfirmationHeader,
-  DeclarationReview,
+  ConditionalQuestionPanel,
+  DetailsCard,
   ExitModal,
-  ReviewFeesCard,
+  PrivacyCardPreview,
   ReviewInfoCard,
   TransactionCtaGroup,
   TransactionSummaryCard,
-  ConditionalQuestionPanel,
 } from './tapaas-preview'
 
 type VenueStep =
   | 'privacy'
-  | 'applicant'
+  | 'details'
   | 'venue'
   | 'accessibility'
   | 'supporting'
-  | 'declaration'
   | 'review'
   | 'confirmation'
 
-const stepOrder: VenueStep[] = [
-  'privacy', 'applicant', 'venue', 'accessibility', 'supporting', 'declaration', 'review', 'confirmation',
-]
+type VenueStage = Exclude<VenueStep, 'confirmation'>
 
-const stepLabels: Record<VenueStep, string> = {
+const stepOrder: VenueStep[] = ['privacy', 'details', 'venue', 'accessibility', 'supporting', 'review', 'confirmation']
+const stepperStages: VenueStage[] = ['privacy', 'details', 'venue', 'accessibility', 'supporting', 'review']
+
+const transactionName = 'Community venue booking'
+
+const stageLabels: Record<VenueStage, string> = {
   privacy: 'Privacy',
-  applicant: 'Applicant details',
+  details: 'Your details',
   venue: 'Venue booking details',
   accessibility: 'Accessibility and equipment',
   supporting: 'Supporting information',
-  declaration: 'Declaration',
   review: 'Review',
-  confirmation: 'Confirmation',
+}
+
+const accountProfile = {
+  fullName: 'Alex Citizen',
+  email: 'alex.citizen@example.test',
+}
+
+const receipt = {
+  referenceNumber: 'VENUE-000000',
+  transactionDate: '1 June 2026',
 }
 
 interface FormState {
-  privacyAgreed: boolean
-  fullName: string
-  email: string
-  phone: string
+  termsAccepted: boolean
+  contactPhone: string
   venueType: 'meeting-room' | 'hall' | 'outdoor-space' | ''
   bookingPurpose: string
   eventDay: string
@@ -66,10 +73,8 @@ interface FormState {
 }
 
 const initialState: FormState = {
-  privacyAgreed: false,
-  fullName: '',
-  email: '',
-  phone: '',
+  termsAccepted: false,
+  contactPhone: '',
   venueType: '',
   bookingPurpose: '',
   eventDay: '',
@@ -88,164 +93,256 @@ export function CommunityVenueBookingSkeleton() {
     setForm((prev) => ({ ...prev, ...patch }))
   }
 
-  const getErrors = useCallback((s: VenueStep) => errorsForStep(s, form), [form])
-  const { step, setStep, attempted, setAttempted, errors, errorSummaryRef, exitModalOpen, openExitModal, closeExitModal, goBack, goNext, reset } = useTransactionStep(stepOrder, 'confirmation', getErrors)
+  const getErrors = useCallback((currentStep: VenueStep) => errorsForStep(currentStep, form), [form])
+  const {
+    step,
+    setStep,
+    setAttempted,
+    errors,
+    errorSummaryRef,
+    exitModalOpen,
+    openExitModal,
+    closeExitModal,
+    goBack,
+    goNext,
+    reset,
+  } = useTransactionStep(stepOrder, 'confirmation', getErrors)
 
-  function goToReviewSource(targetStep: Exclude<VenueStep, 'privacy' | 'review' | 'confirmation'>) {
+  function goToReviewSource(targetStep: Exclude<VenueStep, 'review' | 'confirmation'>) {
     setAttempted(false)
     setStep(targetStep)
   }
 
+  function startAgain() {
+    reset()
+    setForm(initialState)
+  }
+
   return (
     <div>
-      <div className='tapaas-trial-banner'>
-        <strong>TaPaaS v0.3 trial skeleton — Community venue booking.</strong>
-        <p style={{ margin: '0.25rem 0 0' }}>
-          This is a non-production build-assist example using mock data only. Privacy, legal, fee and processing details need owner confirmation.
-        </p>
-      </div>
-
-      {step !== 'confirmation' && (
-        <p aria-live='polite' style={{ color: 'var(--gel-color-text-grey)', marginTop: 0 }}>
-          Step {stepOrder.indexOf(step) + 1} of 8: {stepLabels[step]}
-        </p>
-      )}
+      {step !== 'confirmation' && <VenueFormHeader step={step} />}
 
       <ErrorSummary ref={errorSummaryRef} errors={errors} />
 
-      {step === 'privacy' && <PrivacyStep form={form} attempted={attempted} update={update} onContinue={goNext} onExit={openExitModal} />}
-      {step === 'applicant' && <ApplicantStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
-      {step === 'venue' && <VenueStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
-      {step === 'accessibility' && <AccessibilityStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
-      {step === 'supporting' && <SupportingStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
-      {step === 'declaration' && <DeclarationStep form={form} attempted={attempted} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
-      {step === 'review' && <ReviewStep form={form} onBack={goBack} onEditStep={goToReviewSource} onSubmit={goNext} onExit={openExitModal} />}
-      {step === 'confirmation' && <ConfirmationStep form={form} onStartAgain={() => { reset(); setForm(initialState) }} />}
+      {step === 'privacy' && <PrivacyStep form={form} errors={errors} update={update} onContinue={goNext} onExit={openExitModal} />}
+      {step === 'details' && <YourDetailsStep form={form} errors={errors} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
+      {step === 'venue' && <VenueBookingStep form={form} errors={errors} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
+      {step === 'accessibility' && <AccessibilityStep form={form} errors={errors} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
+      {step === 'supporting' && <SupportingStep form={form} errors={errors} update={update} onBack={goBack} onContinue={goNext} onExit={openExitModal} />}
+      {step === 'review' && <ReviewStep form={form} errors={errors} update={update} onBack={goBack} onEditStep={goToReviewSource} onSubmit={goNext} onExit={openExitModal} />}
+      {step === 'confirmation' && <ConfirmationStep onStartAgain={startAgain} />}
 
       <ExitModal
         isOpen={exitModalOpen}
         onContinue={closeExitModal}
-        onExit={() => { reset(); setForm(initialState) }}
-        description='This preview does not save draft applications. If you exit, the mock form data will be cleared.'
+        onExit={startAgain}
+        description='If you exit, the information entered in this booking request will be cleared.'
       />
     </div>
   )
 }
 
-// --- Validation ---
+function VenueFormHeader({ step }: { step: VenueStage }) {
+  return (
+    <header
+      aria-labelledby={`${step}-heading`}
+      style={{
+        background: '#f4f4f4',
+        borderBottom: '1px solid var(--gel-color-border)',
+        borderTop: '1px solid var(--gel-color-border)',
+        marginBottom: '1.5rem',
+        padding: '1.5rem',
+      }}
+    >
+      <VenueProgressStepper currentStage={step} />
+      <p style={{ color: 'var(--gel-color-text-grey)', fontSize: '0.875rem', fontWeight: 700, margin: '0 0 0.25rem' }}>
+        {transactionName}
+      </p>
+      <Heading level={2} id={`${step}-heading`} style={{ marginBottom: 0 }}>
+        {stageLabels[step]}
+      </Heading>
+    </header>
+  )
+}
+
+function VenueProgressStepper({ currentStage }: { currentStage: VenueStage }) {
+  const currentIndex = stepperStages.indexOf(currentStage)
+
+  return (
+    <nav aria-label='Booking progress' data-gelweb-component='progress-stepper' className='gel-progress-stepper'>
+      <ol className='gel-progress-stepper__list'>
+        {stepperStages.map((stage, index) => {
+          const status = index < currentIndex ? 'completed' : index === currentIndex ? 'current' : 'todo'
+
+          return (
+            <li
+              key={stage}
+              className={`gel-progress-stepper__step gel-progress-stepper__step--${status}`}
+              aria-current={status === 'current' ? 'step' : undefined}
+            >
+              <div className='gel-progress-stepper__position' aria-hidden='true'>
+                {status === 'completed' ? (
+                  <svg width='14' height='14' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'>
+                    <path d='M13.17 1.86c.57-.68 1.57-.77 2.25-.2.64.53.76 1.45.31 2.12l-.1.13-8.5 10.23c-.56.67-1.54.76-2.21.24l-.13-.11-4.3-4.18c-.63-.62-.65-1.63-.04-2.26.58-.59 1.5-.64 2.14-.14l.12.11 3.07 2.98 7.4-8.9z' fill='currentColor' />
+                  </svg>
+                ) : (
+                  <span className='gel-progress-stepper__number'>{index + 1}</span>
+                )}
+              </div>
+              <span className='gel-progress-stepper__label'>
+                {status !== 'todo' && <span className='gel-sr-only'>{status === 'completed' ? 'Completed: ' : 'Current: '}</span>}
+                <span>{stageLabels[stage]}</span>
+              </span>
+            </li>
+          )
+        })}
+      </ol>
+    </nav>
+  )
+}
+
 function errorsForStep(step: VenueStep, form: FormState) {
-  const errs: { id: string; text: string }[] = []
-  if (step === 'privacy' && !form.privacyAgreed) {
-    errs.push({ id: 'privacy-confirmation', text: 'Confirm that you have read the privacy and terms information' })
+  const errs: StepError[] = []
+
+  if (step === 'privacy' && !form.termsAccepted) {
+    errs.push({ id: 'terms-and-conditions', text: 'Accept the Terms and Conditions to continue' })
   }
-  if (step === 'applicant') {
-    if (!form.fullName.trim()) errs.push({ id: 'full-name', text: 'Enter your full name' })
-    if (!form.email.trim() || !form.email.includes('@') || !form.email.split('@')[1]?.includes('.')) errs.push({ id: 'email', text: 'Enter a valid email address' })
-    if (!form.phone.trim()) errs.push({ id: 'phone', text: 'Enter your phone number' })
+
+  if (step === 'details' && !form.contactPhone.trim()) {
+    errs.push({ id: 'contact-phone', text: 'Enter a contact phone number' })
   }
+
   if (step === 'venue') {
     if (!form.venueType) errs.push({ id: 'venue-type', text: 'Select a venue type' })
     if (!form.bookingPurpose.trim()) errs.push({ id: 'booking-purpose', text: 'Enter the booking purpose' })
-    if (!form.eventDay || !form.eventMonth || !form.eventYear) errs.push({ id: 'event-day', text: 'Enter the booking date' })
-    else {
-      const d = parseInt(form.eventDay), m = parseInt(form.eventMonth), y = parseInt(form.eventYear)
-      if (d < 1 || d > 31 || m < 1 || m > 12 || y < 2024 || y > 2030) errs.push({ id: 'event-day', text: 'Enter a valid booking date' })
+    if (!form.eventDay || !form.eventMonth || !form.eventYear) {
+      errs.push({ id: 'event-day', text: 'Enter the booking date' })
+    } else {
+      const day = Number.parseInt(form.eventDay, 10)
+      const month = Number.parseInt(form.eventMonth, 10)
+      const year = Number.parseInt(form.eventYear, 10)
+      if (day < 1 || day > 31 || month < 1 || month > 12 || year < 2026 || year > 2030) {
+        errs.push({ id: 'event-day', text: 'Enter a valid booking date' })
+      }
     }
   }
+
   if (step === 'accessibility') {
-    if (!form.needsSupport) errs.push({ id: 'needs-support', text: 'Select whether you need accessibility or equipment support' })
+    if (!form.needsSupport) errs.push({ id: 'needs-support', text: 'Select whether accessibility or equipment support is needed' })
     if (form.needsSupport === 'yes' && !form.supportDetails.trim()) errs.push({ id: 'support-details', text: 'Describe the support needed' })
   }
-  if (step === 'supporting') {
-    if (!form.additionalInfo.trim()) errs.push({ id: 'additional-info', text: 'Provide additional information about your booking' })
+
+  if (step === 'supporting' && !form.additionalInfo.trim()) {
+    errs.push({ id: 'additional-info', text: 'Provide additional information about the booking' })
   }
-  if (step === 'declaration' && !form.declarationAccepted) {
-    errs.push({ id: 'declaration-accepted', text: 'Accept the declaration to continue' })
+
+  if (step === 'review' && !form.declarationAccepted) {
+    errs.push({ id: 'declaration-accepted', text: 'Accept the declaration to submit' })
   }
+
   return errs
 }
 
-// --- Page components ---
 interface StepProps {
   form: FormState
-  attempted: boolean
+  errors: StepError[]
   update: (patch: Partial<FormState>) => void
   onBack?: () => void
   onContinue: () => void
   onExit: () => void
 }
 
-function PrivacyStep({ form, attempted, update, onContinue, onExit }: StepProps) {
+function hasStepError(errors: StepError[], id: string) {
+  return errors.some((error) => error.id === id)
+}
+
+function PrivacyStep({ form, errors, update, onContinue, onExit }: StepProps) {
+  const termsError = hasStepError(errors, 'terms-and-conditions')
+
   return (
-    <section aria-labelledby='privacy-heading'>
-      <Heading level={2} id='privacy-heading'>Privacy information</Heading>
-      <InPageAlert variant='info' title='Owner confirmation required'>
-        <p>Replace these placeholders with the confirmed privacy collection notice, terms and notification wording for the community venue booking service.</p>
-      </InPageAlert>
-      <section aria-labelledby='privacy-collection-notice-heading'>
-        <Heading level={3} id='privacy-collection-notice-heading'>Privacy collection notice</Heading>
-        <p>We collect your personal information to process your community venue booking. This information may be shared with [confirmed disclosure recipients]. For more information, see [confirmed privacy policy URL].</p>
-      </section>
-      <section aria-labelledby='terms-and-conditions-heading'>
-        <Heading level={3} id='terms-and-conditions-heading'>Terms and conditions</Heading>
-        <p>Terms, conditions and consent wording for this booking must be supplied by the service owner before real use.</p>
-      </section>
-      <section aria-labelledby='notifications-heading'>
-        <Heading level={3} id='notifications-heading'>Notifications</Heading>
-        <p>Notification channels, timing and content are placeholders in this preview and need owner confirmation.</p>
-      </section>
-      <Checkbox
-        id='privacy-confirmation'
-        label='I have read and understand the privacy and terms information.'
-        checked={form.privacyAgreed}
-        onChange={(v) => update({ privacyAgreed: Boolean(v) })}
-        hasError={attempted && !form.privacyAgreed}
-        errorMessage='Confirm that you have read the privacy and terms information.'
+    <section aria-labelledby='privacy-heading' data-venue-page-template='privacy-and-terms'>
+      <PrivacyCardPreview
+        title='Privacy and terms'
+        description='Read the Privacy Collection Notice and Terms and Conditions before continuing.'
+        showAcknowledgement={false}
+        sections={[
+          {
+            id: 'community-venue-privacy-collection-notice',
+            title: 'Privacy Collection Notice',
+            content: <p>Read the Privacy Collection Notice for this service before continuing.</p>,
+          },
+          {
+            id: 'community-venue-terms-and-conditions',
+            title: 'Terms and Conditions',
+            content: <p>Read the Terms and Conditions for this booking request before continuing.</p>,
+          },
+          {
+            id: 'community-venue-notifications-receipt',
+            title: 'Notifications and receipt',
+            content: <p>We will send the submitted booking receipt to the email address shown in your profile.</p>,
+          },
+        ]}
       />
-      <TransactionCtaGroup onContinue={onContinue} onExit={onExit} continueLabel='Continue' />
+      <Checkbox
+        id='terms-and-conditions'
+        label='I agree to the Terms and Conditions.'
+        checked={form.termsAccepted}
+        onChange={(value) => update({ termsAccepted: Boolean(value) })}
+        hasError={termsError}
+        errorMessage='Accept the Terms and Conditions to continue.'
+      />
+      <TransactionCtaGroup onContinue={onContinue} onExit={onExit} />
     </section>
   )
 }
 
-function ApplicantStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  const nameErr = attempted && !form.fullName.trim()
-  const emailErr = attempted && (!form.email.trim() || !form.email.includes('@') || !form.email.split('@')[1]?.includes('.'))
-  const phoneErr = attempted && !form.phone.trim()
+function YourDetailsStep({ form, errors, update, onBack, onContinue, onExit }: StepProps) {
+  const phoneError = hasStepError(errors, 'contact-phone')
+
   return (
-    <section aria-labelledby='applicant-heading'>
-      <Heading level={2} id='applicant-heading'>Applicant details</Heading>
-      <Field id='full-name' label='Full name' helpMessage='Enter your first and last name.' hasError={nameErr} errorMessage='Enter your full name.'>
-        <Input id='full-name' value={form.fullName} onChange={(e) => update({ fullName: e.target.value })} hasError={nameErr} inputWidth='xl' autoComplete='name' />
-      </Field>
-      <Field id='email' label='Email address' hasError={emailErr} errorMessage='Enter a valid email address.'>
-        <Input id='email' type='email' value={form.email} onChange={(e) => update({ email: e.target.value })} hasError={emailErr} inputWidth='xl' autoComplete='email' />
-      </Field>
-      <Field id='phone' label='Phone number' hasError={phoneErr} errorMessage='Enter your phone number.'>
-        <Input id='phone' type='tel' value={form.phone} onChange={(e) => update({ phone: e.target.value })} hasError={phoneErr} inputWidth='lg' autoComplete='tel' />
+    <section aria-labelledby='details-heading' data-venue-page-template='profile-playback'>
+      <DetailsCard
+        title='Your profile details'
+        description='These details come from Account/Profile. If they are incorrect, update them in Account/Profile before continuing.'
+        statusLabel='Account/Profile'
+        rows={[
+          { label: 'Full name', value: accountProfile.fullName },
+          { label: 'Email', value: accountProfile.email },
+        ]}
+      />
+      <Field
+        id='contact-phone'
+        label='Contact phone number'
+        helpMessage='We will use this number if we need more information about this booking request.'
+        hasError={phoneError}
+        errorMessage='Enter a contact phone number.'
+      >
+        <Input id='contact-phone' type='tel' value={form.contactPhone} onChange={(event) => update({ contactPhone: event.target.value })} hasError={phoneError} inputWidth='lg' autoComplete='tel' />
       </Field>
       <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
     </section>
   )
 }
 
-function VenueStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  const typeErr = attempted && !form.venueType
-  const purposeErr = attempted && !form.bookingPurpose.trim()
-  const dateErr = attempted && (!form.eventDay || !form.eventMonth || !form.eventYear)
+function VenueBookingStep({ form, errors, update, onBack, onContinue, onExit }: StepProps) {
+  const typeError = hasStepError(errors, 'venue-type')
+  const purposeError = hasStepError(errors, 'booking-purpose')
+  const dateError = hasStepError(errors, 'event-day')
+
   return (
-    <section aria-labelledby='venue-heading'>
-      <Heading level={2} id='venue-heading'>Venue booking details</Heading>
-      <Field id='venue-type' label='Venue type' hasError={typeErr} errorMessage='Select a venue type.'>
+    <section aria-labelledby='venue-heading' data-venue-page-template='venue-booking-details'>
+      <p>All fields must be completed unless marked optional.</p>
+      <Field id='venue-type' label='Venue type' hasError={typeError} errorMessage='Select a venue type.'>
         <Select
           id='venue-type'
           value={form.venueType}
-          onChange={(e) => update({ venueType: e.target.value as FormState['venueType'] })}
-          hasError={typeErr}
+          onChange={(event) => update({ venueType: event.target.value as FormState['venueType'] })}
+          hasError={typeError}
           inputWidth='xl'
           options={[
-            { value: 'meeting-room', text: 'Meeting room (mock)' },
-            { value: 'hall', text: 'Hall (mock)' },
-            { value: 'outdoor-space', text: 'Outdoor space (mock)' },
+            { value: 'meeting-room', text: 'Meeting room' },
+            { value: 'hall', text: 'Hall' },
+            { value: 'outdoor-space', text: 'Outdoor space' },
           ]}
         />
       </Field>
@@ -254,46 +351,42 @@ function VenueStep({ form, attempted, update, onBack, onContinue, onExit }: Step
           <li>Use meeting room for small group sessions.</li>
           <li>Use hall for larger community activities.</li>
           <li>Use outdoor space for activities that need open areas.</li>
-          <li>This is mock guidance only and needs owner confirmation.</li>
         </ul>
       </MoreInfoDisclosure>
-      <Field id='booking-purpose' label='Booking purpose' hasError={purposeErr} errorMessage='Enter the booking purpose.'>
-        <Input id='booking-purpose' value={form.bookingPurpose} onChange={(e) => update({ bookingPurpose: e.target.value })} hasError={purposeErr} inputWidth='xl' />
+      <Field id='booking-purpose' label='Booking purpose' hasError={purposeError} errorMessage='Enter the booking purpose.'>
+        <Input id='booking-purpose' value={form.bookingPurpose} onChange={(event) => update({ bookingPurpose: event.target.value })} hasError={purposeError} inputWidth='xl' />
       </Field>
       <fieldset style={{ border: 'none', padding: 0, margin: '0 0 1.5rem' }}>
         <legend style={{ fontWeight: 500, fontSize: '1rem', marginBottom: '0.5rem' }}>Booking date</legend>
-        <p style={{ fontSize: '0.875rem', margin: '0 0 0.5rem', color: 'var(--gel-color-text-grey)' }}>For example, 25 12 2026</p>
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
+        <p style={{ fontSize: '0.875rem', margin: '0 0 0.5rem', color: 'var(--gel-color-text-grey)' }}>Enter the date as DD MM YYYY. For example, 25 12 2026.</p>
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           <div>
             <label htmlFor='event-day' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Day</label>
-            <Input id='event-day' value={form.eventDay} onChange={(e) => update({ eventDay: e.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={dateErr} inputWidth='xxs' maxLength={2} />
+            <Input id='event-day' value={form.eventDay} onChange={(event) => update({ eventDay: event.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={dateError} inputWidth='xxs' maxLength={2} />
           </div>
           <div>
             <label htmlFor='event-month' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Month</label>
-            <Input id='event-month' value={form.eventMonth} onChange={(e) => update({ eventMonth: e.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={dateErr} inputWidth='xxs' maxLength={2} />
+            <Input id='event-month' value={form.eventMonth} onChange={(event) => update({ eventMonth: event.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={dateError} inputWidth='xxs' maxLength={2} />
           </div>
           <div>
             <label htmlFor='event-year' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Year</label>
-            <Input id='event-year' value={form.eventYear} onChange={(e) => update({ eventYear: e.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={dateErr} inputWidth='sm' maxLength={4} />
+            <Input id='event-year' value={form.eventYear} onChange={(event) => update({ eventYear: event.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={dateError} inputWidth='sm' maxLength={4} />
           </div>
         </div>
-        {dateErr && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'var(--gel-color-error-bg)', padding: '0.5rem 1rem', marginTop: '0.5rem', fontWeight: 700, fontSize: '1rem' }}>
-            <span style={{ color: 'var(--gel-color-error)' }}>⊘</span> Enter the booking date.
-          </div>
-        )}
+        {dateError && <p className='gel-field__error' id='event-day-error'>Enter the booking date.</p>}
       </fieldset>
       <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
     </section>
   )
 }
 
-function AccessibilityStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  const supportErr = attempted && !form.needsSupport
-  const detailsErr = attempted && form.needsSupport === 'yes' && !form.supportDetails.trim()
+function AccessibilityStep({ form, errors, update, onBack, onContinue, onExit }: StepProps) {
+  const supportError = hasStepError(errors, 'needs-support')
+  const detailsError = hasStepError(errors, 'support-details')
+  const charLimit = 500
+
   return (
-    <section aria-labelledby='accessibility-heading'>
-      <Heading level={2} id='accessibility-heading'>Accessibility and equipment</Heading>
+    <section aria-labelledby='accessibility-heading' data-venue-page-template='accessibility-and-equipment'>
       <ConditionalQuestionPanel
         id='needs-support'
         legend='Do you need accessibility or equipment support?'
@@ -302,41 +395,38 @@ function AccessibilityStep({ form, attempted, update, onBack, onContinue, onExit
           { value: 'yes', label: 'Yes' },
         ]}
         value={form.needsSupport}
-        onChange={(v) => update({ needsSupport: v as FormState['needsSupport'] })}
+        onChange={(value) => update({ needsSupport: value as FormState['needsSupport'], supportDetails: value === 'yes' ? form.supportDetails : '' })}
         showWhen='yes'
-        hasError={supportErr}
-        errorMessage='Select whether you need accessibility or equipment support'
+        hasError={supportError}
+        errorMessage='Select whether accessibility or equipment support is needed'
       >
-        <Field id='support-details' label='Describe the support needed' helpMessage='This is placeholder content only. No assessment, decision or service promise is made.' hasError={detailsErr} errorMessage='Describe the support needed.'>
-          <Textarea id='support-details' value={form.supportDetails} onChange={(e) => update({ supportDetails: e.target.value })} hasError={detailsErr} rows={4} />
+        <Field
+          id='support-details'
+          label='Describe the support needed'
+          helpMessage={`Maximum ${charLimit} characters.`}
+          hasError={detailsError}
+          errorMessage='Describe the support needed.'
+        >
+          <Textarea id='support-details' value={form.supportDetails} onChange={(event) => update({ supportDetails: event.target.value })} hasError={detailsError} maxLength={charLimit} rows={4} />
         </Field>
+        <p aria-live='polite' aria-atomic='true' style={{ fontSize: '0.875rem', color: 'var(--gel-color-text-grey)', marginTop: '-1rem' }}>
+          {form.supportDetails.length}/{charLimit} characters
+        </p>
       </ConditionalQuestionPanel>
       <Accordion
         id='support-guidance'
         items={[
           {
             title: 'Accessibility support',
-            children: (
-              <>
-                <p>Placeholder guidance about accessible entry, seating and toilets.</p>
-                <p style={{ fontSize: '0.875rem', color: 'var(--gel-color-text-grey)', fontStyle: 'italic' }}>Owner confirmation required before real use.</p>
-              </>
-            ),
+            children: <p>Tell us about accessible entry, seating or toilet access that would help the booking work well.</p>,
           },
           {
             title: 'Equipment requests',
-            children: (
-              <>
-                <p>Placeholder guidance about tables, chairs, projector or audio equipment.</p>
-                <p style={{ fontSize: '0.875rem', color: 'var(--gel-color-text-grey)', fontStyle: 'italic' }}>Owner confirmation required before real use.</p>
-              </>
-            ),
+            children: <p>Tell us about tables, chairs, projector or audio equipment needed for the booking.</p>,
           },
           {
             title: 'What not to include',
-            children: (
-              <p>Do not include sensitive personal, health or identity information in this prototype. This is mock data only.</p>
-            ),
+            children: <p>Do not include sensitive personal, health or identity information.</p>,
           },
         ]}
       />
@@ -345,18 +435,21 @@ function AccessibilityStep({ form, attempted, update, onBack, onContinue, onExit
   )
 }
 
-function SupportingStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  const infoErr = attempted && !form.additionalInfo.trim()
+function SupportingStep({ form, errors, update, onBack, onContinue, onExit }: StepProps) {
+  const infoError = hasStepError(errors, 'additional-info')
   const charLimit = 500
+
   return (
-    <section aria-labelledby='supporting-heading'>
-      <Heading level={2} id='supporting-heading'>Supporting information</Heading>
-      <p>Provide additional details about your venue booking to help us process your request. This uses mock data only.</p>
-      <InPageAlert variant='warning' title='Sensitive information'>
-        <p>Do not include sensitive personal, health, identity or payment information.</p>
-      </InPageAlert>
-      <Field id='additional-info' label='Additional information' helpMessage={`Describe any specific requirements for your booking. Maximum ${charLimit} characters.`} hasError={infoErr} errorMessage='Provide additional information about your booking.'>
-        <Textarea id='additional-info' value={form.additionalInfo} onChange={(e) => update({ additionalInfo: e.target.value })} hasError={infoErr} maxLength={charLimit} rows={5} />
+    <section aria-labelledby='supporting-heading' data-venue-page-template='supporting-information'>
+      <p>Provide any other details that will help us review this booking request.</p>
+      <Field
+        id='additional-info'
+        label='Additional information'
+        helpMessage={`Describe any specific requirements for your booking. Maximum ${charLimit} characters.`}
+        hasError={infoError}
+        errorMessage='Provide additional information about the booking.'
+      >
+        <Textarea id='additional-info' value={form.additionalInfo} onChange={(event) => update({ additionalInfo: event.target.value })} hasError={infoError} maxLength={charLimit} rows={5} />
       </Field>
       <p aria-live='polite' aria-atomic='true' style={{ fontSize: '0.875rem', color: 'var(--gel-color-text-grey)', marginTop: '-1rem' }}>
         {form.additionalInfo.length}/{charLimit} characters
@@ -366,109 +459,122 @@ function SupportingStep({ form, attempted, update, onBack, onContinue, onExit }:
   )
 }
 
-function DeclarationStep({ form, attempted, update, onBack, onContinue, onExit }: StepProps) {
-  return (
-    <section aria-labelledby='declaration-heading'>
-      <Heading level={2} id='declaration-heading'>Declaration</Heading>
-      <InPageAlert variant='warning' title='Legal wording required'>
-        <p>This placeholder must be replaced with confirmed legal or policy wording before use in a real transaction.</p>
-      </InPageAlert>
-      <p>By submitting this booking request, I declare that the information I have provided is true and correct. I understand that providing false or misleading information is [confirmed legal consequence — policy owner to confirm].</p>
-      <Checkbox
-        id='declaration-accepted'
-        label='I declare that the information provided is true and correct.'
-        checked={form.declarationAccepted}
-        onChange={(v) => update({ declarationAccepted: Boolean(v) })}
-        hasError={attempted && !form.declarationAccepted}
-        errorMessage='Accept the declaration to continue.'
-      />
-      <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
-    </section>
-  )
-}
-
 function ReviewStep({
   form,
+  errors,
+  update,
   onBack,
   onEditStep,
   onSubmit,
   onExit,
 }: {
   form: FormState
+  errors: StepError[]
+  update: (patch: Partial<FormState>) => void
   onBack: () => void
-  onEditStep: (step: Exclude<VenueStep, 'privacy' | 'review' | 'confirmation'>) => void
+  onEditStep: (step: Exclude<VenueStep, 'review' | 'confirmation'>) => void
   onSubmit: () => void
   onExit: () => void
 }) {
-  const venueTypeLabel: Record<string, string> = { 'meeting-room': 'Meeting room', 'hall': 'Hall', 'outdoor-space': 'Outdoor space' }
+  const declarationError = hasStepError(errors, 'declaration-accepted')
+
   return (
-    <section aria-labelledby='review-heading'>
-      <Heading level={2} id='review-heading'>Review your booking</Heading>
-      <p>Check the information below before submitting. This page does not submit to a real service.</p>
-      <ReviewInfoCard title='Applicant details' sections={[{ title: 'Personal information', rows: [
-        { label: 'Full name', value: form.fullName },
-        { label: 'Email', value: form.email },
-        { label: 'Phone', value: form.phone },
-      ] }]} onEdit={() => onEditStep('applicant')} />
-      <ReviewInfoCard title='Venue booking details' sections={[{ title: 'Venue information', rows: [
-        { label: 'Venue type', value: venueTypeLabel[form.venueType] || form.venueType },
-        { label: 'Booking purpose', value: form.bookingPurpose },
-        { label: 'Booking date', value: `${form.eventDay}/${form.eventMonth}/${form.eventYear}` },
-      ] }]} onEdit={() => onEditStep('venue')} />
-      <ReviewInfoCard title='Accessibility and equipment' sections={[{ title: 'Support needs', rows: [
-        { label: 'Needs support', value: form.needsSupport === 'yes' ? 'Yes' : 'No' },
-        ...(form.needsSupport === 'yes' ? [{ label: 'Support details', value: form.supportDetails }] : []),
-      ] }]} onEdit={() => onEditStep('accessibility')} />
-      <ReviewInfoCard title='Supporting information' sections={[{ title: 'Additional details', rows: [
-        { label: 'Additional information', value: form.additionalInfo },
-      ] }]} onEdit={() => onEditStep('supporting')} />
-      <DeclarationReview
-        intro='You accepted this placeholder declaration before reviewing the booking:'
-        sections={[{
-          title: 'Declaration accepted',
-          statements: [
-            'I declare that the information provided is true and correct.',
-            'Legal consequence wording remains source-gated and must be confirmed by the policy owner.',
-          ],
-        }]}
+    <section aria-labelledby='review-heading' data-venue-page-template='review'>
+      <div className='storybook-stack'>
+        <ReviewInfoCard title='Your details' sections={[{ title: 'Profile and contact', rows: [
+          { label: 'Full name', value: accountProfile.fullName },
+          { label: 'Email', value: accountProfile.email },
+          { label: 'Contact phone number', value: form.contactPhone },
+        ] }]} onEdit={() => onEditStep('details')} />
+        <ReviewInfoCard title='Venue booking details' sections={[{ title: 'Venue information', rows: [
+          { label: 'Venue type', value: venueTypeLabel(form.venueType) },
+          { label: 'Booking purpose', value: form.bookingPurpose },
+          { label: 'Booking date', value: bookingDate(form) },
+        ] }]} onEdit={() => onEditStep('venue')} />
+        <ReviewInfoCard title='Accessibility and equipment' sections={[{ title: 'Support needs', rows: [
+          { label: 'Support needed', value: yesNo(form.needsSupport) },
+          { label: 'Support details', value: form.needsSupport === 'yes' ? form.supportDetails : 'Not applicable' },
+        ] }]} onEdit={() => onEditStep('accessibility')} />
+        <ReviewInfoCard title='Supporting information' sections={[{ title: 'Additional details', rows: [
+          { label: 'Additional information', value: form.additionalInfo },
+        ] }]} onEdit={() => onEditStep('supporting')} />
+        <ReviewInfoCard title='Privacy' sections={[{ title: 'Privacy and terms', rows: [
+          { label: 'Privacy Collection Notice', value: 'Read' },
+          { label: 'Terms and Conditions', value: form.termsAccepted ? 'Accepted' : 'Not accepted' },
+        ] }]} onEdit={() => onEditStep('privacy')} />
+      </div>
+      <Checkbox
+        id='declaration-accepted'
+        label='I declare that the information provided is true and correct.'
+        checked={form.declarationAccepted}
+        onChange={(value) => update({ declarationAccepted: Boolean(value) })}
+        hasError={declarationError}
+        errorMessage='Accept the declaration to submit.'
       />
-      <p>
-        <TextLink onClick={() => onEditStep('declaration')}>Edit declaration</TextLink>
-      </p>
-      <ReviewFeesCard fees={[{ label: 'Venue booking fee', amount: '$0.00' }]} totalAmount='$0.00' />
-      <InPageAlert variant='info' title='Payment excluded'>
-        <p>No payment flow is included in this trial skeleton. Fee amounts need owner confirmation.</p>
-      </InPageAlert>
-      <TransactionCtaGroup onBack={onBack} onContinue={onSubmit} onExit={onExit} continueLabel='Submit booking' />
+      <TransactionCtaGroup onBack={onBack} onContinue={onSubmit} onExit={onExit} continueLabel='Submit booking request' />
     </section>
   )
 }
 
-function ConfirmationStep({ form, onStartAgain }: { form: FormState; onStartAgain: () => void }) {
-  const venueTypeLabel: Record<string, string> = { 'meeting-room': 'Meeting room', 'hall': 'Hall', 'outdoor-space': 'Outdoor space' }
+function ConfirmationStep({ onStartAgain }: { onStartAgain: () => void }) {
   return (
-    <section aria-labelledby='confirmation-heading'>
-      <ConfirmationHeader title='Booking submitted' transactionName='Community venue booking' />
-      <TransactionSummaryCard items={[
-        { label: 'Reference number', value: 'VENUE-000000', helpText: 'Mock reference only.' },
-        { label: 'Applicant', value: form.fullName },
-        { label: 'Venue type', value: venueTypeLabel[form.venueType] || form.venueType },
-        { label: 'Booking date', value: `${form.eventDay}/${form.eventMonth}/${form.eventYear}` },
-        { label: 'Receipt', value: 'No payment receipt generated' },
-      ]}>
-        <p>Processing timeframes, receipt wording and next steps must be confirmed by the service owner before reuse. Expected processing time: [confirmed timeframe].</p>
-      </TransactionSummaryCard>
-      <Heading level={2}>Next steps</Heading>
-      <ol className='tapaas-step-list'>
-        <li>Your booking will be reviewed within [confirmed timeframe].</li>
-        <li>You will receive a confirmation at [confirmed contact method].</li>
-        <li>If approved, your venue booking will be confirmed for the requested date.</li>
-        <li>Contact [confirmed support channel] if you need to change your booking details.</li>
-      </ol>
-      <InPageAlert variant='info' title='Owner confirmation required'>
-        <p>All timeframes, contact methods and approval processes above are placeholders. They must be confirmed by the service owner before real use.</p>
-      </InPageAlert>
+    <section aria-labelledby='confirmation-heading' data-venue-page-template='confirmation'>
+      <ConfirmationHeader title='Your booking request has been submitted' transactionName={transactionName} />
+      <TransactionSummaryCard
+        heading='Receipt details'
+        items={[
+          { label: 'Reference number', value: receipt.referenceNumber },
+          { label: 'Transaction date', value: receipt.transactionDate },
+        ]}
+      />
+      <section aria-labelledby='keep-record-heading' className='tapaas-card'>
+        <Heading level={2} id='keep-record-heading'>Keep a record</Heading>
+        <p>Keep your reference number until the booking request has been reviewed.</p>
+      </section>
+      <section aria-labelledby='next-steps-heading' className='tapaas-card'>
+        <Heading level={2} id='next-steps-heading'>What happens next?</Heading>
+        <ol className='tapaas-step-list'>
+          <li>Your booking request will be reviewed.</li>
+          <li>We will contact you if more information is needed.</li>
+          <li>We will notify you of the outcome.</li>
+          <li>If accepted, you will receive booking details for the requested date.</li>
+        </ol>
+      </section>
+      <FeedbackPrompt />
       <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start another booking' />
     </section>
   )
+}
+
+function FeedbackPrompt() {
+  const [feedbackChoice, setFeedbackChoice] = useState<string | null>(null)
+
+  return (
+    <section aria-labelledby='feedback-heading' className='tapaas-card'>
+      <Heading level={2} id='feedback-heading'>Help us improve</Heading>
+      <p>Was this transaction easy to understand?</p>
+      <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+        <Button variant='secondary' onClick={() => setFeedbackChoice('yes')}>Yes</Button>
+        <Button variant='secondary' onClick={() => setFeedbackChoice('no')}>No</Button>
+      </div>
+      <p aria-live='polite'>{feedbackChoice ? 'Thanks for your feedback.' : ''}</p>
+    </section>
+  )
+}
+
+function venueTypeLabel(value: FormState['venueType']) {
+  if (value === 'meeting-room') return 'Meeting room'
+  if (value === 'hall') return 'Hall'
+  if (value === 'outdoor-space') return 'Outdoor space'
+  return 'Not selected'
+}
+
+function bookingDate(form: FormState) {
+  return `${form.eventDay}/${form.eventMonth}/${form.eventYear}`
+}
+
+function yesNo(value: 'yes' | 'no' | '') {
+  if (value === 'yes') return 'Yes'
+  if (value === 'no') return 'No'
+  return 'Not selected'
 }

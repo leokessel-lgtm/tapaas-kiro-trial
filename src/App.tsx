@@ -25,9 +25,9 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
     subtitle: 'Apply for an accessible market permit and receive a submitted application receipt.',
   },
   venue: {
-    label: 'TaPaaS x Kiro trial',
+    label: 'Community venue booking',
     title: 'Community venue booking',
-    subtitle: 'A non-production 8-step skeleton with MoreInfoDisclosure, Accordion and conditional questions.',
+    subtitle: 'Request a community venue booking and receive a submitted booking receipt.',
   },
   mps: {
     label: 'Mobility Parking Scheme',
