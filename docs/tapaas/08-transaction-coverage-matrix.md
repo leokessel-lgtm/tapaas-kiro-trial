@@ -6,9 +6,20 @@ This matrix keeps MPS transaction assembly connected to source-backed preview ar
 
 It is trial guidance only. It does not claim production readiness, WCAG compliance, GEL approval, TaPaaS approval, legal approval, privacy approval or policy approval.
 
+## Clara/TaPaaS Rule Status
+
+This matrix was created for MPS source-frame coverage before Clara/TaPaaS rules were promoted into the trial steering layer. Status values such as `aligned` mean source-frame, Storybook, skeleton, test and evidence connections are present. They do not mean Clara/TaPaaS-rule alignment.
+
+For current Clara/TaPaaS transaction rules, start with:
+
+- `docs/tapaas/12-clara-tapaas-transaction-rules-v01.md`
+- `docs/tapaas/designer-package/README.md`
+
+As of Slice 7A, only Trial Permit and Accessible Market Permit are Clara-aligned runtime examples. MPS remains a legacy/pre-Clara evidence surface with source-frame-aligned areas, but it is not yet Clara/TaPaaS-rule aligned as a transaction.
+
 Status values:
 
-- `aligned`: source-backed preview, Storybook review surface, transaction usage, tests and evidence are connected.
+- `aligned`: source-backed preview, Storybook review surface, transaction usage, tests and evidence are connected. This means source-frame aligned, not Clara/TaPaaS-rule aligned.
 - `partial`: some connection exists, but one or more surfaces are missing or weak.
 - `skeleton-only`: implemented mainly in the transaction skeleton without a source-backed preview frame/story.
 - `story-only`: available in Storybook but not used in the transaction skeleton.
@@ -34,9 +45,9 @@ Status values:
 
 ## Current Strongest Connections
 
-- Applicant details/manual address is the strongest early/middle aligned stage because it now connects source-backed frame extraction, isolated Storybook review, transaction skeleton usage, tests and evidence.
-- Review is strongly connected through `MpsReviewFramePreview`, supporting preview components, Storybook fidelity and transaction usage.
-- Confirmation is strongly connected through `MpsConfirmationFramePreview`, next-steps preview content, Storybook fidelity and outcome usage.
+- Applicant details/manual address is the strongest early/middle source-frame-aligned stage because it now connects source-backed frame extraction, isolated Storybook review, transaction skeleton usage, tests and evidence.
+- Review is strongly source-frame connected through `MpsReviewFramePreview`, supporting preview components, Storybook fidelity and transaction usage.
+- Confirmation is strongly source-frame connected through `MpsConfirmationFramePreview`, next-steps preview content, Storybook fidelity and outcome usage.
 
 ## Current Weakest Connections
 

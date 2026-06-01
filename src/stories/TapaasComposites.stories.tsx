@@ -25,7 +25,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Trial-only TaPaaS preview composites. These help designers review component relationships outside full transaction flows.',
+        component: 'Trial-only TaPaaS preview composites. These are legacy/pre-Clara or source-bounded review surfaces unless a story explicitly says Clara-aligned. Current Clara-aligned runtime examples live under TaPaaS Transactions: Trial Permit - Clara Aligned and Accessible Market Permit - Clara Aligned.',
       },
     },
   },
@@ -170,7 +170,7 @@ export const ReviewAndConfirmation: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Composite transaction assembly story showing how review, fee, confirmation, summary and next-step patterns can sit together. Use the isolated MPS stories for bounded source-structure QA.',
+        story: 'Legacy/pre-Clara composite transaction assembly story showing how review, fee, confirmation, summary and next-step patterns can sit together. Use the isolated MPS stories for bounded source-structure QA, and use Trial Permit or Accessible Market Permit stories for Clara-aligned transaction examples.',
       },
     },
   },
@@ -178,7 +178,7 @@ export const ReviewAndConfirmation: Story = {
     <div className='storybook-stack'>
       <div className='storybook-note'>
         <strong>Review and Confirmation - transaction assembly</strong>
-        <p>Composite review surface for pattern relationships. For bounded source-structure review, use the isolated MPS Review Frame and MPS Confirmation Frame stories.</p>
+        <p>Legacy/pre-Clara composite review surface for pattern relationships. It is not a Clara/TaPaaS-rule aligned transaction example. For bounded source-structure review, use the isolated MPS Review Frame and MPS Confirmation Frame stories.</p>
       </div>
       <MpsReviewFramePreview
         sections={mpsReviewSections}
@@ -241,7 +241,7 @@ export const MpsEndToEndTransactionAssemblyV1: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'End-to-end review surface for the current MPS transaction skeleton. It composes the strongest available coded-preview artefacts while keeping unresolved backend, identity, upload, validation, legal, privacy and policy behaviour review-gated.',
+        story: 'Legacy/pre-Clara end-to-end review surface for the current MPS transaction skeleton. It composes the strongest available coded-preview artefacts while keeping unresolved backend, identity, upload, validation, legal, privacy and policy behaviour review-gated. It is not Clara/TaPaaS-rule aligned.',
       },
     },
   },
@@ -249,8 +249,9 @@ export const MpsEndToEndTransactionAssemblyV1: Story = {
     <div className='storybook-stack'>
       <div className='storybook-note'>
         <strong>MPS End-to-End Transaction Assembly v1</strong>
-        <p>Interactive transaction skeleton for preview/story/transaction alignment review. Use isolated frame stories for bounded source-structure checks.</p>
+        <p>Legacy/pre-Clara interactive transaction skeleton for preview/story/transaction source alignment review. It is not a Clara/TaPaaS-rule aligned transaction example. Use isolated frame stories for bounded source-structure checks.</p>
         <ul>
+          <li>Current Clara-aligned runtime examples are Trial Permit and Accessible Market Permit under TaPaaS Transactions.</li>
           <li>Source-backed preview artefacts currently composed: applicant details/manual address frame, radio-card application type, MPS review frame, MPS confirmation frame, evidence/status summaries and mock backend error examples.</li>
           <li>Review-gated areas: privacy/start content, representative/contact frame parity, medical upload states, concession validation, declaration wording, backend recovery, identity, payment and assistive-technology behaviour.</li>
           <li>Boundary: preview-only mock transaction assembly; no real address lookup, identity verification, upload/storage, backend persistence, validation engine, eligibility, payment, legal, privacy or policy behaviour.</li>

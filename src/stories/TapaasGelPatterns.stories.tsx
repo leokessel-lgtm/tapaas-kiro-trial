@@ -16,7 +16,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Storybook guidance only for TaPaaS GEL patterns composed from GEL primitives. These are source-informed local pattern previews, not production GEL exports, and not an accessibility, WCAG, legal, privacy, policy, production, GEL or TaPaaS approval claim.',
+        component: 'Storybook guidance only for TaPaaS GEL patterns composed from GEL primitives. These are source-informed local pattern previews, not production GEL exports, and not an accessibility, WCAG, legal, privacy, policy, production, GEL or TaPaaS approval claim. Transaction-specific Clara/TaPaaS rules may override these generic examples.',
       },
     },
   },
@@ -30,6 +30,7 @@ function PatternBoundaryNote() {
     <div className='storybook-note'>
       <strong>source-informed local pattern preview</strong>
       <p>Storybook guidance only. This is not a production GEL export and not an accessibility, WCAG, legal, privacy, policy, production, GEL or TaPaaS approval claim.</p>
+      <p>Generic GEL examples and Clara/TaPaaS transaction rules are not interchangeable. For current Clara-aligned runtime examples, use Trial Permit and Accessible Market Permit under TaPaaS Transactions.</p>
     </div>
   )
 }
@@ -247,18 +248,17 @@ export const ProgressStepperUsage: Story = {
     <div className='storybook-stack'>
       <PatternBoundaryNote />
       <Heading level={2}>Progress stepper usage</Heading>
-      <p>This story shows a short transaction progress pattern for bounded flows where a visible stepper helps orientation.</p>
+      <p>This story shows a generic progress-stepper pattern for bounded flows where a visible stepper helps orientation. For Clara/TaPaaS transaction flows, confirmation is excluded from the transaction stepper.</p>
       <ProgressStepper
         stepsList={[
           { content: 'Privacy', status: 'completed' },
           { content: 'Details', status: 'current' },
           { content: 'Review', status: 'todo' },
-          { content: 'Confirmation', status: 'todo' },
         ]}
       />
       <div className='storybook-note'>
         <strong>Usage boundary</strong>
-        <p>Use this as pattern guidance only. Keep longer or complex transaction progress behaviour review-gated.</p>
+        <p>Use this as pattern guidance only. Keep longer or complex transaction progress behaviour review-gated, and do not add Confirmation as a transaction stepper item for Clara/TaPaaS transaction examples.</p>
       </div>
     </div>
   ),

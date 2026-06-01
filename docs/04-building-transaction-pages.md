@@ -1,5 +1,14 @@
 # Building Transaction Pages
 
+## Clara/TaPaaS rule status
+
+This page is older generic build guidance for local transaction pages. For current Clara/TaPaaS transaction assembly rules, start with:
+
+- `docs/tapaas/designer-package/README.md`
+- `docs/tapaas/12-clara-tapaas-transaction-rules-v01.md`
+
+Only `TrialPermitSkeleton` and `AccessibleMarketPermitSkeleton` are currently Clara-aligned runtime examples. Treat older generic, MPS, Community Venue and stress-test skeletons as legacy/pre-Clara, source-bounded or development examples unless a later slice explicitly aligns them.
+
 ## Page structure
 
 A Service NSW transaction page has these regions:
