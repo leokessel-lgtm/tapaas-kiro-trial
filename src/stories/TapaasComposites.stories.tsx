@@ -25,7 +25,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Trial-only TaPaaS preview composites. These are legacy/pre-Clara or source-bounded review surfaces unless a story explicitly says Clara-aligned. Current Clara-aligned runtime examples live under TaPaaS Transactions: Trial Permit - Clara Aligned and Accessible Market Permit - Clara Aligned.',
+        component: 'Trial-only TaPaaS preview composites. These are legacy/pre-Clara or source-bounded review surfaces unless a story explicitly says Clara-aligned. Current Clara-aligned runtime app examples are Trial Permit, Accessible Market Permit, MPS and Community Venue. Dedicated Clara-aligned Storybook transaction stories currently exist for Trial Permit and Accessible Market Permit only.',
       },
     },
   },
@@ -241,7 +241,7 @@ export const MpsEndToEndTransactionAssemblyV1: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Legacy/pre-Clara end-to-end review surface for the current MPS transaction skeleton. It composes the strongest available coded-preview artefacts while keeping unresolved backend, identity, upload, validation, legal, privacy and policy behaviour review-gated. It is not Clara/TaPaaS-rule aligned.',
+        story: 'Source-bounded end-to-end review surface for the current Clara-aligned MPS runtime skeleton. It composes the strongest available coded-preview artefacts while keeping unresolved backend, identity, upload, validation, legal, privacy and policy behaviour review-gated. It remains a historical/source-bounded composite, not a dedicated Clara-aligned transaction-story benchmark.',
       },
     },
   },
@@ -249,9 +249,10 @@ export const MpsEndToEndTransactionAssemblyV1: Story = {
     <div className='storybook-stack'>
       <div className='storybook-note'>
         <strong>MPS End-to-End Transaction Assembly v1</strong>
-        <p>Legacy/pre-Clara interactive transaction skeleton for preview/story/transaction source alignment review. It is not a Clara/TaPaaS-rule aligned transaction example. Use isolated frame stories for bounded source-structure checks.</p>
+        <p>Interactive MPS runtime skeleton for preview/story/source alignment review. The runtime is now Clara/TaPaaS aligned; this composite story remains source-bounded historical context rather than a dedicated Clara-aligned transaction-story benchmark. Use isolated frame stories for bounded source-structure checks.</p>
         <ul>
-          <li>Current Clara-aligned runtime examples are Trial Permit and Accessible Market Permit under TaPaaS Transactions.</li>
+          <li>Current Clara-aligned runtime app examples are Trial Permit, Accessible Market Permit, MPS and Community Venue.</li>
+          <li>Dedicated Clara-aligned Storybook transaction stories currently cover Trial Permit and Accessible Market Permit only.</li>
           <li>Source-backed preview artefacts currently composed: applicant details/manual address frame, radio-card application type, MPS review frame, MPS confirmation frame, evidence/status summaries and mock backend error examples.</li>
           <li>Review-gated areas: privacy/start content, representative/contact frame parity, medical upload states, concession validation, declaration wording, backend recovery, identity, payment and assistive-technology behaviour.</li>
           <li>Boundary: preview-only mock transaction assembly; no real address lookup, identity verification, upload/storage, backend persistence, validation engine, eligibility, payment, legal, privacy or policy behaviour.</li>

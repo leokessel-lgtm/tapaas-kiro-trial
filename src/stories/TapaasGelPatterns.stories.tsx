@@ -30,7 +30,7 @@ function PatternBoundaryNote() {
     <div className='storybook-note'>
       <strong>source-informed local pattern preview</strong>
       <p>Storybook guidance only. This is not a production GEL export and not an accessibility, WCAG, legal, privacy, policy, production, GEL or TaPaaS approval claim.</p>
-      <p>Generic GEL examples and Clara/TaPaaS transaction rules are not interchangeable. For current Clara-aligned runtime examples, use Trial Permit and Accessible Market Permit under TaPaaS Transactions.</p>
+      <p>Generic GEL examples and Clara/TaPaaS transaction rules are not interchangeable. Current Clara-aligned runtime app examples are Trial Permit, Accessible Market Permit, MPS and Community Venue. Dedicated Clara-aligned Storybook transaction stories currently cover Trial Permit and Accessible Market Permit under TaPaaS Transactions.</p>
     </div>
   )
 }

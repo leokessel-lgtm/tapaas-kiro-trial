@@ -6,6 +6,8 @@ Storybook is the designer-facing review surface for the trial rules and examples
 
 It is review evidence only. It is not accessibility compliance evidence, production approval, GEL approval, TaPaaS approval or privacy/legal approval.
 
+Dedicated Clara-aligned Storybook transaction stories currently exist for Trial Permit and Accessible Market Permit. Clara-aligned runtime app examples now include Trial Permit, Accessible Market Permit, MPS and Community Venue; review MPS and Community Venue in the app runtime until dedicated Clara-aligned Storybook transaction stories are added.
+
 ## Rule stories
 
 Use these stories to review the reusable rules:
@@ -22,7 +24,7 @@ Use these stories to review the reusable rules:
 
 ## Transaction examples
 
-Use these stories to review the two canonical examples:
+Use these stories to review the two dedicated Clara-aligned Storybook transaction examples:
 
 | Storybook title | Story ID | Review focus |
 |---|---|---|

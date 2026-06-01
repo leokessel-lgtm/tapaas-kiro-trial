@@ -14,6 +14,7 @@ Use this package when you need to:
 - check whether a generated transaction followed Clara/TaPaaS rules
 - review Trial Permit as the short immediate-approval example
 - review Accessible Market Permit as the longer submitted-for-review example
+- orient MPS and Community Venue as Clara-aligned runtime examples, noting they do not yet have dedicated Clara-aligned Storybook transaction stories
 - prepare feedback for Kiro or Codex without exposing raw source assets
 
 ## Source of truth
@@ -46,7 +47,7 @@ This package summarises those rules for design use. If there is a conflict, use 
 
 ## Clara-aligned Storybook surfaces
 
-Use these Storybook story IDs when reviewing the rule surfaces:
+Use these Storybook story IDs when reviewing the rule surfaces and the two dedicated Clara-aligned Storybook transaction examples:
 
 - `tapaas-transaction-rules--privacy-and-terms`
 - `tapaas-transaction-rules--stepper-and-page-structure`
@@ -57,6 +58,8 @@ Use these Storybook story IDs when reviewing the rule surfaces:
 - `tapaas-transaction-rules--annotation-boundaries`
 - `tapaas-transactions--trial-permit-clara-aligned`
 - `tapaas-transactions--accessible-market-permit-clara-aligned`
+
+Current Clara-aligned runtime app examples are Trial Permit, Accessible Market Permit, MPS and Community Venue. MPS and Community Venue are runtime examples only for now; they do not yet have dedicated Clara-aligned transaction stories in Storybook.
 
 ## Boundary
 
