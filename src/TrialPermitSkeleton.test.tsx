@@ -3,155 +3,143 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import { TrialPermitSkeleton } from './TrialPermitSkeleton'
 
+const annotationPattern = /mock only|mock data|source content|required:|placeholder|owner confirmation|implementation note|internal caveat|designer note|non-production|build-assist/i
+
+function expectNoCustomerFacingAnnotations() {
+  expect(document.body).not.toHaveTextContent(annotationPattern)
+}
+
 async function completePrivacy(user: ReturnType<typeof userEvent.setup>) {
-  await user.click(screen.getByRole('checkbox', { name: 'I agree to the terms and conditions for this trial permit application.' }))
+  await user.click(screen.getByRole('checkbox', { name: 'I agree to the Terms and Conditions.' }))
   await user.click(screen.getByRole('button', { name: 'Continue' }))
 }
 
-async function completeInput(user: ReturnType<typeof userEvent.setup>) {
-  await user.type(screen.getByLabelText(/Full name/), 'Jane Citizen')
-  await user.click(screen.getByRole('radio', { name: 'Standard permit (mock)' }))
-  await user.click(screen.getByRole('button', { name: 'Continue' }))
-}
-
-async function completeDeclaration(user: ReturnType<typeof userEvent.setup>) {
+async function completeApplicationDetails(user: ReturnType<typeof userEvent.setup>) {
+  await user.click(screen.getByRole('radio', { name: 'Standard trial permit' }))
   await user.click(screen.getByRole('checkbox', { name: 'I declare that the information provided is true and correct.' }))
   await user.click(screen.getByRole('button', { name: 'Continue' }))
 }
 
+async function getToReview(user: ReturnType<typeof userEvent.setup>) {
+  await completePrivacy(user)
+  await completeApplicationDetails(user)
+}
+
+async function getToConfirmation(user: ReturnType<typeof userEvent.setup>) {
+  await getToReview(user)
+  await user.click(screen.getByRole('button', { name: 'Submit application' }))
+}
+
 describe('TrialPermitSkeleton', () => {
-  it('blocks privacy progression until the privacy checkbox is selected', async () => {
+  it('does not render a stepper in default or error states', async () => {
     const user = userEvent.setup()
-    render(<TrialPermitSkeleton />)
+    const { container } = render(<TrialPermitSkeleton />)
+
+    expect(screen.getByRole('heading', { name: 'Privacy information' })).toBeInTheDocument()
+    expect(screen.queryByText(/Step \d+ of \d+/)).not.toBeInTheDocument()
+    expect(container.querySelector('[data-gelweb-component="progress-stepper"]')).not.toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'Continue' }))
 
     expect(screen.getByRole('group', { name: 'Your form has an error' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Confirm that you agree to the terms and conditions' })).toHaveAttribute('href', '#privacy-confirmation')
-    expect(screen.getByRole('heading', { name: 'Privacy information' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Trial permit privacy and terms' })).toBeInTheDocument()
-    expect(screen.getByText('[Source content required: privacy collection notice]')).toBeInTheDocument()
-    expect(screen.getByText('[Source content required: terms and conditions text]')).toBeInTheDocument()
+    expect(screen.queryByText(/Step \d+ of \d+/)).not.toBeInTheDocument()
+    expect(container.querySelector('[data-gelweb-component="progress-stepper"]')).not.toBeInTheDocument()
+  })
+
+  it('uses the TaPaaS privacy-and-terms template with a Terms checkbox', async () => {
+    const user = userEvent.setup()
+    render(<TrialPermitSkeleton />)
+
+    await user.click(screen.getByRole('button', { name: 'Continue' }))
+
+    expect(screen.getByRole('heading', { name: 'Privacy Collection Notice' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Terms and Conditions' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Notifications and receipt' })).toBeInTheDocument()
+    expect(screen.getByRole('checkbox', { name: 'I agree to the Terms and Conditions.' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Accept the Terms and Conditions to continue' })).toHaveAttribute('href', '#terms-and-conditions')
+    expect(screen.getByRole('button', { name: 'Exit' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Continue' })).toBeInTheDocument()
+    expectNoCustomerFacingAnnotations()
+  })
+
+  it('plays back authenticated personal details as read-only Account/Profile data', async () => {
+    const user = userEvent.setup()
+    render(<TrialPermitSkeleton />)
 
     await completePrivacy(user)
+
+    expect(screen.getByRole('heading', { name: 'Personal details' })).toBeInTheDocument()
+    expect(screen.getByText('These details come from your Service NSW Account.')).toBeInTheDocument()
+    expect(screen.getByText('Jane')).toBeInTheDocument()
+    expect(screen.getByText('Citizen')).toBeInTheDocument()
+    expect(screen.getByText('If these details are incorrect, update them through Account/Profile before continuing.')).toBeInTheDocument()
+    expect(screen.queryByRole('textbox', { name: /first name/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('textbox', { name: /family name/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('textbox', { name: /full name/i })).not.toBeInTheDocument()
+    expectNoCustomerFacingAnnotations()
+  })
+
+  it('keeps permit type and declaration on the Application details page', async () => {
+    const user = userEvent.setup()
+    render(<TrialPermitSkeleton />)
+
+    await completePrivacy(user)
+    await user.click(screen.getByRole('button', { name: 'Continue' }))
 
     expect(screen.getByRole('heading', { name: 'Application details' })).toBeInTheDocument()
-  })
-
-  it('blocks empty input submission and then advances with valid details', async () => {
-    const user = userEvent.setup()
-    render(<TrialPermitSkeleton />)
-
-    await completePrivacy(user)
-    await user.click(screen.getByRole('button', { name: 'Continue' }))
-
-    const heading = screen.getByRole('heading', { name: 'Application details' })
-    const errorSummary = screen.getByRole('group', { name: 'Your form has errors' })
-    expect(heading.compareDocumentPosition(errorSummary) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
-    expect(errorSummary).toHaveAttribute('id', 'trial-permit-error-summary')
-    expect(errorSummary).toHaveAttribute('data-gelweb-component', 'error-summary')
-    expect(errorSummary).toHaveClass('gel-error-summary')
-    expect(screen.getByText((_, element) => element?.textContent === '* indicates a required field.')).toBeInTheDocument()
-    const fullNameErrorLink = screen.getByRole('link', { name: 'Enter your full name' })
-    const permitTypeErrorLink = screen.getByRole('link', { name: 'Select a permit type' })
-    expect(fullNameErrorLink).toHaveAttribute('href', '#applicant-name')
-    expect(permitTypeErrorLink).toHaveAttribute('href', '#permit-type')
-    expect(fullNameErrorLink).toHaveStyle({ color: 'var(--gel-color-link)' })
-    expect(permitTypeErrorLink).toHaveStyle({ color: 'var(--gel-color-link)' })
-    expect(fullNameErrorLink).not.toHaveStyle({ color: 'var(--gel-color-error)' })
-    expect(permitTypeErrorLink).not.toHaveStyle({ color: 'var(--gel-color-error)' })
-    expect(screen.getByText('[Source content required: permit type explanation]')).toBeInTheDocument()
-
-    await completeInput(user)
-
-    expect(screen.getByRole('heading', { name: 'Declaration' })).toBeInTheDocument()
-  })
-
-  it('keeps submitted errors visible until Continue revalidates the current step', async () => {
-    const user = userEvent.setup()
-    render(<TrialPermitSkeleton />)
-
-    await completePrivacy(user)
-    await user.click(screen.getByRole('button', { name: 'Continue' }))
-
-    const fullNameInput = screen.getByLabelText(/Full name/)
-    expect(screen.getByRole('link', { name: 'Enter your full name' })).toHaveAttribute('href', '#applicant-name')
-    expect(fullNameInput).toHaveAttribute('aria-invalid', 'true')
-
-    await user.type(fullNameInput, 'Jane Citizen')
-
-    expect(screen.getByRole('link', { name: 'Enter your full name' })).toHaveAttribute('href', '#applicant-name')
-    expect(fullNameInput).toHaveAttribute('aria-invalid', 'true')
-
-    await user.click(screen.getByRole('button', { name: 'Continue' }))
-
-    expect(screen.queryByRole('link', { name: 'Enter your full name' })).not.toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Select a permit type' })).toHaveAttribute('href', '#permit-type')
-    expect(fullNameInput).not.toHaveAttribute('aria-invalid')
+    expect(screen.getByRole('link', { name: 'Accept the declaration to continue' })).toHaveAttribute('href', '#declaration-accepted')
+    expect(screen.getByText('By submitting this application, I declare that the information I have provided is true and correct.')).toBeInTheDocument()
+    expect(screen.getByRole('checkbox', { name: 'I declare that the information provided is true and correct.' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Declaration' })).not.toBeInTheDocument()
+
+    await completeApplicationDetails(user)
+
+    expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
   })
 
-  it('maps review edit actions to the relevant source steps', async () => {
+  it('mirrors completed Application details and Privacy sections on review', async () => {
     const user = userEvent.setup()
     render(<TrialPermitSkeleton />)
 
-    await completePrivacy(user)
-    await completeInput(user)
-    await user.click(screen.getByRole('button', { name: 'Continue' }))
-
-    expect(screen.getByRole('link', { name: 'Accept the declaration to continue' })).toHaveAttribute('href', '#declaration-accepted')
-
-    await completeDeclaration(user)
-
-    expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
-    await user.click(screen.getByRole('button', { name: 'Edit Application details' }))
-
-    expect(screen.getByRole('heading', { name: 'Application details' })).toBeInTheDocument()
-
-    await user.click(screen.getByRole('button', { name: 'Continue' }))
-    await user.click(screen.getByRole('button', { name: 'Continue' }))
-
-    expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
-    await user.click(screen.getByRole('button', { name: 'Edit declaration' }))
-
-    expect(screen.getByRole('heading', { name: 'Declaration' })).toBeInTheDocument()
-  })
-
-  it('blocks declaration until accepted, then submits review to confirmation', async () => {
-    const user = userEvent.setup()
-    render(<TrialPermitSkeleton />)
-
-    await completePrivacy(user)
-    await completeInput(user)
-    await user.click(screen.getByRole('button', { name: 'Continue' }))
-
-    expect(screen.getByRole('link', { name: 'Accept the declaration to continue' })).toHaveAttribute('href', '#declaration-accepted')
-
-    await completeDeclaration(user)
+    await getToReview(user)
 
     expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Application details' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Fees' })).toBeInTheDocument()
-    expect(screen.getByText('Jane Citizen')).toBeInTheDocument()
-    expect(screen.getByText('Standard permit (mock)')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Declaration' })).toBeInTheDocument()
-    expect(screen.getAllByText('$0.00')).toHaveLength(2)
+    expect(screen.getByRole('heading', { name: 'Privacy' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Edit Application details' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Edit Privacy' })).toBeInTheDocument()
+    expect(screen.getByText('Standard trial permit')).toBeInTheDocument()
+    expect(screen.getAllByText('Accepted')).toHaveLength(2)
+    expect(screen.getByText('Receipt shown after approval')).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Fees' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Declaration' })).not.toBeInTheDocument()
 
     const reviewActions = screen.getByRole('group', { name: 'Transaction actions' })
     const reviewButtons = within(reviewActions).getAllByRole('button').map((button) => button.textContent)
     expect(reviewButtons).toEqual(['Back', 'Submit application', 'Exit'])
-    const backButton = within(reviewActions).getByRole('button', { name: 'Back' })
-    expect(backButton).toHaveClass('gel-btn--secondary')
-    expect(backButton).not.toHaveClass('gel-btn--destructive')
+    expectNoCustomerFacingAnnotations()
+  })
 
-    await user.click(screen.getByRole('button', { name: 'Submit application' }))
+  it('submits to immediate-approval confirmation without a Next steps card', async () => {
+    const user = userEvent.setup()
+    render(<TrialPermitSkeleton />)
+
+    await getToConfirmation(user)
 
     const status = screen.getByRole('status', { name: 'Transaction completed' })
-    expect(within(status).getByRole('heading', { name: 'Application submitted' })).toBeInTheDocument()
-    expect(screen.getByText('PERMIT-000000')).toBeInTheDocument()
-    expect(screen.queryByText('Jane Citizen')).not.toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Next steps' })).toBeInTheDocument()
+    expect(within(status).getByRole('heading', { name: 'Your trial permit is approved' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Receipt details' })).toBeInTheDocument()
+    expect(screen.getByText('TP-000000')).toBeInTheDocument()
+    expect(screen.getByText('1 June 2026')).toBeInTheDocument()
+    expect(screen.getByText('Your receipt is your trial permit.')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Keep a record' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Print or save receipt' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Tell us about your experience' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Start another application' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Next steps' })).not.toBeInTheDocument()
+    expect(screen.queryByText(/reviewed within/i)).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Continue' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: 'Review TaPaaS source inventory' })).not.toBeInTheDocument()
+    expectNoCustomerFacingAnnotations()
   })
 })

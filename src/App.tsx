@@ -17,7 +17,7 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
   permit: {
     label: 'TaPaaS x Kiro trial',
     title: 'Apply for a trial permit',
-    subtitle: 'A non-production trial permit application skeleton using mock data only.',
+    subtitle: 'Apply for a short trial permit and receive an approved permit receipt.',
   },
   market: {
     label: 'TaPaaS x Kiro trial',
