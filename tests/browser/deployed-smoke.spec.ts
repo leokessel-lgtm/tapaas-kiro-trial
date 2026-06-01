@@ -31,13 +31,13 @@ async function chooseOptionInGroup(page: import('@playwright/test').Page, groupN
 }
 
 test.describe('published preview app', () => {
-  test('loads the app, exposes the expected visible transactions and avoids unsafe claims', async ({ page }) => {
+  test('loads the app, exposes the Clara-aligned visible transactions and avoids unsafe claims', async ({ page }) => {
     await page.goto('./')
 
     await expect(page.getByRole('heading', { name: 'Apply for a trial permit' })).toBeVisible()
 
     const switcher = page.getByRole('group', { name: 'Choose a trial transaction skeleton' })
-    await expect(switcher.getByRole('button', { name: 'Vehicle skeleton' })).toBeVisible()
+    await expect(switcher.getByRole('button', { name: 'Vehicle skeleton' })).toHaveCount(0)
     await expect(switcher.getByRole('button', { name: 'Trial permit skeleton' })).toBeVisible()
     await expect(switcher.getByRole('button', { name: 'Accessible market permit' })).toBeVisible()
     await expect(switcher.getByRole('button', { name: 'Community venue booking' })).toBeVisible()

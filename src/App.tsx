@@ -1,19 +1,13 @@
 import { useState } from 'react'
 import { ServiceNSWChrome } from './layout-preview/ServiceNSWChrome'
-import { TapaasTransactionSkeleton } from './TapaasTransactionSkeleton'
 import { TrialPermitSkeleton } from './TrialPermitSkeleton'
 import { AccessibleMarketPermitSkeleton } from './AccessibleMarketPermitSkeleton'
 import { CommunityVenueBookingSkeleton } from './CommunityVenueBookingSkeleton'
 import { MobilityParkingPermitSkeleton } from './MobilityParkingPermitSkeleton'
 
-type ActiveSkeleton = 'vehicle' | 'permit' | 'market' | 'venue' | 'mps'
+type ActiveSkeleton = 'permit' | 'market' | 'venue' | 'mps'
 
 const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; subtitle: string }> = {
-  vehicle: {
-    label: 'TaPaaS x Kiro trial',
-    title: 'Repeatable transaction skeleton',
-    subtitle: 'A non-production example for building simple Service NSW transaction flows from TaPaaS templates.',
-  },
   permit: {
     label: 'TaPaaS x Kiro trial',
     title: 'Apply for a trial permit',
@@ -37,7 +31,6 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
 }
 
 const switcherOptions: { id: ActiveSkeleton; label: string }[] = [
-  { id: 'vehicle', label: 'Vehicle skeleton' },
   { id: 'permit', label: 'Trial permit skeleton' },
   { id: 'market', label: 'Accessible market permit' },
   { id: 'venue', label: 'Community venue booking' },
@@ -76,7 +69,6 @@ export function App() {
           </button>
         ))}
       </div>
-      {active === 'vehicle' && <TapaasTransactionSkeleton />}
       {active === 'permit' && <TrialPermitSkeleton />}
       {active === 'market' && <AccessibleMarketPermitSkeleton />}
       {active === 'venue' && <CommunityVenueBookingSkeleton />}
