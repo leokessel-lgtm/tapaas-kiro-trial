@@ -19,6 +19,17 @@ async function chooseByLabelText(page: import('@playwright/test').Page, label: s
   await page.getByText(label, { exact: typeof label === 'string' }).click()
 }
 
+async function chooseOptionInGroup(page: import('@playwright/test').Page, groupName: string, optionName: string) {
+  const radio = page.getByRole('group', { name: groupName }).getByRole('radio', { name: optionName })
+  const id = await radio.getAttribute('id')
+
+  if (id) {
+    await page.locator(`label[for="${id}"]`).click()
+  } else {
+    await radio.check({ force: true })
+  }
+}
+
 test.describe('published preview app', () => {
   test('loads the app, exposes the expected visible transactions and avoids unsafe claims', async ({ page }) => {
     await page.goto('./')
@@ -47,69 +58,54 @@ test.describe('published preview app', () => {
     await page.goto('./')
     await page.getByRole('button', { name: 'Mobility Parking Scheme' }).click()
 
-    await expect(page.getByText('Step 1 of 7: Start and privacy')).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Mobility Parking Scheme permit' })).toBeVisible()
+    await expect(page.getByRole('navigation', { name: 'Application progress' })).toContainText('Privacy')
+    await expect(page.getByText(/Step \d+ of \d+/)).toHaveCount(0)
     await continueFromCurrentStep(page)
-    await expect(page.getByRole('link', { name: 'Confirm that you have read the privacy information' })).toHaveAttribute('href', '#privacy-confirmation')
+    await expect(page.getByRole('link', { name: 'Accept the Terms and Conditions to continue' })).toHaveAttribute('href', '#terms-and-conditions')
 
-    await chooseByLabelText(page, 'I have read and understand the privacy information.')
-    await continueFromCurrentStep(page)
-
-    await chooseByLabelText(page, 'Signed in with verified account details (mock)')
-    await expect(page.getByRole('region', { name: 'MyAccount context' })).toBeVisible()
-    await expect(page.getByRole('button', { name: 'Change mock account' })).toHaveCount(0)
-    await chooseByLabelText(page, 'I understand proof of identity is not performed in this prototype.')
+    await chooseByLabelText(page, 'I agree to the Terms and Conditions.')
     await continueFromCurrentStep(page)
 
-    await expect(page.getByText('N', { exact: true })).toHaveCount(0)
-    await expect(page.getByText('R', { exact: true })).toHaveCount(0)
-    await expect(page.getByText('P', { exact: true })).toHaveCount(0)
-    await chooseByLabelText(page, 'Apply for a new permit (mock)')
+    await chooseByLabelText(page, 'Apply for a new permit')
     await continueFromCurrentStep(page)
 
-    await expect(page.getByText('Step 1 of 4')).toBeVisible()
-    await page.getByLabel('First name *').fill('Alex')
-    await page.getByLabel('Last name *').fill('Citizen')
-    await page.getByLabel('Day').fill('15')
-    await page.getByLabel('Month').selectOption('mar')
-    await page.getByLabel('Year').fill('1990')
-    await page.getByLabel('Email address *').fill('alex@example.test')
-    await page.getByLabel('Phone number *').fill('0400000000')
-    await page.getByLabel('Residential address *').fill('1 Mock Street, Sydney NSW 2000')
+    await expect(page.getByRole('region', { name: 'Your profile details' })).toBeVisible()
+    await expect(page.getByText('Alex Citizen')).toBeVisible()
+    await expect(page.getByLabel(/First name/i)).toHaveCount(0)
+    await expect(page.getByLabel(/Last name/i)).toHaveCount(0)
+    await expect(page.getByLabel(/^Date of birth/i)).toHaveCount(0)
+    await page.getByLabel('Contact phone number').fill('0400000000')
     await continueFromCurrentStep(page)
 
-    await chooseByLabelText(page, 'No')
+    await chooseOptionInGroup(page, 'Is someone applying on behalf of the applicant?', 'No')
     await continueFromCurrentStep(page)
 
-    await page.locator('label[for="has-mobility-condition-no"]').click()
-    await page.locator('label[for="has-driver-licence-0"]').click()
-    await page.locator('label[for="has-photo-card-0"]').click()
-    await page.locator('label[for="needs-temporary-permit-1"]').click()
+    await chooseOptionInGroup(page, 'Does the applicant have a mobility condition?', 'Yes')
+    await page.getByLabel('Describe the mobility condition').fill('Mobility support is required for walking longer distances.')
+    await chooseOptionInGroup(page, 'Does the applicant have a NSW driver licence?', 'No')
+    await chooseOptionInGroup(page, 'Does the applicant have a NSW photo card?', 'No')
+    await chooseOptionInGroup(page, 'Is a temporary permit needed while this application is reviewed?', 'No')
     await continueFromCurrentStep(page)
 
-    await chooseByLabelText(page, 'Medical certificate (mock)')
-    await chooseByLabelText(page, 'Mock uploaded now')
-    await chooseByLabelText(page, 'I understand medical evidence handling is simulated only.')
-    await continueFromCurrentStep(page)
-
-    await chooseByLabelText(page, 'No')
-    await continueFromCurrentStep(page)
-
-    await chooseByLabelText(page, 'Post to residential address (mock)')
-    await continueFromCurrentStep(page)
-
-    await chooseByLabelText(page, 'Mock payment succeeds and application submits')
-    await continueFromCurrentStep(page)
-
-    await chooseByLabelText(page, 'I declare that the information provided is true and correct.')
+    await chooseOptionInGroup(page, 'What medical evidence will be provided?', 'Medical certificate')
+    await chooseOptionInGroup(page, 'How will the medical evidence be provided?', 'I have medical evidence ready')
+    await chooseOptionInGroup(page, 'Does the applicant have a New South Wales concession card?', 'No')
     await continueFromCurrentStep(page)
 
     await expect(page.getByRole('heading', { name: 'Review your application' })).toBeVisible()
-    await expect(page.getByText('Alex', { exact: true })).toBeVisible()
-    await expect(page.getByText('Citizen', { exact: true })).toBeVisible()
-    await page.getByRole('button', { name: 'Submit mock application' }).click()
+    await expect(page.getByRole('button', { name: 'Edit Application details' })).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Edit Your details' })).toBeVisible()
+    await expect(page.getByText(/payment|fee|mock|prototype|figma|kiro/i)).toHaveCount(0)
+    await chooseByLabelText(page, 'I declare that the information provided is true and correct.')
+    await page.getByRole('button', { name: 'Submit application' }).click()
 
     await expect(page.getByRole('status', { name: 'Transaction completed' })).toBeVisible()
-    await expect(page.getByText('MPS-MOCK-000000')).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Your application has been submitted for review' })).toBeVisible()
+    await expect(page.getByText('MPS-000000')).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Keep a record' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'What happens next?' })).toBeVisible()
+    await expect(page.getByText(/payment|fee|mock|prototype|figma|kiro/i)).toHaveCount(0)
   })
 })
 

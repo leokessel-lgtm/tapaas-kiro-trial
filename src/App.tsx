@@ -30,9 +30,9 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
     subtitle: 'A non-production 8-step skeleton with MoreInfoDisclosure, Accordion and conditional questions.',
   },
   mps: {
-    label: 'TaPaaS x Kiro trial',
-    title: 'Mobility Parking Scheme simulation',
-    subtitle: 'A non-production Figma-guided MPS transaction with mock identity, eligibility, evidence, concession, payment and outcome routing.',
+    label: 'Mobility Parking Scheme',
+    title: 'Mobility Parking Scheme permit',
+    subtitle: 'Apply for a Mobility Parking Scheme permit and receive a submitted application receipt.',
   },
 }
 

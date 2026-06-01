@@ -3,472 +3,183 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import { MobilityParkingPermitSkeleton } from './MobilityParkingPermitSkeleton'
 
-async function continueFromCurrentStep(user: ReturnType<typeof userEvent.setup>) {
-  await user.click(screen.queryByRole('button', { name: 'Continue' }) ?? screen.getByRole('button', { name: 'Next' }))
+async function continueFromCurrentStep(user: ReturnType<typeof userEvent.setup>, label = 'Continue') {
+  await user.click(screen.getByRole('button', { name: label }))
 }
 
-async function reachApplicationTypeStep(user: ReturnType<typeof userEvent.setup>) {
-  await user.click(screen.getByRole('checkbox', { name: 'I have read and understand the privacy information.' }))
-  await continueFromCurrentStep(user)
-
-  await user.click(screen.getByRole('radio', { name: 'Signed in with verified account details (mock)' }))
-  await user.click(screen.getByRole('checkbox', { name: 'I understand proof of identity is not performed in this prototype.' }))
+async function acceptPrivacyTerms(user: ReturnType<typeof userEvent.setup>) {
+  await user.click(screen.getByRole('checkbox', { name: 'I agree to the Terms and Conditions.' }))
   await continueFromCurrentStep(user)
 }
 
-async function reachApplicantDetailsStep(user: ReturnType<typeof userEvent.setup>) {
-  await reachApplicationTypeStep(user)
-  await user.click(screen.getByRole('radio', { name: 'Apply for a new permit (mock)' }))
+async function completeApplicationDetails(user: ReturnType<typeof userEvent.setup>) {
+  await user.click(screen.getByRole('radio', { name: 'Apply for a new permit' }))
   await continueFromCurrentStep(user)
 }
 
-async function completeFromApplicantDetailsToReview(user: ReturnType<typeof userEvent.setup>) {
-  await fillApplicantSearchStep(user)
-  await continueFromCurrentStep(user)
-
-  await user.click(screen.getByRole('radio', { name: 'No' }))
-  await continueFromCurrentStep(user)
-
-  await user.click(screen.getByRole('radio', { name: 'No' }))
-  await user.click(screen.getAllByRole('radio', { name: 'Yes (mock)' })[0])
-  await user.click(screen.getAllByRole('radio', { name: 'Yes (mock)' })[1])
-  await user.click(screen.getAllByRole('radio', { name: 'No (mock)' })[2])
-  await continueFromCurrentStep(user)
-
-  await user.click(screen.getByRole('radio', { name: 'Medical certificate (mock)' }))
-  await user.click(screen.getByRole('radio', { name: 'Static provided/uploaded state preview' }))
-  await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
-  await continueFromCurrentStep(user)
-
-  await user.click(screen.getByRole('radio', { name: 'No' }))
-  await continueFromCurrentStep(user)
-
-  await user.click(screen.getByRole('radio', { name: 'Post to residential address (mock)' }))
-  await continueFromCurrentStep(user)
-
-  await user.click(screen.getByRole('radio', { name: 'Mock payment succeeds and application submits' }))
-  await continueFromCurrentStep(user)
-
-  await user.click(screen.getByRole('checkbox', { name: 'I declare that the information provided is true and correct.' }))
+async function completeYourDetails(user: ReturnType<typeof userEvent.setup>) {
+  await user.type(screen.getByLabelText('Contact phone number'), '0400000000')
   await continueFromCurrentStep(user)
 }
 
-async function fillApplicantSearchStep(user: ReturnType<typeof userEvent.setup>) {
-  await user.type(screen.getByLabelText('First name *'), 'Alex')
-  await user.type(screen.getByLabelText('Last name *'), 'Citizen')
-  await user.type(screen.getByLabelText('Day'), '15')
-  await user.selectOptions(screen.getByLabelText('Month'), 'mar')
-  await user.type(screen.getByLabelText('Year'), '1990')
-  await user.type(screen.getByLabelText('Email address *'), 'alex@example.test')
-  await user.type(screen.getByLabelText('Phone number *'), '0400000000')
-  await user.type(screen.getByLabelText('Residential address *'), '1 Mock Street, Sydney NSW 2000')
-}
-
-async function reachMedicalEvidenceStep(user: ReturnType<typeof userEvent.setup>) {
-  await reachApplicantDetailsStep(user)
-  await fillApplicantSearchStep(user)
-  await continueFromCurrentStep(user)
-
+async function completeRepresentativeDetails(user: ReturnType<typeof userEvent.setup>) {
   await user.click(screen.getByRole('radio', { name: 'No' }))
-  await continueFromCurrentStep(user)
-
-  await user.click(screen.getByRole('radio', { name: 'No' }))
-  await user.click(screen.getAllByRole('radio', { name: 'Yes (mock)' })[0])
-  await user.click(screen.getAllByRole('radio', { name: 'Yes (mock)' })[1])
-  await user.click(screen.getAllByRole('radio', { name: 'No (mock)' })[2])
   await continueFromCurrentStep(user)
 }
 
-async function reachConcessionStep(user: ReturnType<typeof userEvent.setup>) {
-  await reachMedicalEvidenceStep(user)
-  await user.click(screen.getByRole('radio', { name: 'Medical certificate (mock)' }))
-  await user.click(screen.getByRole('radio', { name: 'Static provided/uploaded state preview' }))
-  await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
+async function completeEligibility(user: ReturnType<typeof userEvent.setup>) {
+  await user.click(within(screen.getByRole('group', { name: 'Does the applicant have a mobility condition?' })).getByRole('radio', { name: 'Yes' }))
+  await user.type(screen.getByLabelText('Describe the mobility condition'), 'Mobility support is required for walking longer distances.')
+  await user.click(within(screen.getByRole('group', { name: 'Does the applicant have a NSW driver licence?' })).getByRole('radio', { name: 'No' }))
+  await user.click(within(screen.getByRole('group', { name: 'Does the applicant have a NSW photo card?' })).getByRole('radio', { name: 'No' }))
+  await user.click(within(screen.getByRole('group', { name: 'Is a temporary permit needed while this application is reviewed?' })).getByRole('radio', { name: 'No' }))
   await continueFromCurrentStep(user)
 }
 
-async function completeSuccessfulPathToPayment(user: ReturnType<typeof userEvent.setup>) {
-  await reachApplicantDetailsStep(user)
-  await fillApplicantSearchStep(user)
-  await continueFromCurrentStep(user)
-
+async function completeSupportingEvidence(user: ReturnType<typeof userEvent.setup>) {
+  await user.click(screen.getByRole('radio', { name: 'Medical certificate' }))
+  await user.click(screen.getByRole('radio', { name: 'I have medical evidence ready' }))
   await user.click(screen.getByRole('radio', { name: 'No' }))
   await continueFromCurrentStep(user)
+}
 
-  await user.click(screen.getByRole('radio', { name: 'No' }))
-  await user.click(screen.getAllByRole('radio', { name: 'Yes (mock)' })[0])
-  await user.click(screen.getAllByRole('radio', { name: 'Yes (mock)' })[1])
-  await user.click(screen.getAllByRole('radio', { name: 'No (mock)' })[2])
-  await continueFromCurrentStep(user)
-
-  await user.click(screen.getByRole('radio', { name: 'Medical certificate (mock)' }))
-  await user.click(screen.getByRole('radio', { name: 'Static provided/uploaded state preview' }))
-  await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
-  await continueFromCurrentStep(user)
-
-  await user.click(screen.getByRole('radio', { name: 'No' }))
-  await continueFromCurrentStep(user)
-
-  await user.click(screen.getByRole('radio', { name: 'Post to residential address (mock)' }))
-  await continueFromCurrentStep(user)
+async function completeToReview(user: ReturnType<typeof userEvent.setup>) {
+  await acceptPrivacyTerms(user)
+  await completeApplicationDetails(user)
+  await completeYourDetails(user)
+  await completeRepresentativeDetails(user)
+  await completeEligibility(user)
+  await completeSupportingEvidence(user)
 }
 
 describe('MobilityParkingPermitSkeleton', () => {
-  it('renders the account context as a source-informed read-only card', async () => {
+  it('uses meaningful stable stepper labels and excludes confirmation', () => {
+    render(<MobilityParkingPermitSkeleton />)
+
+    const progress = screen.getByRole('navigation', { name: 'Application progress' })
+    expect(within(progress).getByText('Privacy')).toBeInTheDocument()
+    expect(within(progress).getByText('Application details')).toBeInTheDocument()
+    expect(within(progress).getByText('Your details')).toBeInTheDocument()
+    expect(within(progress).getByText('Eligibility')).toBeInTheDocument()
+    expect(within(progress).getByText('Supporting evidence')).toBeInTheDocument()
+    expect(within(progress).getByText('Review')).toBeInTheDocument()
+    expect(within(progress).queryByText('Confirmation')).not.toBeInTheDocument()
+    expect(screen.queryByText(/Step \d+ of \d+/)).not.toBeInTheDocument()
+  })
+
+  it('uses the TaPaaS privacy and terms template', async () => {
     const user = userEvent.setup()
     render(<MobilityParkingPermitSkeleton />)
 
-    await user.click(screen.getByRole('checkbox', { name: 'I have read and understand the privacy information.' }))
-    await continueFromCurrentStep(user)
-    await user.click(screen.getByRole('radio', { name: 'Signed in with verified account details (mock)' }))
+    expect(screen.getByRole('heading', { name: 'Privacy Collection Notice' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Terms and Conditions' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Notifications and receipt' })).toBeInTheDocument()
+    expect(screen.getByRole('checkbox', { name: 'I agree to the Terms and Conditions.' })).toBeInTheDocument()
+    expect(screen.queryByRole('checkbox', { name: 'I have read and understand the privacy information.' })).not.toBeInTheDocument()
 
-    const accountCard = screen.getByRole('region', { name: 'MyAccount context' })
-    expect(within(accountCard).getByText('Source-informed account context only. No real account data or identity proofing is used.')).toBeInTheDocument()
-    expect(within(accountCard).getByText('Preview only')).toBeInTheDocument()
-    expect(within(accountCard).getByText('Identity proofing')).toBeInTheDocument()
-    expect(within(accountCard).getByText('Simulated only')).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: 'Change mock account' })).not.toBeInTheDocument()
-    expect(screen.queryByText('Mock account context')).not.toBeInTheDocument()
+    await continueFromCurrentStep(user)
+    expect(screen.getByRole('link', { name: 'Accept the Terms and Conditions to continue' })).toHaveAttribute('href', '#terms-and-conditions')
   })
 
-  it('blocks the privacy step and then completes a mock successful MPS path', async () => {
+  it('plays back profile-owned details as read-only and does not recapture name or date of birth', async () => {
     const user = userEvent.setup()
-    const { container } = render(<MobilityParkingPermitSkeleton />)
+    render(<MobilityParkingPermitSkeleton />)
 
-    expect(screen.getByText('Step 1 of 7: Start and privacy')).toBeInTheDocument()
-    expect(container.querySelector('[data-mps-page-template="start-intro"]')).toBeInTheDocument()
+    await acceptPrivacyTerms(user)
+    await completeApplicationDetails(user)
 
-    await continueFromCurrentStep(user)
-    expect(screen.getByRole('link', { name: 'Confirm that you have read the privacy information' })).toHaveAttribute('href', '#privacy-confirmation')
+    const profile = screen.getByRole('region', { name: 'Your profile details' })
+    expect(within(profile).getByText('These details come from Account/Profile. If they are incorrect, update them in Account/Profile before continuing.')).toBeInTheDocument()
+    expect(within(profile).getByText('Full name')).toBeInTheDocument()
+    expect(within(profile).getByText('Alex Citizen')).toBeInTheDocument()
+    expect(within(profile).getByText('Date of birth')).toBeInTheDocument()
+    expect(within(profile).getByText('15 March 1990')).toBeInTheDocument()
+    expect(screen.getByLabelText('Contact phone number')).toBeInTheDocument()
+    expect(screen.queryByLabelText(/First name/i)).not.toBeInTheDocument()
+    expect(screen.queryByLabelText(/Family name/i)).not.toBeInTheDocument()
+    expect(screen.queryByLabelText(/Last name/i)).not.toBeInTheDocument()
+    expect(screen.queryByLabelText(/^Date of birth/i)).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('Day')).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('Month')).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('Year')).not.toBeInTheDocument()
+  })
 
-    await reachApplicantDetailsStep(user)
+  it('keeps declaration on the review page rather than a standalone step', async () => {
+    const user = userEvent.setup()
+    render(<MobilityParkingPermitSkeleton />)
 
-    expect(screen.getByRole('heading', { name: 'Personal details' })).toBeInTheDocument()
-    expect(screen.getByText('Step 1 of 4')).toBeInTheDocument()
-    expect(container.querySelector('[data-mps-page-template="form-page"]')).toBeInTheDocument()
-    expect(screen.getByLabelText('Residential address *')).toBeInTheDocument()
-    await fillApplicantSearchStep(user)
-    await continueFromCurrentStep(user)
-
-    expect(screen.getByRole('heading', { name: 'Representative and authorised contacts' })).toBeInTheDocument()
-    await user.click(screen.getByRole('radio', { name: 'No' }))
-    await continueFromCurrentStep(user)
-
-    expect(screen.getByRole('heading', { name: 'Eligibility questions' })).toBeInTheDocument()
-    expect(container.querySelector('[data-mps-page-template="eligibility-state"]')).toBeInTheDocument()
-    await user.click(screen.getByRole('radio', { name: 'No' }))
-    await user.click(screen.getAllByRole('radio', { name: 'Yes (mock)' })[0])
-    await user.click(screen.getAllByRole('radio', { name: 'Yes (mock)' })[1])
-    await user.click(screen.getAllByRole('radio', { name: 'No (mock)' })[2])
-    await continueFromCurrentStep(user)
-
-    expect(screen.getByRole('heading', { name: 'Medical evidence' })).toBeInTheDocument()
-    expect(container.querySelector('[data-mps-page-template="evidence-state"]')).toBeInTheDocument()
-    await user.click(screen.getByRole('radio', { name: 'Medical certificate (mock)' }))
-    expect(screen.getByText('Medical evidence source state is unresolved')).toBeInTheDocument()
-    expect(screen.getByText('The source frames show required and provided/uploaded states for certificate and report evidence, but the file rules and true state meaning are not confirmed. This preview is status-only and does not upload, remove, store, validate, scan or assess files.')).toBeInTheDocument()
-    await user.click(screen.getByRole('radio', { name: 'Static provided/uploaded state preview' }))
-    expect(screen.queryByRole('radio', { name: 'Mock uploaded now' })).not.toBeInTheDocument()
-    await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
-    await continueFromCurrentStep(user)
-
-    expect(screen.getByRole('heading', { name: 'Concession card details' })).toBeInTheDocument()
-    expect(container.querySelector('[data-mps-page-template="concession-source-state"]')).toBeInTheDocument()
-    expect(screen.getByText('Concession details are source-gated')).toBeInTheDocument()
-    expect(screen.getByRole('group', { name: 'Do you have a New South Wales concession card?' })).toBeInTheDocument()
-    expect(screen.queryByRole('combobox', { name: 'Concession card option' })).not.toBeInTheDocument()
-    expect(screen.queryByLabelText('Concession card number')).not.toBeInTheDocument()
-    expect(screen.queryByRole('group', { name: 'Mock validation result' })).not.toBeInTheDocument()
-    await user.click(screen.getByRole('radio', { name: 'No' }))
-    await continueFromCurrentStep(user)
-
-    expect(screen.getByRole('heading', { name: 'Delivery preferences' })).toBeInTheDocument()
-    expect(container.querySelector('[data-mps-page-template="kiro-stress-test-form"]')).toBeInTheDocument()
-    expect(screen.getByText('Trial-only delivery stress path')).toBeInTheDocument()
-    expect(screen.getByText('This page is a Kiro stress-test route only. It is not confirmed in the MPS source flow and does not set real delivery, approval or fulfilment behaviour.')).toBeInTheDocument()
-    expect(screen.getByRole('group', { name: 'Choose a trial-only delivery route' })).toBeInTheDocument()
-    expect(screen.queryByText('How would the permit be delivered if the real service approves the application?')).not.toBeInTheDocument()
-    await user.click(screen.getByRole('radio', { name: 'Post to residential address (mock)' }))
-    await continueFromCurrentStep(user)
-
-    expect(screen.getByRole('heading', { name: 'Payment simulation' })).toBeInTheDocument()
-    expect(container.querySelector('[data-mps-page-template="mock-payment-state"]')).toBeInTheDocument()
-    await user.click(screen.getByRole('radio', { name: 'Mock payment succeeds and application submits' }))
-    await continueFromCurrentStep(user)
-
-    expect(screen.getByRole('heading', { name: 'Declaration' })).toBeInTheDocument()
-    expect(container.querySelector('[data-mps-page-template="declaration"]')).toBeInTheDocument()
-    await user.click(screen.getByRole('checkbox', { name: 'I declare that the information provided is true and correct.' }))
-    await continueFromCurrentStep(user)
+    await completeToReview(user)
 
     expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
-    expect(container.querySelector('[data-mps-page-template="review"]')).toBeInTheDocument()
-    expect(screen.getByText('Alex')).toBeInTheDocument()
-    expect(screen.getByText('Citizen')).toBeInTheDocument()
-    expect(screen.getByText('New application')).toBeInTheDocument()
-    expect(screen.getByText('1 Mock Street, Sydney NSW 2000')).toBeInTheDocument()
-    expect(screen.getByText('Mock/system state summary')).toBeInTheDocument()
-    expect(screen.getByText('Representative/contact, delivery, payment, evidence and assessment rows are designer-review prompts only. They remain trial-only or mock state summaries and do not prove backend validation, eligibility, payment, approval or permit issue behaviour.')).toBeInTheDocument()
-    expect(screen.getByText('Mock application fee')).toBeInTheDocument()
-    expect(screen.getByText('First name')).toBeInTheDocument()
-    expect(screen.getByText('Last name')).toBeInTheDocument()
-    expect(screen.getByText('Permit type')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Trial-only stress and backend states' })).toBeInTheDocument()
-    expect(screen.getByText('Has New South Wales concession card')).toBeInTheDocument()
-    expect(screen.getByText('Card issuer')).toBeInTheDocument()
-    expect(screen.getByText('Card number')).toBeInTheDocument()
-    expect(screen.getAllByText('Not applicable').length).toBeGreaterThan(0)
-    expect(screen.queryByText('Concession validation result')).not.toBeInTheDocument()
-    expect(screen.getByText('Medical evidence status')).toBeInTheDocument()
-    expect(screen.getByText('No real upload, storage, scanning or assessment occurs.')).toBeInTheDocument()
-    expect(screen.getByText('Representative/contact route')).toBeInTheDocument()
-    expect(screen.getByText('Payment route')).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: 'Edit Application details' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('group', { name: 'Mock validation result' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Declaration' })).not.toBeInTheDocument()
+    expect(screen.getByRole('checkbox', { name: 'I declare that the information provided is true and correct.' })).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'Submit mock application' }))
+    await continueFromCurrentStep(user, 'Submit application')
+    expect(screen.getByRole('link', { name: 'Accept the declaration to submit' })).toHaveAttribute('href', '#declaration-accepted')
+  })
+
+  it('mirrors completed review sections with one edit affordance per section', async () => {
+    const user = userEvent.setup()
+    render(<MobilityParkingPermitSkeleton />)
+
+    await completeToReview(user)
+
+    const expectedSections = [
+      'Application details',
+      'Your details',
+      'Representative details',
+      'Eligibility',
+      'Supporting evidence',
+      'Privacy',
+    ]
+
+    for (const section of expectedSections) {
+      expect(screen.getByRole('heading', { name: section })).toBeInTheDocument()
+      expect(screen.getAllByRole('button', { name: `Edit ${section}` })).toHaveLength(1)
+    }
+  })
+
+  it('renders submitted-for-review confirmation with receipt, next steps, keep a record and feedback', async () => {
+    const user = userEvent.setup()
+    render(<MobilityParkingPermitSkeleton />)
+
+    await completeToReview(user)
+    await user.click(screen.getByRole('checkbox', { name: 'I declare that the information provided is true and correct.' }))
+    await continueFromCurrentStep(user, 'Submit application')
 
     const status = screen.getByRole('status', { name: 'Transaction completed' })
-    expect(within(status).getByRole('heading', { name: 'Your application has been submitted for assessment' })).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: 'Mobility Parking Scheme outcome' })).toHaveAttribute('data-mps-page-template', 'confirmation')
-    expect(screen.getByText('MPS-MOCK-000000')).toBeInTheDocument()
-    expect(screen.getByText('Apply for a Mobility Parking Permit')).toBeInTheDocument()
-    expect(screen.getByText('Source-observed assessment step: your application will be reviewed. Timing and ownership need service-owner confirmation.')).toBeInTheDocument()
-    expect(screen.getByText('Source-observed contact/payment step: further information and payment processing rules are not connected in this preview.')).toBeInTheDocument()
-    expect(screen.getByText('Source-observed service-centre step: any visit requirement needs service-owner confirmation.')).toBeInTheDocument()
-    expect(screen.getByText('Source-observed permit mailout step: no permit issue or delivery has occurred in this preview.')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Return expired or replaced cards' })).toBeInTheDocument()
-    expect(screen.getByText('Source-observed return-card instructions and fine warnings require service-owner confirmation before they can be treated as operational guidance.')).toBeInTheDocument()
-    expect(screen.getByText('Source-observed confirmation content is shown to review structure only. Next steps, return-card content and notification wording are not approved operational instructions. No approval, permit issue, payment receipt, eligibility decision, lodgement record or concession validation has occurred.')).toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: 'Review TaPaaS component-template relationship map' })).not.toBeInTheDocument()
+    expect(within(status).getByRole('heading', { name: 'Your application has been submitted for review' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Receipt details' })).toBeInTheDocument()
+    expect(screen.getByText('MPS-000000')).toBeInTheDocument()
+    expect(screen.getByText('1 June 2026')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Keep a record' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'What happens next?' })).toBeInTheDocument()
+    expect(screen.getByText('Your application will be reviewed.')).toBeInTheDocument()
+    expect(screen.getByText('We will notify you of the outcome.')).toBeInTheDocument()
+    expect(screen.getByText('If approved, your permit document will be sent using the service delivery process.')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Help us improve' })).toBeInTheDocument()
+    expect(screen.queryByText(/payment/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/fee/i)).not.toBeInTheDocument()
   })
 
-  it('shows the source-backed certificate uploaded status without upload or remove controls', async () => {
+  it('does not render customer-facing annotations or mock implementation notes', async () => {
     const user = userEvent.setup()
     render(<MobilityParkingPermitSkeleton />)
 
-    await reachMedicalEvidenceStep(user)
-
-    await user.click(screen.getByRole('radio', { name: 'Medical certificate (mock)' }))
-    await user.click(screen.getByRole('radio', { name: 'Static provided/uploaded state preview' }))
-
-    expect(screen.getByRole('heading', { name: 'Medical document' })).toBeInTheDocument()
-    expect(screen.getByText('medicalcertificate_april2020.png')).toBeInTheDocument()
-    expect(screen.getByText('Medical certificate')).toBeInTheDocument()
-    expect(screen.getByText('Supporting evidence status')).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: /select file/i })).not.toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: /remove file/i })).not.toBeInTheDocument()
-  })
-
-  it('shows the source-backed report uploaded status without upload or remove controls', async () => {
-    const user = userEvent.setup()
-    render(<MobilityParkingPermitSkeleton />)
-
-    await reachMedicalEvidenceStep(user)
-
-    await user.click(screen.getByRole('radio', { name: 'Medical report (mock)' }))
-    await user.click(screen.getByRole('radio', { name: 'Static provided/uploaded state preview' }))
-
-    expect(screen.getByText('medicalreport_april2020.png')).toBeInTheDocument()
-    expect(screen.getByText('Medical report')).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: /select file/i })).not.toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: /remove file/i })).not.toBeInTheDocument()
-  })
-
-  it('keeps provide-later as required status and routes to manual review', async () => {
-    const user = userEvent.setup()
-    render(<MobilityParkingPermitSkeleton />)
-
-    await reachMedicalEvidenceStep(user)
-
-    await user.click(screen.getByRole('radio', { name: 'Medical report (mock)' }))
-    await user.click(screen.getByRole('radio', { name: 'Static required/provide-later preview' }))
-
-    expect(screen.getByText('Required')).toBeInTheDocument()
-    expect(screen.queryByText('medicalcertificate_april2020.png')).not.toBeInTheDocument()
-    expect(screen.queryByText('medicalreport_april2020.png')).not.toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: /select file/i })).not.toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: /remove file/i })).not.toBeInTheDocument()
-
-    await user.click(screen.getByRole('checkbox', { name: 'I understand medical evidence handling is simulated only.' }))
-    await continueFromCurrentStep(user)
-
-    await user.click(screen.getByRole('radio', { name: 'No' }))
-    await continueFromCurrentStep(user)
-
-    await user.click(screen.getByRole('radio', { name: 'Post to residential address (mock)' }))
-    await continueFromCurrentStep(user)
-
-    await user.click(screen.getByRole('radio', { name: 'Mock payment succeeds and application submits' }))
-    await continueFromCurrentStep(user)
-
+    await completeToReview(user)
     await user.click(screen.getByRole('checkbox', { name: 'I declare that the information provided is true and correct.' }))
-    await continueFromCurrentStep(user)
+    await continueFromCurrentStep(user, 'Submit application')
 
-    await user.click(screen.getByRole('button', { name: 'Submit mock application' }))
-
-    expect(screen.getByRole('status', { name: 'Transaction completed' })).toBeInTheDocument()
-    expect(screen.getByText('MPS-REVIEW-000000')).toBeInTheDocument()
-  })
-
-  it('shows the source-backed manual address frame state without address lookup or backend behaviour', async () => {
-    const user = userEvent.setup()
-    render(<MobilityParkingPermitSkeleton />)
-
-    await reachApplicantDetailsStep(user)
-
-    expect(screen.getByRole('heading', { name: 'Personal details' })).toBeInTheDocument()
-    await user.click(screen.getByRole('button', { name: 'Enter address manually' }))
-
-    expect(screen.getByRole('group', { name: 'Residential address' })).toBeInTheDocument()
-    expect(screen.getByLabelText('Street number *')).toBeInTheDocument()
-    expect(screen.getByLabelText('Street name *')).toBeInTheDocument()
-    expect(screen.getByLabelText('Street type *')).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: /find|lookup/i })).not.toBeInTheDocument()
-
-    await user.type(screen.getByLabelText('First name *'), 'Alex')
-    await user.type(screen.getByLabelText('Last name *'), 'Citizen')
-    await user.type(screen.getByLabelText('Day'), '15')
-    await user.selectOptions(screen.getByLabelText('Month'), 'mar')
-    await user.type(screen.getByLabelText('Year'), '1990')
-    await user.type(screen.getByLabelText('Street number *'), '1')
-    await user.type(screen.getByLabelText('Street name *'), 'Mock')
-    await user.selectOptions(screen.getByLabelText('Street type *'), 'street')
-    await user.type(screen.getByLabelText('Suburb *'), 'Sydney')
-    await user.selectOptions(screen.getByLabelText('State *'), 'NSW')
-    await user.type(screen.getByLabelText('Postcode *'), '2000')
-    await user.type(screen.getByLabelText('Email address *'), 'alex@example.test')
-    await user.type(screen.getByLabelText('Phone number *'), '0400000000')
-    await continueFromCurrentStep(user)
-
-    expect(screen.getByRole('heading', { name: 'Representative and authorised contacts' })).toBeInTheDocument()
-  })
-
-  it('shows the radio-card application branch without permit lookup behaviour', async () => {
-    const user = userEvent.setup()
-    render(<MobilityParkingPermitSkeleton />)
-
-    await reachApplicationTypeStep(user)
-
-    expect(screen.getByRole('heading', { name: 'Application type' })).toBeInTheDocument()
-    expect(screen.queryByText('N')).not.toBeInTheDocument()
-    expect(screen.queryByText('R')).not.toBeInTheDocument()
-    expect(screen.queryByText('P')).not.toBeInTheDocument()
-    await user.click(screen.getByRole('radio', { name: 'Apply for a new permit (mock)' }))
-
-    expect(screen.queryByLabelText('Existing permit number')).not.toBeInTheDocument()
-    expect(screen.queryByRole('group', { name: 'Reason for replacement' })).not.toBeInTheDocument()
-
-    await user.click(screen.getByRole('radio', { name: 'Renew an existing permit (mock)' }))
-
-    expect(screen.getByLabelText('Existing permit number')).toBeInTheDocument()
-    expect(screen.getByText('Mock only. No permit lookup is performed.')).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: /find|lookup|search/i })).not.toBeInTheDocument()
-  })
-
-  it('links replacement-reason validation summary to the radio group and shows inline group error', async () => {
-    const user = userEvent.setup()
-    render(<MobilityParkingPermitSkeleton />)
-
-    await reachApplicationTypeStep(user)
-    await user.click(screen.getByRole('radio', { name: 'Replace a permit (mock)' }))
-    await user.type(screen.getByLabelText('Existing permit number'), 'MPS-REPLACE-001')
-    await continueFromCurrentStep(user)
-
-    expect(screen.getByRole('link', { name: 'Select a replacement reason' })).toHaveAttribute('href', '#replace-reason')
-    expect(screen.getByRole('group', { name: 'Reason for replacement' })).toHaveAttribute('aria-describedby', 'replace-reason-error')
-    expect(screen.getAllByText('Select a replacement reason.')).toHaveLength(1)
-    expect(screen.getByRole('radio', { name: 'Lost permit (mock)' })).toBeInTheDocument()
-  })
-
-  it('links concession Yes/No validation summary to the source-confirmed group', async () => {
-    const user = userEvent.setup()
-    render(<MobilityParkingPermitSkeleton />)
-
-    await reachConcessionStep(user)
-    await continueFromCurrentStep(user)
-
-    expect(screen.getByRole('link', { name: 'Select whether the applicant has a New South Wales concession card' })).toHaveAttribute('href', '#has-concession-card')
-    expect(screen.getByRole('group', { name: 'Do you have a New South Wales concession card?' })).toHaveAttribute('aria-describedby', 'has-concession-card-error')
-    expect(screen.getAllByText('Select whether the applicant has a New South Wales concession card.')).toHaveLength(1)
-    expect(screen.getByText('Concession details are source-gated')).toBeInTheDocument()
-    expect(screen.queryByLabelText('Concession card number')).not.toBeInTheDocument()
-    expect(screen.queryByRole('group', { name: 'Mock validation result' })).not.toBeInTheDocument()
-  })
-
-  it('keeps concession card issuer, number and validation source-gated when Yes is selected', async () => {
-    const user = userEvent.setup()
-    render(<MobilityParkingPermitSkeleton />)
-
-    await reachConcessionStep(user)
-    await user.click(screen.getByRole('radio', { name: 'Yes' }))
-
-    await user.click(screen.getByRole('button', { name: 'What is still source-gated' }))
-    expect(screen.getByText('Card issuer, card number, concession validation, recovery states and backend rules need designer and service-owner confirmation before they can be added to this preview.')).toBeInTheDocument()
-    expect(screen.queryByLabelText('Concession card number')).not.toBeInTheDocument()
-    expect(screen.queryByText('Trial-only validation state selector')).not.toBeInTheDocument()
-    expect(screen.queryByRole('group', { name: 'Mock validation result' })).not.toBeInTheDocument()
-  })
-
-  it('carries the renewal branch through to review without lookup or backend behaviour', async () => {
-    const user = userEvent.setup()
-    render(<MobilityParkingPermitSkeleton />)
-
-    await reachApplicationTypeStep(user)
-    await user.click(screen.getByRole('radio', { name: 'Renew an existing permit (mock)' }))
-    await user.type(screen.getByLabelText('Existing permit number'), 'MPS-RENEW-001')
-    await continueFromCurrentStep(user)
-
-    expect(screen.queryByRole('button', { name: /find|lookup|search/i })).not.toBeInTheDocument()
-    await completeFromApplicantDetailsToReview(user)
-
-    expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
-    expect(screen.getByText('Renewal')).toBeInTheDocument()
-    expect(screen.getByText('MPS-RENEW-001')).toBeInTheDocument()
-    expect(screen.getAllByText('Not applicable').length).toBeGreaterThan(0)
-  })
-
-  it('carries the replacement branch and reason through to review without lookup or backend behaviour', async () => {
-    const user = userEvent.setup()
-    render(<MobilityParkingPermitSkeleton />)
-
-    await reachApplicationTypeStep(user)
-    await user.click(screen.getByRole('radio', { name: 'Replace a permit (mock)' }))
-
-    expect(screen.getByLabelText('Existing permit number')).toBeInTheDocument()
-    expect(screen.getByRole('group', { name: 'Reason for replacement' })).toBeInTheDocument()
-    expect(screen.queryByRole('combobox', { name: 'Reason for replacement' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: /find|lookup|search/i })).not.toBeInTheDocument()
-
-    await user.type(screen.getByLabelText('Existing permit number'), 'MPS-REPLACE-001')
-    await user.click(screen.getByRole('radio', { name: 'Lost permit (mock)' }))
-    await continueFromCurrentStep(user)
-
-    await completeFromApplicantDetailsToReview(user)
-
-    expect(screen.getByRole('heading', { name: 'Review your application' })).toBeInTheDocument()
-    expect(screen.getByText('Replacement')).toBeInTheDocument()
-    expect(screen.getByText('MPS-REPLACE-001')).toBeInTheDocument()
-    expect(screen.getByText('Lost permit (mock)')).toBeInTheDocument()
-  })
-
-  it('routes mock payment failure through the backend error preview without real submission behaviour', async () => {
-    const user = userEvent.setup()
-    render(<MobilityParkingPermitSkeleton />)
-
-    await completeSuccessfulPathToPayment(user)
-    await user.click(screen.getByRole('radio', { name: 'Payment fails and shows a recoverable error' }))
-    await continueFromCurrentStep(user)
-
-    await user.click(screen.getByRole('checkbox', { name: 'I declare that the information provided is true and correct.' }))
-    await continueFromCurrentStep(user)
-
-    await user.click(screen.getByRole('button', { name: 'Submit mock application' }))
-
-    expect(screen.getByRole('alert')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Unable to submit permit request' })).toBeInTheDocument()
-    expect(screen.getByText('Mock backend code:')).toBeInTheDocument()
-    expect(screen.getByText('INVALID_PAYMENT_DETAILS')).toBeInTheDocument()
-    expect(screen.queryByText('MPS-MOCK-000000')).not.toBeInTheDocument()
+    expect(document.body).not.toHaveTextContent(/\bmock\b/i)
+    expect(document.body).not.toHaveTextContent(/\bsource\b/i)
+    expect(document.body).not.toHaveTextContent(/\bowner\b/i)
+    expect(document.body).not.toHaveTextContent(/\bprototype\b/i)
+    expect(document.body).not.toHaveTextContent(/\bkiro\b/i)
+    expect(document.body).not.toHaveTextContent(/\bfigma\b/i)
+    expect(document.body).not.toHaveTextContent(/\bpreview\b/i)
+    expect(document.body).not.toHaveTextContent(/\bplaceholder\b/i)
+    expect(document.body).not.toHaveTextContent(/\binternal\b/i)
+    expect(document.body).not.toHaveTextContent(/\bpayment\b/i)
+    expect(document.body).not.toHaveTextContent(/\bfee\b/i)
   })
 })
