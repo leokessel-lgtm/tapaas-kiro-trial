@@ -22,7 +22,7 @@ const skeletonConfig: Record<ActiveSkeleton, { label: string; title: string; sub
   market: {
     label: 'TaPaaS x Kiro trial',
     title: 'Accessible market permit',
-    subtitle: 'A non-production 9-step skeleton with conditional questions and details card.',
+    subtitle: 'Apply for an accessible market permit and receive a submitted application receipt.',
   },
   venue: {
     label: 'TaPaaS x Kiro trial',

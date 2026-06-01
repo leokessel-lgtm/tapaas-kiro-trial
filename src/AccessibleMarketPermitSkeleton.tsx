@@ -1,61 +1,69 @@
-import { useState, useCallback, type CSSProperties } from 'react'
+import { useCallback, useState, type CSSProperties } from 'react'
 import { type StepError, useTransactionStep } from './useTransactionStep'
 import {
+  Button,
   Checkbox,
   ErrorSummary,
   Field,
   Heading,
-  InPageAlert,
   Input,
-  RadioButtonList,
+  ProgressStepper,
   Select,
   TextLink,
   Textarea,
 } from './gel'
 import {
+  ConditionalQuestionPanel,
   ConfirmationHeader,
+  DetailsCard,
   ExitModal,
-  ReviewFeesCard,
+  PrivacyCardPreview,
   ReviewInfoCard,
   TransactionCtaGroup,
   TransactionSummaryCard,
-  DetailsCard,
-  ConditionalQuestionPanel,
 } from './tapaas-preview'
 
-type MarketStep =
-  | 'privacy'
-  | 'applicant'
-  | 'contact'
-  | 'market'
-  | 'accessibility'
-  | 'supporting'
-  | 'declaration'
-  | 'review'
-  | 'confirmation'
+type MarketStep = 'privacy' | 'yourDetails' | 'marketStallDetails' | 'additionalDetails' | 'review' | 'confirmation'
+type StepperStep = Exclude<MarketStep, 'confirmation'>
 
-const stepOrder: MarketStep[] = [
-  'privacy', 'applicant', 'contact', 'market', 'accessibility', 'supporting', 'declaration', 'review', 'confirmation',
-]
+const stepOrder: MarketStep[] = ['privacy', 'yourDetails', 'marketStallDetails', 'additionalDetails', 'review', 'confirmation']
+const stepperSteps: StepperStep[] = ['privacy', 'yourDetails', 'marketStallDetails', 'additionalDetails', 'review']
+
+const transactionName = 'Accessible market permit'
 
 const stepLabels: Record<MarketStep, string> = {
   privacy: 'Privacy',
-  applicant: 'Applicant details',
-  contact: 'Contact details',
-  market: 'Market details',
-  accessibility: 'Accessibility and support',
-  supporting: 'Supporting information',
-  declaration: 'Declaration',
+  yourDetails: 'Your details',
+  marketStallDetails: 'Market stall details',
+  additionalDetails: 'Additional details',
   review: 'Review',
-  confirmation: 'Confirmation',
+  confirmation: 'Application submitted for review',
 }
 
+const accountProfile = {
+  fullName: 'Alex Citizen',
+  dateOfBirth: '15 March 1990',
+  source: 'Account/Profile',
+}
+
+const applicationReceipt = {
+  number: 'AMP-000000',
+  transactionDate: '1 June 2026',
+}
+
+const marketTypeOptions = [
+  { value: 'community-market', text: 'Community market' },
+  { value: 'farmers-market', text: 'Farmers market' },
+  { value: 'food-market', text: 'Food market' },
+  { value: 'arts-craft-market', text: 'Arts and craft market' },
+  { value: 'mixed-market', text: 'Mixed market' },
+  { value: 'other-market', text: 'Other market' },
+]
+
+const marketTypeLabel = Object.fromEntries(marketTypeOptions.map((option) => [option.value, option.text]))
+
 interface FormState {
-  privacyAgreed: boolean
-  fullName: string
-  dobDay: string
-  dobMonth: string
-  dobYear: string
+  termsAccepted: boolean
   email: string
   phone: string
   street: string
@@ -69,16 +77,12 @@ interface FormState {
   eventYear: string
   needsSupport: string
   supportDetails: string
-  additionalInfo: string
+  servicesDescription: string
   declarationAccepted: boolean
 }
 
 const initialState: FormState = {
-  privacyAgreed: false,
-  fullName: '',
-  dobDay: '',
-  dobMonth: '',
-  dobYear: '',
+  termsAccepted: false,
   email: '',
   phone: '',
   street: '',
@@ -92,7 +96,7 @@ const initialState: FormState = {
   eventYear: '',
   needsSupport: '',
   supportDetails: '',
-  additionalInfo: '',
+  servicesDescription: '',
   declarationAccepted: false,
 }
 
@@ -135,7 +139,7 @@ export function AccessibleMarketPermitSkeleton() {
     goBack()
   }
 
-  function goToReviewSource(targetStep: Exclude<MarketStep, 'privacy' | 'review' | 'confirmation'>) {
+  function goToReviewSource(targetStep: Exclude<MarketStep, 'review' | 'confirmation'>) {
     setAttempted(false)
     setSubmittedErrors([])
     setStep(targetStep)
@@ -149,53 +153,107 @@ export function AccessibleMarketPermitSkeleton() {
 
   return (
     <div>
-      <div className='tapaas-trial-banner'>
-        <strong>TaPaaS v0.3 trial skeleton — Accessible market permit.</strong>
-        <p style={{ margin: '0.25rem 0 0' }}>
-          This is a non-production build-assist example using mock data only. Privacy, legal, fee and processing details need owner confirmation.
-        </p>
-      </div>
-
       {step !== 'confirmation' && (
-        <p aria-live='polite' style={{ color: 'var(--gel-color-text-grey)', marginTop: 0 }}>
-          Step {stepOrder.indexOf(step) + 1} of {stepOrder.length}: {stepLabels[step]}
-        </p>
+        <AccessibleMarketFormHeader step={step} />
       )}
 
       <ErrorSummary ref={errorSummaryRef} errors={submittedErrors} />
 
-      {step === 'privacy' && <PrivacyStep form={form} submittedErrors={submittedErrors} update={update} onContinue={handleContinue} onExit={openExitModal} />}
-      {step === 'applicant' && <ApplicantStep form={form} submittedErrors={submittedErrors} update={update} onBack={handleBack} onContinue={handleContinue} onExit={openExitModal} />}
-      {step === 'contact' && <ContactStep form={form} submittedErrors={submittedErrors} update={update} onBack={handleBack} onContinue={handleContinue} onExit={openExitModal} />}
-      {step === 'market' && <MarketStep form={form} submittedErrors={submittedErrors} update={update} onBack={handleBack} onContinue={handleContinue} onExit={openExitModal} />}
-      {step === 'accessibility' && <AccessibilityStep form={form} submittedErrors={submittedErrors} update={update} onBack={handleBack} onContinue={handleContinue} onExit={openExitModal} />}
-      {step === 'supporting' && <SupportingStep form={form} submittedErrors={submittedErrors} update={update} onBack={handleBack} onContinue={handleContinue} onExit={openExitModal} />}
-      {step === 'declaration' && <DeclarationStep form={form} submittedErrors={submittedErrors} update={update} onBack={handleBack} onContinue={handleContinue} onExit={openExitModal} />}
-      {step === 'review' && <ReviewStep form={form} onBack={handleBack} onEditStep={goToReviewSource} onSubmit={handleContinue} onExit={openExitModal} />}
-      {step === 'confirmation' && <ConfirmationStep form={form} onStartAgain={resetTransaction} />}
+      {step === 'privacy' && (
+        <PrivacyStep
+          form={form}
+          submittedErrors={submittedErrors}
+          update={update}
+          onContinue={handleContinue}
+          onExit={openExitModal}
+        />
+      )}
+      {step === 'yourDetails' && (
+        <YourDetailsStep
+          form={form}
+          submittedErrors={submittedErrors}
+          update={update}
+          onBack={handleBack}
+          onContinue={handleContinue}
+          onExit={openExitModal}
+        />
+      )}
+      {step === 'marketStallDetails' && (
+        <MarketStallDetailsStep
+          form={form}
+          submittedErrors={submittedErrors}
+          update={update}
+          onBack={handleBack}
+          onContinue={handleContinue}
+          onExit={openExitModal}
+        />
+      )}
+      {step === 'additionalDetails' && (
+        <AdditionalDetailsStep
+          form={form}
+          submittedErrors={submittedErrors}
+          update={update}
+          onBack={handleBack}
+          onContinue={handleContinue}
+          onExit={openExitModal}
+        />
+      )}
+      {step === 'review' && (
+        <ReviewStep
+          form={form}
+          onBack={handleBack}
+          onEditStep={goToReviewSource}
+          onSubmit={handleContinue}
+          onExit={openExitModal}
+        />
+      )}
+      {step === 'confirmation' && <ConfirmationStep onStartAgain={resetTransaction} />}
 
       <ExitModal
         isOpen={exitModalOpen}
         onContinue={closeExitModal}
         onExit={resetTransaction}
-        description='This preview does not save draft applications. If you exit, the mock form data will be cleared.'
+        description='If you exit, the information entered in this application will be cleared.'
       />
     </div>
   )
 }
 
-// --- Validation ---
+function AccessibleMarketFormHeader({ step }: { step: StepperStep }) {
+  const currentIndex = stepperSteps.indexOf(step)
+  return (
+    <header
+      aria-labelledby={`${step}-heading`}
+      style={{
+        background: '#f4f4f4',
+        borderBottom: '1px solid var(--gel-color-border)',
+        borderTop: '1px solid var(--gel-color-border)',
+        marginBottom: '1.5rem',
+        padding: '1.5rem',
+      }}
+    >
+      <ProgressStepper
+        stepsList={stepperSteps.map((stepperStep, index) => ({
+          content: stepLabels[stepperStep],
+          status: index < currentIndex ? 'completed' : index === currentIndex ? 'current' : 'todo',
+        }))}
+      />
+      <p style={{ color: 'var(--gel-color-text-grey)', fontSize: '0.875rem', fontWeight: 700, margin: '0 0 0.25rem' }}>
+        {transactionName}
+      </p>
+      <Heading level={2} id={`${step}-heading`} style={{ marginBottom: 0 }}>
+        {stepLabels[step]}
+      </Heading>
+    </header>
+  )
+}
+
 function errorsForStep(step: MarketStep, form: FormState) {
   const errs: { id: string; text: string }[] = []
-  if (step === 'privacy' && !form.privacyAgreed) {
-    errs.push({ id: 'privacy-confirmation', text: 'Confirm that you have read the privacy information' })
+  if (step === 'privacy' && !form.termsAccepted) {
+    errs.push({ id: 'terms-and-conditions', text: 'Accept the Terms and Conditions to continue' })
   }
-  if (step === 'applicant') {
-    if (!form.fullName.trim()) errs.push({ id: 'full-name', text: 'Enter your full name' })
-    const dobError = getDobErrorText(form)
-    if (dobError) errs.push({ id: 'dob-day', text: dobError })
-  }
-  if (step === 'contact') {
+  if (step === 'yourDetails') {
     if (!isPreviewEmail(form.email)) errs.push({ id: 'email', text: 'Enter a valid email address' })
     if (!form.phone.trim()) errs.push({ id: 'phone', text: 'Enter your phone number' })
     if (!form.street.trim()) errs.push({ id: 'street', text: 'Enter your street address' })
@@ -203,32 +261,22 @@ function errorsForStep(step: MarketStep, form: FormState) {
     if (!form.state) errs.push({ id: 'state', text: 'Select your state' })
     if (!form.postcode.trim() || form.postcode.length !== 4) errs.push({ id: 'postcode', text: 'Enter a valid 4-digit postcode' })
   }
-  if (step === 'market') {
+  if (step === 'marketStallDetails') {
     if (!form.marketName.trim()) errs.push({ id: 'market-name', text: 'Enter the market name' })
     if (!form.marketType) errs.push({ id: 'market-type', text: 'Select a market type' })
-    if (!form.eventDay || !form.eventMonth || !form.eventYear) errs.push({ id: 'event-day', text: 'Enter the event date' })
-    else {
-      const d = parseInt(form.eventDay), m = parseInt(form.eventMonth), y = parseInt(form.eventYear)
-      if (d < 1 || d > 31 || m < 1 || m > 12 || y < 2024 || y > 2030) errs.push({ id: 'event-day', text: 'Enter a valid event date' })
+    if (!form.eventDay || !form.eventMonth || !form.eventYear) {
+      errs.push({ id: 'event-day', text: 'Enter the event date' })
+    } else if (!isPreviewDate(form.eventDay, form.eventMonth, form.eventYear, 2026, 2030)) {
+      errs.push({ id: 'event-day', text: 'Enter a valid event date' })
     }
-  }
-  if (step === 'accessibility') {
     if (!form.needsSupport) errs.push({ id: 'needs-support', text: 'Select whether you need accessibility support' })
     if (form.needsSupport === 'yes' && !form.supportDetails.trim()) errs.push({ id: 'support-details', text: 'Describe the support needed' })
   }
-  if (step === 'supporting') {
-    if (!form.additionalInfo.trim()) errs.push({ id: 'additional-info', text: 'Provide additional information about your market stall' })
-  }
-  if (step === 'declaration' && !form.declarationAccepted) {
-    errs.push({ id: 'declaration-accepted', text: 'Accept the declaration to continue' })
+  if (step === 'additionalDetails') {
+    if (!form.servicesDescription.trim()) errs.push({ id: 'services-description', text: 'Describe the goods, services or activities for your stall' })
+    if (!form.declarationAccepted) errs.push({ id: 'declaration-accepted', text: 'Accept the declaration to continue' })
   }
   return errs
-}
-
-function getDobErrorText(form: FormState) {
-  if (!form.dobDay || !form.dobMonth || !form.dobYear) return 'Enter your date of birth'
-  if (!isPreviewDate(form.dobDay, form.dobMonth, form.dobYear, 1900, 2026)) return 'Enter a valid date of birth'
-  return ''
 }
 
 function isPreviewDate(dayValue: string, monthValue: string, yearValue: string, minYear: number, maxYear: number) {
@@ -258,7 +306,6 @@ function submittedErrorText(errors: StepError[], id: string) {
   return errors.find((error) => error.id === id)?.text ?? ''
 }
 
-// --- Page components ---
 interface StepProps {
   form: FormState
   submittedErrors: StepError[]
@@ -269,179 +316,171 @@ interface StepProps {
 }
 
 function PrivacyStep({ form, submittedErrors, update, onContinue, onExit }: StepProps) {
-  const privacyErr = hasSubmittedError(submittedErrors, 'privacy-confirmation')
+  const termsError = hasSubmittedError(submittedErrors, 'terms-and-conditions')
   return (
     <section aria-labelledby='privacy-heading'>
-      <Heading level={2} id='privacy-heading'>Privacy information</Heading>
-      <InPageAlert variant='info' title='Owner confirmation required'>
-        <p>Replace this placeholder with the confirmed privacy collection notice for the accessible market permit service.</p>
-      </InPageAlert>
-      <p>We collect your personal information to process your accessible market permit application. This information may be shared with [confirmed disclosure recipients]. For more information, see [confirmed privacy policy URL].</p>
+      <PrivacyCardPreview
+        title='Privacy and terms'
+        description='Read the Privacy Collection Notice and Terms and Conditions before continuing.'
+        showAcknowledgement={false}
+        sections={[
+          {
+            id: 'accessible-market-privacy-collection-notice',
+            title: 'Privacy Collection Notice',
+            content: <p>Read the Privacy Collection Notice for this service before continuing.</p>,
+          },
+          {
+            id: 'accessible-market-terms-and-conditions',
+            title: 'Terms and Conditions',
+            content: <p>Read the Terms and Conditions for this application before continuing.</p>,
+          },
+          {
+            id: 'accessible-market-notifications-receipt',
+            title: 'Notifications and receipt',
+            content: <p>We will send the submitted application receipt to the contact details provided in this application.</p>,
+          },
+        ]}
+      />
       <Checkbox
-        id='privacy-confirmation'
-        label='I have read and understand the privacy information.'
-        checked={form.privacyAgreed}
-        onChange={(v) => update({ privacyAgreed: Boolean(v) })}
-        hasError={privacyErr}
-        errorMessage='Confirm that you have read the privacy information.'
+        id='terms-and-conditions'
+        label='I agree to the Terms and Conditions.'
+        checked={form.termsAccepted}
+        onChange={(value) => update({ termsAccepted: Boolean(value) })}
+        hasError={termsError}
+        errorMessage='Accept the Terms and Conditions to continue.'
       />
       <TransactionCtaGroup onContinue={onContinue} onExit={onExit} continueLabel='Continue' />
     </section>
   )
 }
 
-function ApplicantStep({ form, submittedErrors, update, onBack, onContinue, onExit }: StepProps) {
-  const nameErr = hasSubmittedError(submittedErrors, 'full-name')
-  const dobErrorMessage = submittedErrorText(submittedErrors, 'dob-day')
-  const dobErr = Boolean(dobErrorMessage)
-  const dobHelpId = 'dob-help'
-  const dobErrorId = dobErr ? 'dob-day-error' : undefined
-  const dobDescribedBy = [dobHelpId, dobErrorId].filter(Boolean).join(' ') || undefined
-  return (
-    <section aria-labelledby='applicant-heading'>
-      <Heading level={2} id='applicant-heading'>Your details</Heading>
-      <Field id='full-name' label='Full name *' helpMessage='Enter your first and last name.' hasError={nameErr} errorMessage='Enter your full name.'>
-        <Input id='full-name' value={form.fullName} onChange={(e) => update({ fullName: e.target.value })} hasError={nameErr} autoComplete='name' style={fullWidthInputStyle(nameErr)} />
-      </Field>
-      <fieldset id='dob-fieldset' aria-invalid={dobErr || undefined} aria-describedby={dobDescribedBy} style={{ border: 'none', padding: 0, margin: '0 0 1.5rem' }}>
-        <legend style={{ fontWeight: 500, fontSize: '1rem', marginBottom: '0.5rem' }}>Date of birth</legend>
-        <p id={dobHelpId} style={{ fontSize: '0.875rem', margin: '0 0 0.5rem', color: 'var(--gel-color-text-grey)' }}>For example, 15 03 1990</p>
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
-          <div>
-            <label htmlFor='dob-day' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Day</label>
-            <Input id='dob-day' value={form.dobDay} onChange={(e) => update({ dobDay: e.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={dobErr} inputWidth='xxs' maxLength={2} aria-describedby={dobDescribedBy} />
-          </div>
-          <div>
-            <label htmlFor='dob-month' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Month</label>
-            <Input id='dob-month' value={form.dobMonth} onChange={(e) => update({ dobMonth: e.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={dobErr} inputWidth='xxs' maxLength={2} aria-describedby={dobDescribedBy} />
-          </div>
-          <div>
-            <label htmlFor='dob-year' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Year</label>
-            <Input id='dob-year' value={form.dobYear} onChange={(e) => update({ dobYear: e.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={dobErr} inputWidth='sm' maxLength={4} aria-describedby={dobDescribedBy} />
-          </div>
-        </div>
-        {dobErr && (
-          <div id={dobErrorId} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'var(--gel-color-error-bg)', padding: '0.5rem 1rem', marginTop: '0.5rem', fontWeight: 700, fontSize: '1rem' }}>
-            <span style={{ color: 'var(--gel-color-error)' }}>⊘</span> {dobErrorMessage}.
-          </div>
-        )}
-      </fieldset>
-      <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
-    </section>
-  )
-}
-
-function ContactStep({ form, submittedErrors, update, onBack, onContinue, onExit }: StepProps) {
+function YourDetailsStep({ form, submittedErrors, update, onBack, onContinue, onExit }: StepProps) {
   const emailErr = hasSubmittedError(submittedErrors, 'email')
   const phoneErr = hasSubmittedError(submittedErrors, 'phone')
   const streetErr = hasSubmittedError(submittedErrors, 'street')
   const suburbErr = hasSubmittedError(submittedErrors, 'suburb')
   const stateErr = hasSubmittedError(submittedErrors, 'state')
   const postcodeErr = hasSubmittedError(submittedErrors, 'postcode')
+
   return (
-    <section aria-labelledby='contact-heading'>
-      <Heading level={2} id='contact-heading'>Contact details</Heading>
-      <Field id='email' label='Email address *' hasError={emailErr} errorMessage='Enter a valid email address.'>
-        <Input id='email' type='email' value={form.email} onChange={(e) => update({ email: e.target.value })} hasError={emailErr} autoComplete='email' style={fullWidthInputStyle(emailErr)} />
-      </Field>
-      <Field id='phone' label='Phone number *' hasError={phoneErr} errorMessage='Enter your phone number.'>
-        <Input id='phone' type='tel' value={form.phone} onChange={(e) => update({ phone: e.target.value })} hasError={phoneErr} autoComplete='tel' style={fullWidthInputStyle(phoneErr)} />
-      </Field>
-      <fieldset style={{ border: 'none', padding: 0, margin: '0 0 1.5rem' }}>
-        <legend style={{ fontWeight: 500, fontSize: '1rem', marginBottom: '1rem' }}>Postal address</legend>
-        <Field id='street' label='Street address *' hasError={streetErr} errorMessage='Enter your street address.'>
-          <Input id='street' value={form.street} onChange={(e) => update({ street: e.target.value })} hasError={streetErr} autoComplete='street-address' style={fullWidthInputStyle(streetErr)} />
+    <section aria-labelledby='yourDetails-heading'>
+      <p>Check your verified identity details and provide contact details for this application.</p>
+      <p style={{ fontSize: '0.875rem', margin: '0 0 1.5rem' }}>
+        All fields must be completed unless marked optional.
+      </p>
+      <DetailsCard
+        title='Verified identity details'
+        description='These details come from Account/Profile. If they are incorrect, update them through Account/Profile before continuing.'
+        rows={[
+          { label: 'Full name', value: accountProfile.fullName },
+          { label: 'Date of birth', value: accountProfile.dateOfBirth },
+          { label: 'Source', value: accountProfile.source },
+        ]}
+        headingLevel={3}
+      />
+      <section aria-labelledby='contact-details-heading'>
+        <Heading level={3} id='contact-details-heading'>Contact details for this application</Heading>
+        <p className='tapaas-help-text'>
+          These contact and postal address details are captured for this application. They do not update Account/Profile.
+        </p>
+        <Field id='email' label='Email address' hasError={emailErr} errorMessage='Enter a valid email address.'>
+          <Input id='email' type='email' value={form.email} onChange={(e) => update({ email: e.target.value })} hasError={emailErr} autoComplete='email' style={fullWidthInputStyle(emailErr)} />
         </Field>
-        <Field id='suburb' label='Suburb *' hasError={suburbErr} errorMessage='Enter your suburb.'>
-          <Input id='suburb' value={form.suburb} onChange={(e) => update({ suburb: e.target.value })} hasError={suburbErr} autoComplete='address-level2' style={fullWidthInputStyle(suburbErr)} />
+        <Field id='phone' label='Phone number' hasError={phoneErr} errorMessage='Enter your phone number.'>
+          <Input id='phone' type='tel' value={form.phone} onChange={(e) => update({ phone: e.target.value })} hasError={phoneErr} autoComplete='tel' style={fullWidthInputStyle(phoneErr)} />
         </Field>
-        <Field id='state' label='State *' hasError={stateErr} errorMessage='Select your state.'>
-          <Select
-            id='state'
-            value={form.state}
-            onChange={(e) => update({ state: e.target.value })}
-            hasError={stateErr}
-            inputWidth='md'
-            autoComplete='address-level1'
-            options={[
-              { value: 'NSW', text: 'NSW' },
-              { value: 'VIC', text: 'VIC' },
-              { value: 'QLD', text: 'QLD' },
-              { value: 'WA', text: 'WA' },
-              { value: 'SA', text: 'SA' },
-              { value: 'TAS', text: 'TAS' },
-              { value: 'ACT', text: 'ACT' },
-              { value: 'NT', text: 'NT' },
-            ]}
-          />
-        </Field>
-        <Field id='postcode' label='Postcode *' hasError={postcodeErr} errorMessage='Enter a valid 4-digit postcode.'>
-          <Input id='postcode' value={form.postcode} onChange={(e) => update({ postcode: e.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={postcodeErr} inputWidth='xs' maxLength={4} autoComplete='postal-code' />
-        </Field>
-      </fieldset>
+        <fieldset style={{ border: 'none', padding: 0, margin: '0 0 1.5rem' }}>
+          <legend style={{ fontWeight: 500, fontSize: '1rem', marginBottom: '1rem' }}>Postal address for this application</legend>
+          <Field id='street' label='Street address' hasError={streetErr} errorMessage='Enter your street address.'>
+            <Input id='street' value={form.street} onChange={(e) => update({ street: e.target.value })} hasError={streetErr} autoComplete='street-address' style={fullWidthInputStyle(streetErr)} />
+          </Field>
+          <Field id='suburb' label='Suburb' hasError={suburbErr} errorMessage='Enter your suburb.'>
+            <Input id='suburb' value={form.suburb} onChange={(e) => update({ suburb: e.target.value })} hasError={suburbErr} autoComplete='address-level2' style={fullWidthInputStyle(suburbErr)} />
+          </Field>
+          <Field id='state' label='State' hasError={stateErr} errorMessage='Select your state.'>
+            <Select
+              id='state'
+              value={form.state}
+              onChange={(e) => update({ state: e.target.value })}
+              hasError={stateErr}
+              inputWidth='md'
+              autoComplete='address-level1'
+              options={[
+                { value: 'NSW', text: 'NSW' },
+                { value: 'VIC', text: 'VIC' },
+                { value: 'QLD', text: 'QLD' },
+                { value: 'WA', text: 'WA' },
+                { value: 'SA', text: 'SA' },
+                { value: 'TAS', text: 'TAS' },
+                { value: 'ACT', text: 'ACT' },
+                { value: 'NT', text: 'NT' },
+              ]}
+            />
+          </Field>
+          <Field id='postcode' label='Postcode' hasError={postcodeErr} errorMessage='Enter a valid 4-digit postcode.'>
+            <Input id='postcode' value={form.postcode} onChange={(e) => update({ postcode: e.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={postcodeErr} inputWidth='xs' maxLength={4} autoComplete='postal-code' />
+          </Field>
+        </fieldset>
+      </section>
       <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
     </section>
   )
 }
 
-function MarketStep({ form, submittedErrors, update, onBack, onContinue, onExit }: StepProps) {
+function MarketStallDetailsStep({ form, submittedErrors, update, onBack, onContinue, onExit }: StepProps) {
   const nameErr = hasSubmittedError(submittedErrors, 'market-name')
   const typeErr = hasSubmittedError(submittedErrors, 'market-type')
-  const dateErr = hasSubmittedError(submittedErrors, 'event-day')
+  const eventDateErrorMessage = submittedErrorText(submittedErrors, 'event-day')
+  const dateErr = Boolean(eventDateErrorMessage)
+  const supportErr = hasSubmittedError(submittedErrors, 'needs-support')
+  const detailsErr = hasSubmittedError(submittedErrors, 'support-details')
+  const eventHelpId = 'event-date-help'
+  const eventErrorId = dateErr ? 'event-day-error' : undefined
+  const eventDescribedBy = [eventHelpId, eventErrorId].filter(Boolean).join(' ') || undefined
+
   return (
-    <section aria-labelledby='market-heading'>
-      <Heading level={2} id='market-heading'>Market details</Heading>
+    <section aria-labelledby='marketStallDetails-heading'>
+      <p>Provide the market stall details needed to assess this application.</p>
+      <p style={{ fontSize: '0.875rem', margin: '0 0 1.5rem' }}>
+        All fields must be completed unless marked optional.
+      </p>
       <Field id='market-name' label='Market name' hasError={nameErr} errorMessage='Enter the market name.'>
-        <Input id='market-name' value={form.marketName} onChange={(e) => update({ marketName: e.target.value })} hasError={nameErr} inputWidth='xl' />
+        <Input id='market-name' value={form.marketName} onChange={(e) => update({ marketName: e.target.value })} hasError={nameErr} style={fullWidthInputStyle(nameErr)} />
       </Field>
-      <RadioButtonList
-        id='market-type'
-        legend='Market type'
-        options={[
-          { value: 'food-market', label: 'Food market (mock)' },
-          { value: 'craft-market', label: 'Craft market (mock)' },
-          { value: 'farmers-market', label: 'Farmers market (mock)' },
-          { value: 'mixed-market', label: 'Mixed market (mock)' },
-        ]}
-        value={form.marketType}
-        onChange={(v) => update({ marketType: String(v) })}
-        hasError={typeErr}
-        errorMessage='Select a market type.'
-      />
-      <fieldset style={{ border: 'none', padding: 0, margin: '0 0 1.5rem' }}>
+      <Field id='market-type' label='Market type' hasError={typeErr} errorMessage='Select a market type.'>
+        <Select
+          id='market-type'
+          value={form.marketType}
+          onChange={(e) => update({ marketType: e.target.value })}
+          hasError={typeErr}
+          inputWidth='xl'
+          placeholder='Select market type'
+          options={marketTypeOptions}
+        />
+      </Field>
+      <fieldset id='event-date-fieldset' aria-invalid={dateErr || undefined} aria-describedby={eventDescribedBy} style={{ border: 'none', padding: 0, margin: '0 0 1.5rem' }}>
         <legend style={{ fontWeight: 500, fontSize: '1rem', marginBottom: '0.5rem' }}>Event date</legend>
-        <p style={{ fontSize: '0.875rem', margin: '0 0 0.5rem', color: 'var(--gel-color-text-grey)' }}>For example, 25 12 2026</p>
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
+        <p id={eventHelpId} style={{ fontSize: '0.875rem', margin: '0 0 0.5rem', color: 'var(--gel-color-text-grey)' }}>Format: DD MM YYYY. For example, 25 12 2026.</p>
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           <div>
-            <label htmlFor='event-day' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Day</label>
-            <Input id='event-day' value={form.eventDay} onChange={(e) => update({ eventDay: e.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={dateErr} inputWidth='xxs' maxLength={2} />
+            <label htmlFor='event-day' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Event day</label>
+            <Input id='event-day' value={form.eventDay} onChange={(e) => update({ eventDay: e.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={dateErr} inputWidth='xxs' maxLength={2} aria-describedby={eventDescribedBy} />
           </div>
           <div>
-            <label htmlFor='event-month' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Month</label>
-            <Input id='event-month' value={form.eventMonth} onChange={(e) => update({ eventMonth: e.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={dateErr} inputWidth='xxs' maxLength={2} />
+            <label htmlFor='event-month' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Event month</label>
+            <Input id='event-month' value={form.eventMonth} onChange={(e) => update({ eventMonth: e.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={dateErr} inputWidth='xxs' maxLength={2} aria-describedby={eventDescribedBy} />
           </div>
           <div>
-            <label htmlFor='event-year' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Year</label>
-            <Input id='event-year' value={form.eventYear} onChange={(e) => update({ eventYear: e.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={dateErr} inputWidth='sm' maxLength={4} />
+            <label htmlFor='event-year' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Event year</label>
+            <Input id='event-year' value={form.eventYear} onChange={(e) => update({ eventYear: e.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={dateErr} inputWidth='sm' maxLength={4} aria-describedby={eventDescribedBy} />
           </div>
         </div>
         {dateErr && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'var(--gel-color-error-bg)', padding: '0.5rem 1rem', marginTop: '0.5rem', fontWeight: 700, fontSize: '1rem' }}>
-            <span style={{ color: 'var(--gel-color-error)' }}>⊘</span> Enter the event date.
+          <div id={eventErrorId} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', backgroundColor: 'var(--gel-color-error-bg)', padding: '0.5rem 1rem', marginTop: '0.5rem', fontWeight: 700, fontSize: '1rem' }}>
+            {eventDateErrorMessage}.
           </div>
         )}
       </fieldset>
-      <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
-    </section>
-  )
-}
-
-function AccessibilityStep({ form, submittedErrors, update, onBack, onContinue, onExit }: StepProps) {
-  const supportErr = hasSubmittedError(submittedErrors, 'needs-support')
-  const detailsErr = hasSubmittedError(submittedErrors, 'support-details')
-  return (
-    <section aria-labelledby='accessibility-heading'>
-      <Heading level={2} id='accessibility-heading'>Accessibility and support needs</Heading>
       <ConditionalQuestionPanel
         id='needs-support'
         legend='Do you need accessibility or inclusion support for this market stall?'
@@ -450,66 +489,51 @@ function AccessibilityStep({ form, submittedErrors, update, onBack, onContinue, 
           { value: 'yes', label: 'Yes' },
         ]}
         value={form.needsSupport}
-        onChange={(v) => update({ needsSupport: v })}
+        onChange={(value) => update({ needsSupport: value, supportDetails: value === 'yes' ? form.supportDetails : '' })}
         showWhen='yes'
         hasError={supportErr}
         errorMessage='Select whether you need accessibility support'
       >
-        <div role='group' aria-labelledby='support-details-group-heading' style={{ borderLeft: '4px solid var(--gel-color-border)', paddingLeft: '1rem', marginTop: '1rem' }}>
-          <Heading level={3} id='support-details-group-heading'>Support details</Heading>
-          <Field id='support-details' label='Describe the support needed' helpMessage='This is placeholder content only. No assessment, decision or service promise is made.' hasError={detailsErr} errorMessage='Describe the support needed.'>
-            <Textarea id='support-details' value={form.supportDetails} onChange={(e) => update({ supportDetails: e.target.value })} hasError={detailsErr} rows={4} />
-          </Field>
-        </div>
+        <Field id='support-details' label='Describe the support needed' helpMessage='Maximum 500 characters.' hasError={detailsErr} errorMessage='Describe the support needed.'>
+          <Textarea id='support-details' value={form.supportDetails} onChange={(e) => update({ supportDetails: e.target.value })} hasError={detailsErr} maxLength={500} rows={4} />
+        </Field>
       </ConditionalQuestionPanel>
-      <DetailsCard
-        title='Your application so far'
-        rows={[
-          { label: 'Name', value: form.fullName || '—' },
-          { label: 'Market name', value: form.marketName || '—' },
-        ]}
-        headingLevel={3}
-      />
       <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
     </section>
   )
 }
 
-function SupportingStep({ form, submittedErrors, update, onBack, onContinue, onExit }: StepProps) {
-  const infoErr = hasSubmittedError(submittedErrors, 'additional-info')
+function AdditionalDetailsStep({ form, submittedErrors, update, onBack, onContinue, onExit }: StepProps) {
+  const servicesErr = hasSubmittedError(submittedErrors, 'services-description')
+  const declarationErr = hasSubmittedError(submittedErrors, 'declaration-accepted')
   const charLimit = 500
   return (
-    <section aria-labelledby='supporting-heading'>
-      <Heading level={2} id='supporting-heading'>Supporting information</Heading>
-      <p>Provide additional details about your market stall to help us process your application. This uses mock data only.</p>
-      <Field id='additional-info' label='Additional information' helpMessage={`Describe what your stall will offer, any equipment needs and special requirements. Maximum ${charLimit} characters.`} hasError={infoErr} errorMessage='Provide additional information about your market stall.'>
-        <Textarea id='additional-info' value={form.additionalInfo} onChange={(e) => update({ additionalInfo: e.target.value })} hasError={infoErr} maxLength={charLimit} rows={5} />
+    <section aria-labelledby='additionalDetails-heading'>
+      <p>Tell us what your stall will provide and accept the declaration before review.</p>
+      <Field
+        id='services-description'
+        label='Market-stall services description'
+        helpMessage={`Describe the goods, services or activities your stall will provide. Maximum ${charLimit} characters.`}
+        hasError={servicesErr}
+        errorMessage='Describe the goods, services or activities for your stall.'
+      >
+        <Textarea id='services-description' value={form.servicesDescription} onChange={(e) => update({ servicesDescription: e.target.value })} hasError={servicesErr} maxLength={charLimit} rows={5} />
       </Field>
       <p aria-live='polite' aria-atomic='true' style={{ fontSize: '0.875rem', color: 'var(--gel-color-text-grey)', marginTop: '-1rem' }}>
-        {form.additionalInfo.length}/{charLimit} characters
+        {form.servicesDescription.length}/{charLimit} characters
       </p>
-      <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
-    </section>
-  )
-}
-
-function DeclarationStep({ form, submittedErrors, update, onBack, onContinue, onExit }: StepProps) {
-  const declarationErr = hasSubmittedError(submittedErrors, 'declaration-accepted')
-  return (
-    <section aria-labelledby='declaration-heading'>
-      <Heading level={2} id='declaration-heading'>Declaration</Heading>
-      <InPageAlert variant='warning' title='Legal wording required'>
-        <p>This placeholder must be replaced with confirmed legal or policy wording before use in a real transaction.</p>
-      </InPageAlert>
-      <p>By submitting this application, I declare that the information I have provided is true and correct. I understand that providing false or misleading information is [confirmed legal consequence — policy owner to confirm].</p>
-      <Checkbox
-        id='declaration-accepted'
-        label='I declare that the information provided is true and correct.'
-        checked={form.declarationAccepted}
-        onChange={(v) => update({ declarationAccepted: Boolean(v) })}
-        hasError={declarationErr}
-        errorMessage='Accept the declaration to continue.'
-      />
+      <section aria-labelledby='declaration-heading'>
+        <Heading level={3} id='declaration-heading'>Declaration</Heading>
+        <p>By submitting this application, I declare that the information I have provided is true and correct.</p>
+        <Checkbox
+          id='declaration-accepted'
+          label='I declare that the information provided is true and correct.'
+          checked={form.declarationAccepted}
+          onChange={(value) => update({ declarationAccepted: Boolean(value) })}
+          hasError={declarationErr}
+          errorMessage='Accept the declaration to continue.'
+        />
+      </section>
       <TransactionCtaGroup onBack={onBack} onContinue={onContinue} onExit={onExit} />
     </section>
   )
@@ -524,74 +548,115 @@ function ReviewStep({
 }: {
   form: FormState
   onBack: () => void
-  onEditStep: (step: Exclude<MarketStep, 'privacy' | 'review' | 'confirmation'>) => void
+  onEditStep: (step: Exclude<MarketStep, 'review' | 'confirmation'>) => void
   onSubmit: () => void
   onExit: () => void
 }) {
-  const marketTypeLabel: Record<string, string> = { 'food-market': 'Food market', 'craft-market': 'Craft market', 'farmers-market': 'Farmers market', 'mixed-market': 'Mixed market' }
   return (
     <section aria-labelledby='review-heading'>
-      <Heading level={2} id='review-heading'>Review your application</Heading>
-      <p>Check the information below before submitting. This page does not submit to a real service.</p>
-      <ReviewInfoCard title='Applicant details' sections={[{ title: 'Personal information', rows: [
-        { label: 'Full name', value: form.fullName },
-        { label: 'Date of birth', value: `${form.dobDay}/${form.dobMonth}/${form.dobYear}` },
-      ] }]} onEdit={() => onEditStep('applicant')} />
-      <ReviewInfoCard title='Contact details' sections={[{ title: 'Contact information', rows: [
-        { label: 'Email', value: form.email },
-        { label: 'Phone', value: form.phone },
-        { label: 'Address', value: `${form.street}, ${form.suburb} ${form.state} ${form.postcode}` },
-      ] }]} onEdit={() => onEditStep('contact')} />
-      <ReviewInfoCard title='Market details' sections={[{ title: 'Market information', rows: [
-        { label: 'Market name', value: form.marketName },
-        { label: 'Market type', value: marketTypeLabel[form.marketType] || form.marketType },
-        { label: 'Event date', value: `${form.eventDay}/${form.eventMonth}/${form.eventYear}` },
-      ] }]} onEdit={() => onEditStep('market')} />
-      <ReviewInfoCard title='Accessibility support' sections={[{ title: 'Support needs', rows: [
-        { label: 'Needs support', value: form.needsSupport === 'yes' ? 'Yes' : 'No' },
-        ...(form.needsSupport === 'yes' ? [{ label: 'Support details', value: form.supportDetails }] : []),
-      ] }]} onEdit={() => onEditStep('accessibility')} />
-      <ReviewInfoCard title='Supporting information' sections={[{ title: 'Additional details', rows: [
-        { label: 'Additional information', value: form.additionalInfo },
-      ] }]} onEdit={() => onEditStep('supporting')} />
-      <ReviewFeesCard fees={[{ label: 'Application fee', amount: '$0.00' }, { label: 'Processing fee', amount: '$0.00' }]} totalAmount='$0.00' />
-      <InPageAlert variant='info' title='Payment excluded'>
-        <p>No payment flow is included in this trial skeleton. Fee amounts need owner confirmation.</p>
-      </InPageAlert>
-      <p>
-        <TextLink onClick={() => onEditStep('declaration')}>Edit declaration</TextLink>
-      </p>
+      <p>Check your application before submitting.</p>
+      <ReviewInfoCard
+        title='Your details'
+        sections={[
+          {
+            title: 'Verified identity details',
+            rows: [
+              { label: 'Full name', value: accountProfile.fullName },
+              { label: 'Date of birth', value: accountProfile.dateOfBirth },
+              { label: 'Source', value: accountProfile.source },
+            ],
+          },
+          {
+            title: 'Contact details for this application',
+            rows: [
+              { label: 'Email', value: form.email },
+              { label: 'Phone', value: form.phone },
+              { label: 'Postal address', value: `${form.street}, ${form.suburb} ${form.state} ${form.postcode}` },
+            ],
+          },
+        ]}
+        onEdit={() => onEditStep('yourDetails')}
+      />
+      <ReviewInfoCard
+        title='Market stall information'
+        sections={[
+          {
+            title: 'Market stall details',
+            rows: [
+              { label: 'Market name', value: form.marketName },
+              { label: 'Market type', value: marketTypeLabel[form.marketType] || form.marketType },
+              { label: 'Event date', value: formatEventDate(form) },
+              { label: 'Needs accessibility support', value: form.needsSupport === 'yes' ? 'Yes' : 'No' },
+              ...(form.needsSupport === 'yes' ? [{ label: 'Support details', value: form.supportDetails }] : []),
+            ],
+          },
+        ]}
+        onEdit={() => onEditStep('marketStallDetails')}
+      />
+      <ReviewInfoCard
+        title='Additional information'
+        sections={[
+          {
+            title: 'Additional details',
+            rows: [
+              { label: 'Market-stall services description', value: form.servicesDescription },
+              { label: 'Declaration', value: 'Accepted' },
+            ],
+          },
+        ]}
+        onEdit={() => onEditStep('additionalDetails')}
+      />
+      <ReviewInfoCard
+        title='Privacy'
+        sections={[
+          {
+            title: 'Privacy and terms',
+            rows: [
+              { label: 'Privacy Collection Notice', value: 'Read' },
+              { label: 'Terms and Conditions', value: 'Accepted' },
+              { label: 'Notifications and receipt', value: 'Receipt sent after submission' },
+            ],
+          },
+        ]}
+        onEdit={() => onEditStep('privacy')}
+      />
       <TransactionCtaGroup onBack={onBack} onContinue={onSubmit} onExit={onExit} continueLabel='Submit application' />
     </section>
   )
 }
 
-function ConfirmationStep({ form, onStartAgain }: { form: FormState; onStartAgain: () => void }) {
-  const marketTypeLabel: Record<string, string> = { 'food-market': 'Food market', 'craft-market': 'Craft market', 'farmers-market': 'Farmers market', 'mixed-market': 'Mixed market' }
+function ConfirmationStep({ onStartAgain }: { onStartAgain: () => void }) {
   return (
     <section aria-labelledby='confirmation-heading'>
-      <ConfirmationHeader title='Application submitted' transactionName='Accessible market permit' />
-      <TransactionSummaryCard items={[
-        { label: 'Reference number', value: 'ACCESS-MARKET-000000', helpText: 'Mock reference only.' },
-        { label: 'Applicant', value: form.fullName },
-        { label: 'Market name', value: form.marketName },
-        { label: 'Market type', value: marketTypeLabel[form.marketType] || form.marketType },
-        { label: 'Event date', value: `${form.eventDay}/${form.eventMonth}/${form.eventYear}` },
-        { label: 'Receipt', value: 'No payment receipt generated' },
-      ]}>
-        <p>Processing timeframes, receipt wording and next steps must be confirmed by the service owner before reuse. Expected processing time: [confirmed timeframe].</p>
-      </TransactionSummaryCard>
-      <Heading level={2}>Next steps</Heading>
-      <ol className='tapaas-step-list'>
-        <li>Your application will be reviewed within [confirmed timeframe].</li>
-        <li>You will receive a notification at [confirmed contact method].</li>
-        <li>If approved, your accessible market permit will be issued for the event date.</li>
-        <li>Contact [confirmed support channel] if you need to change your market details.</li>
-      </ol>
-      <InPageAlert variant='info' title='Owner confirmation required'>
-        <p>All timeframes, contact methods and approval processes above are placeholders. They must be confirmed by the service owner before real use.</p>
-      </InPageAlert>
+      <ConfirmationHeader title='Application submitted for review' transactionName={transactionName} />
+      <TransactionSummaryCard
+        heading='Receipt details'
+        items={[
+          { label: 'Receipt number', value: applicationReceipt.number },
+          { label: 'Transaction date', value: applicationReceipt.transactionDate },
+        ]}
+      />
+      <section className='tapaas-card' aria-labelledby='keep-a-record-heading'>
+        <Heading level={2} id='keep-a-record-heading'>Keep a record</Heading>
+        <p>Print or save this receipt for your records.</p>
+        <Button variant='secondary' onClick={() => window.print()}>Print or save receipt</Button>
+      </section>
+      <section aria-labelledby='next-steps-heading'>
+        <Heading level={2} id='next-steps-heading'>Next steps</Heading>
+        <ol className='tapaas-step-list'>
+          <li>Your application will be reviewed.</li>
+          <li>You will be sent the outcome using the contact details provided.</li>
+          <li>If approved, permit details or documents will be sent to you.</li>
+        </ol>
+      </section>
+      <p>
+        <TextLink href='#!'>Tell us about your experience</TextLink>
+      </p>
       <TransactionCtaGroup onContinue={onStartAgain} continueLabel='Start another application' />
     </section>
   )
+}
+
+function formatEventDate(form: FormState) {
+  return `${form.eventDay}/${form.eventMonth}/${form.eventYear}`
 }
