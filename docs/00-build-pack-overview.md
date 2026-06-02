@@ -52,8 +52,8 @@ The pack is intended to help teams build faster and more safely during the trial
 |------|---------|
 | Working preview app | TaPaaS transaction skeleton and local preview components |
 | `docs/tapaas/` | TaPaaS source inventory, component registry, page registry and evidence log |
-| `docs/tapaas/designer-package/` | Designer-facing Clara/TaPaaS transaction rules package, brief templates, review checklists and example guides |
-| `docs/` folder | Engineer guides for getting to production-ready pages |
+| `docs/tapaas/designer-package/` | Designer-facing TaPaaS transaction rules package, local Kiro preview guidance, prompt templates, review checklists and example guides |
+| `docs/` folder | Engineer guides for preparing reviewable pages |
 | `.kiro/steering/` | Content, safety and TaPaaS rules loaded automatically into Kiro |
 
 ## Important boundary
@@ -74,3 +74,17 @@ Each team still needs to verify:
 - Keyboard and focus behaviour
 - Accessibility review
 - Product, design, content and engineering owner review
+
+## Designer local workflow
+
+Designers can use the package from a clean ZIP without GitHub publishing access.
+
+Start with:
+
+- `docs/tapaas/designer-package/START-HERE-DESIGNERS.md`
+- `docs/tapaas/designer-package/LOCAL-PREVIEW-GUIDE.md`
+- `docs/tapaas/designer-package/prompts/`
+- `docs/tapaas/designer-package/designer-feedback-template.md`
+- `docs/tapaas/designer-package/zip-package-manifest.md`
+
+The expected workflow is local preview in Kiro, not publishing. The clean ZIP should exclude `.git/`, `node_modules/`, `dist/`, `.npm-cache/`, `test-results/`, `playwright-report/`, `.env` files and raw source assets.

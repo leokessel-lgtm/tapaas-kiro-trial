@@ -2,7 +2,7 @@
 
 ## TLDR
 
-This package is a trial review aid. It helps designers and agents apply Clara/TaPaaS rules consistently, but it does not approve the prototype for production use.
+This package is a trial review aid. It helps designers and agents apply the TaPaaS transaction rules consistently, but it does not approve any prototype for production use.
 
 ## Standing caveats
 
@@ -14,18 +14,19 @@ Keep these visible in any handover, prompt, review pack or share-out:
 - Not privacy/legal approval.
 - Not formal GEL approval.
 - Not TaPaaS approval.
+- Not policy approval.
 - Not governance clearance.
-- Not final TaPaaS policy or product approval.
+- Not final TaPaaS product approval.
 
 ## Source limitations
 
-The package uses text summaries and committed steering files. It does not include raw Clara PDFs, videos, frames, screenshots, SharePoint files or source mock-up images.
+The package uses text summaries, committed steering files and local prototype code. It does not include raw Clara PDFs, videos, frames, screenshots, SharePoint files, Figma exports, Sketch files or source mock-up images.
 
 Do not add or redistribute raw source assets unless Leo confirms the destination and permissions.
 
 ## Design limitations
 
-Clara-aligned means derived from Clara's feedback for this trial. It does not mean Clara has approved every future implementation.
+TaPaaS-rule aligned means the prototype follows the committed rule layer for this trial. It does not mean Clara, TaPaaS, GEL, legal, privacy, accessibility, policy or governance owners have approved every future implementation.
 
 Designers still need to confirm:
 
@@ -35,6 +36,7 @@ Designers still need to confirm:
 - final confirmation wording
 - final feedback affordance
 - whether a pattern is generally reusable or transaction-specific
+- which source mode applies: prompt-only, Figma-informed, source-bounded or legacy/pre-TaPaaS-rules
 
 ## Content, legal and privacy limitations
 
@@ -48,7 +50,7 @@ Generated prototypes must not invent:
 - eligibility, policy or decision rules
 - privacy or legal approval
 
-Use `Unknown` or owner-confirmation notes in documentation when source is missing.
+Use `Unknown` or owner-confirmation notes in documentation when source is missing. Do not render owner-confirmation notes as customer-facing UI.
 
 ## Accessibility limitations
 
@@ -80,6 +82,21 @@ Do not infer real:
 - notification delivery
 - document delivery
 - feedback submission
+
+## Local ZIP limitations
+
+A clean ZIP package should exclude:
+
+- `.git/`
+- `node_modules/`
+- `dist/`
+- `.npm-cache/`
+- `test-results/`
+- `playwright-report/`
+- `.env` files
+- raw PDFs, videos, screenshots, frames, SharePoint files, Figma exports, Sketch files, source mock-up images or ZIPs
+
+See [zip-package-manifest.md](zip-package-manifest.md).
 
 ## When to stop and ask
 

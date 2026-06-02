@@ -8,7 +8,7 @@ The biggest shift is that Kiro/Codex should not invent transaction structure fro
 
 ## Main changes
 
-| Area | Previous risk | Clara-aligned rule |
+| Area | Previous risk | TaPaaS transaction rule |
 |---|---|---|
 | Privacy | Privacy and terms could be merged or both treated as accepted content. | Privacy informs through a Privacy Collection Notice. Terms and Conditions are accepted through one checkbox. |
 | Short flows | A stepper could be generated just because screens exist. | Short immediate-approval flows such as Trial Permit should not use a stepper unless a tracked rule requires it. |
@@ -33,11 +33,11 @@ When reviewing a generated transaction, ask:
 
 ## What did not change
 
-The Clara-aligned rules do not approve final content, legal wording, privacy notices, accessibility compliance, GEL approval, TaPaaS approval, backend behaviour or production readiness.
+The TaPaaS transaction rules do not approve final content, legal wording, privacy notices, accessibility compliance, GEL approval, TaPaaS approval, backend behaviour or production readiness.
 
 They also do not allow raw Clara/SharePoint assets to be committed or redistributed.
 
 ## Source links
 
-- [Core Clara/TaPaaS rule layer](../12-clara-tapaas-transaction-rules-v01.md)
+- [Clara-informed TaPaaS rule layer](../12-clara-tapaas-transaction-rules-v01.md)
 - [Approved examples and anti-patterns](../18-approved-examples-and-anti-patterns.md)

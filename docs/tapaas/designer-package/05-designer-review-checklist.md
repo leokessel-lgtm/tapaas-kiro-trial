@@ -1,6 +1,6 @@
 # Designer review checklist
 
-Use this checklist when reviewing a Clara-aligned TaPaaS transaction prototype.
+Use this checklist when reviewing a TaPaaS-rule aligned transaction prototype.
 
 ## Before reviewing
 
@@ -68,7 +68,7 @@ Classify review comments before asking Kiro/Codex to patch:
 | Bucket | Use for |
 |---|---|
 | Source-fidelity defect | The prototype does not match confirmed source material. |
-| TaPaaS rule defect | The prototype breaks a Clara/TaPaaS rule. |
+| TaPaaS rule defect | The prototype breaks a TaPaaS transaction rule. |
 | Content decision | Wording needs owner, content, legal or privacy confirmation. |
 | Interaction defect | Validation, control choice, reveal behaviour or navigation feels wrong. |
 | Manual QA item | Keyboard, focus, screen-reader, contrast or responsive review is needed. |

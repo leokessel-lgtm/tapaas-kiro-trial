@@ -13,12 +13,13 @@ It includes:
 - page template registry for repeatable transaction skeletons
 - TaPaaS steering files for Kiro
 - trial-only TaPaaS preview composites
-- five visible non-production transaction skeletons:
-  - vehicle search skeleton
+- six visible non-production transaction skeletons:
   - trial permit application skeleton
   - accessible market permit
   - community venue booking
   - Mobility Parking Scheme simulation
+  - busking permit rule-generated prototype
+  - legacy vehicle search skeleton retained in source, no longer exposed as current TaPaaS-rule guidance
 - Storybook component catalogue for isolated designer review
 - TaPaaS component intake board for evidence-first Figma component triage
 
@@ -72,6 +73,8 @@ npm run build:all
 ```
 
 Storybook runs locally at `http://localhost:6006`. The GitHub Pages workflow runs `npm run build:all`, so the main Vite app and Storybook catalogue are deployed together.
+
+For designer-local ZIP use, start with `docs/tapaas/designer-package/START-HERE-DESIGNERS.md` and `docs/tapaas/designer-package/LOCAL-PREVIEW-GUIDE.md`. Designers can run local app and Storybook previews without GitHub publishing access.
 
 Use `npm run validate` before committing substantial changes. It runs the audit, lint, evidence parity check, automated component tests, app build, Storybook build and Playwright browser smoke tests.
 
@@ -138,6 +141,9 @@ See:
 - `docs/tapaas/04-evidence-log.md`
 - `docs/tapaas/06-selected-component-maturity-backlog.md`
 - `docs/tapaas/component-maturity/`
+- `docs/tapaas/designer-package/START-HERE-DESIGNERS.md`
+- `docs/tapaas/designer-package/LOCAL-PREVIEW-GUIDE.md`
+- `docs/tapaas/designer-package/prompts/`
 - `.kiro/steering/10-tapaas-transaction-skeleton-rules.md`
 - `.kiro/steering/11-tapaas-component-selection-rules.md`
 - `.kiro/steering/12-tapaas-figma-to-code-evidence-rules.md`

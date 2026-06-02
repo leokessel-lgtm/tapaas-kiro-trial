@@ -4,7 +4,7 @@
 
 Canonical short, immediate-approval TaPaaS transaction example for this trial.
 
-This is Clara-aligned trial guidance, not production approval.
+This is TaPaaS-rule aligned trial guidance, not production approval.
 
 ## Outcome type
 
@@ -112,7 +112,7 @@ Related rule stories:
 
 ## Source links
 
-- [Core Clara/TaPaaS rule layer](../12-clara-tapaas-transaction-rules-v01.md)
+- [Clara-informed TaPaaS rule layer](../12-clara-tapaas-transaction-rules-v01.md)
 - [Stepper and page structure rules](../14-stepper-page-structure-rules.md)
 - [Authenticated profile playback rules](../15-authenticated-profile-playback-rules.md)
 - [Review and confirmation rules](../16-review-confirmation-rules.md)
