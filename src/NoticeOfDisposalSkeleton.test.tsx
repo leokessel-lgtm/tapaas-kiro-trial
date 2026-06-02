@@ -39,9 +39,7 @@ async function completeVehicleSelection(user: ReturnType<typeof userEvent.setup>
 }
 
 async function completeSaleAndBuyerIndividual(user: ReturnType<typeof userEvent.setup>) {
-  await user.type(screen.getByLabelText('Day'), '14')
-  await user.type(screen.getByLabelText('Month'), '06')
-  await user.type(screen.getByLabelText('Year'), '2025')
+  await user.type(screen.getByLabelText('Date of sale'), '14/06/2025')
   await user.type(screen.getByLabelText(/Sale price or market value/i), '5000')
   await user.click(screen.getByRole('radio', { name: 'Individual' }))
   await user.type(screen.getByLabelText(/Buyer's NSW Driver Licence number/i), 'DA19345')
@@ -50,9 +48,7 @@ async function completeSaleAndBuyerIndividual(user: ReturnType<typeof userEvent.
 }
 
 async function completeSaleAndBuyerDealer(user: ReturnType<typeof userEvent.setup>) {
-  await user.type(screen.getByLabelText('Day'), '14')
-  await user.type(screen.getByLabelText('Month'), '06')
-  await user.type(screen.getByLabelText('Year'), '2025')
+  await user.type(screen.getByLabelText('Date of sale'), '14/06/2025')
   await user.type(screen.getByLabelText(/Sale price or market value/i), '5000')
   await user.click(screen.getByRole('radio', { name: 'Motor dealer' }))
   await user.type(screen.getByLabelText(/NSW Motor dealer licence number/i), '805401')
@@ -129,10 +125,17 @@ describe('NoticeOfDisposalSkeleton', () => {
 
     expect(screen.getByRole('heading', { name: 'Sale and buyer details' })).toBeInTheDocument()
     expect(screen.getByText(/format DD\/MM\/YYYY/i)).toBeInTheDocument()
-    expect(screen.getByLabelText('Day')).toBeInTheDocument()
-    expect(screen.getByLabelText('Month')).toBeInTheDocument()
-    expect(screen.getByLabelText('Year')).toBeInTheDocument()
+    expect(screen.getByLabelText('Date of sale')).toHaveAttribute('placeholder', 'DD/MM/YYYY')
+    expect(screen.queryByLabelText('Day')).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('Month')).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('Year')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Open calendar' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Open calendar' }))
+    expect(screen.getByRole('dialog', { name: 'Calendar' })).toBeInTheDocument()
+    expect(screen.getByText('Aug 2023')).toBeInTheDocument()
     expect(screen.getByLabelText(/Sale price or market value/i)).toBeInTheDocument()
+    expect(screen.getByTestId('sale-price-prefix')).toHaveTextContent('$')
+    expect(screen.getByTestId('sale-price-field')).toContainElement(screen.getByLabelText(/Sale price or market value/i))
     expect(screen.getByText(/at least \$1 and no more than \$2 million/i)).toBeInTheDocument()
   })
 
@@ -147,6 +150,20 @@ describe('NoticeOfDisposalSkeleton', () => {
     expect(screen.getByText(/business, organisation or company/i)).toBeInTheDocument()
   })
 
+  it('uses the source-style error summary and inline errors on sale and buyer details', async () => {
+    const user = userEvent.setup()
+    render(<NoticeOfDisposalSkeleton />)
+    await completePrivacy(user)
+    await completeVehicleSelection(user)
+    await user.click(screen.getByRole('button', { name: 'Continue' }))
+
+    expect(screen.getByRole('link', { name: 'Enter the date of sale' })).toHaveAttribute('href', '#sale-date')
+    expect(screen.getByRole('link', { name: 'Enter the sale price or market value' })).toHaveAttribute('href', '#sale-price')
+    expect(screen.getByRole('link', { name: 'Select who you sold the vehicle to' })).toHaveAttribute('href', '#buyer-type')
+    expect(screen.getByText('Enter the date of sale as DD/MM/YYYY.')).toBeInTheDocument()
+    expectNoBoundaryViolations()
+  })
+
   it('shows Individual buyer fields when Individual is selected', async () => {
     const user = userEvent.setup()
     render(<NoticeOfDisposalSkeleton />)
@@ -154,7 +171,11 @@ describe('NoticeOfDisposalSkeleton', () => {
     await completeVehicleSelection(user)
     await user.click(screen.getByRole('radio', { name: 'Individual' }))
 
+    expect(screen.getByLabelText('NSW Driver Licence guide')).toBeInTheDocument()
+    expect(screen.getAllByText('Licence number').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getByText('Card number')).toBeInTheDocument()
     expect(screen.getByLabelText(/Buyer's NSW Driver Licence number/i)).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Buyer does not have a NSW Driver Licence/i })).toBeInTheDocument()
     expect(screen.getByLabelText(/Buyer's family name/i)).toBeInTheDocument()
   })
 
@@ -179,6 +200,7 @@ describe('NoticeOfDisposalSkeleton', () => {
     expect(screen.getByText('Citizen')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Vehicle details' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Sale and buyer details' })).toBeInTheDocument()
+    expect(screen.getByText('14/06/2025')).toBeInTheDocument()
 
     // Edit affordances: Vehicle + Sale (not Your details which is profile-owned)
     const editButtons = screen.getAllByRole('button', { name: /^Edit / })
@@ -209,18 +231,30 @@ describe('NoticeOfDisposalSkeleton', () => {
     const status = screen.getByRole('status', { name: 'Transaction completed' })
     expect(within(status).getByRole('heading', { name: 'Notice of Disposal submitted' })).toBeInTheDocument()
 
+    expect(screen.getByText(/successfully submitted a Notice of Disposal for ADC74M/i)).toBeInTheDocument()
+    expect(screen.getByText(/A receipt has been emailed to/i)).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Send to another email' })).toBeInTheDocument()
     expect(screen.getByText('I-037283638')).toBeInTheDocument()
     expect(screen.getByText('2 June 2026')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Keep a record' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Download receipt (PDF 5KB)' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Print receipt' })).toBeInTheDocument()
+    expect(screen.getByText('Email receipt')).toBeInTheDocument()
+    expect(screen.getByLabelText('Email receipt address')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Send' })).toBeInTheDocument()
     expect(screen.getByText(/Notify the buyer/i)).toBeInTheDocument()
     expect(screen.getByText(/new vehicle owner/i)).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Next steps' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Insurance' })).toBeInTheDocument()
+    expect(screen.getByText(/You don't need to do anything/i)).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'E-tag or toll pass' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Tolls' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Personalised or special number plates' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'reserve and replace' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Help us improve' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Give feedback' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Submit another Notice of Disposal' })).toBeInTheDocument()
+    expect(screen.getByText('How was your online experience today?')).toBeInTheDocument()
 
     // No approval claims
     expect(document.body.textContent).not.toMatch(/\bapproved\b/i)

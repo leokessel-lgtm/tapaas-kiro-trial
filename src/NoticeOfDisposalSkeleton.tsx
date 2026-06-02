@@ -20,7 +20,6 @@ import {
   PrivacyCardPreview,
   ReviewInfoCard,
   TransactionCtaGroup,
-  TransactionSummaryCard,
 } from './tapaas-preview'
 
 type NodStep = 'privacy' | 'vehicleSelection' | 'saleAndBuyer' | 'review' | 'confirmation'
@@ -59,9 +58,7 @@ interface FormState {
   termsAccepted: boolean
   vehicleSelected: boolean
   searchPlate: string
-  saleDateDay: string
-  saleDateMonth: string
-  saleDateYear: string
+  saleDate: string
   salePrice: string
   buyerType: string
   buyerLicenceNumber: string
@@ -74,9 +71,7 @@ const initialState: FormState = {
   termsAccepted: false,
   vehicleSelected: false,
   searchPlate: '',
-  saleDateDay: '',
-  saleDateMonth: '',
-  saleDateYear: '',
+  saleDate: '',
   salePrice: '',
   buyerType: '',
   buyerLicenceNumber: '',
@@ -173,10 +168,10 @@ function errorsForStep(step: NodStep, form: FormState): StepError[] {
     errs.push({ id: 'vehicle-selection', text: 'Select a vehicle to continue' })
   }
   if (step === 'saleAndBuyer') {
-    if (!form.saleDateDay || !form.saleDateMonth || !form.saleDateYear) {
-      errs.push({ id: 'sale-date-day', text: 'Enter the date of sale' })
-    } else if (!isValidDate(form.saleDateDay, form.saleDateMonth, form.saleDateYear)) {
-      errs.push({ id: 'sale-date-day', text: 'Enter a valid date of sale as DD/MM/YYYY' })
+    if (!form.saleDate.trim()) {
+      errs.push({ id: 'sale-date', text: 'Enter the date of sale' })
+    } else if (!isValidDate(form.saleDate)) {
+      errs.push({ id: 'sale-date', text: 'Enter a valid date of sale as DD/MM/YYYY' })
     }
     if (!form.salePrice.trim() || Number(form.salePrice) < 1) {
       errs.push({ id: 'sale-price', text: 'Enter the sale price or market value' })
@@ -196,14 +191,229 @@ function errorsForStep(step: NodStep, form: FormState): StepError[] {
   return errs
 }
 
-function isValidDate(day: string, month: string, year: string) {
-  if (!/^\d{1,2}$/.test(day) || !/^\d{1,2}$/.test(month) || !/^\d{4}$/.test(year)) return false
+function isValidDate(value: string) {
+  const match = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/)
+  if (!match) return false
+  const [, day, month, year] = match
   const d = Number(day), m = Number(month), y = Number(year)
   const date = new Date(y, m - 1, d)
   return y >= 2020 && y <= 2026 && date.getFullYear() === y && date.getMonth() === m - 1 && date.getDate() === d
 }
 
+function formatDateInput(value: string) {
+  const digits = value.replace(/\D/g, '').slice(0, 8)
+  if (digits.length <= 2) return digits
+  if (digits.length <= 4) return `${digits.slice(0, 2)}/${digits.slice(2)}`
+  return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`
+}
+
 function hasErr(errors: StepError[], id: string) { return errors.some((e) => e.id === id) }
+
+function NodRuleCallout({ title, body }: { title: string; body: string }) {
+  return (
+    <div style={{ borderLeft: '6px solid var(--gel-color-primary)', margin: '0 0 1.5rem', padding: '0.75rem 0 0.75rem 1.25rem' }}>
+      <p style={{ fontWeight: 700, margin: '0 0 0.5rem' }}>{title}</p>
+      <p style={{ margin: 0 }}>{body}</p>
+    </div>
+  )
+}
+
+function NodCalendarPopover() {
+  const days = [
+    ['26', '27', '28', '30', '31', '1', '2'],
+    ['3', '4', '5', '6', '7', '8', '9'],
+    ['10', '11', '12', '13', '14', '15', '16'],
+    ['17', '18', '19', '20', '21', '22', '23'],
+    ['24', '25', '26', '27', '28', '29', '30'],
+    ['31', '1', '2', '3', '4', '5', '6'],
+  ]
+  const mutedDays = new Set(['26', '27', '28', '30', '31', '1', '2', '3', '4', '5', '6'])
+
+  return (
+    <div
+      role='dialog'
+      aria-label='Calendar'
+      style={{
+        background: '#fff',
+        borderRadius: '8px',
+        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.18)',
+        left: 0,
+        padding: '1.25rem',
+        position: 'absolute',
+        top: '3.35rem',
+        width: '20rem',
+        zIndex: 10,
+      }}
+    >
+      <div style={{ alignItems: 'center', display: 'flex', gap: '0.75rem', justifyContent: 'space-between', marginBottom: '1rem' }}>
+        <strong>Aug 2023</strong>
+        <span aria-hidden='true' style={{ display: 'flex', gap: '0.5rem' }}>
+          <span style={{ background: '#edf1f4', borderRadius: '50%', display: 'inline-block', height: '2rem', position: 'relative', width: '2rem' }} />
+          <span style={{ background: '#edf1f4', borderRadius: '50%', display: 'inline-block', height: '2rem', position: 'relative', width: '2rem' }} />
+        </span>
+      </div>
+      <div style={{ columnGap: '0.75rem', display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', rowGap: '0.75rem', textAlign: 'center' }}>
+        {['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'].map((day) => (
+          <strong key={day} style={{ fontSize: '0.75rem' }}>{day}</strong>
+        ))}
+        {days.flat().map((day, index) => {
+          const selected = day === '12' && index === 16
+          return (
+            <span
+              key={`${day}-${index}`}
+              aria-current={selected ? 'date' : undefined}
+              style={{
+                alignItems: 'center',
+                background: selected ? '#2e5aac' : 'transparent',
+                borderRadius: '50%',
+                color: selected ? '#fff' : mutedDays.has(day) ? '#7f8794' : '#22272b',
+                display: 'inline-flex',
+                fontWeight: selected ? 700 : 600,
+                height: '2rem',
+                justifyContent: 'center',
+                width: '2rem',
+              }}
+            >
+              {day}
+            </span>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+function NswDriverLicenceHelper() {
+  return (
+    <figure
+      aria-label='NSW Driver Licence guide'
+      style={{
+        margin: '0 0 1.5rem',
+        maxWidth: '28rem',
+      }}
+    >
+      <div
+        style={{
+          alignItems: 'center',
+          display: 'grid',
+          gap: '0.75rem',
+          gridTemplateColumns: '7rem 12rem 7rem',
+        }}
+      >
+        <div style={{ display: 'grid', gap: '0.35rem', fontSize: '0.875rem', fontWeight: 700, justifyItems: 'end' }}>
+          <span>Name</span>
+          <span>Licence number</span>
+          <span>Date of birth</span>
+        </div>
+        <div
+          style={{
+            background: '#eef2f6',
+            border: '1px solid #c3c8cf',
+            borderRadius: '10px',
+            boxShadow: '0 1px 2px rgba(0,0,0,0.12)',
+            minHeight: '6.4rem',
+            overflow: 'hidden',
+            position: 'relative',
+          }}
+        >
+          <div style={{ background: '#f7e500', color: '#22272b', fontSize: '0.75rem', fontWeight: 700, padding: '0.3rem 0.75rem' }}>New South Wales</div>
+          <div style={{ padding: '0.45rem 0.75rem' }}>
+            <div style={{ display: 'flex', fontSize: '0.75rem', fontWeight: 700, justifyContent: 'space-between' }}>
+              <span>Jay Citizen</span>
+              <span>1234 567 890</span>
+            </div>
+            <div style={{ fontSize: '0.75rem', fontWeight: 700, marginTop: '0.55rem' }}>12345678</div>
+            <div aria-hidden='true' style={{ background: '#9aa0a8', borderRadius: '50%', height: '2rem', margin: '-0.65rem 0 0 auto', width: '2rem' }} />
+            <div style={{ fontSize: '0.75rem', fontWeight: 700, marginTop: '0.35rem', textAlign: 'center' }}>01/01/2000</div>
+          </div>
+        </div>
+        <div style={{ fontSize: '0.875rem', fontWeight: 700 }}>Card number</div>
+      </div>
+      <figcaption style={{ fontSize: '0.875rem', marginTop: '0.5rem' }}>Use the licence number and family name exactly as they appear on the buyer's NSW Driver Licence.</figcaption>
+    </figure>
+  )
+}
+
+function ReceiptSummaryPanel() {
+  return (
+    <dl
+      style={{
+        background: '#f3f6f8',
+        display: 'grid',
+        gap: '0.75rem 4rem',
+        gridTemplateColumns: 'minmax(10rem, 1fr) minmax(10rem, 2fr)',
+        margin: '1.5rem 0',
+        maxWidth: '42rem',
+        padding: '1.5rem',
+      }}
+    >
+      <dt>Receipt number</dt>
+      <dd style={{ fontWeight: 700, margin: 0 }}>{receipt.referenceNumber}</dd>
+      <dt>Date of transaction</dt>
+      <dd style={{ fontWeight: 700, margin: 0 }}>{receipt.transactionDate}</dd>
+    </dl>
+  )
+}
+
+function RecordAction({ icon, label }: { icon: 'download' | 'print'; label: string }) {
+  return (
+    <TextLink href='#!'>
+      <span
+        aria-hidden='true'
+        style={{
+          border: '2px solid var(--gel-color-primary)',
+          borderTop: icon === 'download' ? 0 : '2px solid var(--gel-color-primary)',
+          display: 'inline-block',
+          height: icon === 'download' ? '0.75rem' : '0.9rem',
+          marginRight: '0.5rem',
+          position: 'relative',
+          top: '0.12rem',
+          width: '0.9rem',
+        }}
+      />
+      {label}
+    </TextLink>
+  )
+}
+
+function NodExperienceBar() {
+  return (
+    <section
+      aria-label='Online experience feedback'
+      style={{
+        alignItems: 'center',
+        background: '#2f5da9',
+        color: '#fff',
+        display: 'flex',
+        gap: '0.5rem',
+        justifyContent: 'center',
+        marginTop: '2rem',
+        maxWidth: '48rem',
+        minHeight: '2.875rem',
+        padding: '0.5rem 1rem',
+      }}
+    >
+      <span>How was your online experience today?</span>
+      {['Like', 'Comment', 'Dislike'].map((label) => (
+        <button
+          key={label}
+          type='button'
+          aria-label={label}
+          style={{
+            background: 'transparent',
+            border: '1px solid rgba(255,255,255,0.9)',
+            color: '#fff',
+            cursor: 'pointer',
+            minHeight: '1.5rem',
+            minWidth: '1.5rem',
+          }}
+        >
+          <span aria-hidden='true'>{label.slice(0, 1)}</span>
+        </button>
+      ))}
+    </section>
+  )
+}
 
 // ---------------------------------------------------------------------------
 // Privacy step
@@ -279,7 +489,8 @@ function VehicleSelectionStep({ form, submittedErrors, update, onBack, onContinu
 // Sale and buyer details step
 // ---------------------------------------------------------------------------
 function SaleAndBuyerStep({ form, submittedErrors, update, onBack, onContinue, onExit }: { form: FormState; submittedErrors: StepError[]; update: (p: Partial<FormState>) => void; onBack: () => void; onContinue: () => void; onExit: () => void }) {
-  const dateErr = hasErr(submittedErrors, 'sale-date-day')
+  const [calendarOpen, setCalendarOpen] = useState(false)
+  const dateErr = hasErr(submittedErrors, 'sale-date')
   const priceErr = hasErr(submittedErrors, 'sale-price')
   const buyerTypeErr = hasErr(submittedErrors, 'buyer-type')
   const licenceErr = hasErr(submittedErrors, 'buyer-licence-number')
@@ -290,39 +501,125 @@ function SaleAndBuyerStep({ form, submittedErrors, update, onBack, onContinue, o
 
   return (
     <section aria-labelledby='saleAndBuyer-heading'>
-      <div className='tapaas-card' style={{ borderLeft: '4px solid var(--gel-color-primary)', marginBottom: '1.5rem' }}>
-        <p style={{ fontWeight: 700, marginBottom: '0.25rem' }}>Check that all information is accurate and truthful</p>
-        <p style={{ margin: 0, fontSize: '0.875rem' }}>It is a criminal offence to give false or misleading information.</p>
-      </div>
+      <NodRuleCallout
+        title='Check that all information is accurate and truthful'
+        body='It is a criminal offence to give false or misleading information.'
+      />
       <p style={{ fontSize: '0.875rem', margin: '0 0 1.5rem' }}>All fields must be completed.</p>
 
       <Heading level={3}>Enter sale details</Heading>
-      <fieldset aria-describedby={dateHelpId} style={{ border: 'none', padding: 0, margin: '0 0 1.5rem' }}>
-        <legend style={{ fontWeight: 500, fontSize: '1rem', marginBottom: '0.5rem' }}>Date of sale</legend>
-        <p id={dateHelpId} style={{ fontSize: '0.875rem', margin: '0 0 0.5rem', color: 'var(--gel-color-text-grey)' }}>
-          Enter the date you sold or disposed of the vehicle using the format DD/MM/YYYY.
-        </p>
-        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-          <div>
-            <label htmlFor='sale-date-day' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Day</label>
-            <Input id='sale-date-day' value={form.saleDateDay} onChange={(e) => update({ saleDateDay: e.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={dateErr} inputWidth='xxs' maxLength={2} />
+      <Field
+        id='sale-date'
+        label='Date of sale'
+        helpMessage='Enter date you sold or disposed of the vehicle using the format DD/MM/YYYY.'
+        hasError={dateErr}
+        errorMessage='Enter the date of sale as DD/MM/YYYY.'
+      >
+        <div style={{ position: 'relative', width: '21.5rem', maxWidth: '100%' }}>
+          <div
+            data-testid='sale-date-field'
+            style={{
+              alignItems: 'stretch',
+              display: 'flex',
+              maxWidth: '100%',
+              width: '21.5rem',
+            }}
+          >
+            <input
+              id='sale-date'
+              aria-describedby={`${dateHelpId}${dateErr ? ' sale-date-error' : ''}`}
+              aria-invalid={dateErr || undefined}
+              value={form.saleDate}
+              onChange={(e) => update({ saleDate: formatDateInput(e.target.value) })}
+              inputMode='numeric'
+              maxLength={10}
+              placeholder='DD/MM/YYYY'
+              style={{
+                borderBottom: `1px solid ${dateErr ? 'var(--gel-color-error)' : 'var(--gel-color-border)'}`,
+                borderLeft: `1px solid ${dateErr ? 'var(--gel-color-error)' : 'var(--gel-color-border)'}`,
+                borderRight: 0,
+                borderRadius: '4px 0 0 4px',
+                borderTop: `1px solid ${dateErr ? 'var(--gel-color-error)' : 'var(--gel-color-border)'}`,
+                flex: '1 1 auto',
+                font: 'inherit',
+                minHeight: '3rem',
+                minWidth: 0,
+                padding: '0.75rem 1rem',
+              }}
+            />
+            <button
+              type='button'
+              aria-label='Open calendar'
+              aria-expanded={calendarOpen}
+              onClick={() => setCalendarOpen((open) => !open)}
+              style={{
+                alignItems: 'center',
+                background: '#f4f7f9',
+                border: `1px solid ${dateErr ? 'var(--gel-color-error)' : 'var(--gel-color-border)'}`,
+                borderRadius: '0 4px 4px 0',
+                color: 'var(--gel-color-primary)',
+                cursor: 'pointer',
+                display: 'flex',
+                justifyContent: 'center',
+                minHeight: '3rem',
+                width: '3.25rem',
+              }}
+            >
+              <span aria-hidden='true' style={{ border: '2px solid currentColor', borderRadius: '2px', display: 'inline-block', height: '1.1rem', position: 'relative', width: '1.1rem' }}>
+                <span style={{ background: 'currentColor', height: '2px', left: 0, position: 'absolute', right: 0, top: '0.28rem' }} />
+              </span>
+            </button>
           </div>
-          <div>
-            <label htmlFor='sale-date-month' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Month</label>
-            <Input id='sale-date-month' value={form.saleDateMonth} onChange={(e) => update({ saleDateMonth: e.target.value.replace(/\D/g, '').slice(0, 2) })} hasError={dateErr} inputWidth='xxs' maxLength={2} />
-          </div>
-          <div>
-            <label htmlFor='sale-date-year' style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.25rem' }}>Year</label>
-            <Input id='sale-date-year' value={form.saleDateYear} onChange={(e) => update({ saleDateYear: e.target.value.replace(/\D/g, '').slice(0, 4) })} hasError={dateErr} inputWidth='sm' maxLength={4} />
-          </div>
+          {calendarOpen && <NodCalendarPopover />}
         </div>
-        {dateErr && <p className='gel-field__error' id='sale-date-day-error'>Enter the date of sale as DD/MM/YYYY.</p>}
-      </fieldset>
+      </Field>
 
       <Field id='sale-price' label='Sale price or market value (whichever is higher)' helpMessage='Enter an amount of at least $1 and no more than $2 million. Do not include cents.' hasError={priceErr} errorMessage='Enter the sale price or market value.'>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <span style={{ fontWeight: 700 }}>$</span>
-          <Input id='sale-price' value={form.salePrice} onChange={(e) => update({ salePrice: e.target.value.replace(/\D/g, '') })} hasError={priceErr} inputWidth='md' inputMode='numeric' />
+        <div
+          data-testid='sale-price-field'
+          style={{
+            alignItems: 'stretch',
+            display: 'flex',
+            maxWidth: '100%',
+            width: '21.5rem',
+          }}
+        >
+          <span
+            data-testid='sale-price-prefix'
+            aria-hidden='true'
+            style={{
+              alignItems: 'center',
+              background: '#f4f4f4',
+              border: `1px solid ${priceErr ? 'var(--gel-color-error)' : 'var(--gel-color-border)'}`,
+              borderRadius: '4px 0 0 4px',
+              display: 'flex',
+              fontWeight: 700,
+              justifyContent: 'center',
+              minHeight: '3rem',
+              width: '3rem',
+            }}
+          >
+            $
+          </span>
+          <input
+            id='sale-price'
+            aria-invalid={priceErr || undefined}
+            value={form.salePrice}
+            onChange={(e) => update({ salePrice: e.target.value.replace(/\D/g, '') })}
+            inputMode='numeric'
+            style={{
+              borderBottom: `1px solid ${priceErr ? 'var(--gel-color-error)' : 'var(--gel-color-border)'}`,
+              borderLeft: 0,
+              borderRadius: '0 4px 4px 0',
+              borderRight: `1px solid ${priceErr ? 'var(--gel-color-error)' : 'var(--gel-color-border)'}`,
+              borderTop: `1px solid ${priceErr ? 'var(--gel-color-error)' : 'var(--gel-color-border)'}`,
+              flex: '1 1 auto',
+              font: 'inherit',
+              minHeight: '3rem',
+              minWidth: 0,
+              padding: '0.75rem 1rem',
+            }}
+          />
         </div>
       </Field>
 
@@ -350,9 +647,14 @@ function SaleAndBuyerStep({ form, submittedErrors, update, onBack, onContinue, o
       {form.buyerType === 'individual' && (
         <section aria-labelledby='buyer-details-heading'>
           <Heading level={4} id='buyer-details-heading'>Buyer details</Heading>
-          <Field id='buyer-licence-number' label="Buyer's NSW Driver Licence number" helpMessage='Enter the numbers and letters on the card under Licence number.' hasError={licenceErr} errorMessage="Enter the buyer's NSW Driver Licence number.">
+          <NswDriverLicenceHelper />
+          <Field id='buyer-licence-number' label="Buyer's NSW Driver Licence number" helpMessage="Enter the numbers and letters on the card under 'Licence number'." hasError={licenceErr} errorMessage="Enter the buyer's NSW Driver Licence number.">
             <Input id='buyer-licence-number' value={form.buyerLicenceNumber} onChange={(e) => update({ buyerLicenceNumber: e.target.value })} hasError={licenceErr} inputWidth='md' />
           </Field>
+          <p style={{ marginTop: '-0.5rem' }}>
+            <TextLink href='#!'>Buyer does not have a NSW Driver Licence?</TextLink>
+            <span aria-hidden='true' style={{ border: '2px solid var(--gel-color-primary)', borderRadius: '50%', color: 'var(--gel-color-primary)', display: 'inline-flex', fontSize: '0.75rem', fontWeight: 700, height: '1rem', justifyContent: 'center', lineHeight: '0.8rem', marginLeft: '0.4rem', width: '1rem' }}>i</span>
+          </p>
           <Field id='buyer-family-name' label="Buyer's family name" helpMessage='The family name on the card is in CAPITAL LETTERS. Enter the family name exactly as it is on the licence.' hasError={familyErr} errorMessage="Enter the buyer's family name.">
             <Input id='buyer-family-name' value={form.buyerFamilyName} onChange={(e) => update({ buyerFamilyName: e.target.value })} hasError={familyErr} inputWidth='lg' />
           </Field>
@@ -395,10 +697,10 @@ function ReviewStep({ form, onBack, onEditStep, onSubmit, onExit }: { form: Form
 
   return (
     <section aria-labelledby='review-heading'>
-      <div className='tapaas-card' style={{ borderLeft: '4px solid var(--gel-color-primary)', marginBottom: '1.5rem' }}>
-        <p style={{ fontWeight: 700, marginBottom: '0.25rem' }}>Make sure all your details are correct</p>
-        <p style={{ margin: 0, fontSize: '0.875rem' }}>To make any changes after submission you will need to contact us.</p>
-      </div>
+      <NodRuleCallout
+        title='Make sure all your details are correct'
+        body='To make any changes after submission you will need to contact us.'
+      />
 
       <DetailsCard
         title='Your details'
@@ -422,7 +724,7 @@ function ReviewStep({ form, onBack, onEditStep, onSubmit, onExit }: { form: Form
         title='Sale and buyer details'
         sections={[
           { title: 'Sale details', rows: [
-            { label: 'Date of sale', value: `${form.saleDateDay}/${form.saleDateMonth}/${form.saleDateYear}` },
+            { label: 'Date of sale', value: form.saleDate },
             { label: 'Sale price or market value', value: `$${form.salePrice}` },
           ] },
           { title: 'Buyer details', rows: buyerRows },
@@ -460,48 +762,80 @@ function ConfirmationStep({ onStartAgain }: { onStartAgain: () => void }) {
     <section aria-labelledby='confirmation-heading'>
       <ConfirmationHeader title='Notice of Disposal submitted' transactionName={transactionName} />
 
-      <TransactionSummaryCard
-        heading='Summary'
-        items={[
-          { label: 'Receipt number', value: receipt.referenceNumber },
-          { label: 'Date of transaction', value: receipt.transactionDate },
-        ]}
+      <section aria-labelledby='summary-heading'>
+        <Heading level={2} id='summary-heading'>Summary</Heading>
+        <p>You have successfully submitted a Notice of Disposal for {mockVehicle.plate}.</p>
+        <p>
+          A receipt has been emailed to <strong>{'{samplemail@gmail.com.au}'}</strong>.{' '}
+          <TextLink href='#!'>Send to another email</TextLink>
+        </p>
+        <ReceiptSummaryPanel />
+      </section>
+
+      <NodRuleCallout
+        title='Notify the buyer'
+        body='Let the new vehicle owner know you have completed a Notice of Disposal so they can transfer the vehicle registration and avoid any late fees.'
       />
 
-      <div className='tapaas-card' style={{ borderLeft: '4px solid var(--gel-color-info)', marginBottom: '1.5rem' }}>
-        <p style={{ fontWeight: 700, marginBottom: '0.25rem' }}>Notify the buyer</p>
-        <p style={{ margin: 0, fontSize: '0.875rem' }}>Let the new vehicle owner know you have completed a Notice of Disposal so they can transfer the vehicle registration and avoid any late fees.</p>
-      </div>
-
-      <section className='tapaas-card' aria-labelledby='keep-a-record-heading'>
+      <section aria-labelledby='keep-a-record-heading'>
         <Heading level={2} id='keep-a-record-heading'>Keep a record</Heading>
-        <p>Save a copy of this receipt for your records.</p>
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-          <Button variant='secondary' onClick={() => window.print()}>Download receipt</Button>
-          <Button variant='secondary' onClick={() => window.print()}>Print receipt</Button>
+        <div style={{ display: 'grid', gap: '0.75rem', justifyItems: 'start', marginBottom: '0.75rem' }}>
+          <RecordAction icon='download' label='Download receipt (PDF 5KB)' />
+          <RecordAction icon='print' label='Print receipt' />
+          <p style={{ fontWeight: 700, margin: 0 }}>
+            <span aria-hidden='true' style={{ border: '2px solid var(--gel-color-text)', display: 'inline-block', height: '0.75rem', marginRight: '0.5rem', position: 'relative', top: '0.1rem', width: '1rem' }} />
+            Email receipt
+          </p>
+          <input
+            aria-label='Email receipt address'
+            style={{
+              border: '1px solid var(--gel-color-border)',
+              borderRadius: '4px',
+              font: 'inherit',
+              minHeight: '3rem',
+              padding: '0.75rem 1rem',
+              width: '18rem',
+            }}
+          />
+          <Button variant='secondary' onClick={() => { /* preview only, no email is sent */ }}>Send</Button>
         </div>
       </section>
 
       <section aria-labelledby='next-steps-heading'>
         <Heading level={2} id='next-steps-heading'>Next steps</Heading>
         <Heading level={3}>Insurance</Heading>
-        <p>Your compulsory third party (CTP) insurance for the vehicle will automatically transfer to the new owner.</p>
+        <p>Your compulsory third party (CTP) insurance for the vehicle, also known as a green slip, will automatically transfer to the new owner. <strong>You don't need to do anything.</strong></p>
+        <p>If you have comprehensive insurance cover, contact your provider and remove the vehicle from the policy.</p>
         <Heading level={3}>E-tag or toll pass</Heading>
-        <p>Remove any tags or passes from the vehicle and delete the registration number from your account(s).</p>
+        <p>
+          Make sure you are not charged for the new owner's toll use. Remove any tags or passes from the vehicle and delete the registration number from your account(s). For more information, visit <TextLink href='#!'>Tolls</TextLink>.
+        </p>
         <Heading level={3}>Personalised or special number plates</Heading>
-        <p>If you want to keep your personalised or special number plates you can reserve and replace them, or exchange them with another vehicle registered in your name.</p>
+        <p>If you want to keep your personalised or special number plates you can either:</p>
+        <ul>
+          <li><TextLink href='#!'>reserve and replace</TextLink> them with general number plates, or</li>
+          <li>exchange them with another vehicle registered in your name.</li>
+        </ul>
       </section>
 
-      <section className='tapaas-card' aria-labelledby='feedback-heading'>
+      <section aria-labelledby='feedback-heading'>
         <Heading level={2} id='feedback-heading'>Help us improve</Heading>
-        <p>Tell us about your experience by answering a few questions. <TextLink href='#!'>Give feedback</TextLink></p>
+        <p>
+          Tell us about your experience by answering a few questions. <TextLink href='#!'>Give feedback</TextLink>
+          <span aria-hidden='true' style={{ border: '1px solid var(--gel-color-primary)', display: 'inline-block', height: '0.75rem', marginLeft: '0.25rem', position: 'relative', top: '0.1rem', width: '0.75rem' }} />
+        </p>
       </section>
 
       <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '2rem' }}>
         <Button onClick={onStartAgain}>Submit another Notice of Disposal</Button>
         <Button variant='secondary' onClick={() => { /* mock nav */ }}>Go to my account</Button>
       </div>
-      <p style={{ marginTop: '1rem' }}><TextLink href='#!'>Log out</TextLink></p>
+      <p style={{ marginTop: '1rem' }}>
+        <TextLink href='#!'>
+          Log out <span aria-hidden='true' style={{ border: '1px solid var(--gel-color-primary)', display: 'inline-block', height: '0.75rem', marginLeft: '0.25rem', position: 'relative', top: '0.1rem', width: '0.75rem' }} />
+        </TextLink>
+      </p>
+      <NodExperienceBar />
     </section>
   )
 }
