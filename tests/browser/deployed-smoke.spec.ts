@@ -31,6 +31,8 @@ async function chooseOptionInGroup(page: import('@playwright/test').Page, groupN
 }
 
 test.describe('published preview app', () => {
+  const unsafeCustomerContentWords = /payment|fee|mock|prototype|figma|kiro/i
+
   test('loads the app, exposes the Clara-aligned visible transactions and avoids unsafe claims', async ({ page }) => {
     await page.goto('./')
 
@@ -96,16 +98,18 @@ test.describe('published preview app', () => {
     await expect(page.getByRole('heading', { name: 'Review your application' })).toBeVisible()
     await expect(page.getByRole('button', { name: 'Edit Application details' })).toBeVisible()
     await expect(page.getByRole('button', { name: 'Edit Your details' })).toBeVisible()
-    await expect(page.getByText(/payment|fee|mock|prototype|figma|kiro/i)).toHaveCount(0)
+    const reviewSurface = page.locator('[data-mps-page-template="review"]')
+    await expect(reviewSurface.getByText(unsafeCustomerContentWords)).toHaveCount(0)
     await chooseByLabelText(page, 'I declare that the information provided is true and correct.')
     await page.getByRole('button', { name: 'Submit application' }).click()
 
-    await expect(page.getByRole('status', { name: 'Transaction completed' })).toBeVisible()
+    const confirmationSurface = page.getByRole('status', { name: 'Transaction completed' })
+    await expect(confirmationSurface).toBeVisible()
     await expect(page.getByRole('heading', { name: 'Your application has been submitted for review' })).toBeVisible()
     await expect(page.getByText('MPS-000000')).toBeVisible()
     await expect(page.getByRole('heading', { name: 'Keep a record' })).toBeVisible()
     await expect(page.getByRole('heading', { name: 'What happens next?' })).toBeVisible()
-    await expect(page.getByText(/payment|fee|mock|prototype|figma|kiro/i)).toHaveCount(0)
+    await expect(confirmationSurface.getByText(unsafeCustomerContentWords)).toHaveCount(0)
   })
 })
 

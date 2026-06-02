@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import type { ReactNode } from 'react'
 import { AccessibleMarketPermitSkeleton } from '../AccessibleMarketPermitSkeleton'
 import { BuskingPermitSkeleton } from '../BuskingPermitSkeleton'
+import { NoticeOfDisposalSkeleton } from '../NoticeOfDisposalSkeleton'
 import { TrialPermitSkeleton } from '../TrialPermitSkeleton'
 import './storybook.css'
 
@@ -111,6 +112,34 @@ export const BuskingPermitRuleGeneratedPrototype: Story = {
         </ul>
       </TransactionBoundaryNote>
       <BuskingPermitSkeleton />
+    </div>
+  ),
+}
+
+
+export const NoticeOfDisposalFigmaInformedPrototype: Story = {
+  name: 'Notice of Disposal - Figma-informed Prototype',
+  parameters: {
+    docs: {
+      description: {
+        story: 'Figma-informed prototype using TaPaaS transaction rules and a sanitised source summary. This has not been approved by TaPaaS, GEL, legal, privacy, accessibility, policy or governance owners.',
+      },
+    },
+  },
+  render: () => (
+    <div className='storybook-board'>
+      <TransactionBoundaryNote transactionType='Notice of Disposal - Figma-informed prototype'>
+        <ul>
+          <li>This is a Figma-informed prototype using TaPaaS transaction rules and a sanitised source summary.</li>
+          <li>It has not been approved by TaPaaS, GEL, legal, privacy, accessibility, policy or governance owners.</li>
+          <li>Staged flow: Privacy, Vehicle selection, Sale and buyer details, Review. Confirmation excluded from stepper.</li>
+          <li>Your details are read-only Account/Profile playback.</li>
+          <li>Buyer type branches into Individual and Motor dealer paths.</li>
+          <li>Confirmation is successful lodgement with genuine next steps.</li>
+          <li>No real lookup, backend integration, payment or notification behaviour.</li>
+        </ul>
+      </TransactionBoundaryNote>
+      <NoticeOfDisposalSkeleton />
     </div>
   ),
 }
